@@ -1,0 +1,179 @@
+﻿<script type="text/javascript">
+    app.expandAuthorBasicDetails = function ($scope, AJService, $window) {
+        app.expandControllerRoyaltySlab($scope, AJService, $window);
+        app.expandControllerContractDetails($scope, AJService, $window);
+        app.expandControllerA($scope, AJService, $window);
+        $scope.RoyaltyslabList = [];
+        $scope.RoyaltyslabList.push(1);
+
+        var ProductType = {
+            Id: $scope.ProductTypeId,
+        };
+        /* end here*/
+        var SubProductTypeList = AJService.PostDataToAPI("CommonList/SubProductTypeList", ProductType);
+        SubProductTypeList.then(function (SubProductTypeList) {
+            $scope.SubProductTypeList = SubProductTypeList.data;
+        }, function () {
+            //alert('Error in getting SubProduct Type List');
+        });
+
+        $scope.addroyalslabrow = function () {
+            var i = $scope.RoyaltyslabList.length + 1;
+            $scope.RoyaltyslabList.push(i);
+        }
+
+        var getPaymentPeriodList = AJService.GetDataFromAPI("CommonList/getPaymentPeriodList", null);
+        getPaymentPeriodList.then(function (PaymentPeriod) {
+            $scope.PaymentPeriodeList = PaymentPeriod.data.query;
+        }, function () {
+            //alert('Error in getting Payment Period list');
+        });
+
+    }
+</script>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Author <span ng-bind="$index+1"></span> Basic Details
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body clearfix">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12" style="padding-left:4px;">
+                        <label class="control-label col-md-5">Contract Type <span class="red">*</span></label>
+                        <div class="col-md-7">
+                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContactType.$dirty) && userForm.ContactType.$invalid } ">
+                                <select class="form-control" name="ContactType" ng-model="contractType[$index]" required > @*ng-change="fn_validate_OneTimePayment($index,this);"*@
+                                    <option value="">--Please Select--</option>
+                                    <option ng-repeat="div in ContactTypeList" value="{{div.Id}}">{{div.Contact}}</option>
+                                </select>
+                                <div class="help-block">
+                                    <p ng-show="userForm.ContactType.$error.required && (userForm.ContactType.$dirty || submitted)">Please select contract type</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5">Type <span class="red">*</span></label>
+                        <div class="col-md-7">
+                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorType_{{$index+1}}.$dirty) && userForm.AuthorType_{{$index+1}}.$invalid } ">
+                                <select class="form-control" name="AuthorType_{{$index+1}}" ng-change="ValidateMe($event)" ng-model="AuthorType[$index]" required>
+                                    <option value="">--Please Select--</option>
+                                    <option ng-repeat="authorTyp in _authorTypeList" value="{{authorTyp.Id}}">{{authorTyp.AuthorTypeName}}</option>
+                                </select>
+                                <div class="help-block">
+                                    <p ng-show="userForm.AuthorType_{{$index+1}}.$error.required && (userForm.AuthorType_{{$index+1}}.$dirty || submitted)">Please select author type</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 ParentClass">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5">Name</label>
+                        <div class="col-md-7">
+                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorName.$dirty) && userForm.AuthorName.$invalid } ">
+                                <select class="form-control fetch_Author_Name" id="Author_Name_{{$index+1}}" ng-change="UpdateAuthor(AuthorValue[$index],'../../Master/Master/AuthorMaster');get_Author()" name="AuthorName" ng-model="AuthorValue[$index]" required>
+                                    <option value="">--Please Select--</option>
+                                    <option ng-repeat="Author in AuthorListProduct" value="{{Author.Id}}">{{Author.FirstName}} &nbsp;{{Author.LastName}}</option>
+                                </select>
+                                <div class="help-block">
+                                    <p ng-show="userForm.AuthorName.$error.required && (userForm.AuthorName.$dirty || submitted)">Please select author</p>
+
+                                    <p class="ng-hide">Duplicate author</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2 updateauthor">
+                <div class="form-group">
+                    <a href="javascript:void(0)" data-toggle="modal" ng-click="EditAuthorDataView(AuthorValue[$index])" data-target="#AuthorView" style="color:#ee5941">View</a>
+                    <span style=" color:#ee5941" ng-if="'@Session["deptCode"]'!='ED'">|</span>
+                    <a href="#" ng-if="'@Session["deptCode"]'!='ED'" ng-click="OpenAuthorUpdate(AuthorValue[$index])" id="EditAuthor" style="color:#ee5941">Update Author</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-md-12">
+            <div class="caption">
+                <strong>Contract Details</strong>
+            </div>
+            @Html.Partial("~/Areas/Contract/Views/Shared/_ContractDetails.cshtml")
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="caption">
+                <strong>Royalty Slab</strong>
+            </div>
+            @Html.Partial("~/Areas/Contract/Views/Shared/_RoyaltySlab.cshtml")
+        </div>
+
+
+    </div>
+</div>
+
+@*=================================================================================
+        this model will open the author in view mode
+    =================================================================================*@
+
+<div class="modal fade bs-example-modal-lg" id="AuthorView" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document" style="width:90%;">
+        @Html.Partial("~/Views/Shared/_AuthorView.cshtml")
+    </div>
+</div>
+
+<div class="modal fade text-center" id="theModal">
+    <div class="modal-dialog" style="width:95%;">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Author Update</h4>
+            </div>
+            <div class="modal-body">
+                <iframe style="width:98%;height:1047px"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var flag = 0;
+    $(document).ready(function () {
+
+        $(document).on('click', '.RoyaltySlabnotAdd', function () {
+
+            if (flag == 0) {
+                angular.element(document.getElementById('angularid')).scope().addroyalslabbyJquery($(this));
+                flag = 1;
+            }
+            setTimeout(function () { flag = 0; }, 200);
+        });
+
+        $(document).on('click', '.RoyaltySlabnotRemove', function () {
+
+            angular.element(document.getElementById('angularid')).scope().removeroyalslab($(this));
+        });
+
+        $(".updateauthor").css("display", "none");
+    });
+</script>

@@ -1,0 +1,188 @@
+﻿ * {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	margin: 0;
+	padding: 0;
+	color: #000;
+	font-size: 13px;
+	line-height: 1.428571429;
+    font-family: 'open_sansregular';
+	-webkit-font-smoothing: antialiased;
+	 background: #eff3f8;
+}
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('../fonts/opensans-regular-webfont.eot');
+    src: url('../fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans-regular-webfont.woff2') format('woff2'),
+         url('../fonts/opensans-regular-webfont.woff') format('woff'),
+         url('../fonts/opensans-regular-webfont.ttf') format('truetype'),
+         url('../fonts/opensans-regular-webfont.svg#open_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+html, body, div, span, hr, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strong, sub, sup, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	border: 0;
+
+}
+label {
+    display: inline-block;
+    font-weight: normal; font-size:14px;
+    margin-bottom: 5px;
+    max-width: 100%; color:#4c4c4c;
+}
+.required {
+    color: #e02222;
+    font-size:14px;
+    padding-left: 2px; 
+}
+.form-control {
+    background-color: #fff;
+    border: 1px solid #c2cad8;
+    border-radius:0px;
+    box-shadow:none;
+    height: 34px;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+}
+
+.help-block {
+    color: #ff0000;
+    display: block;
+    margin-bottom: 0px;
+
+}
+.dropzone-file-area {
+    background: #fff none repeat scroll 0 0;
+    border: 1px dashed #ee5941;
+    margin: 0 auto;
+    padding: 10px 25px;
+    text-align: center;
+}
+.sbold {
+ font-size:15px; color:#4c4c4c;
+}
+
+/*top-header*/
+.top-header{ width:100%; background:#2b3643;}
+.top-header .logo{ background:#fff; text-align:center; padding:4px; }
+.top-header .search {float:right; position:relative; top:10px; width:280px; }
+.top-header .search .form-control {background: #fff none repeat scroll 0 0; border: medium none; border-radius: 0;box-shadow: none;color: #39424a; font-size:13px;position: relative; height:27px; border:#424850 solid 1px;}
+.top-header .search .btn > i { color: #5f5f5f; position: absolute;right: 8px;top: 6px;}
+.name-box{ width:100%; color:#FFF; font-size:13px; padding-top:15px;}
+.loginheader{ float:left; margin-top:10px;}
+.loginheader ul{ list-style:none; text-align:right; margin-bottom:0px;}
+.loginheader ul li{ display:inline-table; font-size:13px; color:#fff; border-right:#636e77 solid 1px; padding:7px; }
+.loginheader ul li i{ color:#fff !important; margin-right:7px;}
+.loginheader ul li.nobg{  border-right:none;}
+/*top-header-end*/
+
+/*navbar*/
+.navbar {margin-bottom:0px;}
+.navbar-default {background-color: #39424a;border:0px; border-radius:0px; margin-top:15px;}
+.navbar-nav > li.active a { color:#fff !important; background:#ee5941 !important;}
+.navbar-nav>li>a:hover{ color:#fff !important; background:#ee5941 !important;}
+/*navbar-end*/
+
+
+/*main-title*/
+.main-title{ background:#fff; border-bottom-left-radius:5px; border-bottom-right-radius:5px; padding:8px; margin-bottom:20px}
+.main-title h1{ color:#2b3643; font-size:20px; font-weight:bold;}
+.main-title h1 small{ text-align:right; margin-top:5px; float:right; font-size:12px; color:#2b3643 }
+/*main-title end*/
+.form-horizontal .control-label { margin-bottom: 0;padding-top: 7px;text-align: left;}
+
+/*footer*/
+footer{ background:#364150; margin-top:10px; padding:15px; float:left; width:100%}
+footer .copyright{ color:#fff; font-size:13px; line-height:55px; text-align:left}
+footer .designedby { color:#fff; font-size:13px; text-align: right}
+/*footer end*/
+.red {
+    color: red;
+}
+
+.back-to-search {
+    float: right; 
+    cursor: pointer;
+}
+.dataTables_paginate a {
+ color: #222;
+ padding-right : 5px;
+ /*background:#ee5941;
+ border-radius:3px;
+ margin-right:7px;
+ width:14px;
+ text-align:center;
+ margin-top:20px;
+ margin-bottom :20px;*/
+}
+
+.dataTables_paginate a:hover {
+ color: #ee5941;
+ cursor:pointer;
+ }
+
+@media (max-width:1024px) {
+/*top-header*/
+.top-header .logo {background: #fff none repeat scroll 0 0;padding: 6px;text-align: center;}
+/*top-header end*/
+
+/*navbar*/
+
+.navbar-nav > li {border-right: 1px solid #636e77;float: left;font-size: 13px;}
+.nav > li > a { display: block;padding: 15px 11px;position: relative;}
+
+/*navbar-end*/
+}
+@media (max-width:768px) {
+/*navbar*/
+.top-header .logo {background: #fff none repeat scroll 0 0;padding:8px;text-align: center;}
+/*top-header end*/
+
+/*navbar*/
+.navbar-default {background-color: #39424a;border:0px; border-radius:0px; margin-top:0px; border-top:#636e77 solid 1px;}
+.navbar-collapse.collapse {display: none !important;}
+.navbar-collapse.collapse.in {display: block !important;}
+.navbar-header .collapse, .navbar-toggle {display:block !important;}
+.navbar-header {float:none;}	
+.navbar-nav > li {border-bottom: 1px solid #636e77 !important; border-right:0px;float: left;font-size: 13px;width: 100%;}
+.nav > li > a {display: block;padding: 8px 11px;position: relative;}
+
+/*navbar-end*/
+
+/*footer*/
+.copyright{ color:#fff; font-size:13px; line-height:20px !important; }
+.designedby { color:#fff; font-size:13px; text-align: right; }
+/*footer end*/
+}
+
+@media (max-width:767px) {
+/*top-header*/
+.top-header .search {float:right; position:relative; top:10px; width:100%;   }	
+/*top-header end*/
+
+/*main-title*/
+.main-title h1 {color: #2b3643;font-size: 18px;font-weight: normal;}
+.main-title h1 small{ text-align:right; margin-top:5px; float:right; font-size:11px; color:#2b3643 }
+
+/*main-title end*/
+
+/*navbar*/
+
+.navbar-default { background-color: #39424a;border:0px; border-radius:0px; margin-top:0px; border-top:#636e77 solid 1px;}
+.navbar-nav > li {border-bottom: 1px solid #636e77;float: left;font-size: 13px;width: 100%;}
+.nav > li > a {display: block;padding: 8px 11px;position: relative;}
+
+/*navbar-end*/
+.copyright{ color:#fff; font-size:13px; line-height:20px !important; text-align: center !important}
+.designedby{ color:#fff; font-size:13px; text-align: center !important; padding-top:5px;}
+}

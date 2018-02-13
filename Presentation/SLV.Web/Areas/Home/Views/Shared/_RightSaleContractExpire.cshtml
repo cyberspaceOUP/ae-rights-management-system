@@ -1,0 +1,70 @@
+﻿
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @T("Dashboard.RightsContractsExpired")
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!RightSaleContractExpiring_List.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Product Code </th>
+                        <th> ISBN </th>
+                        <th> Working Product</th>
+                        <th> Author </th>
+                        <th> Expiry Date </th>
+                        <th> Territorial Rights </th>
+                        <th> Type </th>
+                    </tr>
+
+                    <tr ng-repeat="RSP in RightSaleContractExpiring_List">
+                        <td class="table-color"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{RSP.ContractId}}&type=A{{RSP.ProductId}}&RightsSellingId={{RSP.RightsSellingID}}"><span ng-bind="(RSP.ProductCode)"></span>   </a></td>
+                        <td> <span ng-bind="(RSP.ISBN)"></span>    </td>
+                        <td> <span ng-bind="(RSP.WorkingProduct)"></span>  <span style="font-size:11px;">  <br /><span ng-bind="(RSP.WorkingSubProduct)"></span>    </span></td>
+                        <td> <span ng-bind="(RSP.AuthorName)"></span> </td>
+                        <td><span ng-bind="(RSP.Expirydate)"></span>   </td>
+                        <td><span ng-bind="(RSP.Territoryrights)"></span>  </td>
+                        <td>Contract</td>
+
+                    </tr>
+                    <tr ng-repeat="RSP in RightSaleContractExpiring_List_License">
+                        <td class="table-color"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{RSP.ProductId}}&type=P{{RSP.ProductId}}&RightsSellingId={{RSP.RightsSellingID}}">  <span ng-bind="(RSP.ProductCode)"></span>  </a></td>
+                        <td>  <span ng-bind="(RSP.ISBN)"></span>  </td>
+                        <td>  <span ng-bind="(RSP.WorkingProduct)"></span>  <span style="font-size:11px;">  <br /> <span ng-bind="(RSP.WorkingSubProduct)"></span>  </span></td>
+                        <td>  <span ng-bind="(RSP.AuthorName)"></span>  </td>
+                        <td><span ng-bind="(RSP.Expirydate)"></span>  </td>
+                        <td> <span ng-bind="(RSP.Territoryrights)"></span>  </td>
+                        <td>License</td>
+                    </tr>
+                </table>
+
+                <div style="float:right">
+
+                    @*<a ng-show="RightSaleContractExpiring_List.length" href="javascript:void(0);" ng-click="RightSaleContractExpire_submitForm();" title="Contract" class="moreDash">Contract : View More</a>
+                    
+
+                    <br />
+                    <a ng-show="RightSaleContractExpiring_List_License.length" href="javascript:void(0);" ng-click="RightSaleContractExpire_submitForm();" title="License" class="moreDash">License : View More</a>*@
+                    
+                </div>
+
+
+                <a href="javascript:void(0);" ng-show="RightSaleContractExpiring_List_License.length||RightSaleContractExpiring_List.length" ng-click="RightSaleContractExpire_submitForm();" class="moreDash">View More</a>
+            </div>
+            <div ng-hide="RightSaleContractExpiring_List.length">No result found</div>
+        </div>
+    </div>
+</div>
+
+
+

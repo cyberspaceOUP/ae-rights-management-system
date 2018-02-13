@@ -1,0 +1,200 @@
+﻿@{
+    Layout = null;
+
+}
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Rights Management System</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!--  BEGIN GLOBAL MANDATORY STYLES -->
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/components.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="~/Content/login.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Content/plugin/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    @*<link href="~/Content/plugin/plugins.css" rel="stylesheet" type="text/css" />
+
+        <link href="~/Content/plugin/login-3.min.css" rel="stylesheet" />
+
+        <link href="~/Content/plugin/custom.css" rel="stylesheet" />*@
+
+
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/angular/angular-message.js"></script>
+
+
+    <script type="text/javascript">
+
+
+
+        var app = angular
+        .module('app', ['ngMessages']);
+        app.controller('MainCtrl', MainCtrl);
+
+        function MainCtrl() {
+
+        }
+    </script>
+    <script src="~/Scripts/service.js"></script>
+
+
+
+</head>
+<body class="login">
+    <div class="content" ng-app="app" ng-controller="MainCtrl as main">
+        <!-- BEGIN LOGIN -->
+        <div class="logo">
+            <div class="col-xs-6">
+                <a href="#">
+                    <img src="~/Content/images/logo.jpg" class="img-responsive  " alt="" />
+                </a>
+            </div>
+            <div class="col-xs-6" >
+                <img src="~/Content/images/oxford-logo.jpg" class="oxford-logo img-responsive  right" alt="" style="float:right !important; margin:2% 4% 0 0;" />
+            </div>
+        </div>
+        <!-- END LOGO -->
+        <!-- BEGIN LOGIN FORM -->
+        <div class="col-md-5 col-sm-6 col-xs-12">
+            <form class="login-form" name="myform" id="myform">
+                <div class="myerror" style="color:red">@ViewBag.Msg<br/><span ng-bind="InvalidMsg"></span></div>
+               
+                <div class="form-group input-icon" ng-class="{ 'has-error': ( submitted ||myform.Emailid.$dirty) && myform.Emailid.$invalid } ">
+                    <i class="fa fa-user"></i>
+                    <label class="control-label visible-ie8 visible-ie9">Use your username</label>
+                    <input type="text" id="username" name="Emailid" placeholder="Please enter email id" autocomplete="off" class="form-control form-control-solid placeholder-no-fix" tabindex="1" ng-model="Emailid" required ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" />
+                    <div class="help-block">
+                        <p ng-show="myform.Emailid.$error.required && (myform.Emailid.$dirty || submitted)" class="help-block red">Please enter email Id</p>
+                        <p ng-show="myform.Emailid.$error.pattern" class="help-block red">Please enter valid email Id</p>
+
+                    </div>
+                </div>
+                <div class="form-group input-icon" ng-class="{ 'has-error': ( submitted ||myform.password.$dirty) && myform.password.$invalid }">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" name="password" placeholder="Please enter password" autocomplete="off" class="form-control form-control-solid placeholder-no-fix" tabindex="2" ng-model="password" required />
+                    <div class="help-block">
+                        <p ng-show="myform.password.$error.required && (myform.password.$dirty || submitted)" class="help-block red">Please enter password</p>
+                        <p ng-show="myform.password.$error.pattern" class="help-block red">Please enter valid password</p>
+                    </div>
+                </div>
+                @*<div class="form-actions">
+                <label class="rememberme check mt-checkbox mt-checkbox-outline">
+                    <input type="checkbox" value="1" name="remember"> Remember me next time
+                </label>
+            </div>*@
+                <div class="form-actions">
+                    <button class="btn green btn-block uppercase" type="submit" tabindex="4" ng-click="myform.$valid &&Login()">Login</button>
+                    <p class="forget-password text-center">
+                        <a href="javascript:;" id="forget-password" >
+                            Forgot Password?<br>
+                            @*Create New Account*@
+                        </a>
+                    </p>
+                </div>
+            </form>
+
+
+            <form class="forget-form" name="myform1" id="myform1" ng-controller="MainCtrl">
+                <input type="hidden" id="hdnContactId" value="11" />
+                <div class="myerror" style="color:red;"><span ng-bind="InvalidMsg"></span></div>
+                <h4>Forgot Password</h4>
+
+                <div class="form-group">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||myform1.email.$dirty) && myform1.email.$invalid }">
+
+                        @*<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="@T("Common.Login.ForgotPassword.Email")" name="email" />*@
+                        <input class="form-control placeholder-no-fix" type="text" ng-required="true" placeholder="@T("Common.Login.ForgotPassword.Email")" ng-model="email" name="email" ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" />
+                        <div class="help-block">
+                            <p ng-show="myform1.email.$error.required && (myform1.email.$dirty || submitted)" class="help-block red">@T("Common.Login.ForgotPassword.EnterEmail")</p>
+                            <p ng-show="myform1.email.$error.pattern" class="help-block red">@T("Common.Login.ForgotPassword.validEmail")</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="back-btn" class="btn">
+                        Back
+                    </button>
+                    <button type="submit" class="btn green pull-right" ng-click="myform1.$valid &&ForgotPassword();">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-7 col-sm-6 col-xs-12">
+            @*<div class="box-content">*@
+                <p style="float: right !important; margin:22% 4% 0 0;">
+                    Oxford University Press is a <br />
+                    department of the University of <br />
+                    Oxford. It furthers the University's <br />
+                    objective of excellence in research, <br />
+                    scholarship, and education by <br />
+                    publishing worldwide.
+                </p>
+            @*</div>*@
+        </div>
+    </div>
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+
+
+    <script src="~/Content/script/jquery.min.js"></script>
+    <script src="~/Content/script/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/bootstrap-hover-dropdown.min.js"></script>
+    <script src="~/Content/script/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/script/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/bootstrap-switch.min.js"></script>
+    <script src="~/Content/script/metronic.js"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="~/Content/script/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/additional-methods.min.js"></script>
+
+    <!-- END PAGE LEVEL PLUGINS -->
+    <script src="~/Content/script/app.min.js"></script>
+    @*<script src="~/Content/script/login.min.js"></script>*@
+
+    <script src="~/Content/script/login.min.js"></script>
+    <script src="~/js/master/common.master.js"></script>
+
+
+
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+        jQuery(document).ready(function () {
+            Metronic.init(); // init metronic core components
+
+            Login.init();
+
+        });
+
+
+
+    </script>
+
+    @*<script src="~/js/staff/login.login.js"></script>*@
+    @*<script src="~/js/login/loginCtrl.js"></script>*@
+    <script src="~/js/login/loginCtrl.js"></script>
+    <!-- END JAVASCRIPTS -->
+
+
+</body>
+</html>

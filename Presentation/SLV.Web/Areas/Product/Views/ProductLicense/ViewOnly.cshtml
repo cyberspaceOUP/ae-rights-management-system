@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "ProductLicenseView";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/Product/ProductLicenseUpdate.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+<script src="~/js/common/TopSearch.js"></script>
+
+<input type="hidden" id="hid_AddendumId" name="hid_AddendumId" value="@ViewBag.AddendumId" /> 
+<input type="hidden" id="hid_LicenseeId" name="hid_LicenseeId" value="@ViewBag.LicenseId" /> 
+<h3 class="text-muted">@*@T("Form.CityMaster.Heading")*@</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Product License View
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        @if (Session["PrintPermissions"] != null)
+        {
+            <div class="col-md-12 text-right btnPrint">
+                <div class="tools">
+                    <input type="button" class="btn green" id="btn_printPage" value="Print">
+                </div>
+            </div>
+        }
+        <div class="col-md-12">&nbsp;</div>
+        <div class="col-md-12 text-right backToList" @*ng-if="'@TempData["BackToserach"]' == 'BackToserach'"*@>
+            <div class="tools">
+                <a href="~/Product/ProductLicense/ProductLicenseSearch?For=BackToserach" class="backtosearch" style="color:black;">Back To List</a>
+            </div>
+        </div>
+
+        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseView.cshtml")
+
+         
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $('#btn_printPage').on('click', function () {
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.backToList').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+
+        $('.btnPrint').hide();
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+
+        window.print();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('.backToList').show();
+        $('footer').show();
+        $('.menu').show();
+        $('.top-header').show();
+
+        $('.btnPrint').show();
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+    });
+
+</script>
+

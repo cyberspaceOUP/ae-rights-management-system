@@ -1,0 +1,63 @@
+﻿
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Inbound Permission
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr ng-repeat="div in InbounDetailsList">
+                    <th> Inbound Code </th>
+                    <th> Product Code </th>
+                    @*<th> Inbound Type</th>
+                    <th> {{div.InboundType=='C'?'Author Contract':'Product License'}} Code </th>*@
+                    <th> ISBN</th>
+                </tr>
+
+                <tr ng-repeat="div in InbounDetailsList">
+                    @*<td> 
+                        <a href="javascript:void(0);" style="color: #ee5941;" class="ng-binding"> {{div.Code}} </a>
+                   </td>*@
+                    <td>
+                        @*<a style="color:#ee5941;" class="ng-binding" href="~/PermissionsInbound/PermissionsInbound/ViewInbound?Id={{div.InboundForId}}&type={{div.InboundType}}{{div.ProductId}}&InboundId={{div.Code}} ">{{div.Code}}</a>*@
+                        <a style="color:#ee5941;" class="ng-binding" href="~/PermissionsInbound/PermissionsInbound/ViewInbound?type={{'P'+div.ProductId}}&InboundId={{div.Code}} ">{{div.Code}}</a>
+                                          
+                    </td>
+                   
+                    @*<td> <a href="javascript:void(0);" style="color: #ee5941;" class="ng-binding"> {{div.ProductCode}} </a></td>*@
+
+
+                    <td>
+                        <a style="color:#ee5941;" class="ng-binding" href="~/Product/ProductMaster/ProductDetailsView?Id={{div.ProductId}}">{{div.ProductCode}}</a>
+                        
+                    </td>
+
+                    @*<td> {{div.InboundType=='C'?'Author Contract':'Product License'}}</td>
+
+                    <td ng-if="div.InboundType=='C'">
+
+                        <a style="color:#ee5941;" class="ng-binding" href="~/Contract/AuthorContract/view?Id={{div.InboundForId}}">{{div.TypeForCode}}</a>
+                    </td>
+                    <td ng-if="(div.InboundType == 'L')">
+                        <a style="color:#ee5941;" class="ng-binding" href="~/Product/ProductLicense/view?Id={{div.InboundForId}}">{{div.TypeForCode}}</a>
+                    </td>*@
+
+
+                    @*<td> <a href="javascript:void(0);" style="color: #ee5941;" class="ng-binding"> {{div.TypeForCode}}</a> </td>*@
+                    <td> {{div.Isbn}}</td>
+                   
+
+                </tr>
+
+
+            </table>
+
+        </div>
+    </div>
+</div>

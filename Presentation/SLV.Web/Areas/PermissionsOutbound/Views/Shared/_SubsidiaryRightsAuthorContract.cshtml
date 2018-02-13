@@ -1,0 +1,65 @@
+﻿<script src="~/js/PermissionsOutbound/SubsidiaryRightsAuthorContract.js"></script>
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Subsidiary Rights
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="portlet-body clearfix">
+                    <div class="portlet-body flip-scroll">
+
+                        <table  class="table table-striped table-bordered table-hover dataTable no-footer" id="tblsubsidiary">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo.</th>
+                                    <th>Subsidiary Rights</th>
+                                    <th ng-if="SubsidiaryRightsAuthorContractDetails.length > 0" ng-repeat="i in SubsidiaryRightsAuthorContractDetails">Author <span ng-bind="$index+1"></span> % (<span ng-bind="i.AuthorName"></span>)</th>
+                                    <th ng-if="SubsidiaryRightsAuthorContractDetails.length == 0">Author (%)</th>
+                                    <th>OUP (%)</th>
+                                    <th>Total (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="div in SubsidiaryRightsAuthorContractDetails | limitTo :SubsidiaryRightsAuthorContractDetails.length/SubsidiaryRightsAuthorContractDetails.length" ng-if="SubsidiaryRightsAuthorContractDetails.length > 0">
+                                    <td>
+                                        <span ng-bind="$index+1"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="div.SubsidiaryRights"></span>
+                                    </td>
+
+                                    <td ng-repeat="i in SubsidiaryRightsAuthorContractDetails" ng-if="SubsidiaryRightsAuthorContractDetails.length > 0">
+                                        <span ng-bind="i.AuthorPercentage"></span>
+                                    </td>
+                                    <td  ng-if="SubsidiaryRightsAuthorContractDetails.length == 0">
+                                        <span ng-bind="div.AuthorPercentage"></span>
+                                    </td>
+
+                                    <td>
+                                        <span ng-bind="div.Ouppercentage"></span>
+                                    </td>
+
+                                    <td>
+                                        <span ng-bind="calcTotalPer(div.SubsidiaryId)"></span>
+                                    </td>
+
+                                </tr>
+                                <tr ng-if="SubsidiaryRightsAuthorContractDetails.length == 0">
+                                    <td colspan="5">
+                                        No Subsidiary Rights Exist
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

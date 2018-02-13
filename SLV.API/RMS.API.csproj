@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6159FFA4-F423-42A1-8475-232C0E2C9B73}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SLV.API</RootNamespace>
+    <AssemblyName>SLV.API</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.3.3.4\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mail">
+      <HintPath>..\..\..\ANKUSH\Desktop\DLLs\Mail.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Settings.txt" />
+    <Content Include="Global.asax" />
+    <Content Include="MailHtml\ForgetPassword - Copy.html" />
+    <Content Include="MailHtml\ForgetPassword.html" />
+    <Content Include="MailHtml\AuthorContractStatus.html" />
+    <Content Include="MailHtml\logo.jpg" />
+    <Content Include="MailHtml\RightsSellingAlertFrequency.html" />
+    <Content Include="MailHtml\RightsSellingAdvancePayment.html" />
+    <Content Include="MailHtml\PermissionInboundBalanceQuantity.html" />
+    <Content Include="MailHtml\PermissionOutboundReceivedInvoiceDate.html" />
+    <Content Include="MailHtml\RecurringExpiryDate.html" />
+    <Content Include="MailHtml\PermissionInboundExpiryDate.html" />
+    <Content Include="MailHtml\PermissionOutboundExpiryDate.html" />
+    <Content Include="MailHtml\BalanceQuantityProductLicense.html" />
+    <Content Include="MailHtml\InboundPermissionNotEntered.html" />
+    <Content Include="MailHtml\BalanceQuantityAddendum.html" />
+    <Content Include="MailHtml\OtherContractExpiryDate.html" />
+    <Content Include="MailHtml\PendingRequestOtherContract.html" />
+    <Content Include="MailHtml\ProductLicenseEntered.html" />
+    <Content Include="MailHtml\ProductLicenseEntered .html" />
+    <Content Include="MailHtml\ContributorEntered .html" />
+    <Content Include="MailHtml\ISBNleft.html" />
+    <Content Include="MailHtml\ProductLicenseAddendumExpiryDate.html" />
+    <Content Include="MailHtml\ContractAddendumExpiryDate.html" />
+    <Content Include="MailHtml\ProductlicenseExpiryDate.html" />
+    <Content Include="MailHtml\ISBNAssignMail.html" />
+    <Content Include="MailHtml\RightsSellingContractExpiryDate.html" />
+    <Content Include="MailHtml\AuthorContractExpiryDate.html" />
+    <Content Include="MailHtml\SAPAgreementNumberNotEntered.html" />
+    <Content Include="MailHtml\ISBNNotEntered.html" />
+    <Content Include="MailHtml\PendingRequestLicense.html" />
+    <Content Include="MailHtml\PendingRequestContract.html" />
+    <Content Include="MailHtml\TestMail.html" />
+    <Content Include="System.Web.Http.dll" />
+    <Content Include="System.Web.Http.WebHost.dll" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Alert\AlertController.cs" />
+    <Compile Include="Controllers\Alert\SchedulerController.cs" />
+    <Compile Include="Controllers\Author\AuthorContactController.cs" />
+    <Compile Include="Controllers\CommonDropDownBindingController.cs" />
+    <Compile Include="Controllers\CommonListController.cs" />
+    <Compile Include="Controllers\Contact\ContactController.cs" />
+    <Compile Include="Controllers\CustomProduct\CustomProductController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\Author\AuthorController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\Master\AuthorTypeMasterController.cs" />
+    <Compile Include="Controllers\Master\AssetMasterController.cs" />
+    <Compile Include="Controllers\Master\CopyrightHolderMasterController.cs" />
+    <Compile Include="Controllers\Master\GeographicalMasterController.cs" />
+    <Compile Include="Controllers\Master\DivisionMasterController.cs" />
+    <Compile Include="Controllers\Master\ImprintMasterController.cs" />
+    <Compile Include="Controllers\Master\ISBNMasterController.cs" />
+    <Compile Include="Controllers\Master\LanguageMasterController.cs" />
+    <Compile Include="Controllers\Master\LicenseeMasterController.cs" />
+    <Compile Include="Controllers\Master\ManuscriptDeliveryFormatMasterController.cs" />
+    <Compile Include="Controllers\Master\ProductTypeController.cs" />
+    <Compile Include="Controllers\Master\ProductTypeMasterController.cs" />
+    <Compile Include="Controllers\Master\PubCenterMasterController.cs" />
+    <Compile Include="Controllers\Master\PublishingCompanyMasterController.cs" />
+    <Compile Include="Controllers\Master\SeriesMasterController.cs" />
+    <Compile Include="Controllers\Master\SubProductTypeMasterController.cs" />
+    <Compile Include="Controllers\Master\SubsidiaryRightsMasterController.cs" />
+    <Compile Include="Controllers\Master\SupplyMaterialMasterController.cs" />
+    <Compile Include="Controllers\Master\TerritoryRightsMasterController.cs" />
+    <Compile Include="Controllers\Master\TypeOfRightsMasterController.cs" />
+    <Compile Include="Controllers\Other Contract\OtherContractController.cs" />
+    <Compile Include="Controllers\PermissionsInbound\PermissionsInboundController.cs" />
+    <Compile Include="Controllers\PermissionsOutbound\PermissionsOutboundController.cs" />
+    <Compile Include="Controllers\ProductMaster\AddendumController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ProductMaster\ProductLicenseController.cs" />
+    <Compile Include="Controllers\ProductMaster\ProductMasterController.cs" />
+    <Compile Include="Controllers\ProductMaster\SeriesProductEntryController.cs" />
+    <Compile Include="Controllers\PaymentTagging\PaymentTaggingMasterController.cs" />
+    <Compile Include="Controllers\Report\ReportController.cs" />
+    <Compile Include="Controllers\RightsSelling\RightsSellingController.cs" />
+    <Compile Include="JsonSerializer\SerializeObj.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MailSend.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\RMSAPI.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Log\" />
+    <Folder Include="Views\Alert\" />
+    <Folder Include="Views\AssetMaster\" />
+    <Folder Include="Views\AuthorContract\" />
+    <Folder Include="Views\CountryMaster\" />
+    <Folder Include="Views\CustomProduct\" />
+    <Folder Include="Views\ISBNMaster\" />
+    <Folder Include="Views\List\" />
+    <Folder Include="Views\Login\" />
+    <Folder Include="Views\Navigation\" />
+    <Folder Include="Views\OtherContract\" />
+    <Folder Include="Views\PermissionsInbound\" />
+    <Folder Include="Views\PermissionsOutbound\" />
+    <Folder Include="Views\Report\" />
+    <Folder Include="Views\RightsSelling\" />
+    <Folder Include="Views\Scheduler\" />
+    <Folder Include="Views\SeriesProductEntry\" />
+    <Folder Include="Views\SubsidiaryRightsMaster\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\ACS.Core\VRV.Core.csproj">
+      <Project>{f1369bf6-dbcc-426a-8ea1-99dbdd1c1dfb}</Project>
+      <Name>VRV.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\ACS.Data\VRV.Data.csproj">
+      <Project>{da4a16d3-4523-42c2-9348-976850e85233}</Project>
+      <Name>VRV.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\ACS.Services\VRV.Services.csproj">
+      <Project>{43a232f6-2512-46b2-93aa-80880309bc52}</Project>
+      <Name>VRV.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Presentation\ACS.Web.Framework\RMS.Web.Framework.csproj">
+      <Project>{ff85c9c7-4bf6-47d0-8178-fb70acf7555e}</Project>
+      <Name>RMS.Web.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Presentation\SLV.Model\RMS.Model.csproj">
+      <Project>{e990d4c3-2a97-4d70-9b96-8ea16f3f81ba}</Project>
+      <Name>RMS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Logger\RMS.Logger.csproj">
+      <Project>{2821cbb0-1d95-4520-a679-ae23452550f8}</Project>
+      <Name>RMS.Logger</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50319</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/RMSAPI</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

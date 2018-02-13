@@ -1,0 +1,346 @@
+﻿@using SLV.Model.Common;
+@{
+
+    Layout = null;
+
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/Scripts/angular/angular.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+   @*<script type="text/javascript" language="javascript">
+
+
+        var app = angular.module('app', []);
+
+        app.controller('MainCtrl', MainCtrl);
+
+
+
+        function MainCtrl($scope, AJService) {
+
+
+            $scope.GetData = function () {
+                //alert($scope.sessionStorage.LicenseeView);
+                //$scope.LicenseeView = sessionStorage.LicenseeView + "Ankush";
+               $scope.LicenseeView = "dsdfsd";
+                //$scope.LicenseeView = sessionStorage.LicenseeView+"Ankush";
+                //$scope.ContactPersonView = sessionStorage.ContactPersonView;
+                //$scope.AddressView = sessionStorage.AddressView;
+                //$scope.CountryView = sessionStorage.CountryView;
+                //$scope.StateView = sessionStorage.StateView;
+                //$scope.CityView = sessionStorage.CityView
+                //$scope.PincodeView = sessionStorage.PincodeView
+
+                //$scope.DateInvoiceView = sessionStorage.DateInvoiceView;
+                //$scope.InvoiceNoView = sessionStorage.InvoiceNoView;
+                //$scope.InvoiceValueView = sessionStorage.InvoiceValueView;
+                //$scope.InvoiceDescriptionView = sessionStorage.InvoiceDescriptionView;
+            }
+
+
+            $scope.GetData();
+
+
+
+            
+            //function GetPermissionsOutBound(Id) {
+
+            // var EditPermissionsOutBoundDetail = {
+            //        PermissionsoutboundId: Id,
+
+            //    };
+            //    //$('#hid_PermissionsOutbound').val(Id)
+            //    //$('#hid_ReqValue').val(0)
+            //    // call API to fetch temp product type list basis on the FlatId
+
+            //    var EditPermissionsOutBoundDetailStatus = AJService.PostDataToAPI('PermissionsOutbound/PermissionsOutBoundDetails', EditPermissionsOutBoundDetail);
+            //    EditPermissionsOutBoundDetailStatus.then(function (msg) {
+            //        if (msg != null) {
+
+            //            if (msg.data._GetPermissionsOutBoundUpdate != null) {
+
+            //                $scope.LicenseeView = (msg.data._GetPermissionsOutBound[0].organizationname == null ? '---' : msg.data._GetPermissionsOutBound[0].organizationname);
+            //                $scope.ContactPersonView = (msg.data._GetPermissionsOutBound[0].contactperson == null ? '---' : msg.data._GetPermissionsOutBound[0].contactperson);
+            //                $scope.ContactPersonView = (msg.data._GetPermissionsOutBound[0].contactperson == null ? '---' : msg.data._GetPermissionsOutBound[0].contactperson)
+            //                $scope.AddressView = (msg.data._GetPermissionsOutBound[0].address == null ? '---' : msg.data._GetPermissionsOutBound[0].address)
+            //                $scope.CountryView = (msg.data._GetPermissionsOutBound[0].Country == null ? '---' : msg.data._GetPermissionsOutBound[0].Country);
+            //                $scope.StateView = (msg.data._GetPermissionsOutBound[0].State == null ? '---' : msg.data._GetPermissionsOutBound[0].State);
+            //                $scope.CityView = (msg.data._GetPermissionsOutBound[0].City == null ? '---' : msg.data._GetPermissionsOutBound[0].City);
+            //                $scope.PincodeView = (msg.data._GetPermissionsOutBound[0].pincode == null ? '---' : msg.data._GetPermissionsOutBound[0].pincode);
+
+            //                $scope.DateInvoiceView = (msg.data._GetPermissionsOutBound[0].DateOfInvoiceView == null ? '---' : msg.data._GetPermissionsOutBound[0].DateOfInvoiceView);
+            //                $scope.InvoiceNoView = (msg.data._GetPermissionsOutBound[0].invoiceno == null ? '---' : msg.data._GetPermissionsOutBound[0].invoiceno);
+            //                $scope.InvoiceValueView = (msg.data._GetPermissionsOutBound[0].invoicevalue == null ? '---' : msg.data._GetPermissionsOutBound[0].invoicevalue);
+            //                $scope.InvoiceDescriptionView = (msg.data._GetPermissionsOutBound[0].invoicedescription == null ? '---' : msg.data._GetPermissionsOutBound[0].invoicedescription);
+
+
+            //                if (msg.data._GetPermissionsOutBoundUpdate[0] != undefined) {
+
+            //                    $scope.CurrencyView = (msg.data._GetPermissionsOutBoundUpdate[0].currencyname == null ? '---' : msg.data._GetPermissionsOutBoundUpdate[0].currencyname);
+            //                }
+            //            }
+            //            else {
+            //                SweetAlert.swal("Error!", "Error in system. Please try again", "", "error");
+            //                blockUI.stop();
+            //            }
+
+            //        }
+            //    });
+            //}
+            //$scope.GetData = function () {
+            //    if ($('#hid_OutboundId').val() != "") {
+            //        GetPermissionsOutBound($('#hid_OutboundId').val());
+
+            //    }
+            //}
+
+
+            //$scope.GetData();
+
+            
+            
+        }
+
+
+    </script>
+
+    <script src="~/Scripts/service.js"></script>*@ 
+
+
+    @*<script src="~/js/PermissionsOutbound/PermissionsOutboundInvoiceViewPdf.js"></script>*@
+</head>
+
+
+
+<body id="angularid" ng-controller="MainCtrl as main" ng-app="app" class="ng-scope" style="background-color:#fff !important">
+
+    @*@Html.Partial("~/Areas/PermissionsOutbound/Views/Shared/_PermissionsOutboundInvoiceViewPdf_Print.cshtml")*@
+
+    <style>
+        table#InvoiceDetails {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        table#Invoice {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #fff;
+        }
+
+            table#Invoice th, table#Invoice td {
+                border: 1px solid #fff;
+                text-align: left;
+                padding: 8px;
+            }
+
+        table#InvoiceDetails th, table#InvoiceDetails td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
+
+    @*<div class="modal-header">
+        <h4 class="modal-title">Permissions Outbound Invoice</h4>
+    </div>*@
+
+
+
+
+    <div class="container-fluid" style="margin-left:2%;margin-top:2%;">
+        <div class="row">
+
+            <div class="col-md-10" style="margin-top:2%">
+                <table id="Invoice" style="line-height:1px;">
+                    <tr>
+                        <td valign="top" align="left">
+                            <table>
+                                <tr>
+                                    <td><label class="control-label">@Model.organizationname</label></td>
+                                </tr>
+                                <tr>
+                                    <td style="line-height:20px;"><label class="control-label">@Model.address</label></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="control-label"> @Model.City - @Model.pincode</label></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="control-label">@Model.State ( @Model.Country )</label></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="control-label"><u>Kind Attention</u> : @Model.contactperson </label></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td valign="top" align="right">
+                            <table style="float:right;">
+                                <tr>
+                                    <td><label class="control-label col-md-5">Invoice&nbsp;Number&nbsp;:</label></td>
+                                    <td><label class="control-label">@Model.invoiceno</label></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="control-label col-md-5">Date&nbsp;:</label></td>
+                                    <td><label class="control-label">@Model.DateOfInvoiceView</label></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="control-label col-md-5">Invoice&nbsp;Value&nbsp;:</label>
+                                    </td>
+                                    <td>
+                                        <label class="control-label">
+                                            <i class="fa fa-@Model.InvoiceCurrencySymbol" aria-hidden="true"></i>&nbsp;@Model.invoicevalue
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                @*<table id="Invoice">
+                    <tr>
+                        <td>
+                            <label class="control-label">@Model.organizationname</label>
+                        </td>
+                        <td></td>
+                        <td style=" text-align: right;"><label class="control-label col-md-5">Invoice&nbsp;Number&nbsp;:</label></td>
+                        <td style=" text-align: right;"><label class="control-label">@Model.invoiceno</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">@Model.address</label>
+                        </td>
+                        <td></td>
+                        <td style=" text-align: right;"><label class="control-label col-md-5">Date&nbsp;:</label></td>
+                        <td style=" text-align: right;"><label class="control-label">@Model.DateOfInvoiceView</label></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label class="control-label"> @Model.City - @Model.pincode</label>
+                        </td>
+                        <td></td>
+                        <td style=" text-align: right;"><label class="control-label col-md-5">Invoice&nbsp;Value&nbsp;:</label></td>
+                        <td style=" text-align: right;">
+                            <label class="control-label">
+                                <i class="fa fa-@Model.InvoiceCurrencySymbol" aria-hidden="true"></i>
+                                @Model.invoicevalue
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label class="control-label">@Model.State ( @Model.Country )</label>
+                        </td>
+                        <td></td>
+                        <td style=" text-align: right;"></td>
+                        <td style=" text-align: right;"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label class="control-label"><u>Kind Attention</u> : @Model.contactperson </label>
+                        </td>
+                        <td></td>
+                        <td style=" text-align: right;"></td>
+                        <td style=" text-align: right;"></td>
+                    </tr>
+
+                </table>*@
+            </div>
+
+            <div class="col-md-10" style="text-align:center">
+                <h4><b>Inovice</b></h4>
+            </div>
+
+            <div class="col-md-10" style="margin-top:2%">
+                <table id="InvoiceDetails">
+                    <tr>
+                        <th style=" text-align: right;width:10%;">S No.</th>
+                        <th style=" text-align: right;width:20%;">ISBN</th>
+                        <th style="width: 50%;">Description</th>
+                        <th style=" text-align: right; width: 20%;">
+                            Amount&nbsp;<span ng-show="@Model.InvoiceCurrencySymbol">( <i class="fa fa-@Model.InvoiceCurrencySymbol" aria-hidden="true"></i> )</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style=" text-align: right;">1</td>
+                        <td style=" text-align: right;">@Model.ISBN</td>
+                        <td>  
+                            @Model.WorkingProduct 
+                            <br />
+                            @Model.AuthorName 
+                            <br />
+                            <br />
+                            @Html.Raw(Model.invoicedescription.Replace(",", "<br>"))                        
+                        </td>
+                        <td style=" text-align: right;">                        
+                            <i class="fa fa-@Model.InvoiceCurrencySymbol" aria-hidden="true"></i>&nbsp;@Model.invoicevalue 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td><td></td>
+                        <td style=" text-align: right;">Total</td>
+                        <td style=" text-align: right;">                   
+                            <i class="fa fa-@Model.InvoiceCurrencySymbol" aria-hidden="true"></i>&nbsp;@Model.invoicevalue 
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="col-md-10" style="margin-top:10%">
+                <div class=" row">
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <label class="control-label"><u>Payment Information</u></label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <label class="control-label">PLEASE MAKE PAYMENTS USING THE RTGS / NEFT MODE. OUR BANK DETAILS ARE AS FOLLOWS: </label><br />
+                                <label class="control-label">ACCOUNT NAME: OXFORD UNIVERSITY PRESS </label><br />
+                                <label class="control-label">ACCOUNT NO: 2000OUP15397 </label><br />
+                                <label class="control-label">BANK NAME: HSBC</label><br />
+                                <label class="control-label">BRANCH ADDRESS: MAIN BRANCH, 25, BARAKHAMBA ROAD, NEW DELHI - 110001 </label><br />
+                                <label class="control-label">IFSC CODE: HSBC0110002</label><br />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <input type="hidden" value="@ViewBag.OutboundId" ng-model="hid_OutboundId" id="hid_OutboundId" name="hid_OutboundId">
+
+</body>
+
+</html>
+

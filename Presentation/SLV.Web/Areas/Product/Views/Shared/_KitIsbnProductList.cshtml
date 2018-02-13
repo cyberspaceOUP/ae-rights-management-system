@@ -1,0 +1,57 @@
+﻿
+<script src="~/js/Product/_productKitIsbnList.js"></script>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Kit ISBN Product Details
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th> Product Code</th>
+                    <th> Product Category </th>
+                    <th> ISBN</th>
+                    <th> Product Type </th>
+                    <th> Author Name </th>
+                    <th>Type</th>
+                    <th>Total Qty</th>
+                    <th>Balance Qty</th>
+                    <th>No of Impression</th>
+                   
+                </tr>
+
+                <tr ng-repeat="KitISBN in ProductKitIsbnDetailsList">
+                    <td>
+                        <span ng-bind="KitISBN.productcode"></span>
+                        <input type="hidden" id="hid_ProductLic_{{$index + 1}}" name="hid_ProductLic_{{$index + 1}}" value="{{KitISBN.ProductLicenseId}}" />
+                        <input type="hidden" id="hid_TotalQty_{{$index + 1}}" name="hid_TotalQty_{{$index + 1}}" value="{{KitISBN.printquantity}}" />
+                        <input type="hidden" id="hid_NoOffImpr_{{$index + 1}}" name="hid_NoOffImpr_{{$index + 1}}" value="{{KitISBN.noofimpressions}}" />
+                        <input type="hidden" id="hid_balanceqty_{{$index + 1}}" name="hid_balanceqty_{{$index + 1}}" value="{{KitISBN.balanceqty}}" />
+                        <input type="hidden" id="hid_AuthorContractId_{{$index + 1}}" name="hid_AuthorContractId_{{$index + 1}}" value="{{KitISBN.AuthorContractId}}" />
+                        <input type="hidden" id="hid_Check_NoOfImpressions_{{$index + 1}}" name="hid_Check_NoOfImpressions_{{$index + 1}}" value="{{KitISBN.Check_NoOfImpressions}}" />
+                        <input type="hidden" id="hid_ProductId_{{$index + 1}}" name="hid_ProductId_{{$index + 1}}" value="{{KitISBN.ProductId}}" />
+                        <input type="hidden" id="hid_Unrestricted_Check_{{$index + 1}}" name="hid_Unrestricted_Check_{{$index + 1}}" value="{{KitISBN.printquantity}}" />
+
+
+                    </td>
+                    <td><span ng-bind="KitISBN.ProductCategory"></span></td>
+                    <td><span ng-bind="KitISBN.ISBN"></span></td>
+                    <td><span ng-bind="KitISBN.ProductType"></span></td>
+                    <td><span ng-bind="KitISBN.AuthorName"></span></td>
+                    <td><span ng-bind="KitISBN.Type"></span></td>
+                    <td><span ng-bind="KitISBN.printquantity"></span></td>
+                    <td><span ng-bind="KitISBN.balanceqty"></span></td>
+                    <td><span ng-bind="KitISBN.noofimpressions"></span></td>
+
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>

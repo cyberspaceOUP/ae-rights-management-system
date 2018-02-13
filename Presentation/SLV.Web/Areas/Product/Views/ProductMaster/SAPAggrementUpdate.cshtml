@@ -1,0 +1,155 @@
+﻿@{
+    ViewBag.Title = "SAPAggrementUpdate";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/common/TopSearch.js"></script>
+<script src="~/js/Product/SAPAggrementUpdate.js"></script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    SAP Agreement / Author Code Update
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <form name="userForm" class="form-horizontal" ng-submit="SAPAggrementEntryForm()" novalidate>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+                    </div>
+                </div>
+                @*</div>*@
+            </div>
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            SAP Agreement No / Author Code
+                            <input type="hidden" id="hid_productId" name="hid_sapproductId" ng-model="ProductId" />
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row saprow" ng-repeat="Author in SAPAggreementAuthorDetails">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                           
+                                            <label class="control-label col-md-6" >SAP Agreement No  {{SAPAggreementAuthorDetails.length > 1 ? "("+($index +1) + ")" : '' }}  </label>
+                                            <input type="hidden" value="" id="hid_SAPAggrementId_{{$index}}" name="hid_SAPAggrementId_{{$index}}" />
+                                        
+
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SAPAggrementNo_{{$index}}.$dirty) && userForm.SAPAggrementNo_{{$index}}.$invalid } ">
+                                                    <input type="text" name="SAPAggrementNo_{{$index}}" class="form-control" @*ng-required="(SapAuthorCode['SapAuthorCode_'+ $index].length)"*@ @*ng-required="SAPAggValid_{{$index}}"*@
+                                                           ng-model="SAPAggrementNo['SAPAggrementNo_' +$index]" ng-pattern="/^[0-9]+$/" maxlength="6" placeholder="SAP Agreement No">
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.SAPAggrementNo_{{$index}}.$error.required && (userForm.SAPAggrementNo_{{$index}}.$dirty || submitted)" class="help-block red validValue">Please enter SAP Agreement No</p>
+                                                        <p ng-show="userForm.SAPAggrementNo_{{$index}}.$error.pattern" class="help-block red">Please enter valid SAP Agreement No</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+
+                                            <label class="control-label col-md-6" ng-click="settext()">Author Code {{SAPAggreementAuthorDetails.length > 1 ? "("+($index +1) + ")" : '' }}</label>
+                                          
+                                            <input type="hidden" value="" id="hid_AuthorCodeId_{{$index}}" name="hid_AuthorCodeId_{{$index}}" />
+
+
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorCode_{{$index}}.$dirty) && userForm.AuthorCode_{{$index}}.$invalid } ">
+                                                    <input type="text" name="AuthorCode_{{$index}}" class="form-control"  @*ng-required="(SAPAggrementNo['SAPAggrementNo_' +$index].length)"*@
+                                                           ng-model="SapAuthorCode['SapAuthorCode_'+ $index]" @*ng-pattern="/^[0-9]+$/"*@ maxlength="10" @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Author Code">
+                                                    <input type="hidden" value="{{row.AuthorId}}" name="hid_sapAuthorId" />
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AuthorCode_{{$index}}.$error.required && (userForm.AuthorCode_{{$index}}.$dirty || submitted)" class="help-block red">Please enter Author Code</p>
+                                                        @*<p ng-show="userForm.AuthorCode_{{$index}}.$error.pattern" class="help-block red">Please enter valid Author Code</p>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                         
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            @*<label class="control-label col-md-5 col-xs-6 col-sm-6">Author Name {{SAPAggreementAuthorDetails.length > 1 ? "("+($index +1) + ")" : '' }}</label>*@
+
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Author Name : </label>
+
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+
+                                                    <label class="control-label">{{Author.AuthorName}} </label>
+
+                                                    <input type="hidden" value="{{Author.id}}" id="hid_SapAggAuthorId_{{$index}}" name="hid_SapAggAuthorId_{{$index}}" />
+
+                                                    <input type="hidden" value="{{SAPAggreementAuthorDetails.length}}" id="hid_SapAggLength" name="hid_SapAggLength" />
+
+                                                    <input type="hidden" value="0" id="hid_SapAggValue" name="hid_SapAggValue" />
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                             
+                            </div>
+
+                            <div ng-show="!SAPAggreementAuthorDetails.length">
+                                Author Not Available.
+                            </div>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" ng-hide="!SAPAggreementAuthorDetails.length">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                            <input type="hidden" id="hid_oup_isbn" name="hid_oup_isbn" value="@ViewBag.OUPISBN" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.datePicker')
+            .datepicker({
+                format: "mm/dd/yyyy",
+                autoclose: true,
+            })
+    });
+
+    
+</script>
+

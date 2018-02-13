@@ -1,0 +1,40 @@
+﻿
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Product For Which ISBN Not Entered
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th> Product Code </th>
+                    <th> Working Product</th>
+                    <th> Author </th>
+                    <th> Publishing Date </th>
+                    
+                </tr>
+
+                <tr ng-repeat="Product in ProductListForNotEnteredISBN">
+                    <td class="table-color">{{Product.ProductCode}}</td>
+                    <td>{{Product.WorkingProduct}}</td>
+                    <td>{{Product.Author}}</td>
+                    <td>{{Product.ProjectDate}}</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+

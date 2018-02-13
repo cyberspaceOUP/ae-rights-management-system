@@ -1,0 +1,44 @@
+﻿@model IList<ACS.Core.Domain.Configuration.ApplicationActivities>
+<!-- BEGIN SIDEBAR -->
+<div class="menu" style="margin-top: 5px !important;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nav green-black">
+                    <ul class="dropdown clear">
+                         @{
+                            foreach (ACS.Core.Domain.Configuration.ApplicationActivities activity in @Model)
+                            {
+                                <li class=@(activity.ChildActivities.Count > 0 ?"sub":"")>
+                                    @if (activity.Action == null)
+                                    {
+                                    <a href="javascript:;">
+                                        @activity.ActivityDesc
+                                    </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action(activity.Action, activity.Controller, new { area = activity.Area})"  >
+                                            @activity.ActivityDesc
+                                        </a>
+                                    }
+                                    @if (activity.ChildActivities.Count > 0)
+                                    {
+                                        <ul>
+                                            @for (int counter = 0; counter < activity.ChildActivities.Count; counter++)
+                                            {
+                                                Html.RenderAction("SubMenu", new { SubMenu = activity.ChildActivities.ElementAt(counter) });
+                                            }
+                                        </ul>
+                                     }
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SIDEBAR -->

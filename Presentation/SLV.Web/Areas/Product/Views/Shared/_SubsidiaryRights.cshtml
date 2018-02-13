@@ -1,0 +1,69 @@
+﻿<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Subsidiary Rights
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="form-body">
+            <div class="portlet-body clearfix">
+                <div class="portlet-body flip-scroll">
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tblsubsidiary">
+                        <thead class="flip-content">
+                            <tr>
+                                @*<th>Subsidiary Rights</th>
+                                    <th>Publisher (%)</th>
+                                    <th>OUP (%)</th>*@
+
+                                
+                                <th>Subsidiary Rights</th>
+                                <th>Publisher(%)</th>
+                                <th>OUP Share(%)</th>
+                                <th>Total(%)</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="div in _subsidiaryList">
+                                <td>
+                                    <span ng-bind="div.SubsidiaryRights"></span>
+                                    <input type="hidden" id="SubsidiaryRightsId_{{div.Id}}" name="SubsidiaryRightsId" value="{{div.Id}}" />
+                                </td>
+                                <td>
+                                    <input type="number" indexno="{{$index}}" @*ng-change="calculatePublisherValue($event)"*@ onchange="angular.element(document.getElementById('angularid')).scope().calculatePublisherValue(this);" min="1" max="100" ng-model="PublisherPercentage" id="lblPublisherPercentage_{{div.Id}}" name="lblPublisherPercentage" class="form-control" />
+                                    <input type="hidden" id="hid_PublisherPercentage_{{div.Id}}" name="hid_PublisherPercentage" value="{{PublisherPercentage}}" />
+                                </td>
+                                <td>
+                                    <input type="number" indexno="{{$index}}" ng-model="PublisherPercentageArray[$index]" @*ng-change="calculatePublisherValue($event)"*@ onchange="angular.element(document.getElementById('angularid')).scope().calculatePublisherValue(this);" id="lblOUPPercentage_{{div.Id}}" name="lblOUPPercentage" class="form-control" />
+                                    <input type="hidden" id="OUPPercentage_{{div.Id}}" name="OUPPercentage" value="{{PublisherPercentageArray[$index]}}" />
+                                </td>
+                               
+                                <td>
+                                   <span id="spnPercentage"></span> 
+                                </td>
+                               
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+            $("input[type=radio][name*=SubsidiaryRights]").change(function () {
+                if ($(this).val() == "Yes") {
+                    $("input[type=text][name*=lblOUPPercentage]").val("");
+                }
+            });
+
+      
+    });
+</script>

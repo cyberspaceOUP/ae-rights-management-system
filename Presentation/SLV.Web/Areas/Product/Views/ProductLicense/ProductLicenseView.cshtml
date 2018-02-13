@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "ProductLicenseView";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/Product/ProductLicenseUpdate.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/common/TopSearch.js"></script>
+
+<input type="hidden" value="@ViewBag.LicenseId" id="hid_LicenseeId" name="hid_LicenseeId" ng-model="ProductModel.LicenseId" />
+
+<h3 class="text-muted">@*@T("Form.CityMaster.Heading")*@</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Product License Update
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class="col-md-12 text-right" ng-if="'@TempData["BackToserach"]' == 'BackToserach'">
+            <div class="tools">
+                <a href="~/Product/ProductLicense/ProductLicenseSearch?For=BackToserach" class="backtosearch" style="color:black;">Back To List</a>
+            </div>
+        </div>
+
+        @*<form name="userForm" class=" form-horizontal" ng-submit="productLicenseEntryForm(ProductModel)" novalidate>*@
+        <form name="userForm" class=" form-horizontal" ng-submit="productLicenseEntryForm()" novalidate>
+            @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseView.cshtml")
+            <div class="col-md-12" ng-show="OtherContractDeatilsViewByExpirydate == '--'">
+                @*ng-show="LicenseFileDetails.length==0"*@
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Other License Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5"> Agreement Date <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.AgreementDate.$dirty) && userForm.AgreementDate.$invalid } ">
+                                                    <div class="input-group input-append date datePicker AgreementDate">
+                                                        <input type="text" name="AgreementDate" class="form-control" ng-model="ProductModel.AgreementDate" 
+                                                               onchange="angular.element(document.getElementById('angularid')).scope().SetAggrementDate(this);" placeholder="Agreement Date" required>
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AgreementDate.$error.required && (userForm.AgreementDate.$dirty || submitted)" class="help-block red">Please enter Agreement Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Effective Date</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.EffectiveDate.$dirty) && userForm.EffectiveDate.$invalid } ">
+                                                    <div class="input-group input-append date datePicker">
+                                                        <input type="text" id="EffectiveDate" name="EffectiveDate" class="form-control" ng-model="ProductModel.EffectiveDate" placeholder="Effective Date">
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.EffectiveDate.$error.required && (userForm.EffectiveDate.$dirty || submitted)" class="help-block red">Please enter Effective Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    @*<div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Contract Period <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PaymentAmount.$dirty) && userForm.ContractPeriod.$invalid } ">
+                                                    <input type="number" name="ContractPeriod" class="form-control" ng-model="ProductModel.ContractPeriod" ng-change="CalculateExpiry()" placeholder="Contract Period (Months)" required>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ContractPeriod.$error.required && (userForm.ContractPeriod.$dirty || submitted)" class="help-block red">Please enter Contract Period</p>
+                                                        <p ng-show="userForm.ContractPeriod.$error.pattern" class="help-block red">Please enter valid Contract Period</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Expiry Date <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ExpiryDate.$dirty) && userForm.ExpiryDate.$invalid } ">
+                                                    <div class="input-group input-append date datePicker">
+                                                        <input type="text" id="ExpiryDate" name="ExpiryDate"  class="form-control" ng-model="ProductModel.ExpiryDate" 
+                                                               placeholder="Expiry Date" required> @*ng-disabled="true"*@
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ExpiryDate.$error.required && (userForm.ExpiryDate.$dirty || submitted)" class="help-block red">Please enter Expiry Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Partial("~/Areas/Product/Views/Shared/LicenseDetails.cshtml")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" ng-show="OtherContractDeatilsViewByExpirydate == '--'"> @*LicenseFileDetails.length==0*@ 
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.datePicker')
+            .datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+            })
+    });
+</script>
+
+
+

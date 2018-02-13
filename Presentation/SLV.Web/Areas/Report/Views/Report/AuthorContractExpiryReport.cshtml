@@ -1,0 +1,250 @@
+﻿@*Author Contract Expiry Report Search Added by Ankush Kumar on 25/10/2016*@
+
+@{
+    ViewBag.Title = "AuthorContractExpiryReport";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/Report/AuthorContractExpiryReport.js"></script>
+
+<script src="~/js/common/TopSearch.js"></script>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    <span ng-bind="headingStatement"></span>
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class=" col-md-12 text-right" id="backToSearch" ng-show="backToSearch">
+            <div class="tools">
+                <a href="javascript:void(0);" ng-click="func_GoBack();" style="color:black; ">Back To Search</a>
+            </div>
+        </div>
+
+        <form id="AuthorPublisherStatement_Search" name="userForm" class=" form-horizontal" ng-submit="AuthorContractExpiryReportSearchForm()" ng-show="ShowSearchForm" novalidate>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span ng-bind="headingStatement"></span>
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class=" form-body ">
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Product Code </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductCode.$dirty) && userForm.ProductCode.$invalid } ">
+                                                            <input type="text" name="ProductCode" class="form-control" ng-model="ProductCode" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Product Name">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ProductCode.$error.pattern" class="help-block red">Please enter valid Product Name</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Product Name </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductName.$dirty) && userForm.ProductName.$invalid } ">
+                                                            <input type="text" name="ProductName" class="form-control" ng-model="ProductName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Product Name">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ProductName.$error.pattern" class="help-block red">Please enter valid Product Code</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Expiry From Date </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group date">
+                                                            <div class="input-group input-append date datetimepicker">
+                                                                <input type="text" name="ExpiryFromDate" class="form-control" id="ExpiryFromDate" ng-model="ExpiryFromDate"
+                                                                       onchange="angular.element(document.getElementById('angularid')).scope().SetExpiryFromDate(this);"
+                                                                       placeholder="Expiry From Date">
+                                                                <span class=" input-group-btn">
+                                                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">ISBN </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ISBN.$dirty) && userForm.ISBN.$invalid } ">
+                                                            <input type="text" name="ISBN" class="form-control" ng-model="ISBN" ng-maxlength="13" ng-pattern="/^[0-9]{13}$/" placeholder="ISBN">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ISBN.$error.pattern" class="help-block red">Please enter valid ISBN</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Author</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <input type="text" name="Authors" class="form-control" ng-model="Authors" placeholder="Authors">
+                                                            @*<select class="form-control" name="Authors" ng-model="AuthorContract.Authors">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in AuthorList" ng-model="Authors" value="{{div.Id}}">{{div.FirstName + " " + div.LastName}}</option>
+                                                            </select>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Expiry To Date </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group date">
+                                                            <div class="input-group input-append date datetimepicker">
+                                                                <input type="text" name="ExpiryToDate" class="form-control" id="ExpiryToDate" ng-model="ExpiryToDate"
+                                                                       onchange="angular.element(document.getElementById('angularid')).scope().SetExpiryToDate(this);"
+                                                                       placeholder="Expiry To Date">
+                                                                <span class=" input-group-btn">
+                                                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <script type="text/javascript">
+                                                $(document).ready(function () {
+
+                                                    $("#ExpiryFromDate").datepicker({
+                                                        format: "dd/mm/yyyy",
+                                                        todayHighlight: true,
+                                                        autoclose: true
+
+                                                    });
+                                                    $("#ExpiryFromDate").datepicker().on('change', function (e) {
+                                                        mstrstartdate = $("#ExpiryFromDate").val();
+                                                        $("#ExpiryToDate").val('');
+                                                        $('#ExpiryToDate').datepicker('remove');
+                                                        $("#ExpiryToDate").attr("disabled", false);
+                                                        $("#ExpiryToDate").datepicker({
+                                                            format: "dd/mm/yyyy",
+                                                            // todayHighlight: true,
+                                                            autoclose: true,
+                                                            startDate: mstrstartdate
+                                                        });
+                                                    });
+
+                                                });
+
+
+
+
+
+
+                                            </script>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <input type="hidden" value="@Session["UserDepartment"]" ng-model="hid_User" id="hid_User" name="hid_User">
+                            <button type="submit" class="btn green" id="btnSubmit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="col-md-12" id="AuthorPublisherStatement_List" ng-show="ShowListForm">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span ng-bind="headingStatement"></span>
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+
+                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>Author Contract Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>WorkingTitle &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Author(s) &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Contract Date  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Expiry Date  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="obj in AuthorContractList" class="tooltipclass">
+
+                                    <td><span ng-bind="$index + 1"></span></td>
+                                    <td><a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}&Type=ExpiryReport" style="color: #ee5941;" class="tooltip-btn authorModal"><span ng-bind="obj.AuthorContractCode"></span></a></td>
+                                    <td><a href="~/Product/ProductMaster/ProductDetailsView?Id={{obj.ProductId}}&Type=ExpiryReport" style="color: #ee5941;" class="tooltip-btn authorModal"><span ng-bind="obj.ProductCode"></span></a></td>
+                                    <td><span ng-bind="obj.WorkingTitle"></span></td>
+                                    <td><span ng-bind="obj.oupisbn"></span></td>
+                                    <td><span ng-bind="obj.AuthorName"></span></td>
+                                    <td><span ng-bind="obj.ContractEntryDate"></span></td>
+                                    <td><span ng-bind="obj.ContractExpiryDate"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

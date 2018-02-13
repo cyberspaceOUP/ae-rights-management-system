@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "FinalProductEntry";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().ProductSerach(@ViewBag.ProductId);
+}
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/Product/FinalProductEntry.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Final Product Entry
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <form name="userForm" class=" form-horizontal" ng-submit="FinalProductEntryForm(ProductModel)" novalidate ng-cloak>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+                    </div>
+                </div>
+                @*</div>*@
+            </div>
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Final Product Entry
+                            <input type="hidden" id="hid_productId" name="productId" ng-model="ProductModel.ProductId" value="@ViewBag.ProductId" ng-init="ProductModel.ProductId=@ViewBag.ProductId" />
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Final Product Name <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.FinalProductName.$dirty) && userForm.FinalProductName.$invalid } ">
+                                                    <input type="text" name="FinalProductName" class="form-control"
+                                                           ng-init="ProductModel.FinalProductName=''"
+                                                           ng-model="ProductModel.FinalProductName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Final Product Name" required>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.FinalProductName.$error.required && (userForm.FinalProductName.$dirty || submitted)" class="help-block red">Please enter Final Product Name</p>
+                                                        <p ng-show="userForm.FinalProductName.$error.pattern" class="help-block red">Please enter valid Final Product Name</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Publishing Date <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.PublishingDate.$dirty) && userForm.PublishingDate.$invalid } ">
+                                                    <div class="input-group input-append date datePicker">
+                                                        <input type="text" name="PublishingDate" class="form-control" onchange="angular.element(document.getElementById('angularid')).scope().SetPublishingDate(this);" ng-model="ProductModel.PublishingDate" placeholder="Publishing Date" required>
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PublishingDate.$error.required && (userForm.PublishingDate.$dirty || submitted)" class="help-block red">Please enter Publishing Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Copyright Year <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OUPCopyrightYear.$dirty) && userForm.OUPCopyrightYear.$invalid } ">
+                                                    <input type="text" name="OUPCopyrightYear" ng-maxlength="4" class="form-control" ng-model="ProductModel.OUPCopyrightYear" ng-pattern="^(19|20)\d{2}" placeholder="Copyright Year" required>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.OUPCopyrightYear.$error.required && (userForm.OUPCopyrightYear.$dirty || submitted)" class="help-block red">Please enter Copyright Year</p>
+                                                        <p ng-show="userForm.OUPCopyrightYear.$error.pattern" class="help-block red">Please enter valid Copyright Year</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+
+                            <input type="hidden" value="@ViewBag.ProductId" ng-model="hid_CopyrightYear" id="hid_CopyrightYear" name="hid_CopyrightYear">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.datePicker')
+            .datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+            })
+    });
+</script>

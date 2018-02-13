@@ -1,0 +1,281 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "CopyrightHolderMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/master/Master.CopyrightHolderMaster.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/app.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getAllCopyrightHolderList();
+    angular.element(document.getElementById('angularid')).scope().GeogList();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Copyright Holder Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Copyright Holder Master
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <form name="userForm" class="form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Copyright Holder Name <span class="red">*</span> </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.CopyrightHolderName.$dirty) && userForm.CopyrightHolderName.$invalid } ">
+                                                        <input type="text" name="CopyrightHolderName" class="form-control" ng-model="CopyrightHolderName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Copyright Holder Name" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.CopyrightHolderName.$error.required && (userForm.CopyrightHolderName.$dirty || submitted)" class="help-block red">Please enter Copyright Holder Name</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contact Person <span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.contactPerson.$dirty) && userForm.contactPerson.$invalid } ">
+                                                        <input type="text" name="contactPerson" class="form-control" ng-model="contactPerson" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Contact Person" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.contactPerson.$error.required && (userForm.contactPerson.$dirty || submitted)" class="help-block red">Please enter contact person</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Address <span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Address.$dirty) && userForm.Address.$invalid } ">
+                                                        <textarea  name="Address" class="form-control" ng-model="Address" required ng-pattern="[a-zA-Z0-9]+" placeholder="Address"></textarea>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Address.$error.required && (userForm.Address.$dirty || submitted)" class="help-block red">Please enter author address </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="publisherGeo">
+                                            <div class="col-md-12">
+                                                @Html.Partial("~/Views/Shared/_geoGraphicalNominee.cshtml")
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Mobile / Telephone</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Mobile.$dirty) && userForm.Mobile.$invalid } ">
+                                                        <input type="text" name="Mobile" @*maxlength="12"*@ class="form-control" maxlength="15"
+                                                               ng-model="Mobile" ng-pattern="/^[0-9\_\- ]*$/" @*ng-pattern="/^[1-9][0-9]{9,12}$/"*@ placeholder="Mobile / Telephone">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Mobile.$error.pattern" class="help-block red">Please enter valid Mobile / Telephone number</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Email <span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Email.$dirty) && userForm.Email.$invalid } ">
+                                                        <input type="text" name="Email" class="form-control" ng-model="Email" ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" placeholder="Email" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Email.$error.pattern && (userForm.Email.$dirty || submitted)" class="help-block red">Please enter valid email id</p>
+                                                            <p ng-show="userForm.Email.$error.required && (userForm.Email.$dirty || submitted)" class="help-block red">Please enter email id</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Website URL</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.URL.$dirty) && userForm.URL.$invalid } ">
+                                                        <input type="text" name="URL" class="form-control" ng-model="URL" ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" placeholder="http://">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.URL.$error.pattern && (userForm.URL.$dirty || submitted)" class="help-block red">Please enter valid URL</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Bank Name</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.BankName.$dirty) && userForm.BankName.$invalid } ">
+                                                        <input type="text" name="BankName" class="form-control" ng-model="BankName" placeholder="Bank Name" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Account Number</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.AccountNumber.$dirty) && userForm.AccountNumber.$invalid } ">
+                                                        <input type="text" name="AccountNumber" class="form-control" ng-model="AccountNumber" placeholder="Account Number" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Bank Address</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.BankAddress.$dirty) && userForm.BankAddress.$invalid } ">
+                                                        <input type="text" name="BankAddress" class="form-control" ng-pattern="/^[a-zA-Z'.\s]/" ng-model="BankAddress" placeholder="Bank Address">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">IFSC Code</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.IFSCCode.$dirty) && userForm.IFSCCode.$invalid } ">
+                                                        <input type="text" name="IFSCCode" class="form-control" ng-model="IFSCCode" placeholder="IFSC Code">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">PAN</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.PANNo.$dirty) && userForm.PANNo.$invalid } ">
+                                                        <input type="text" name="PANNo" maxlength="10" ng-pattern="/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/" class="form-control" ng-model="PANNo" placeholder="PAN">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.PANNo.$error.pattern" class="help-block red ng-hide">Please enter valid PAN.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Vendor Code</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.VendorCode.$dirty) && userForm.VendorCode.$invalid } ">
+                                                        <input type="text" name="VendorCode" class="form-control" ng-model="VendorCode" placeholder="Vendor Code">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_recordid" name="hid_recordid" ng-model="hid_recordid" />
+                                    <button type="submit" class="btn green" id="btnSubmit" ng-model="btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Copyright Holder List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>Copyright Holder Name</th>
+                                    <th>Contact Person</th>
+                                    <th>Address</th>
+                                    <th>Country</th>
+                                    <th>State</th>
+                                    <th>City</th>
+                                    <th>PIN Code</th>
+                                    <th>Mobile / Telephone</th>
+                                    <th>Email</th>
+                                    <th>URL</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="CopyrightHolder in CopyrightHolderData">
+                                    <td>{{CopyrightHolder.CopyRightHolderName}}</td>
+                                    <td>{{CopyrightHolder.ContactPerson}}</td>
+                                    <td>{{CopyrightHolder.Address}}</td>
+                                    <td>{{CopyrightHolder.Country}}</td>
+                                    <td>{{CopyrightHolder.State}}</td>
+                                    <td>{{CopyrightHolder.City}}</td>
+                                    <td>{{CopyrightHolder.Pincode}}</td>
+                                    <td>{{CopyrightHolder.Mobile}}</td>
+                                    <td>{{CopyrightHolder.Email}}</td>
+                                    <td>{{CopyrightHolder.URL}}</td>
+                                    <td><a ng-click="EditCopyrightHolder(CopyrightHolder.Id)"><i class="fa fa-edit" title="Edit CopyrightHolder"></i></a></td>
+                                    <td><a ng-click="DeleteCopyrightHolder(CopyrightHolder.Id)"><i class="fa fa-trash-o" title="Delete CopyrightHolder"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                        
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

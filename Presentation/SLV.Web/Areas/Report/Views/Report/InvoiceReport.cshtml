@@ -1,0 +1,372 @@
+﻿@{
+    ViewBag.Title = "InvoiceReport";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/Report/InvoiceReportSearch.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().GeogList();
+}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    <span ng-bind="Title"></span>
+                    @*Invoice Report Search*@
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class=" col-md-12 text-right" id="backToSearch" style="display:none;">
+            <div class="tools">
+                <a href="javascript:void(0);" ng-click="func_GoBack();" style="color:black; ">Back To Search</a>
+            </div>
+        </div>
+
+        <form id="InvoiceReport_Search" name="userForm" class=" form-horizontal" ng-submit="InvoiceReportSearchForm()" novalidate ng-cloak>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Invoice Report Search
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Invoice From date </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.InvoiceFromdate.$dirty) && userForm.InvoiceFromdate.$invalid } ">
+                                                            <div class="input-group input-append date ContractDate">
+                                                                <input type="text" id="InvoiceFromdate" name="InvoiceFromdate" class="form-control" ng-model="InvoiceFromdate" placeholder="Invoice From date">
+                                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.InvoiceFromdate .$error.required && (userForm.InvoiceFromdate .$dirty || submitted)" class="help-block red">Please enter Invoice From Date</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Invoice To date</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.InvoiceTodate.$dirty) && userForm.InvoiceTodate.$invalid } ">
+                                                            <div class="input-group input-append date ContractDate">
+                                                                <input type="text" id="InvoiceTodate" name="InvoiceTodate" class="form-control" ng-model="InvoiceTodate" placeholder="Invoice To Date">
+                                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.InvoiceTodate .$error.required && (userForm.InvoiceTodate .$dirty || submitted)" class="help-block red">Please enter Invoice To Date</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Invoice Number </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.InvoiceNo.$dirty) && userForm.InvoiceNo.$invalid } ">
+                                                            <input type="number" name="InvoiceNo" class="form-control" ng-model="InvoiceNo" placeholder="Invoice Number">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.InvoiceNo .$error.required && (userForm.InvoiceNo .$dirty || submitted)" class="help-block red">Please enter Invoice</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Invoice Value </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.InvoiceValue.$dirty) && userForm.InvoiceValue.$invalid } ">
+                                                            <input type="text" name="InvoiceValue" class="form-control" ng-model="InvoiceValue" placeholder="Invoice Value">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.InvoiceValue .$error.required && (userForm.Invoice .$dirty || submitted)" class="help-block red">Please enter Invoice Value</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class=" row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Invoice Status </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <label class="radio-inline" style="padding-top: 0px !important;">
+                                                                <input type="radio" name="InvoiceStatus " ng-model="InvoiceStatus" value="Pending"> Issued
+                                                            </label>
+                                                            <label class="radio-inline" style="padding-top: 0px !important;">
+                                                                <input type="radio" name="InvoiceStatus " ng-model="InvoiceStatus" value="Issued"> Received
+                                                            </label>
+
+                                                            <div ng-class="{ 'has-error' : userForm.InvoiceStatus .$invalid && (userForm.InvoiceStatus .$dirty || submitted)}">
+                                                                <div class="help-block">
+                                                                    <p ng-show="userForm.InvoiceStatus .$error.required && (userForm.InvoiceStatus.$dirty || submitted)" class="help-block">Please select Invoice Status </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            @*<td ng-show="ISBNAssign">
+                                                <div class="col-md-12 form-group" style=" position:relative" ng-class="{ 'has-error' : Serchform.ISBNAssignment.$invalid && (Serchform.ISBNAssignment.$dirty || submitted)}">
+                                                    <input type="text" name="ISBNAssignment" productid="{{obj.ProductTypeId}}" setcompelte="N" class="form-control ISBNAssignment" ng-model="ISBNAssignment"  placeholder="ISBN">
+                                                    <div style="font-size:18px;position:absolute; right:20px; top:5px">
+                                                        <i class="fa fa-times" style="display:none;" name="closebtn" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="Serchform.ISBNAssignment.$error.pattern" class="help-block red">Please enter valid ISBN</p>
+                                                    </div>
+                                                    <input type="hidden" name="hid_ISBNAssign" />
+                                                    <input type="hidden" name="hid_ISBNproductId" value="{{obj.Id}}" />
+
+                                                </div>
+                                            </td>*@
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Licensee Name </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.LicenseeName.$dirty) && userForm.LicenseeName.$invalid } ">
+                                                            <input type="text" id="LicenseeName" name="LicenseeName" class="form-control" ng-model="LicenseeName" placeholder="Licensee Name" > @*ng-change="autoCompleteLicenseeName();"*@
+                                                            
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.LicenseeName.$error.required && (userForm.LicenseeName.$dirty || submitted)" class="help-block red">Please enter Licensee Name</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            @Html.Partial("~/Views/Shared/_geoGraphicalSearch.cshtml")
+
+                                            @*<div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">Country </label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Country.$dirty) && userForm.Country.$invalid } ">
+                                                                <input type="text" name="Country" class="form-control" ng-model="Country" placeholder="Country">
+                                                                <div class="help-block">
+                                                                    <p ng-show="userForm.Country.$error.required && (userForm.Country.$dirty || submitted)" class="help-block red">Please enter Country</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">State </label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.State.$dirty) && userForm.State.$invalid } ">
+                                                                <input type="text" name="State" class="form-control" ng-model="State" placeholder="State">
+                                                                <div class="help-block">
+                                                                    <p ng-show="userForm.State.$error.required && (userForm.State.$dirty || submitted)" class="help-block red">Please enter State</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">City </label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.City.$dirty) && userForm.City.$invalid } ">
+                                                                <input type="text" name="City" class="form-control" ng-model="City" placeholder="City">
+                                                                <div class="help-block">
+                                                                    <p ng-show="userForm.City.$error.required && (userForm.City.$dirty || submitted)" class="help-block red">Please enter City</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="col-md-12" id="InvoiceReport_List" style="display:none;">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Invoice Report
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <thead>
+                                <tr>
+                                    <th width="5%">S. No.</th>
+                                    <th width="10%">Licensee Name</th>
+                                    <th width="5%">Invoice Number</th>
+                                    <th width="5%">Invoice Value</th>
+                                    <th width="10%">Currency</th>
+
+                                    <th width="50%">Invoice Description</th>
+                                    <th width="10%">Entry Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="items in InvoiceReport_List">
+                                    <td><span ng-bind="$index + 1"></span></td>
+                                    <td><span ng-bind="items.LicenseeOrganizationName"></span></td>
+                                    <td><span ng-bind="items.InvoiceNo"></span></td>
+                                    <td><span ng-bind="items.InvoiceValue"></span></td>
+                                    <td><span ng-bind="items.CurrencyName"></span></td>
+
+                                    <td><span ng-bind="items.InvoiceDescription"></span></td>
+                                    <td><span ng-bind="items.EntryDate"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                @*@if (Session["PrintPermissions"] != null)
+                {
+                    <div class="col-md-12 text-center btnPrint">
+                        <div class="tools">
+                            <input type="button" class="btn green" id="btn_printPage" value="Print" style=" margin: .5%; ">
+                           
+                        </div>
+                    </div>
+                }*@
+
+
+
+                @if (Session["GenerateExcelPermissions"] != null)
+                {
+                    <div class="col-md-12 text-center btnPrint">
+                        <div class="tools">
+                         
+                            <br />
+                            <button type="submit" class="btn green" ng-click="InvoiceReportReportExcel()" id="btnSubmit">Generate Excel</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Hide pincode search Textbox
+        $('#city_panel').hide();
+
+
+        $("#InvoiceFromdate").datepicker({
+            format: "dd/mm/yyyy",
+            todayHighlight: true,
+            autoclose: true
+        });
+        $("#InvoiceFromdate").datepicker().on('change', function (e) {
+            mstrstartdate = $("#InvoiceFromdate").val();
+            $("#InvoiceTodate").val('');
+            $('#InvoiceTodate').datepicker('remove');
+            $("#InvoiceTodate").attr("disabled", false);
+            $("#InvoiceTodate").datepicker({
+                format: "dd/mm/yyyy",
+                // todayHighlight: true,
+                autoclose: true,
+                startDate: mstrstartdate
+            });
+        });
+
+    });
+
+    $('#btn_printPage').on('click', function () {
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+        $('#backToSearch').hide();
+        $('.btnPrint').hide();
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+        //var title = $scope.Title;
+        //$scope.Title = "abc";
+        window.print();
+
+        $('#backToSearch').show();
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('footer').show();
+        $('.menu').show();
+        $('.top-header').show();
+        $('.btnPrint').show();
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+    });
+
+</script>

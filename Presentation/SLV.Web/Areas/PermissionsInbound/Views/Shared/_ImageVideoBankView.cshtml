@@ -1,0 +1,343 @@
+﻿<script src="~/js/PermissionsInbound/ImageVideoBankView.js"></script>
+<div ng-show="PermissionInboundImageVideoBankView">
+
+    <style type="text/css">
+        legend {
+            display: block;
+            width: auto !important;
+            padding: 8px;
+            font-size: 21px;
+            line-height: inherit;
+            color: #333;
+            border: 0;
+            font-size: 15px;
+        }
+
+        fieldset {
+            min-width: 0;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            padding: 4px !important;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <div class="col-md-12" ng-show="false" ng-if="partyDetails.length>0">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    Image Bank / Video Bank
+                </div>
+                <div class="tools">
+                    <a href="javascript:void(0);" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class=" row" ng-repeat="obj in partyDetails">
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Vendor Name</label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">{{obj.partyName}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Restriction</label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">{{obj.Restriction}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">E-book Rights</label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">{{obj.ElectronicRights}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Print Rights</label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">{{obj.printrights}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Electronic Rights</label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">{{obj.ebookrights}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-6" ng-if="obj.fieldsetdata.type='I'">
+                            <fieldset style="border:1px solid #ee5941 !important;">
+                                <legend>Image Bank</legend>
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6 col-sm-6" ng-repeat="_obj in obj.fieldsetdata">
+                                        <label class="control-label col-md-9 col-xs-9 col-sm-9">{{_obj.fullname}}</label>
+                                        <div class="col-md-3 col-xs-3 col-sm-3" style="padding:0px;">
+                                            <label class="control-label"><i class="{{div.CurrencySysbol=='INR'?'fa fa-inr':'fa fa-usd'}} " aria-hidden="true"></i>&nbsp;&nbsp;{{_obj.Cost}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-6" ng-if="obj.fieldsetdata.type='V'">
+                            <fieldset style="border:1px solid #ee5941 !important;">
+                                <legend> Video Bank </legend>
+                                <div class="row">
+                                    <div class="col-md-4 col-xs-4 col-sm-4" ng-repeat="_obj in obj.fieldsetdata">
+                                        <label class="control-label col-md-9 col-xs-9 col-sm-9" style="padding-left: 0px; padding-right: 0px;">{{_obj.fullname}}</label>
+                                        <div class="col-md-3 col-xs-3 col-sm-3" style="padding:0px;">
+                                            <label class="control-label"><i class="{{div.CurrencySysbol=='INR'?'fa fa-inr':'fa fa-usd'}} " aria-hidden="true"></i>&nbsp;&nbsp;{{_obj.Cost}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12" style="border-top: 1px solid #ee5941;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12" ng-if="PermissionInboundImageVideoBankDataList.length>0">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    Image Video Bank Details
+                </div>
+                <div class="tools">
+                    <a href="javascript:void(0);" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body clearfix">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer SeriesDetail" id="TblOwnerList" style="font-size: 11px;">
+                                <thead class="flip-content">
+                                    <tr>
+                                        <th>S.No.</th>
+                                        @*<th>Assest Type </th>*@
+                                        <th>Vendor Name</th>
+                                        <th>Description</th>
+                                        <th>Image Id </th>
+                                        <th>Invoice Number</th>
+                                        <th>Invoice Value</th>
+                                        <th>Currency</th>
+                                        <th>Invoice Date</th>
+                                        <th>Credit Line</th>
+                                        <th>Print Quantity</th>
+                                        <th>Permission Expiry Date</th>
+                                        @*<th>Web-link</th>*@
+                                        <th>Editorial only image</th>
+                                        <th>Remarks</th>
+
+                                        <th ng-if="'@TempData["User"]' == 'sa' && '@TempData["For"]' == 'delete'">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="M in PermissionInboundImageVideoBankDataList">
+                                        <td>  <span ng-bind="$index +1"></span> </td>
+                                        @*<td><span ng-bind="M.ContractTypes"></span> </td>*@
+
+                                        <td>
+                                            <a href="javascript:viod(0)" ng-click="ViewonchnagPartyDetail(M.PartyNameId)" data-toggle="modal" data-target="#myImageVideo" style="color:#ee5941;">
+                                                <span ng-bind="M.partyname"></span>   
+                                            </a>
+                                        </td>
+                                        
+                                        <td><span ng-bind="M.Description"></span>  </td>
+
+                                        <td>
+                                            <a href="{{M.weblink}}" target="_blank" style="color:#ee5941;">
+                                                <span ng-bind="M.imagevideobankid"></span>
+                                            </a>
+                                        </td>
+
+                                        <td><span ng-bind="M.invoiceno"></span>   </td>
+                                        <td><span ng-bind="M.invoicevalue"></span> </td>
+                                        @*<td><span ng-bind="M.CurrencyName"></span>  </td>*@
+                                        <td><span ng-bind="M.CurrencySymbol"></span>  </td>
+                                        <td> <span ng-bind="M.invoicedate==null?'': M.invoicedate"></span>  </td>
+                                        
+                                        <td><span ng-bind="M.creditlines"></span>  </td>
+
+                                        <td> <span ng-bind="M.printquantity==0?'Unrestricted':M.printquantity"></span> </td>
+
+                                        <td> <span ng-bind="M.permissionexpirydate==null?'': M.permissionexpirydate"></span>  </td>
+                                        @*<td><span ng-bind="M.weblink"></span>  </td>*@
+                                        <td><span ng-bind="M.Editorial_Only_Type"></span>  </td>
+                                        <td><span ng-bind="M.Remarks"></span>  </td>
+
+                                        <td ng-if="'@TempData["User"]' == 'sa' && '@TempData["For"]' == 'delete'">
+                                            <a style="color: red;" href="javascript:void(0);" ng-click="DeleteEntityImageVideoBankData(M.Id,M.LinkId,M.DataId,'sa')"><i class="fa fa-trash-o" title="Delete Entry"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bs-example-modal-lg" id="myImageVideo" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog " role="document" style="width:90%;">
+            <div class="modal-body ">
+                <button type="button" class="close CloseValue" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+             
+                <div class="row panel">
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Vendor Details
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:void(0);" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body form">
+                                <div class="form-body">
+                                    <div class=" row">
+                                        <div class="col-md-6">
+
+
+
+
+                                            <div class=" row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Vendor Name</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{PartyNameView}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Restriction</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                       
+                                                            <label class="control-label">{{RestrictionView}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">E-bookrights</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{EbookrightsView}}</label>
+                                                         
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Print Rights</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{PrintRightsView}}</label>
+                                                         
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Electronic Rights</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                           
+                                                            <label class="control-label">{{ElectronicrightsView}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-6" ng-if="imageBankList.length>0">
+                                            <fieldset style="border:1px solid #ee5941 !important;">
+                                                <legend>Image Bank</legend>
+                                                <div class="row">
+                                                    <div class="col-md-6" ng-repeat="div in imageBankList">
+                                                        <label class="control-label col-md-9">{{div.fullname}}</label>
+                                                        <div class="col-md-3" style="padding:0px;">
+                                                            <label class="control-label"><i class="{{div.CurrencySysbol=='INR'?'fa fa-inr':'fa fa-usd'}} " aria-hidden="true"></i>&nbsp;&nbsp;{{div.Cost}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </fieldset>
+
+
+                                        </div>
+                                        <div class="col-md-6" ng-if="videoBankList.length>0">
+                                            <fieldset style="border:1px solid #ee5941 !important;">
+                                                <legend> Video Bank </legend>
+                                                <div class="row">
+                                                    <div class="col-md-4" ng-repeat="div in videoBankList">
+                                                        <label class="control-label col-md-9" style="padding-left: 0px; padding-right: 0px;">{{div.fullname}}</label>
+                                                        <div class="col-md-3" style="padding:0px;">
+                                                            <label class="control-label"><i class="{{div.CurrencySysbol=='INR'?'fa fa-inr':'fa fa-usd'}} " aria-hidden="true"></i>&nbsp;&nbsp;{{div.Cost}}</label>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

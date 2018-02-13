@@ -1,0 +1,278 @@
+﻿@*chk_Contractld_ is for Both Author Contract Id and proudct License Id*@
+
+<style>
+    .table > tbody > tr > td {
+        padding: 4px !important;
+    }
+    .block-radio {
+        float: left;
+        width: auto;
+        margin-left: 3em;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    Common Details
+
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class=" row">
+                        <div class="col-md-6">
+
+
+
+
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Subsidiary Rights <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                       
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.subsidiaryrightsList.$dirty) && userForm.subsidiaryrightsList.$invalid } ">
+
+                                            <select class="form-control" name="subsidiaryrightsList" ng-required="true" onchange="angular.element(document.getElementById('angularid')).scope().Fun_OUPPercentage()" id="subsidiaryrights" ng-model="subsidiaryrightsList">
+                                                <option value="">--Please Select--</option>
+                                                <option ng-required="true" ng-repeat="div in PaymentTaggingSubSidiaryRightsByAuthorcontractList" ng-model="subsidiaryrights" value="{{div.id}}">{{div.subsidiaryrights}}</option>
+                                            </select>
+
+                                            <div class="help-block" >
+                                                <p ng-show="userForm.subsidiaryrightsList.$error.required && (userForm.subsidiaryrightsList.$dirty || submitted)" class="help-block red">Please select Instrument Number</p>
+                                               
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Instrument Mode <span class="red">*</span></label>
+                                    <div class="col-md-7">
+
+                                        <div class="form-group  block-radio" ng-class="{ 'has-error': ( submitted ||userForm.PaymentModeList.$dirty) && userForm.PaymentModeList.$invalid } ">
+
+                                            <label class="radio-inline">
+                                                <input type="radio" class="block-radio" name="PaymentModeList" id="PaymentMode" ng-model="PaymentModeList" value="DD" onclick="angular.element(document.getElementById('angularid')).scope().func_RadioSelect(this)" ng-required="true"> DD
+                                                <input type="radio" class="block-radio" name="PaymentModeList" id="PaymentMode" ng-model="PaymentModeList" value="Cheque" onclick="angular.element(document.getElementById('angularid')).scope().func_RadioSelect(this)" ng-required="true"> Cheque
+                                                <input type="radio" class="block-radio" name="PaymentModeList" id="PaymentMode" ng-model="PaymentModeList" value="BankTransfer" onclick="angular.element(document.getElementById('angularid')).scope().func_RadioSelect(this)" ng-required="true"> Bank Transfer
+                                            </label>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.PaymentModeList.$error.required && (userForm.PaymentModeList.$dirty || submitted)" class="help-block red">Please select Instrument Mode</p>
+                                            </div>
+                                        </div>
+
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Instrument Number <span class="red">*</span> </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ChequeNumber.$dirty) && userForm.ChequeNumber.$invalid } ">
+
+                                            <input type="text" name="ChequeNumber" id="ChequeNumber" class="form-control" ng-model="ChequeNumber"
+                                                   onchange="angular.element(document.getElementById('angularid')).scope().func_TextChange(this)"
+                                                   placeholder="Instrument Number" min="0" @*required*@ maxlength="20"
+                                                   title="Instrument Number" ng-required="true">
+
+
+                                            <div class="help-block">
+                                                <p ng-show="userForm.ChequeNumber.$error.required && (userForm.ChequeNumber.$dirty || submitted)" class="help-block red">Please enter Instrument Number</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Instrument Date <span class="red">*</span> </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ChequeDateName.$dirty) && userForm.ChequeDateName.$invalid } ">
+                                            <div class="input-group input-append date ChequeDate">
+                                                <input type="text" id="ChequeDate" name="ChequeDateName" class="form-control ChequeDateName" ng-model="ChequeDate" placeholder="Instrument Date" @*required*@
+                                                       onchange="angular.element(document.getElementById('angularid')).scope().ChequeDateValue(this);" title="Instrument Date" ng-required="true">
+                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.ChequeDateName.$error.required && (userForm.ChequeDateName.$dirty || submitted)" class="help-block red">Please enter Instrument Date</p>
+                                            </div>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $(document).ready(function () {
+                                                $('.ChequeDate')
+                                                    .datepicker({
+                                                        format: "dd/mm/yyyy",
+                                                        showButtonPanel: true,
+                                                        autoclose: true,
+                                                    })
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Bank Name <span class="red">*</span> </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BankName.$dirty) && userForm.BankName.$invalid } ">
+
+                                            <input type="text" name="BankName" id="BankName" class="form-control" ng-model="BankName"
+                                                   onchange="angular.element(document.getElementById('angularid')).scope().func_TextChange(this)"
+                                                   placeholder="BankName" @*required*@ title="Bank Name " ng-required="true">
+
+
+                                            <div class="help-block">
+                                                <p ng-show="userForm.BankName .$error.required && (userForm.BankName.$dirty || submitted)" class="help-block red">Please enter Bank Name</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Receipt Amount <span class="red">*</span>  </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Amount.$dirty) && userForm.Amount.$invalid } ">
+
+                                            <input type="number" name="Amount" disabled="disabled" id="Amount" class="form-control"
+                                                   onchange="angular.element(document.getElementById('angularid')).scope().func_ConvertAmtVal()"
+                                                   ng-model="Amount" placeholder="Amount" min="0" @*required*@ title="Receipt Amount" ng-required="true">
+
+
+                                            <div class="help-block">
+                                                <p ng-show="userForm.Amount.$error.required && (userForm.Amount.$dirty || submitted)" class="help-block red">Please enter Amount</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-6">
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">WHT</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <input type="number" name="WHT" id="WHT" class="form-control"
+                                                   ng-model="WHT" placeholder="WHT" min="0" title="{{WHT}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Converison Rate <span class="red">*</span> </label>
+                                    <div class="col-md-7">
+
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ConverisonRate.$dirty) && userForm.ConverisonRate.$invalid } ">
+
+                                            <input type="number" name="ConverisonRate" id="ConverisonRate" class="form-control"
+                                                   onchange="angular.element(document.getElementById('angularid')).scope().func_ConvertAmtVal()" ng-model="ConverisonRate" placeholder="Converison Rate" min=".001" title="Converison Rate" ng-required="true">
+
+                                            <div class="help-block">
+                                                <p ng-show="userForm.ConverisonRate.$error.required && (userForm.ConverisonRate.$dirty || submitted)" class="help-block red">Converison Rate</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Invoice Amount - (INR)</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Invoice_Amount.$dirty) && userForm.Invoice_Amount.$invalid } ">
+
+                                            <input type="number" name="Invoice_Amount" ng-disabled="true" id="Invoice_Amount" class="form-control OupAmount" ng-model="Invoice_Amount" placeholder="Invoice Amount">
+
+
+                                            <div class="help-block">
+                                                <p ng-show="userForm.Invoice_Amount.$error.required && (userForm.Invoice_Amount.$dirty || submitted)" class="help-block red">Invoice Amount</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Receipt Amount - (INR)</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Receipt_Amount.$dirty) && userForm.Receipt_Amount.$invalid } ">
+
+
+                                            <input type="number" name="Receipt_Amount" id="Receipt_Amount" ng-disabled="true" class="form-control"
+                                                   ng-model="Receipt_Amount" placeholder="Receipt Amount - (INR)" title="Receipt Amount - (INR)">
+                                          
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">OUP Percentage</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OUP_Percentage.$dirty) && userForm.OUP_Percentage.$invalid } ">
+
+                                            <input type="number" name="OUP_Percentage" ng-disabled="true" id="OUP_Percentage" class="form-control" ng-model="OUP_Percentage" placeholder="OUP Percentage">
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">OUP Amount</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OupAmount.$dirty) && userForm.OupAmount.$invalid } ">
+
+                                            <input type="number" name="OupAmount" ng-disabled="true" id="OupAmount" class="form-control OupAmount" ng-model="OupAmount" placeholder="OUP Amount">
+
+
+                                            <div class="help-block">
+                                                <p ng-show="userForm.OupAmount.$error.required && (userForm.OupAmount.$dirty || submitted)" class="help-block red">Please enter OUP Amount</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

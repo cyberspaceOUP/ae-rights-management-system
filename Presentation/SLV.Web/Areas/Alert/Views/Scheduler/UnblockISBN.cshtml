@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "UnblockISBN";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/Alert/Scheduler.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().unblockISBNset();
+}
+

@@ -1,0 +1,1277 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "ProductSearch";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/Product/ProductEntry.js"></script>
+<script src="~/js/Product/ProductSearch.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/app.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script>
+
+<script src="~/js/common/TopSearch.js"></script>
+
+<style>
+    .fieldset {
+        min-width: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border: 1px solid #ee5941 !important;
+        padding: 8px !important;
+    }
+
+    .legend {
+        display: block;
+        width: auto !important;
+        padding: 8px;
+        margin-bottom: 20px;
+        font-size: 21px;
+        line-height: inherit;
+        color: #333;
+        border: 0;
+        font-size: 15px;
+    }
+</style>
+
+@section onInit
+{
+
+    @*angular.element(document.getElementById('angularid')).scope().getSubProductTypeList();*@
+    angular.element(document.getElementById('angularid')).scope().getAllProductCategoryList();
+
+    angular.element(document.getElementById('angularid')).scope().getProductTypeList();
+        angular.element(document.getElementById('angularid')).scope().GetSeriesList();
+}
+
+<input type="hidden" value="@TempData["PermissionsInbound"]" ng-model="hid_PermissionsInbound" id="hid_PermissionsInbound" name="hid_PermissionsInbound">
+<input type="hidden" value="@TempData["ForType"]" ng-model="hid_ForType" id="hid_ForType" name="hid_ForType">
+<input type="hidden" value="@TempData["type"]" ng-model="hid_type" id="hid_type" name="hid_type">
+
+<div class="container-fluid">
+    <div class="row">
+
+        <form name="userForm" class=" form-horizontal" novalidate ng-submit="submitForm()" id="Product_search" ng-cloak>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-title">
+                            <h1>
+                                Product Search
+                                @Html.Partial("pagedate")
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Product Search
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body form">
+                                <div class=" form-body ">
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                @Html.Partial("~/Views/Shared/_divisionSubdivision.cshtml")
+                                                @*<div>
+                                                        <label class="control-label col-md-5">Division</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Division.$dirty) && userForm.Division.$invalid } ">
+                                                                <select class="form-control" name="Division" ng-model="DivSubDivCntrl.Division" ng-change="getSubDivisionbyDivisionIdList()">
+                                                                    <option value="">Please Select</option>
+                                                                    <option ng-repeat="div in DivisionList" ng-model="Division" value="{{div.Id}}">{{div.divisionName}}</option>
+                                                                </select>
+
+                                                                <div class="help-block">
+                                                                    <p ng-show="userForm.Division.$error.required && (userForm.Division.$dirty || submitted)">Please select Division</p>
+                                                                </div>
+                                                           </div>
+                                                        </div>
+                                                    </div>*@
+                                                @*<div>
+                                                        <label class="control-label col-md-5">Sub-Division</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.SubDivision.$dirty) && userForm.SubDivision.$invalid } ">
+                                                                <select class="form-control" name="SubDivision" ng-model="SubDivision">
+                                                                    <option value="">Please Select</option>
+                                                                    <option ng-repeat="div in SubDivisionList" ng-model="SubDivision" value="{{div.DivisionId}}">{{div.SubDivisionName}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                                <div>
+                                                    <label class="control-label col-md-5">Product Category</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.ProductCategory.$dirty) && userForm.ProductCategory.$invalid } ">
+                                                            <select class="form-control" name="ProductCategory" id="ProductCategory" ng-model="ProductModel.ProductCategory">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in ProductCategoryListEntry" ng-model="ProductModel.ProductCategory" value="{{div.Id}}">{{div.ProductCategory}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-6">
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">Product Type </label>
+                                                        <div class="col-md-7">
+                                                            <div class="row pt_radio">
+                                                                <label class="radio-inline" ng-repeat="Pt in ProductTypeList">
+                                                                    <input type="radio" id="ProductType" name="ProductType" ng-change="getSubProductTypeList(Pt.Id)" ng-model="ProductModel.ProductType" ng-value="{{Pt.Id}}" required> {{Pt.typeName}}
+                                                                </label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    &nbsp;
+                                                </div>
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">Sub-Product Type</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <select class="form-control" name="SubProductType" id="SubProductType" ng-model="ProductModel.SubProductType">
+                                                                    <option value="">Please Select</option>
+                                                                    <option ng-repeat="div in SubProductTypeList" ng-model="SubProductType" value="{{div.Id}}">{{div.typeName}}</option>
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                @*<div>
+                                                        <label class="control-label col-md-5">Product Type</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.ProductType.$dirty) && userForm.ProductType.$invalid } ">
+                                                                <select class="form-control" name="ProductType" ng-model="ProductModel.ProductType">
+                                                                    <option value="">Please Select</option>
+                                                                    <option ng-repeat="div in ProductTypeList" ng-model="ProductModel.ProductType" value="{{div.Id}}" ng-change="getSubProductTypeList(div.Id)">{{div.typeName}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <label class="control-label col-md-5">Sub-Product Type</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.SubProductType.$dirty) && userForm.SubProductType.$invalid } ">
+                                                                <select class="form-control" name="SubProductType" ng-model="ProductModel.SubProductType">
+                                                                    <option value="">Please Select</option>
+                                                                    <option ng-repeat="div in SubProductTypeList" ng-model="SubProductType" value="{{div.subProductId}}">{{div.subProductName}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Details Search
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body form">
+                                <div class=" form-body ">
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label class="control-label col-md-5">Product Code</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.ProjectCode.$invalid && (userForm.ProjectCode.$dirty || submitted)}">
+                                                            <input type="text" name="ProjectCode" class="form-control" ng-model="ProjectCode" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Product Code">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="control-label col-md-5">SAP Agreement Number</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.SAPAgreementNumber.$invalid && (userForm.SAPAgreementNumber.$dirty || submitted)}">
+                                                            <input type="text" name="SAPAgreementNumber" class="form-control" ng-model="SAPAgreementNumber" placeholder="SAP Agreement Number"> @*ng-pattern="/^[a-zA-Z'.\s]/"*@
+                                                            @*<div class="help-block">
+                                                                   <p ng-show="userForm.SAPAgreementNumber.$error.pattern  && (userForm.SAPAgreementNumber.$dirty || submitted)">
+                                                                </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label class="control-label col-md-5">SAP Author Code</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.SAPAuthorCode.$invalid && (userForm.SAPAuthorCode.$dirty || submitted)}">
+                                                            <input type="text" name="SAPAuthorCode" class="form-control" ng-model="SAPAuthorCode" placeholder="SAP Author Code">   @*ng-pattern="/^[a-zA-Z'.\s]/"*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label class="control-label col-md-5"> ISBN</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.OUPISBN.$invalid && (userForm.OUPISBN.$dirty || submitted)}">
+                                                            <input type="text" name="OUPISBN" class="form-control" ng-model="OUPISBN" ng-pattern="/^[0-9]{13}$/" placeholder=" ISBN" maxlength="13">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.OUPISBN.$error.pattern" class="help-block red">Please enter valid ISBN</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="control-label col-md-5">Working Product</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.WorkingProduct.$invalid && (userForm.WorkingProduct.$dirty || submitted)}">
+                                                            <input type="text" name="WorkingProduct" class="form-control" ng-model="WorkingProduct" ng-pattern="/^[a-zA-Z0-9'.\s]/" placeholder="Working Product">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label class="control-label col-md-5">Working Sub-Product</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.WorkingSubProduct.$invalid && (userForm.WorkingSubProduct.$dirty || submitted)}">
+                                                            <input type="text" name="WorkingSubProduct" class="form-control" ng-model="WorkingSubProduct" ng-pattern="/^[a-zA-Z0-9'.\s]/" placeholder="Working Sub-Product">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="control-label col-md-5"> Edition</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.OUPEdition.$invalid && (userForm.OUPEdition.$dirty || submitted)}">
+                                                            <input type="text" name="OUPEdition" class="form-control" ng-model="OUPEdition" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Edition">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="control-label col-md-5">Volume</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.Volume.$invalid && (userForm.Volume.$dirty || submitted)}">
+                                                            <input type="text" name="Volume" class="form-control" ng-model="Volume" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Volume">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label class="control-label col-md-5">Imprint</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.Imprint.$invalid && (userForm.Imprint.$dirty || submitted)}">
+                                                            <input type="text" name="ProductImprint" class="form-control" ng-model="ProductImprint" placeholder="Imprint">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="control-label col-md-5">Language</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Language.$dirty) && userForm.Language.$invalid } ">
+                                                            <select class="form-control" name="Language" ng-model="Language">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in LanguageList" ng-model="Language" value="{{div.Id}}">{{div.LanguageName}}</option>
+                                                            </select>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div>
+                                                    <label class="control-label col-md-5">Series</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.Series.$invalid && (userForm.Series.$dirty || submitted)}">
+                                                            <input type="text" name="Series" class="form-control" ng-model="Series" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Series">
+
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                                <div>
+                                                    <label class="control-label col-md-5">Series</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <select class="form-control" name="Series" ng-model="Series" ng-change="changeItem(Series)">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in SeriesList" ng-model="Series" value="{{div.Id}}">{{div.SeriesName}}</option>
+                                                            </select>
+                                                            <input type="hidden" name="hid_Series" id="hid_Series" value="" />
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                                    <div>
+                                                        <label class="control-label col-md-5">Derivatives</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group" ng-class="{ 'has-error' : userForm.Derivaties.$invalid && (userForm.Derivaties.$dirty || submitted)}">
+
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="Derivaties" ng-model="Derivaties" value="Yes" required> Yes
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="Derivaties" ng-model="Derivaties" value="No" required> No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                <div class="row" ng-show="@TempData["PermissionsInbound"]==''">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">Third Party Permission</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="ThirdPartyPermission" ng-model="ThirdPartyPermission" ng-value=1> Yes
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="ThirdPartyPermission" ng-model="ThirdPartyPermission" ng-value=2> No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            <div class="col-md-6">
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">Projected Publishing Date</label>
+                                                        <div class="col-md-7">
+
+                                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProjectedPublishingDate.$dirty) && userForm.ProjectedPublishingDate.$invalid } ">
+                                                                @*<div class="input-group input-append" id="ProjectedPublishingDate">
+                                                                        <input type="text" id="ProjectedPublishingDate" name="ProjectedPublishingDate" class="form-control" ng-model="ProjectedPublishingDate" placeholder="Projected Publishing Date">
+
+                                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+
+                                                                    </div>*@
+                                                                <div class="input-group input-append date" id="ProjectedPublishingDate">
+                                                                    <input type="text" class="form-control" ng-change="getCopyrightYear(ProjectedPublishingDate)"
+                                                                           name="ProjectedPublishingDate" id="ProjectedPublishingDate" ng-model="ProjectedPublishingDate" placeholder="Projected Publishing Date">
+                                                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar hit"></span></span>
+
+                                                                </div>
+                                                                <div class="help-block">
+                                                                    <p ng-show="userForm.ProjectedPublishingDate.$error.required && (userForm.ProjectedPublishingDate.$dirty || submitted)" class="help-block red">Please enter Projected Publishing Date</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="control-label col-md-5">Copyright Year</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.CopyrightYear.$invalid && (userForm.CopyrightYear.$dirty || submitted)}">
+                                                            <input type="text" name="CopyrightYear" class="form-control" ng-model="CopyrightYear" placeholder="Copyright Year" ng-pattern="/^(19|20)\d{2}/" maxlength="4">
+                                                            @*<div class="help-block">
+                                                                    <p ng-show="userForm.CopyrightYear.$error.pattern" class="help-block red">Please enter valid copyright Year</p>
+                                                                </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">Projected Price</label>
+                                                        <div class="col-md-7">
+                                                            @*<div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProjectedPrice.$dirty) && userForm.ProjectedPrice.$invalid } ">*@
+                                                            <div class="form-group">
+                                                                <input type="text" name="ProjectedPrice" class="form-control" ng-model="ProjectedPrice" placeholder="Projected Price">
+                                                                
+                                                                
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">Projected Currency</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <select class="form-control" id="ProjectedCurrency" name="ProjectedCurrency" ng-model="ProjectedCurrency">
+                                                                    <option value="">Please Select</option>
+                                                                    <option ng-repeat="div in CurrencyList" ng-model="ProjectedCurrency" value="{{div.Id}}">{{div.CurrencyName}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="DetailsSearch" ng-controller="ProprietorController">
+                                                    @Html.Partial("~/Views/Shared/_AuthorSuggestionAuthorSearch.cshtml")
+                                                    @*<div class="row">
+                                                            <div class="col-md-12">
+                                                                <label class="control-label col-md-5">Author Name(s)</label>
+                                                                <div class="col-md-7">
+                                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorName.$dirty) && userForm.AuthorName.$invalid } ">
+                                                                        <input type="text" id="AuthorName" name="AuthorName" class="form-control" ng-model="AuthorName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>*@
+                                                </div>
+                                                <div>
+                                                    <label class="control-label col-md-5">Final Product Entered</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error' : userForm.ProductEntered.$invalid && (userForm.ProductEntered.$dirty || submitted)}">
+
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="ProductEntered" ng-model="ProductEntered" value="Yes" required> Yes
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="ProductEntered" ng-model="ProductEntered" value="No" required> No
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">Final Product</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group">
+                                                                <input type="text" name="finalProduct" class="form-control" ng-model="finalProduct" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Final product">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5">Final Publishing Date</label>
+                                                        <div class="col-md-7">
+                                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.FinalPublishingDate.$dirty) && userForm.FinalPublishingDate.$invalid } ">
+
+
+                                                                <div class="input-group input-append date" id="FinalPublishingDate">
+                                                                    <input type="text" id="FinalPublishingDate" name="FinalPublishingDate" class="form-control" ng-model="FinalPublishingDate" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Final Publishing Date">
+                                                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Start Kit Search Details-->
+                                                <div class="clearfix"></div>
+                                                <fieldset class="fieldset" style="border:1px solid #ee5941 !important;">
+                                                    <legend class="legend">Kit Search</legend>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Kit ISBN</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error' : userForm.KitISBN.$invalid && (userForm.KitISBN.$dirty || submitted)}">
+                                                                    <input type="text" name="KitISBN" class="form-control" ng-model="KitISBN" ng-pattern="/^[0-9]{13}$/"
+                                                                           placeholder="Kit ISBN" maxlength="13">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.KitISBN.$error.pattern" class="help-block red">Please enter valid ISBN</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Kit Working Product</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error' : userForm.KitWorkingProduct.$invalid && (userForm.KitWorkingProduct.$dirty || submitted)}">
+                                                                    <input type="text" name="KitWorkingProduct" class="form-control" ng-model="KitWorkingProduct"
+                                                                           ng-pattern="/^[a-zA-Z0-9'.\s]/" placeholder="Kit Working Product" maxlength="50">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Kit Working Sub-Product</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error' : userForm.KitWorkingSubProduct.$invalid && (userForm.KitWorkingSubProduct.$dirty || submitted)}">
+                                                                    <input type="text" name="KitWorkingSubProduct" class="form-control" ng-model="KitWorkingSubProduct"
+                                                                           ng-pattern="/^[a-zA-Z0-9'.\s]/" placeholder="Kit Working Sub-Product" maxlength="50">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                                <!-- End Kit Search Details-->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 ProprietorDetailsMandatory">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Proprietor Details
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body form">
+                                <div class="form-body">
+                                    <div class="row">
+                                        @Html.Partial("~/Areas/Product/Views/Shared/_ProprietorDetails.cshtml")
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Status
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body form">
+                                <div class="form-body">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.AC_Y" value="AC_Y"> Assignment Contract entered
+                                                    </label>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.AC_N" value="AC_N"> Assignment Contract not entered
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.PL_Y" value="PL_Y"> Product License entered
+                                                    </label>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.PL_N" value="PL_N"> Product License not entered
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.ISBN_Y" value="ISBN_Y"> ISBN entered
+                                                    </label>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.ISBN_N" value="ISBN_N"> ISBN not entered
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.SAP_Y" value="SAP_Y"> SAP agreement number entered
+                                                    </label>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.SAP_N" value="SAP_N"> SAP agreement number not entered
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.ADD_2M" value="ADD_3M"> Addendum expires in 3 months
+                                                    </label>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.ADD_25L" value="ADD_25L"> Addendum for which balance quantity is less than 25%
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.LIC_2M" value="LIC_3M"> License expires in 3 months
+                                                    </label>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.LIC_25L" value="LIC_25L"> License for which balance quantity is less than 25%
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.SLIC_Y" value="SLIC_Y"> Sub-licensing contract entered
+                                                    </label>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.SLIC_N" value="SLIC_N"> Sub-licensing contract not entered
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    *@
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.PI_Y" value="PI_Y"> Permission Inbound entered
+                                                    </label>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.PI_N" value="PI_N"> Permission Inbound not entered
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.PO_Y" value="PO_Y"> Permission Outbound entered
+                                                    </label>
+                                                    <label class="control-label col-md-6">
+                                                        <input type="checkbox" style="float: left; margin-right: 10px; margin-bottom: 7px; " name="YesNotStatus" ng-model="Status.PO_N" value="PO_N"> Permission Outbound not entered
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn green" id="btnSubmit">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <form name="Serchform" class="form-horizontal" novalidate ng-submit="submitTitleLink()" id="search">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-title">
+                            <h1>
+                                @if (ViewBag.ViewMore == "NoLicense")
+                                {
+                                    <span>@T("Dashboard.LicenseNotEntered")</span>
+                                }
+                                else if (ViewBag.ViewMore == "LicenseExpired")
+                                {
+                                    <span>@T("Dashboard.LicenseExpired")</span>
+                                }
+                                else if (ViewBag.ViewMore == "LicenseAddendumExpired")
+                                {
+                                    <span>@T("Dashboard.LicenseAddendumExpired")</span>
+                                }
+                                else if (ViewBag.ViewMore == "NoISBN")
+                                {
+                                    <span>@T("Dashboard.ISBNNotEntered")</span>
+                                }
+                                else if (ViewBag.ViewMore == "NoSAP")
+                                {
+                                    <span>@T("Dashboard.SAPNotEntered") </span>
+                                }
+                                else if (ViewBag.ViewMore == "NoContract")
+                                {
+                                    <span>@T("Dashboard.LicenseEnteredNotContract")</span>
+                                }
+                                else if (ViewBag.ViewMore == "ISBN")
+                                {
+                                    <span>@T("Dashboard.ISBNEntered")</span>
+                                }
+                                else if (ViewBag.ViewMore == "NoFinalPublishingDate")
+                                {
+                                    <span>@T("Dashboard.FinalPublishingDateNotEntered")</span>
+                                }
+                                else
+                                {
+                                    <span>Product Listing</span>
+                                }
+                                @Html.Partial("pagedate")
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="col-md-12 backtoSearch">
+                        <div class="tools">
+                            <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 backtoDashboard" style="display:none;">
+                        <div class="tools">
+                            <span class="back-to-search" ng-click="BackToserch()"> Back To Dashboard </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                   @if (ViewBag.ViewMore == "NoLicense")
+                                    {
+                                        <span>@T("Dashboard.LicenseNotEntered")</span>
+                                    }
+                                    else if (ViewBag.ViewMore == "LicenseExpired")
+                                    {
+                                        <span>@T("Dashboard.LicenseExpired")</span>
+                                    }
+                                    else if (ViewBag.ViewMore == "LicenseAddendumExpired")
+                                    {
+                                        <span>@T("Dashboard.LicenseAddendumExpired")</span>
+                                    }
+                                    else if (ViewBag.ViewMore == "NoISBN")
+                                    {
+                                        <span>@T("Dashboard.ISBNNotEntered")</span>
+                                    }
+                                    else if (ViewBag.ViewMore == "NoSAP")
+                                    {
+                                        <span>@T("Dashboard.SAPNotEntered")</span>
+                                    }
+                                    else if (ViewBag.ViewMore == "NoContract")
+                                    {
+                                        <span>@T("Dashboard.LicenseEnteredNotContract")</span>
+                                    }
+                                    else if (ViewBag.ViewMore == "ISBN")
+                                    {
+                                        <span>@T("Dashboard.ISBNEntered")</span>
+                                    }
+                                    else if (ViewBag.ViewMore == "NoFinalPublishingDate")
+                                    {
+                                        <span>@T("Dashboard.FinalPublishingDateNotEntered")</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Product Listing</span>
+                                    }
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body flip-scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="">
+                                    
+                                    <table  id="tbl_ISBNtable" datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th style="width:5%">SNo</th>
+                                                <th style="width:5%">Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th style="width:5%" ng-if="ISBNAssign == false && TitleLinking == false">SAP Agreement No(s)&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th style="width:5%">Author Code(s)&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th style="width:10%">Working Title &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th style="width:10%" ng-if="ISBNAssign == false && TitleLinking == false">ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th style="width:10%">Author(s)</th>
+                                                <th style="width:10%">Product Category</th>
+                                                <th style="width:5%">Product Type</th>
+
+                                                <th style="width:10%" ng-if="ISBNAssign == false && TitleLinking == false">Status</th>
+
+                                                <th style="width:10%" ng-hide="TitleLinking || ISBNAssign" ng-if="'@TempData["Report"]' != 'Report'">Action</th>
+                                                <th style="width:10%" ng-if="ISBNAssign"> ISBN Entered</th>
+                                                <th style="width:10%" ng-if="TitleLinking">License Code</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="obj in ProductList" class="tooltipclass" @*ng-bind-html-unsafe="obj.Status"*@>
+                                                <td style="width:5%"><span ng-bind="$index + 1"></span></td>
+
+                                                <td style="width:5%"><a href="#" ng-click="ProductDetailsViewMode(obj.Id)" data-toggle="modal" data-target="#myModal" style="color:#ee5941;"><span ng-bind="obj.ProductCode"></span></a></td>
+                                                <td style="width:5%" ng-if="ISBNAssign == false && TitleLinking == false"><span ng-bind="obj.SapAgreementNo"></span></td>
+                                                <td style="width:5%"><span ng-bind="obj.SapAuthorCode"></span></td>
+
+                                                <td style="width:10%"><span ng-bind="obj.WorkingProduct"></span><br /><span style="font-size:11px;" ng-bind="(obj.WorkingSubProduct)"></span></td>
+                                                <td style="width:10%" ng-if="ISBNAssign == false && TitleLinking == false"><span ng-bind="obj.OupIsbn"></span></td>
+
+                                                <td style="width:10%"> <span ng-bind="obj.AuthorName"></span></td>
+
+
+                                                <td style="width:10%"><span ng-bind="obj.ProductCategory"></span></td>
+                                                <td style="width:5%"><span ng-bind="obj.ProductType"></span><br /><span style="font-size:11px;" ng-bind="(obj.SubProductType)"></span></td>
+
+
+                                                <td style="width:10%" ng-if="ISBNAssign == false && TitleLinking == false"><p ng-bind-html="obj.Status"></p></td>
+
+                                                <td style="width:10%" ng-hide="TitleLinking || ISBNAssign" ng-if="'@TempData["Report"]' != 'Report'">
+                                                    <div class="tooltip-container">
+                                                        <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                                        @*<label for="tooltip-toggle" ng-click="DisplayDiv($index+1)" class="tooltip-btn"> dheeraj*@
+                                                        <label for="tooltip-toggle" onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                            Action
+                                                        </label>
+                                                        <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                                        <div class="tooltip-content">
+                                                            <div class="linking">
+                                                                <ul ng-hide="FinalProductEntry || SAPAggrementEntry">
+                                                                    <li><a href="~/Product/ProductMaster/UpdateProduct?Id={{obj.Id}}&For=Update" ng-if="('@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'SA') && '@TempData["permissionsinbound"]' == ''">Update Product</a></li>
+
+                                                                    <li><a href="~/Product/ProductMaster/UpdateProduct?Id={{obj.Id}}&For=Update" ng-if="('@ViewBag.Department' == 'ED' ) && '@TempData["PermissionsOutbound"]' == ''">Update Product</a></li>
+                                                                    
+                                                                    <li><a href="~/Product/ProductMaster/ProductDetailsView?Id={{obj.Id}}&For=View">View Product</a></li>
+                                                                    <li ng-if="(obj.ProductCategory=='Original') && obj.ContractStatus!=1 && ('@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'ED' || '@ViewBag.Department' == 'SA') && '@TempData["PermissionsOutbound"]' == '' && '@TempData["permissionsinbound"]' == ''"><a href="~/Contract/AuthorContract/Index?ProductId={{obj.Id}}">Create Assignment Contract</a></li>
+                                                                    <li ng-if="(obj.ProductCategory=='Translation' || obj.ProductCategory=='Adaptation') && obj.ContractStatus!=1 && obj.LicenseId!=null &&  ('@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'SA') && '@TempData["PermissionsOutbound"]' == '' && '@TempData["permissionsinbound"]' == ''"><a href="~/Contract/AuthorContract/Index?LicenceId={{obj.LicenseId}}">Create Assignment Contract</a></li>
+                                                                    <li ng-if="obj.ProductCategory!='Original' && obj.LicenceStatus!=1  && ('@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'SA') && '@TempData["PermissionsOutbound"]' == '' && '@TempData["permissionsinbound"]' == ''"><a href="~/Product/ProductLicense/ProductLicense?Id={{obj.Id}}&typeId={{obj.ProductTypeId}}">Create Product License</a></li>
+                                                                    @*<li ng-if="obj.ProductCategory=='Custom'  &&  ('@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'AD')"><a href="~/Master/Master/CustomProduct?Id={{obj.Id}}">Custom Product</a></li>*@
+
+                                                                    <li><a href="~/PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?type={{'P'+obj.Id}}" ng-if="'@TempData["PermissionsInbound"]' == 'permissionsinbound' && ('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT'|| '@ViewBag.Department' == 'ED' || '@ViewBag.Department' == 'SA')">Add Permissions In-bound </a></li>
+
+                                                                    <li>
+                                                                        <a href="javascript:void(0);" ng-if="'@ViewBag.Department' == 'AD' && '@TempData["Action"]' == 'delete' && obj.flag == '0' && '@TempData["permissionsinbound"]' == ''" ng-click="DeleteProduct(obj.Id)">Delete Product</a>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <a href="javascript:void(0);" ng-if="'@ViewBag.Department' == 'SA' && '@TempData["Action"]' == 'delete' && '@TempData["permissionsinbound"]' == ''" ng-click="DeleteProduct(obj.Id,'sa')">Delete Product</a>
+                                                                    </li>
+
+                                                                </ul>
+                                                                <ul ng-show="FinalProductEntry">
+                                                                    <li><a href="~/Product/ProductMaster/FinalProductEntry?Id={{obj.Id}}">Final Product Entry</a></li>
+                                                                </ul>
+                                                                <ul ng-show="SAPAggrementEntry">
+                                                                    <li><a href="~/Product/ProductMaster/SAPAggrementAssign?Id={{obj.Id}}">SAP Agreement No/Author Code Assignment</a></li>
+                                                                </ul>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+
+                                                <td style="width:10%" ng-if="TitleLinking">
+                                                    <div class="col-md-12 form-group" ng-class="{ 'has-error' : Serchform.productLicense.$invalid && (Serchform.productLicense.$dirty || submitted)}">
+
+                                                        <input style="width:135px;" type="text" oldlicensecode="" onblur="angular.element(document.getElementById('angularid')).scope().CheckLicenseCode(this);" 
+                                                               name="productLicense" class="form-control" ng-pattern="/^[a-zA-Z0-9'.\s]/" placeholder="License Code">
+                                                        <div class="help-block">
+                                                            <p ng-show="Serchform.productLicense.$error.pattern" class="help-block red">Please enter valid Product License</p>
+                                                        </div>
+                                                        <input type="hidden" name="hid_multipleproductId" value="{{obj.Id}}" />
+                                                        <input type="hidden" name="hid_multipleLicenseId" value="0" />
+                                                    </div>
+                                                </td>
+
+                                                <td style="width:10%" ng-if="ISBNAssign">
+                                                    <div class="col-md-12 form-group" style=" position:relative" ng-class="{ 'has-error' : Serchform.ISBNAssignment.$invalid && (Serchform.ISBNAssignment.$dirty || submitted)}">
+                                                        <input type="text" onkeyup="callme($(this))" name="ISBNAssignment" productid="{{obj.ProductTypeId}}" setcompelte="N"
+                                                               class="form-control ISBNAssignment" ng-model="ISBNAssignment" placeholder="ISBN" maxlength="13" ng-pattern="/^[0-9]{13}$/">
+                                                        <div style="font-size:18px;position:absolute; right:20px; top:5px">
+                                                            <i class="fa fa-times" style="display:none;" name="closebtn" aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="Serchform.ISBNAssignment.$error.pattern" class="help-block red">Please enter valid ISBN</p>
+                                                        </div>
+                                                        <input type="hidden" name="hid_ISBNAssign" />
+                                                        <input type="hidden" name="hid_ISBNproductId" value="{{obj.Id}}" />
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="col-md-12" id="div_btnExcel" ng-if="'@TempData["Report"]' == 'Report'">
+                        <div class="form-group text-center">
+                            <input type="hidden" name="hid_Report" id="hid_Report" ng-model="hid_Report" />
+                            <button type="submit" class="btn green" ng-click="ProductReportExcel()" id="btnSubmit">Generate Excel</button>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-actions" ng-if="TitleLinking || ISBNAssign">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button type="submit" class="btn green" id="btntitlelinking">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        @{
+                var LicData = TempData["License"];
+                if(LicData!=null)
+                { 
+                if (!string.IsNullOrEmpty(LicData.ToString()))
+                {
+                    <input type="hidden" name="hid_License" id="hid_License" value="License" />
+                }
+                }
+        }
+
+
+
+            <form name="Serch" class="form-horizontal seriesSelect" ng-show="ShowProductSeriesListForm">
+                <div class="container-fluid">
+                    <div class="row">
+
+
+                        <div class="col-md-12">
+                            <div class="main-title">
+                                <h1>
+                                    Product Series List
+                                    @Html.Partial("pagedate")
+                                </h1>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="tools">
+                                <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="portlet box green">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Product Series List
+                                    </div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="collapse"> </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body flip-scroll">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <table @*datatable="ng"*@ class="table table-bordered table-striped table-condensed flip-content">
+                                            <thead class="flip-content">
+                                                <tr>
+                                                    <th>SNo</th>
+                                                    <th><input type="checkbox" id="chk_ProductIdParent" onclick="chk_Parent(this)" name="chk_ProductIdParent" ng-model="chk_ProductIdParent" /></th>
+
+                                                    <th>Product Code @*&nbsp;<span class="glyphicon glyphicon-sort"></span>*@</th>
+                                                    <th>SAP Agreement No(s) </th>
+                                                    <th>Author Code(s) </th>
+                                                    <th>ISBN </th>
+                                                    <th>Working Title </th>
+                                                    <th>Author(s) </th>
+                                                    <th>Product Category </th>
+                                                    <th>Product Type </th>
+                                                    <th>Contract Type  </th>
+                                                    @*<th>Action</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr ng-repeat="obj in ProductSeriesList" class="tooltipclass">
+
+                                                    <td><span ng-bind="$index + 1"></span></td>
+                                                    <td>
+                                                        <input type="checkbox" class="chk_ProductId" id="chk_ProductIdChild" value="{{obj.Id}}" @*ng-required="(chk_ProductIdChild.length = 0)"*@ ng-required="req_Validation" onclick="chk_Child(this)" name="chk_ProductIdParent" ng-model="chk_ProductIdChild"  /> @*ng-disabled="!{{obj.Flag}}"*@
+                                                        <input type="hidden" name="hid_CkeckedVlaue" id="hid_CkeckedVlaue" value="" />
+                                                    </td>
+                                                    <td><span ng-bind="obj.ProductCode"></span></td>
+                                                    <td>
+                                                        <p ng-repeat="objSAPAgreementDetails in obj.SAPAgreementDetails">
+                                                            <span ng-bind="objSAPAgreementDetails.SAPagreementNo"></span>@*<span ng-if="obj.SAPAgreementDetails.length>1"><span ng-if="$index-1">,</span></span>*@
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <p ng-repeat="objAuthorDetails in obj.AuthorDetails">
+                                                            <span ng-bind="objAuthorDetails.AuthorCode"></span>@*<span ng-if="obj.AuthorDetails.length>1"><span ng-if="$index-1">,</span></span>*@
+                                                        </p>
+                                                    </td>
+                                                    <td><span ng-bind="obj.ISBN"></span></td>
+                                                    <td><span ng-bind="obj.WorkingProduct"></span><br /><span style="font-size:11px;" ng-bind="(obj.WorkingSubProduct)"></span></td>
+                                                    <td>
+                                                        <p ng-repeat="objAuthorDetails in obj.AuthorDetails">
+                                                            <span ng-bind="objAuthorDetails.AuthorName"></span><span ng-if="obj.AuthorDetails.length>1"><span ng-if="$index-1">,</span></span>
+                                                        </p>
+                                                    </td>
+                                                    <td><span ng-bind="obj.ProductCategory"></span></td>
+                                                    <td><span ng-bind="obj.ProductType"></span></td>
+                                                    <td><span ng-bind="obj.Contract_Type"></span></td>
+                                                    @*<td>
+                                                        <div class="tooltip-container" ng-show="!{{obj.Flag}}">
+                                                            <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                                            <label for="tooltip-toggle" ng-click="DisplayDiv($index+1)" class="tooltip-btn">
+                                                                Action
+                                                            </label>
+                                                            <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                                            <div class="tooltip-content">
+                                                                <div class="linking">
+                                                                    <ul>
+                                                                        <li><a href="~/Contract/AuthorContract/index?SeriesCode={{obj.SeriesCode}}" ng-show="!{{obj.Flag}}">Update Series Contract</a></li>
+                                                                    </ul>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </td>*@
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-md-12" id="div_btnExcel" ng-if="'@TempData["Report"]' == 'Report'">
+                    <div class="form-group text-center">
+                        <input type="hidden" name="hid_Report" id="hid_Report" ng-model="hid_Report" />
+                        <button type="submit" class="btn green" ng-click="ProductSeriesReportExcel()" id="btnSubmit">Generate Excel</button>
+
+                    </div>
+                </div>
+
+                <div class="form-actions" ng-if="!('@TempData["Report"]' == 'Report')">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmitSeries">Submit</button>
+                            @Html.ActionLink(" ", "index", "AuthorContract", null, new { area = "Contract", id = "JqueryClick" })
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+
+
+
+        </div>
+</div>
+<input type="hidden" name="hid_for" id="hid_for" />
+<input type="hidden" name="hid_from" id="hid_from" />
+<input type="hidden" name="hid_show" id="hid_show" />
+<input type="hidden" name="hid_for_List" id="hid_for_List" value="@TempData["List"]" />
+<input type="hidden" name="hid_for_Dashboard" id="hid_for_Dashboard" value="@TempData["Report"]" />
+
+@*<script type="text/javascript">
+        var $j = jQuery.noConflict();
+
+        $j(document).ready(function () {
+            $j('#FinalPublishingDate').datepicker({
+                dateFormat: 'dd/mm/yy',
+                minDate: 0,
+                changeYear: true,
+                changeMonth: true,
+                showOn: "button"
+            })
+        });
+
+    </script>*@
+
+<script type="text/javascript">
+
+    function chk_Parent(source) {
+
+        checkboxes = document.getElementsByName('chk_ProductIdParent');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            if (!checkboxes[i].disabled)
+                checkboxes[i].checked = source.checked;
+        }
+
+
+
+    }
+    function fireMe(obj) {
+        var length = $(".customizeLink").length;
+        for(i=0;i<$(".customizeLink").length;i++)
+        {
+            $($(".customizeLink")[i]).attr("sequence", i);
+        }
+        angular.element(document.getElementById('angularid')).scope().DisplayDiv(parseInt($(obj).attr("sequence"))+1);
+    };
+
+    function chk_Child(ID) {
+
+        if ($(".chk_ProductId").length == $(".chk_ProductId:checked").length) {
+            $("#chk_ProductIdParent").attr("checked", "checked");
+
+        } else {
+            $("#chk_ProductIdParent").removeAttr("checked");
+        }
+
+    }
+
+
+    var dateToday = new Date();
+    //$(function () {
+    //    $('#FinalPublishingDate').datetimepicker({
+    //        format: "dd/mm/yyyy",
+    //        autoclose: true,
+    //        endDate: dateToday,
+    //    });
+
+    //});
+    $(document).ready(function () {
+        $('#ProjectedPublishingDate').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true
+        });
+        $('#FinalPublishingDate').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true
+        });
+
+        
+
+        $('#hid_for').val(GetParameterValues("for"))
+        $('#hid_from').val(GetParameterValues("from"))
+        $('#hid_show').val(GetParameterValues("show"))
+        
+        function GetParameterValues(param) {
+            var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < url.length; i++) {
+                var urlparam = url[i].split('=');
+                if (urlparam[0] == param) {
+                    return urlparam[1];
+                }
+            }
+        }
+
+        if ($("#hid_from").val() != "" ) {
+            angular.element(document.getElementById('angularid')).scope().SearchingListResult();
+            $("#search").css("display", "block");
+            $("#Product_search").css("display", "none");
+
+        }
+
+
+
+
+
+
+        $("#btnSubmitSeries").click(function () {
+            if ($(".seriesSelect").is(":visible"))
+            {
+                //redirect search result to author contract contracoller in web of authorcontract area
+                if ($('.chk_ProductId:checked').length > 0)
+                {
+                    location.href = $("#JqueryClick").attr("href").replace('/Product/', '/Contract/') + "?SeriesIds=" + $('.chk_ProductId:checked').map(function () { return this.value; }).get().join(',');
+                }
+                else {
+                    alert("Please select product to create series contract");
+                    return false;
+                }
+
+               
+            }
+           
+        });
+       
+
+        //change button if come from Dashboard
+        if ($("#hid_show").val().toLowerCase() == "dashboard" || $("#hid_for_Dashboard").val().toLowerCase() == "dashboard") {
+            $('.backtoSearch').hide();
+            $('.backtoDashboard').show();
+        }
+        else {
+            $('.backtoDashboard').hide();
+            $('.backtoSearch').show();
+        }
+
+
+      
+
+    });
+
+    function callme(obj)
+    {
+        setTimeout(function () { $(".ui-autocomplete:visible").find("li:not(:first)").hide(); },300);
+       
+    }
+</script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/script/jquery-ui.js"></script>
+
+
+<!-- Button trigger modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document" style="width:90%;">
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+            @Html.Partial("~/Areas/Product/Views/Shared/_ProductView.cshtml")
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->

@@ -1,0 +1,700 @@
+﻿@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/PermissionsInbound/PermissionsInboundsearch.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<link href="~/Content/InboundCustom.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getContractPartyType();
+    angular.element(document.getElementById('angularid')).scope().getAssetSubType();
+    angular.element(document.getElementById('angularid')).scope().getStatus();
+    angular.element(document.getElementById('angularid')).scope().getCopyRightHolder();
+    angular.element(document.getElementById('angularid')).scope().getCurrencyList();
+    angular.element(document.getElementById('angularid')).scope().getOtherRightsMaster();
+}
+
+<div class="clearfix"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    @if (ViewBag.Report == "report")
+                    {
+                        <span>Permissions Inbound Report </span>
+                    }
+                    else
+                    {
+                        <span>Permissions Inbound Search</span>
+                    }
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <form name="userForm" class=" form-horizontal inboundSearch" ng-submit="Fn_SearchInboundPermission(PermissionsInboundModel)" novalidate ng-cloak>
+            <div class="col-md-12 ">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Additional Search
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class=" row">
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-6">Permission Inbound Code</label>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.InboundPermissionCode" name="InboundPermissionCode" placeholder="Permission Inbound Code" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="display:none;">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.initailize" ng-init="PermissionsInboundModel.initailize=1" name="Forinitializing" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-6">Product Code</label>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.ProductCode" name="ProductCode" placeholder="Product Code" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-6">Author Contract Code</label>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.AuthorContractCode" name="AuthorContractCode" placeholder="Author Contract Code" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-6">License Code</label>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.LicenseCode" name="LicenseCode" placeholder="License Code" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-6">Working Product</label>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.ProductName" name="ProductName" placeholder="Working Product" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-6">Author Name</label>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.AuthorName" name="AuthorName" placeholder="Author Name" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-6">ISBN</label>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.ISBN" name="ISBN" placeholder="ISBN" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-6">Working Sub-Product</label>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.SubProductName" name="SubProductName" placeholder="Working Sub-Product" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Search Parameters
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class=" row">
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Assets type</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" class="AssetTypeChk" name="AssetstypeImage" ng-model="PermissionsInboundModel.AssetstypeImage" ng-change="ShowHideAssetBox($event)" value="I"> Image Bank/ Video Bank
+                                                </label>
+                                                <label class="checkbox" style="padding-top: 0px !important; float: right; margin-top: -20px; ">
+                                                    <input type="checkbox" class="AssetTypeChk" name="AssetstypeOthers" ng-model="PermissionsInboundModel.OtherChange" ng-change="OthersSlideUpDown($event)" value="O"> Others
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Image Bank/ Video Bank
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class=" row">
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Vendor Name</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <select class="form-control" name="PartyName" id="PartyName" ng-model="PermissionsInboundModel.partyid">
+                                                    <option value="">Please Select</option>
+                                                    <option ng-repeat="div in ContractPartyTypeList" value="{{div.Id}}">{{div.partyname}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Restriction</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" name="Restriction" class="form-control" ng-model="PermissionsInboundModel.Restriction" placeholder="Restriction">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-6">
+                                        <label class=" col-md-5">E-book Rights</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" class="radio" name="Ebookrights" ng-model="PermissionsInboundModel.Ebookrights" value="Yes"> Yes
+                                                </label>
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" class="radio" name="Ebookrights" ng-model="PermissionsInboundModel.Ebookrights" value="No"> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Print Rights</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" class="radio" name="PrintRight" ng-model="PermissionsInboundModel.PrintRights" value="Yes"> Yes
+                                                </label>
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" class="radio" name="PrintRight" ng-model="PermissionsInboundModel.PrintRights" value="No"> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Electronic Rights</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" class="radio" name="ElectronicRights" ng-model="PermissionsInboundModel.ElectronicRights" value="Yes"> Yes
+                                                </label>
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" class="radio" name="ElectronicRights" ng-model="PermissionsInboundModel.ElectronicRights" value="No"> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Assets Details
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class=" row">
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Copyright Holder</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <select class="form-control" name="CopyRightHolder" id="CopyRightHolder" ng-model="PermissionsInboundModel.CopyrightHoplderId">
+                                                    <option value="">Please Select</option>
+                                                    <option ng-repeat="div in CopyRightHolderList" value="{{div.Id}}">{{div.CopyRightHolderName}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">	Status</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <select class="form-control" name="Status" id="Status" ng-change="ShowExtraSearch(PermissionsInboundModel.Status)" ng-model="PermissionsInboundModel.Status">
+                                                    <option value="">Please Select</option>
+                                                    <option ng-repeat="div in StatusList" value="{{div.Id}}">{{div.Status}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Asset Sub-Type</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <select class="form-control" name="AssetSubType" id="AssetSubType" ng-model="PermissionsInboundModel.AssetSubTypeId">
+                                                    <option value="">Please Select</option>
+                                                    <option ng-repeat="div in AssetSubTypeList" value="{{div.Id}}">{{div.AssetName}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Extent </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.Extent" name="Extent" placeholder="Extent" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Gratis copies to be sent</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" name="Gratiscopytobesent " ng-model="PermissionsInboundModel.Gratiscopytobesent" value="Yes"> Yes
+                                                </label>
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" name="Gratiscopytobesent " ng-model="PermissionsInboundModel.Gratiscopytobesent" value="No"> No
+                                                </label>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Original Source </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.OriginalSource" name="OriginalSource" placeholder="Original Source" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Restriction </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="RestrictionOther" ng-model="PermissionsInboundModel.RestrictionOther" id="RestrictionOther" placeholder="Restriction" />
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Sub-Licensing</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" name="SubLicensing" ng-model="PermissionsInboundModel.SubLicensing" value="Yes"> Yes
+                                                </label>
+                                                <label class="radio-inline" style="padding-top: 0px !important;">
+                                                    <input type="radio" name="SubLicensing" ng-model="PermissionsInboundModel.SubLicensing" value="No"> No
+                                                </label>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Fee  </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="number" min="0" class="form-control" ng-model="PermissionsInboundModel.Fee" name="Fee" placeholder="Fee" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Currency</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <select class="form-control" name="Currency" ng-model="PermissionsInboundModel.CurrencyId">
+                                                    <option value="">--Please Select--</option>
+                                                    <option ng-repeat="Currency in CurrencyList" value="{{Currency.Id}}">{{Currency.CurrencyName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Invoice Number   </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.InvoiceNumber" name="InvoiceNumber" placeholder="Invoice Number" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Invoice Value   </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="number" min="0" class="form-control" ng-model="PermissionsInboundModel.Invoicevalue" name="InvoiceValue" placeholder="Invoice Value" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6" ng-repeat="div in dateRequestList">
+                                        <label class="control-label col-md-5">Date of {{div}} Request</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group date">
+                                                <div class="input-group input-append date PermissionsInboundDate">
+                                                    <input type="text" id="Date1stRequest" index="{{$index}}" name="Date1stRequest" class="form-control" ng-model="DateRequest[$index]" onchange="Filldate(this)" placeholder="Date of {{div}} Request">
+                                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Permission Expiry date</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group date">
+                                                <div class="input-group input-append date PermissionsInboundDate">
+                                                    <input type="text" id="PermissionExpirydate" name="PermissionExpirydate" class="form-control" onchange="FillExpiry($(this))" ng-model="PermissionsOutboundModel.PermissionExpirydate" placeholder="Permission Expiry date">
+                                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 text-center">
+                <div class="form-actions">
+                    <div class="row">
+                        <input type="hidden" ng-model="hid_BackToSearch" id="hid_BackToSearch" name="hid_BackToSearch" value="@TempData["BackToSearch"]" />
+                        <input type="hidden" ng-model="hid_AddCopyrightHolder" id="hid_AddCopyrightHolder" name="hid_AddCopyrightHolder" value="@TempData["Type"]" />
+                        <input type="hidden" ng-model="hid_AddDasData" id="hid_AddDasData" name="hid_AddDasData" value="@TempData["Data"]" />
+                        <input type="hidden" ng-model="hid_Action" id="hid_Action" name="hid_Action" value="@TempData["Action"]" />
+
+                        <button type="submit" class="btn green" id="btnSubmit">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="container-fluid InboundList" style="display:none;" ng-show="ResultList.length>0">
+    <div class="row">
+        <div class="col-md-12 backtoSearch">
+            <div class="tools">
+                <span class="back-to-search" id="btn_backtosearch" ng-click="BackToserch()"> Back To Search </span>
+                <span class="back-to-search" id="btn_backtodashboard" style="display:none;" ng-click="BackToserch()"> Back To Dashboard </span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        @if (ViewBag.Report == "report")
+                        {
+                            <span>Permissions Inbound Report </span>
+                        }
+                        else
+                        {
+                            <span>Permissions Inbound List</span>
+                        }
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="">
+
+                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>Permission Inbound Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>                                    
+                                    <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Working Product &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Author Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                    <!--Redirect from dashboard-->
+                                    <th ng-if="'@TempData["Action"]'=='dashboard'">Assets Type &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th ng-if="'@TempData["Action"]'=='dashboard'">Expiry Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                    @*<th>Contract Type</th>
+                                    <th>Contract Code</th>*@
+                                    <th ng-if="'@TempData["Type"]' != '' || '@TempData["BackToSearch"]' == 'BackToSearch' ">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="obj in ResultList" class="tooltipclass">
+
+                                    <td>{{$index + 1}}</td>
+
+                                    <td>
+                                        <a style="color:#ee5941;" class="ng-binding" href="~/PermissionsInbound/PermissionsInbound/ViewInbound?type={{obj.TypeProdyctId}}&InboundId={{obj.Code}} ">{{obj.Code}}</a>
+
+                                    </td>
+
+                                    <td>
+                                        <a style="color:#ee5941;" class="ng-binding" href="~/Product/ProductMaster/ProductDetailsView?Id={{obj.productId}}">{{obj.ProductCode}}</a>
+                                    </td>
+
+                                    <td>
+                                        <span ng-bind="obj.ISBN"></span>
+                                    </td>
+
+                                    <td>
+                                        <span ng-bind="obj.WorkingProduct"></span> <br /> <span style="font-size:11px;" ng-bind="obj.WorkingSubProduct"></span>
+                                    </td>
+
+                                    <td>
+                                        <span ng-bind="obj.AuthorName"></span>
+                                    </td>
+
+                                    <!--Redirect from dashboard-->
+                                    <td ng-if="'@TempData["Action"]'=='dashboard'">
+                                        <span ng-bind="obj.AssetsType"></span>
+                                    </td>
+
+                                    <td ng-if="'@TempData["Action"]'=='dashboard'">
+                                        <span class="sortDateHide" ng-bind="obj.permissionexpirydateForSort"></span>{{obj.permissionexpirydate}}
+                                    </td>
+
+                                    @*<td>{{obj.TypeFor}} </td>*@
+
+                                    @*<td ng-if="(obj.TypeForValue == 'C')">
+                                        <a style="color:#ee5941;" class="ng-binding" href="~/Contract/AuthorContract/view?Id={{obj.TypeId}}">{{obj.TypeCode}}</a>
+                                    </td>
+                                    <td ng-if="(obj.TypeForValue == 'L')">
+                                        <a style="color:#ee5941;" class="ng-binding" href="~/Product/ProductLicense/view?Id={{obj.TypeId}}">{{obj.TypeCode}}</a>
+                                    </td>*@
+
+
+
+                                    <td ng-hide="TitleLinking" ng-if="'@TempData["Type"]' != '' || '@TempData["BackToSearch"]' == 'BackToSearch'">
+                                        <div class="tooltip-container">
+                                            <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                            @*<label for="tooltip-toggle" ng-click="DisplayDiv($index+1)" class="tooltip-btn">*@
+                                            <label for="tooltip-toggle" onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                Action
+                                            </label>
+
+
+                                            <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                            <div class="tooltip-content">
+                                                <div class="linking">
+                                                    <ul>
+
+                                                        @*<li ng-if="'@TempData["Type"]' == 'Update' && ('@TempData["User"]' == 'ad' || '@TempData["User"]' == 'rt')"><a href="~/PermissionsInbound/PermissionsInbound/UpdateInbound?Id={{obj.ContractId}}&type={{obj.ProductId}}&InboundId={{obj.Code}} ">Update Permission Inbound</a></li>
+                                                        <li ng-if="'@TempData["Type"]' == 'View'"><a href="~/PermissionsInbound/PermissionsInbound/ViewInbound?Id={{obj.ContractId}}&type={{obj.ProductId}}&InboundId={{obj.Code}} ">View Permission Inbound</a></li>*@
+
+                                                        <li ng-if="'@TempData["Type"]' == 'Update' && ('@TempData["User"]' == 'ad' || '@TempData["User"]' == 'rt' || '@TempData["User"]' == 'sa')"><a href="~/PermissionsInbound/PermissionsInbound/UpdateInbound?type={{obj.TypeProdyctId}}&InboundId={{obj.Code}} ">Update Permission In-bound</a></li>
+                                                        <li ng-if="'@TempData["Type"]' == 'View'"><a href="~/PermissionsInbound/PermissionsInbound/ViewInbound?type={{obj.TypeProdyctId}}&InboundId={{obj.Code}}">View Permission In-bound</a></li>
+
+                                                        <li ng-if="'@TempData["Type"]' == 'CopyrightHolder'"><a href="~/PermissionsInbound/PermissionsInbound/AddCopyrightHolder?code={{obj.Code}}">Add Copyright holder</a></li>
+
+                                                        <li>
+                                                            <a href="javascript:void(0);" ng-if="'@TempData["User"]' == 'sa' && '@TempData["Type"]' == 'Delete'" ng-click="DeletePermissionInbound(obj.Code,'sa')">Delete all entries</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="~/PermissionsInbound/PermissionsInbound/ViewInbound?type={{obj.TypeProdyctId}}&InboundId={{obj.Code}}&For=Delete" ng-if="'@TempData["User"]' == 'sa' && '@TempData["Type"]' == 'Delete'">Delete single entry</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        @if (ViewBag.Report == "report")
+                        {
+                            <div class="PrintTableData" style="display:none">
+                                <table class="table table-bordered table-striped table-condensed flip-content" id="TblForPrint" >
+                                    <thead class="flip-content">
+                                        <tr>
+                                            <th>SNo</th>
+                                            <th>Permission Inbound Code</th>
+                                            <th>Product Code</th>
+                                            @*<th>Type For</th>
+                                            <th>Type Code</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="obj in ResultList" class="tooltipclass">
+                                            <td>{{$index + 1}}</td>
+
+                                            <td>
+                                               {{obj.Code}}
+                                            </td>
+
+                                            <td>
+                                               {{obj.ProductCode}}
+                                            </td>
+                                            @*<td>{{obj.TypeFor}}</td>
+                                            <td>{{obj.TypeCode}}</td>*@
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+              
+
+            </div>
+        </div>
+
+        @*@if (Session["PrintPermissions"] != null && ViewBag.Report == "report")
+        {
+        <div class="col-md-12 text-center btnPrint">
+            <div class="tools">
+                @* Click Event Is Define in ~/Views/Shared/Footer.cshtml File *@
+                    @*<input type="button" class="btn green" id="btn_printDataTable" value="Print" style=" margin: .5%; ">
+                </div>
+            </div>
+        }*@
+
+        @if (Session["GenerateExcelPermissions"] != null && ViewBag.Report == "report")
+        {
+            <div class="col-md-12 text-center btnPrint">
+                <div class="tools">
+                    <button type="submit" class="btn green" ng-click="PermissionsInboundReportExcel()" id="btnSubmit">Generate Excel</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.PermissionsInboundDate')
+                .datepicker({
+                    format: "dd/mm/yyyy",
+                    showButtonPanel: true,
+                    autoclose: true,
+
+                })
+    });
+    function Filldate(obj) {
+        var obj = $(obj);
+        angular.element(document.getElementById('angularid')).scope().SetDateValue(obj);
+    }
+    function FillExpiry(obj) {
+        var obj = $(obj);
+        angular.element(document.getElementById('angularid')).scope().FillExpiry(obj);
+    }
+
+    function fireMe(obj) {
+        var length = $(".customizeLink").length;
+        for (i = 0; i < $(".customizeLink").length; i++) {
+            $($(".customizeLink")[i]).attr("sequence", i);
+        }
+        angular.element(document.getElementById('angularid')).scope().DisplayDiv(parseInt($(obj).attr("sequence")) + 1);
+    };
+
+</script>

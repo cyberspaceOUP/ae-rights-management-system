@@ -1,0 +1,170 @@
+﻿
+
+<script src="~/js/Product/ProprietorDetails.js"></script>
+<script src="~/js/common/Common.PublishingPubCenter.js"></script>
+
+<div class=" row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Proprietor ISBN  <span class="red" ng-show="ProprietorISBN">*</span></label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorISBN.$dirty) && userForm.ProprietorISBN.$invalid } ">
+                        <input type="text" id="ProprietorISBN" name="ProprietorISBN" class="form-control" maxlength="13" ng-init="ProprDetailCntrl.ProprietorISBN=''"
+                               ng-model="ProprDetailCntrl.ProprietorISBN" ng-pattern="/^[0-9]{13}$/" placeholder="Proprietor ISBN" ng-required="ProprietorISBN && reqProductCategory">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorISBN.$error.required && (userForm.ProprietorISBN.$dirty || submitted)" class="help-block red">Please enter Proprietor ISBN</p>
+                            <p ng-show="userForm.ProprietorISBN.$error.pattern" class="help-block red">Please enter valid ISBN should be 13 digit</p> 
+                            @* Proprietor ISBN*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<input type="text" id="ProprietorISBN" name="ProprietorISBN" class="form-control" ng-maxlength="13" ng-init="ProprietorISBN='1234567891234'"
+            ng-model="ProprietorISBN" ng-pattern="/^[0-9]{13}$/" placeholder="Proprietor ISBN" ng-required="ProprietorISBN">*@
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Proprietor Product <span class="red" ng-show="ProprietorProduct">*</span></label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorProduct.$dirty) && userForm.ProprietorProduct.$invalid } ">
+                        <input type="text" name="ProprietorProduct" class="form-control"
+                               ng-init="ProprDetailCntrl.ProprietorProduct=''"
+                               ng-model="ProprDetailCntrl.ProprietorProduct" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Proprietor Product" ng-required="ProprietorProduct && reqProductCategory">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorProduct.$error.required && (userForm.ProprietorProduct.$dirty || submitted)" class="help-block red">Please enter Proprietor Product</p>
+                            <p ng-show="userForm.ProprietorProduct.$error.pattern" class="help-block red">Please enter valid Proprietor Product</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Proprietor Edition <span class="red" ng-show="ProprietorEdition">*</span> </label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorEdition.$dirty) && userForm.ProprietorEdition.$invalid } ">
+                        <input type="text" name="ProprietorEdition" class="form-control"
+                               ng-init="ProprDetailCntrl.ProprietorEdition=''"
+                               ng-model="ProprDetailCntrl.ProprietorEdition" maxlength="7" ng-pattern="/^[0-9]{1,7}$/" placeholder="Proprietor Edition" ng-required="ProprietorEdition && reqProductCategory">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorEdition.$error.required && (userForm.ProprietorEdition.$dirty || submitted)" class="help-block red">Please enter Proprietor Edition</p>
+                            <p ng-show="userForm.ProprietorEdition.$error.pattern" class="help-block red">Please enter valid Proprietor Edition</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Proprietor Copyright Year <span class="red" ng-show="ProprietorCopyrightYear">*</span> </label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorCopyrightYear.$dirty) && userForm.ProprietorCopyrightYear.$invalid } ">
+                        <input type="text" name="ProprietorCopyrightYear" maxlength="4" class="form-control"
+                               ng-init="ProprDetailCntrl.ProprietorCopyrightYear=''"
+                               ng-model="ProprDetailCntrl.ProprietorCopyrightYear" ng-pattern="/^(19|20)\d{2}/" placeholder="Proprietor Copyright Year" ng-required="ProprietorCopyrightYear && reqProductCategory">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorCopyrightYear.$error.required && (userForm.ProprietorCopyrightYear.$dirty || submitted)" class="help-block red">Please enter Proprietor Copyright Year</p>
+                            <p ng-show="userForm.ProprietorCopyrightYear.$error.pattern" class="help-block red">Please enter valid Proprietor Copyright Year</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5">Publishing Company <span class="red" ng-show="PublishingCompanyMandatory">*</span> </label>
+                        <div class="col-md-7">
+                            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.PublishingCompany.$dirty) && userForm.PublishingCompany.$invalid } ">
+                                <select class="form-control" id="PublishingCompany" ng-change="getPubCenterByCompanyIdList();PublishPubCntrl.PubCenter='';getImprintByCompanyIdList();ProprDetailCntrl.ProprietorImprint='';" name="PublishPubCntrl.PublishingCompany"
+                                        ng-init="PublishPubCntrl.PublishingCompany=''"
+                                        ng-model="PublishPubCntrl.PublishingCompany" ng-required="PublishingCompanyMandatory  && reqProductCategory">
+                                    <option value="">Please Select</option>
+                                    <option ng-repeat="div in PublishingCompanyList" ng-model="PublishingCompany" ng-selected="{{div.Id == PublishPubCntrl.PublishingCompany}}" value="{{div.Id}}">{{div.CompanyName}}</option>
+                                </select>
+                                <div class="help-block">
+                                    <p ng-show="userForm.PublishingCompany.$error.required && (userForm.PublishingCompany.$dirty || submitted)">Please select Publishing Company</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5">Publishing Centre<span class="red" ng-show="PubCenterMandatory">*</span> </label>
+                        <div class="col-md-7">
+                            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.PubCenter.$dirty) && userForm.PubCenter.$invalid } ">
+                                <select class="form-control" id="PubCenter" name="PubCenter"
+                                        ng-init="PublishPubCntrl.PubCenter=''"
+                                        ng-model="PublishPubCntrl.PubCenter" ng-required="PubCenterMandatory && reqProductCategory">
+                                    <option value="">Please Select</option>
+                                    <option ng-repeat="div in PubCenterList" ng-model="PubCenter" ng-selected="{{div.Id == PublishPubCntrl.PubCenter}}" value="{{div.Id}}">{{div.CenterName}}</option>
+                                </select>
+                                <div class="help-block">
+                                    <p ng-show="userForm.PubCenter.$error.required && (userForm.PubCenter.$dirty || submitted)">Please select Publishing Centre</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Imprint <span class="red" ng-show="ProprietorImprint">*</span></label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Imprint.$dirty) && userForm.Imprint.$invalid } ">
+                        <select class="form-control" id="Imprint" name="Imprint"
+                                ng-init="ProprDetailCntrl.ProprietorImprint=''"
+                                ng-model="ProprDetailCntrl.ProprietorImprint" ng-required="ProprietorImprint && reqProductCategory">
+                            <option value="">Please Select</option>                           
+                            <option ng-repeat="div in Imprint_List" ng-model="Imprint" ng-selected="{{div.Id == ProprDetailCntrl.ProprietorImprint}}" value="{{div.Id}}">{{div.ImprintName}}</option>
+                        </select>
+                        @*<option ng-repeat="div in PROPImprintList" ng-model="Imprint" value="{{div.Id}}">{{div.ImprintName}}</option>*@ @*ng-hide="div.ImprintName=='Oxford University Press'"*@ 
+                        <div class="help-block">
+                            <p ng-show="userForm.Imprint.$error.required && (userForm.Imprint.$dirty || submitted)">Please select Imprint</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ProprietorDetails" style="padding-right:40px;">
+        @*Commented & Added by rajneesh Singh on 22/08/2016*@
+        @*@{
+                if (ViewBag.For == 1)
+                {
+                    @Html.Partial("~/Views/Shared/_AuthorSuggestionAuthorSearch.cshtml");
+                }
+                else
+                {
+
+                    @Html.Partial("~/Views/Shared/_AuthorSuggestion.cshtml");
+                }
+            }*@
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Author Name </label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorAuthorName.$dirty) && userForm.ProprietorAuthorName.$invalid } ">
+
+
+                        <input type="text" name="ProprietorAuthorName" class="form-control"
+                               ng-init="ProprDetailCntrl.ProprietorAuthorName=''"
+                               ng-model="ProprDetailCntrl.ProprietorAuthorName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorAuthorName.$error.required && (userForm.ProprietorAuthorName.$dirty || submitted)" class="help-block red">Please enter valid Author Name</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @*Ended by Rajneesh Singh*@
+    </div>
+</div>
+

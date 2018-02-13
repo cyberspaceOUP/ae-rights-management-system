@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "ManuscriptDeliveryFormatMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<style type="text/css">
+    .fa {
+        color: black !important;
+    }
+
+    th {
+        text-align: left !important;
+    }
+
+    td {
+        text-align: left !important;
+    }
+</style>
+
+
+<script src="~/js/master/Master.ManuscriptDeliveryFormatMaster.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/app.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+<link href="~/Content/app.css" rel="stylesheet" />
+<script type="text/javascript">
+
+</script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().GetManuscriptDeliveryFormatList();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Manuscript Delivery Format Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Manuscript Delivery Format Master
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <form name="userForm" class="form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Manuscript Delivery Format<span class="red"> *</span></label>
+                                    <div class="col-md-7">
+                                        <div class="row" ng-class="{ 'has-error': ( submitted ||userForm.name.$dirty) && userForm.name.$invalid } ">
+                                            <input type="text" name="name" class="form-control" ng-model="name" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Manuscript Delivery Format">
+                                            <div class="help-block">
+                                                <p ng-show="userForm.name.$error.required && (userForm.name.$dirty || submitted)" class="help-block">Please Enter Manuscript Delivery Format </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                        </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <input type="hidden" id="hid_recordid" name="hid_recordid" ng-model="hid_recordid" />
+                                        <button type="submit" class="btn green" id="btnSubmit" ng-model="btnSubmit">Submit</button>
+                                    </div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                            </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Manuscript Delivery Format List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Manuscript Delivery Format</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ManuscriptDeliveryFormatMaster in ManuscriptDeliveryFormatList">
+                                <td>{{ManuscriptDeliveryFormatMaster.ManuscriptDeliveryFormat}}</td>
+                                <td><a ng-click="EditManuscriptDeliveryFormatData(ManuscriptDeliveryFormatMaster.Id)"><i class="fa fa-edit" title="Edit Manuscript Delivery Format"></i></a></td>
+                                <td>
+                                    <a ng-click="DeleteManuscriptDeliveryFormat(ManuscriptDeliveryFormatMaster.Id)" ng-if="ManuscriptDeliveryFormatMaster.Flag =='0'"><i class="fa fa-trash-o" title="Delete Manuscript Delivery Format"></i></a>
+                                    <a ng-if="ManuscriptDeliveryFormatMaster.Flag =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Linked With Other Master"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

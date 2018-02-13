@@ -1,0 +1,2640 @@
+﻿@using ACS.Services.Master
+@*@model ACS.Core.Domain.Master.AuthorMaster*@
+@{
+    ViewBag.Title = "AuthorMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+
+}
+
+<style type="text/css">
+    .fa {
+        color: black !important;
+    }
+
+    th {
+        text-align: left !important;
+    }
+
+    td {
+        text-align: left !important;
+    }
+</style>
+
+
+@*<script src="~/Content/script/jquery-2.1.0.min.js"></script>*@
+<script src="~/js/master/common.master.js"></script>
+@*<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+    <script src="~/Content/script/jquery.responsiveTabs.js"></script>*@
+<script src="~/js/master/Master.Author.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+@section onInit
+{
+
+    angular.element(document.getElementById('angularid')).scope().getAuthorDepartmentList();
+
+    angular.element(document.getElementById('angularid')).scope().GeogList();
+
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1 id="pageHeaddingAuthor">
+                    Author Master
+                    @Html.Partial("pagedate")
+                </h1>
+
+                <h1 id="pageHeaddingAuthorView" style="display:none;">
+                    Author View
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        @if (Session["PrintPermissions"] != null && TempData["viewId"].ToString() != "0")
+        {
+            <div class="col-md-12 text-right btnPrint">
+                <div class="tools">
+                    <input type="button" class="btn green" id="btn_printPage" value="Print">
+                </div>
+            </div>
+        }
+        <div class="col-md-12">&nbsp;</div>
+        <div class="col-md-12 text-right backToList" style="display:none;">
+            <div class="tools">
+                <a href="~/Master/Master/AuthorSearch?For=BackToSearch" style="color:black;">Back To List</a>
+            </div>
+        </div>
+
+        <div class="col-md-12 text-left AuthorCodeValue" style="display:none;">
+            <div class="tools">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5"> <b>Author Code</b> : <span ng-bind="AuthorCode"></span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <input type="hidden" name="hid_ViewAuthor" id="hid_ViewAuthor" value="@TempData["viewid"]" />
+        <!--Author Master entry detail-->
+        <form name="userForm" class="form-horizontal" id="FrmInsert" novalidate ng-submit="submitForm()" ng-cloak @*ng-controller="Load"*@>
+
+            <div id="profileContainer" class="col-md-12">
+
+
+
+                <ul class="nav nav-tabs noTabBackground responsive">
+                    <li class="nav active Author"><a data-toggle="tab" href="#Author" style="color: #000 !important; font-size: 16px;"> Author Details</a></li>
+
+                    <li class="nav Affiliation"><a data-toggle="tab" href="#Affiliation" style="color: #000 !important; font-size: 16px;">Affiliation Details</a></li>
+
+
+
+                    <li class="nav Beneficiary" ng-show="BenificaryHide"><a data-toggle="tab" href="#Beneficiary" style="color: #000 !important; font-size: 16px;">Beneficiary Details</a></li>
+                    <li class="nav Nominee"><a data-toggle="tab" href="#Nominee" style="color: #000 !important; font-size: 16px;">Nominee Details</a></li>
+
+                </ul>
+                <div class="tab-content responsive">
+
+
+                    <div id="Author" class="tab-pane fade in active tabOpac form" ng-controller="AuthorTab">
+                        <div class="panel panel-default" style="border-top: none;">
+                            <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; font-size: 18px; ">Author Details </div>
+
+                            <div class="panel-body">
+                                <div class="portlet-body form">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class=" row">
+                                                <div class="col-md-12">
+
+
+
+                                                    <div class="form-group">
+
+                                                        <label class="checkbox" style="padding-left: 65px;">
+
+                                                            <input type="checkbox" style="float:right;" ng-model="string" id="CheckNominee" ng-checked="true" name="CheckNominee" ng-click="ShowNominee_Detials()" />
+
+                                                            Beneficiary details same as Author details
+                                                        </label>
+
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="col-md-6">
+                                                    
+                                                    <div class=" row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Type <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group">
+
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="Type" ng-model="Type" value="Individual" required> Individual
+
+                                                                    </label>
+
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="Type" ng-model="Type" value="Institute" required> Institute
+
+                                                                    </label>
+
+                                                                </div>
+                                                                <div ng-class="{ 'has-error' : userForm.Type.$invalid && (userForm.Type.$dirty || submitted)}">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Type.$error.required && (userForm.Type.$dirty || submitted)" class="help-block">Please enter Author Type</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Author SAP Code @*<span class="red">*</span>*@</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" @*ng-class="{ 'has-error': ( submitted ||userForm.AuthorSAPCode.$dirty) && userForm.AuthorSAPCode.$invalid } "*@>
+                                                                    <input type="text" name="AuthorSAPCode" class="form-control" ng-model="AuthorSAPCode" maxlength="6"
+                                                                           @*ng-required="!(AuthorSAPCode.length || AuthorSAPCode.length)"*@ ng-pattern="/^[0-9]*$/" placeholder="Author SAP Code">
+                                                                    @*<div class="help-block">
+                                                                        <p ng-show="userForm.AuthorSAPCode.$error.required && (userForm.AuthorSAPCode.$dirty || submitted)" class="help-block red">Please enter Author SAP Code.</p>
+                                                                        <p ng-show="userForm.AuthorSAPCode.$error.pattern" class="help-block red">Please enter valid Author SAP Code.</p>
+                                                                    </div>*@
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">First Name <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.FirstName.$dirty) && userForm.FirstName.$invalid } ">
+                                                                    <input type="text" name="FirstName" id="FirstName" ng-required="!(FirstName.length || LastName.length)" 
+                                                                           class="form-control" ng-model="FirstName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="First Name" maxlength="50">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.FirstName.$error.required && (userForm.FirstName.$dirty || submitted)" class="help-block red">Please enter Author First Name</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Last Name <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.LastName.$dirty) && userForm.LastName.$invalid } ">
+                                                                    <input type="text" name="LastName" class="form-control" ng-model="LastName" ng-required="!(FirstName.length || LastName.length)"
+                                                                           ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Last Name" maxlength="50">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.LastName.$error.required && (userForm.LastName.$dirty || submitted)" class="help-block red">Please enter Author Last Name</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> Address <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Address.$dirty) && userForm.Address.$invalid } ">
+                                                                    <textarea name="Address" class="form-control" ng-model="Address" required @*ng-pattern="/^[a-zA-Z'.\s]/"*@ 
+                                                                              placeholder="Address"></textarea>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Address.$error.required && (userForm.Address.$dirty || submitted)" class="help-block red">Please enter Author Address </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Residency Status  <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ResidencyStatus.$dirty) && userForm.ResidencyStatus.$invalid } ">
+
+                                                                    <label class="radio-inline">
+                                                                        @*<input type="radio" name="ResidencyStatus" ng-model="ResidencyStatus" ng-click="function_Resident()"  value="Resident" required> Resident*@
+                                                                        <input type="radio" name="ResidencyStatus" ng-model="ResidencyStatus" ng-click="function_Resident()" ng-attr-value="Resident" required> Resident
+
+                                                                    </label>
+
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="ResidencyStatus" ng-model="ResidencyStatus" value="Non-Resident" ng-change="function_NonResident()" required> Non-Resident
+
+                                                                    </label>
+                                                                    <div ng-class="{ 'has-error' : userForm.ResidencyStatus.$invalid && (userForm.ResidencyStatus.$dirty || submitted)}">
+                                                                        <div class="help-block">
+                                                                            <p ng-show="userForm.ResidencyStatus.$error.required && (userForm.ResidencyStatus.$dirty || submitted)" class="help-block red">Please enter Author Residency Status</p>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" id="Authorgeo">
+                                                        <div class="col-md-12">
+                                                            @Html.Partial("~/Views/Shared/_geoGraphical.cshtml")
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Email <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Email.$dirty) && userForm.Email.$invalid } ">
+                                                                    <input type="text" name="Email" class="form-control" ng-model="Email" required ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/"
+                                                                           placeholder="Email" maxlength="50">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Email.$error.required && (userForm.Email.$dirty || submitted)" class="help-block red">Please enter Email Id</p>
+                                                                        <p ng-show="userForm.Email.$error.pattern" class="help-block red">Please enter valid Email Id</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-6">
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Phone<span class="red">*</span> </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Phone.$dirty) && userForm.Phone.$invalid } ">
+                                                                    <input type="text" name="Phone" class="form-control" ng-model="Phone" maxlength="15" ng-required="!(Phone.length || Mobile.length)" ng-pattern="/^[0-9\_\- ]*$/" placeholder="Phone">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Phone.$error.required && (userForm.Phone.$dirty || submitted)" class="help-block red">Please enter Phone No.</p>
+                                                                        <p ng-show="userForm.Phone.$error.pattern" class="help-block red">Please enter valid Phone No.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Mobile <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Mobile.$dirty) && userForm.Mobile.$invalid } ">
+                                                                    <input type="text" id="Mobile" name="Mobile" class="form-control Mobile" maxlength="15" ng-model="Mobile" ng-required="!(Phone.length || Mobile.length)" ng-pattern="/^[0-9\_\- ]*$/" @*ng-pattern="/^[789]\d{9}$/"*@ placeholder="Mobile">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Mobile.$error.required && (userForm.Mobile.$dirty || submitted)" class="help-block red">Please enter Mobile No.</p>
+                                                                        <p ng-show="userForm.Mobile.$error.pattern" class="help-block red">Please enter valid Mobile No.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Fax </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Fax.$dirty) && userForm.Fax.$invalid } ">
+                                                                    <input type="text" name="Fax" class="form-control" ng-model="Fax" ng-pattern="/^[0-9]+$/" placeholder="Fax" maxlength="50">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Fax.$error.required && (userForm.Fax.$dirty || submitted)" class="help-block red">Please enter Fax No.</p>
+                                                                        <p ng-show="userForm.Fax.$error.pattern" class="help-block red">Please enter valid Fax No.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">PAN <span class="red" ng-show="PANNOReqired">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PANNo.$dirty) && userForm.PANNo.$invalid } ">
+                                                                    <input type="text" name="PANNo" class="form-control" ng-model="PANNo" maxlength="10" ng-required="PANNOReqired" ng-pattern="/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/" placeholder="PAN">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.PANNo.$error.required && (userForm.PANNo.$dirty || submitted)" class="help-block red">Please enter PAN.</p>
+                                                                        <p ng-show="userForm.PANNo.$error.pattern" class="help-block red">Please enter valid PAN.</p>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Aadhaar Card No </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AdharCardNo.$dirty) && userForm.AdharCardNo.$invalid } ">
+                                                                    <input type="text" name="AdharCardNo" class="form-control" maxlength="12" ng-pattern="/^[0-9]{12}$/" ng-model="AdharCardNo" placeholder="Aadhaar Card No">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.AdharCardNo.$error.required && (userForm.AdharCardNo.$dirty || submitted)" class="help-block red">Please enter Aadhaar Card No</p>
+                                                                        <p ng-show="userForm.AdharCardNo.$error.pattern && (userForm.AdharCardNo.$dirty || submitted)" class="help-block red">Please enter valid Aadhaar Card No should be 16 digit</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Date of Birth <span class="red" ng-show="Type == 'Individual'">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" >
+                                                                    <div class="input-group input-medium date date-picker DateOfBirth" ng-class="{ 'has-error': ( submitted ||userForm.DateOfBirth.$dirty) && userForm.DateOfBirth.$invalid } ">
+                                                                        <input type="text" name="DateOfBirth" id="DateOfBirth" onchange="angular.element(document.getElementById('angularid')).scope().SetDateOfBirth(this);" class="form-control" ng-model="DateOfBirth" ng-required="Type =='Individual'" placeholder="Date of Birth">
+                                                                        <span class=" input-group-btn">
+                                                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                                        </span>
+
+                                                                    </div>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.DateOfBirth.$error.required && (userForm.DateOfBirth.$dirty || submitted)" style="color: #a94442;" class="help-block red">Please enter Date of Birth</p>
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <script type="text/javascript">
+                                                                $(document).ready(function () {
+
+                                                                    $('.DateOfBirth')
+                                                                        .datepicker({
+                                                                            format: "dd/mm/yyyy",
+
+                                                                            showButtonPanel: true,
+                                                                            autoclose: true,
+
+
+                                                                        })
+
+
+
+                                                                });
+                                                            </script>
+
+
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Account No <span class="red" ng-show="AccountNoReqired">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AccountNo.$dirty) && userForm.AccountNo.$invalid } ">
+                                                                    <input type="text" name="AccountNo" class="form-control" maxlength="18" ng-pattern="/^[0-9]*$/" ng-model="AccountNo" ng-required="AccountNoReqired" @*ng-pattern="/^[1-9]+[0-9]*$/"*@ placeholder="Account No">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.AccountNo.$error.required && (userForm.AccountNo.$dirty || submitted)" class="help-block red">Please enter Account No.</p>
+                                                                        <p ng-show="userForm.AccountNo.$error.pattern" class="help-block red">Please enter valid Account No.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Bank Name  <span class="red" ng-show="BankNameReq">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BankName.$dirty) && userForm.BankName.$invalid } ">
+                                                                    <input type="text" name="BankName" class="form-control" ng-model="BankName" ng-required="BankNameReq" @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Bank Name">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BankName.$error.required && (userForm.BankName.$dirty || submitted)" class="help-block red">Please enter Bank Name.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Branch Name <span class="red" ng-show="BranchNameReq">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BranchName.$dirty) && userForm.BranchName.$invalid } ">
+                                                                    <input type="text" name="BranchName" class="form-control" ng-model="BranchName" ng-required="BranchNameReq" @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Branch Name">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BranchName.$error.required && (userForm.BranchName.$dirty || submitted)" class="help-block red">Please enter Branch Name</p>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Swift / IFSC Code <span class="red" ng-show="IFSECodeReq">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.IFSECode.$dirty) && userForm.IFSECode.$invalid } ">
+                                                                    <input type="text" name="IFSECode" class="form-control" ng-model="IFSECode" ng-required="IFSECodeReq"
+                                                                           placeholder="Swift / IFSC Code" maxlength="20">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.IFSECode.$error.required && (userForm.IFSECode.$dirty || submitted)" class="help-block red">Please enter Swift / IFSC Code</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Remark</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Remark.$dirty) && userForm.Remark.$invalid } ">
+                                                                    <textarea name="Remark" class="form-control" ng-model="Remark" placeholder="Remark"></textarea>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Remark.$error.required && (userForm.Remark.$dirty || submitted)" class="help-block red">Please enter Remark</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    @*<div class="row">
+                                                            <div class="col-md-12" id="fileuploadcontrol">
+
+                                                            </div>
+
+                                                        </div>*@
+
+
+
+
+
+
+
+
+
+
+
+                                                    <div class="row" ng-show="false">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5">Author Code</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{'has-error': ( submitted ||userForm.Code.$dirty) && userForm.Code.$invalid } ">
+                                                                    <input type="text" name="Code" class="form-control" ng-model="Code" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Code">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Name.$error.required && (userForm.Name.$dirty || submitted)" class="help-block red">Please enter author code</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-2">Uploaded Document</label>
+                                                    <div class="col-md-10">
+                                                        <div @*id="fileuploadcontrol"*@ class="fileuploadcontrol" style=" padding-left: 29px;">
+
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                &nbsp;
+                                                            </div>
+                                                        </div>
+
+                                                        @*<div id="doclistid" ng-show="true" style=" padding-left: 29px;">*@
+                                                        <div id="doclistid" ng-show="documentshow" style=" padding-left: 29px;">
+                                                            <div class="panel panel-warning">
+                                                                <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                                                    <h3 class="panel-title">Uploaded Attachment</h3>
+                                                                </div>
+
+                                                                <div class="tools">
+
+                                                                    <a href="javascript:;" class="collapse"> </a>
+                                                                </div>
+
+                                                                <div class="panel-body">
+
+                                                                    <table class="table table-striped table-hover ">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>S.No</th>
+                                                                                <th>Document Name</th>
+                                                                                <th ng-if="'@ViewBag.Department'=='ad' || '@ViewBag.Department'=='sa'">Action</th>
+
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="url in Docurl">
+                                                                                <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.DocId}}" /></td>
+                                                                                <td>
+                                                                                    <a href="~/uploads/{{url.text}}" target="_blank" style="color: black;" class="hide_for_print"><span ng-bind="url.name"></span></a>
+                                                                                    <a style="color: black; display:none;" class="show_for_print">{{url.name}}</a>
+                                                                                </td>
+                                                                                <td><a style="color: black; cursor:pointer;" ng-if="'@ViewBag.Department'=='ad' || '@ViewBag.Department'=='sa'" ng-click="RemoveDocumentById(url.DocId,url.text)">Delete</a></td>
+
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="Affiliation" class="tab-pane fade tabOpac" ng-controller="AffilationTab">
+                        <div class="panel panel-default" style="border-top: none;">
+                            <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; font-size: 18px; ">Affiliation Details</div>
+                            <div class="panel-body">
+                                <div class="portlet-body form">
+                                    <div class="form-group">
+                                        <div class=" row">
+                                            <div class="col-md-12">
+
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Institute </label>
+                                                            <div class="col-md-7">
+
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.InstituteCompanyName.$dirty) && userForm.InstituteCompanyName.$invalid } ">
+                                                                    <input type="text" name="InstituteCompanyName" class="form-control" ng-model="InstituteCompanyName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Institute Company Name">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.InstituteCompanyName.$error.required && (userForm.InstituteCompanyName.$dirty || submitted)" class="help-block red">Please enter Institute Company Namee</p>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> Designation </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AffiliationDesignation.$dirty) && userForm.AffiliationDesignation.$invalid } ">
+                                                                    <input type="text" name="AffiliationDesignation" class="form-control" ng-model="AffiliationDesignation" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Affiliation Designation">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.AffiliationDesignation.$error.required && (userForm.AffiliationDesignation.$dirty || submitted)" class="help-block red">Please enter Affiliation Designation</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> Department</label>
+                                                            <div class="col-md-7">
+
+                                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.AffiliationDepartment.$dirty) && userForm.AffiliationDepartment.$invalid } ">
+                                                                    @*<select class="form-control" name="AffiliationDepartment" ng-model="AffiliationDepartment">
+                                                                            <option value="">Please Select</option>
+                                                                            <option ng-repeat="div in AuthorDepartmentList" ng-model="Department" value="{{div.Id}}" ng-selected="{{div.Id == AffiliationDepartment}}">{{div.DepartmentName}}</option>
+                                                                        </select>*@
+                                                                    <input type="text" name="AffiliationDepartment" class="form-control" ng-model="AffiliationDepartment" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Affiliation Department">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.AffiliationDepartment.$error.required && (userForm.AffiliationDepartment.$dirty || submitted)">Please select Department</p>
+                                                                        <p ng-show="userForm.AffiliationDepartment.$error.required"></p>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> Address </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AffiliationAddress.$dirty) && userForm.AffiliationAddress.$invalid } ">
+                                                                    <textarea name="AffiliationAddress" class="form-control" ng-model="AffiliationAddress" @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Affiliation Address"></textarea>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.AffiliationAddress.$error.required && (userForm.AffiliationAddress.$dirty || submitted)" class="help-block red">Please enter Affiliation Address</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12" id="Affiliation">
+                                                            @Html.Partial("~/Views/Shared/_geoGraphicalAff.cshtml")
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+                                                <div class="col-md-6">
+
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> Phone  </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AffiliationPhone.$dirty) && userForm.AffiliationPhone.$invalid } ">
+                                                                    <input type="text" name="AffiliationPhone" class="form-control" maxlength="15" ng-model="AffiliationPhone" ng-pattern="/^[0-9\_\- ]*$/" placeholder="Affiliation Phone">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.AffiliationPhone.$error.required && (userForm.AffiliationPhone.$dirty || submitted)" class="help-block red">Please enter Affiliation Phone No.</p>
+                                                                        <p ng-show="userForm.AffiliationPhone.$error.pattern" class="help-block red">Please enter valid Affiliation Phone No.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> 	Website </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AffiliationWebSite.$dirty) && userForm.AffiliationWebSite.$invalid } ">
+                                                                    <input type="text" name="AffiliationWebSite" class="form-control" ng-model="AffiliationWebSite" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Affiliation Website">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.AffiliationWebSite.$error.required && (userForm.AffiliationWebSite.$dirty || submitted)" class="help-block red">Please enter Affiliation WebSite </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> Email</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AffiliationEmail.$dirty) && userForm.AffiliationEmail.$invalid } ">
+                                                                    <input type="text" name="AffiliationEmail" class="form-control" ng-model="AffiliationEmail" ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/"
+                                                                           placeholder="Affiliation Email" maxlength="50">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.AffiliationEmail.$error.required && (userForm.AffiliationEmail.$dirty || submitted)" class="help-block red">Please enter Affiliation Email</p>
+
+                                                                        <p ng-show="userForm.AffiliationEmail.$error.pattern" class="help-block red">Please enter valid Affiliation Email Id</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div id="Beneficiary" class="tab-pane fade tabOpac" ng-controller="BenificaryTab" ng-show="BenificaryHide">
+                        <div class="panel panel-default" style="border-top: none;">
+                            <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; font-size: 18px; ">Beneficiary Details    </div>
+                            <div class="panel-body">
+                                <div class="portlet-body form">
+                                    <div class="form-group">
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5"> Name <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryName.$dirty) && userForm.BeneficiaryName.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryName" class="form-control" ng-model="BeneficiaryName" ng-required="BeneficiaryNameReq"
+                                                                           ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Beneficiary Name" maxlength="50">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryName.$error.required && (userForm.BeneficiaryName.$dirty || submitted)" class="help-block red">Please enter Beneficiary Name </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Relation <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryRelation.$dirty) && userForm.BeneficiaryRelation.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryRelation" class="form-control" ng-model="BeneficiaryRelation" ng-required="BeneficiaryRelationReq" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Beneficiary Relation">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryRelation.$error.required && (userForm.BeneficiaryRelation.$dirty || submitted)" class="help-block red">Please enter Beneficiary Relation</p>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> Address <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryAddress.$dirty) && userForm.BeneficiaryAddress.$invalid } ">
+                                                                    <textarea name="BeneficiaryAddress" class="form-control" ng-model="BeneficiaryAddress" ng-required="BeneficiaryAddressReq" @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Beneficiary Address"></textarea>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryAddress.$error.required && (userForm.BeneficiaryAddress.$dirty || submitted)" class="help-block red">Please enter Beneficiary Address </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12" id="Beneficiary">
+
+                                                            @Html.Partial("~/Views/Shared/_geoGraphicalBeneficiary.cshtml")
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Email <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryEmail.$dirty) && userForm.BeneficiaryEmail.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryEmail" class="form-control" ng-model="BeneficiaryEmail" ng-required="BeneficiaryEmailReq"
+                                                                           ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" placeholder="Beneficiary Email" maxlength="50">
+                                                                    <div class="help-block">
+
+                                                                        <p ng-show="userForm.BeneficiaryEmail.$error.required && (userForm.BeneficiaryEmail.$dirty || submitted)" class="help-block red">Please enter Beneficiary Email Id</p>
+                                                                        <p ng-show="userForm.BeneficiaryEmail.$error.pattern" class="help-block red">Please enter valid Beneficiary Email Id</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> Phone <span class="red" ng-if="BeneficiaryName.length">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryPhone.$dirty) && userForm.BeneficiaryPhone.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryPhone" class="form-control" maxlength="15" ng-model="BeneficiaryPhone" ng-required="!(BeneficiaryPhone.length || BeneficiaryMobile.length) && BeneficiaryName.length" @*ng-required="ReqBeneficiaryPhone"*@ ng-pattern="/^[0-9\_\- ]*$/" placeholder="Beneficiary Phone">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryPhone.$error.required && (userForm.BeneficiaryPhone.$dirty || submitted)" class="help-block red">Please enter Beneficiary Phone</p>
+                                                                        <p ng-show="userForm.BeneficiaryPhone.$error.pattern" class="help-block red">Please enter valid Beneficiary Phone No.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5">Mobile <span class="red" ng-if="BeneficiaryName.length">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryMobile.$dirty) && userForm.BeneficiaryMobile.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryMobile" class="form-control Mobile" maxlength="15" ng-model="BeneficiaryMobile" ng-required="!(BeneficiaryPhone.length || BeneficiaryMobile.length) && BeneficiaryName.length" @*ng-required="BeneficiaryMobileReq"*@ @*ng-pattern="/^[789]\d{9}$/"*@ ng-pattern="/^[0-9\_\- ]*$/" placeholder="Beneficiary Mobile">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryMobile.$error.required && (userForm.BeneficiaryMobile.$dirty || submitted)" class="help-block red">Please enter Beneficiary Mobile</p>
+                                                                        <p ng-show="userForm.BeneficiaryMobile.$error.pattern" class="help-block red">Please enter valid Beneficiary Mobile</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Fax </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryFax.$dirty) && userForm.BeneficiaryFax.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryFax" class="form-control" ng-model="BeneficiaryFax" ng-pattern="/^[0-9]+$/" placeholder="Beneficiary Fax">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryFax.$error.required && (userForm.BeneficiaryFax.$dirty || submitted)" class="help-block red">Please enter Beneficiary Fax</p>
+                                                                        <p ng-show="userForm.BeneficiaryFax.$error.pattern" class="help-block red">Please enter valid Beneficiary Fax</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5">PAN <span class="red" ng-if="BeneficiaryName.length">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryPanNo.$dirty) && userForm.BeneficiaryPanNo.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryPanNo" class="form-control" ng-model="BeneficiaryPanNo" maxlength="10" ng-required="(userForm.ResidencyStatus.$modelValue =='Resident') && BeneficiaryName.length" ng-pattern="/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/" placeholder="Beneficiary PAN">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryPanNo.$error.required && (userForm.BeneficiaryPanNo.$dirty || submitted)" class="help-block red">Please enter Beneficiary PAN. </p>
+                                                                        <p ng-show="userForm.BeneficiaryPanNo.$error.pattern" class="help-block red">Please enter valid Beneficiary PAN.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Account No </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryAccountNo.$dirty) && userForm.BeneficiaryAccountNo.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryAccountNo" class="form-control" maxlength="18" ng-pattern="/^[0-9]*$/" ng-model="BeneficiaryAccountNo"
+                                                                            ng-required="(userForm.ResidencyStatus.$modelValue =='Non-Resident') && BeneficiaryName.length" @*ng-required="BeneficiaryAccountNoReq"*@ placeholder="Beneficiary Account No.">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryAccountNo.$error.required && (userForm.BeneficiaryAccountNo.$dirty || submitted)" class="help-block red">Please enter Beneficiary Account No.</p>
+                                                                        <p ng-show="userForm.BeneficiaryAccountNo.$error.pattern && (userForm.BeneficiaryAccountNo.$dirty || submitted)" class="help-block red">Please enter valid Beneficiary Account No.</p>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5">Bank Name </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryBankName.$dirty) && userForm.BeneficiaryBankName.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryBankName" class="form-control" ng-model="BeneficiaryBankName" ng-required="BeneficiaryAccountNo.length" @*ng-required="BeneficiaryBankNameReq"*@ @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Beneficiary Bank Name">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryBankName.$error.required && (userForm.BeneficiaryBankName.$dirty || submitted)" class="help-block red">Please enter Beneficiary Bank Name </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5">Branch Name </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryBranchName.$dirty) && userForm.BeneficiaryBranchName.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryBranchName" class="form-control" ng-model="BeneficiaryBranchName" ng-required="BeneficiaryAccountNo.length" @*ng-required="BeneficiaryBranchNameReq"*@ @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Beneficiary Branch Name">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryBranchName.$error.required && (userForm.BeneficiaryBranchName.$dirty || submitted)" class="help-block red">Please enter Beneficiary Branch Name</p>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5">Swift / IFSC Code</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BeneficiaryIFSECode.$dirty) && userForm.BeneficiaryIFSECode.$invalid } ">
+                                                                    <input type="text" name="BeneficiaryIFSECode" class="form-control" ng-required="BeneficiaryAccountNo.length" ng-model="BeneficiaryIFSECode" placeholder="Beneficiary Swift / IFSC Code" maxlength="20">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.BeneficiaryIFSECode.$error.required && (userForm.BeneficiaryIFSECode.$dirty || submitted)" class="help-block red">Please enter Beneficiary Swift / IFSC Code </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="Nominee" class="tab-pane fade tabOpac " ng-controller="NomineeTab">
+                        <div class="panel panel-default" style="border-top: none;">
+                            <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; font-size: 18px; ">Nominee Details</div>
+                            <div class="panel-body">
+                                <div class="portlet-body form">
+                                    <div class="form-group">
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Name <span class="red" ng-show="NomineeNameReq">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeName.$dirty) && userForm.NomineeName.$invalid } ">
+                                                                    <input type="text" name="NomineeName" class="form-control" ng-model="NomineeName" ng-required="NomineeNameReq" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Nominee Name" maxlength="50">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeName.$error.required && (userForm.NomineeName.$dirty || submitted)" class="help-block red">Please enter author Nominee Name </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5">Relation <span class="red" ng-show="NomineeRelationReq">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeRelation.$dirty) && userForm.NomineeRelation.$invalid } ">
+                                                                    <input type="text" name="NomineeRelation" class="form-control" ng-model="NomineeRelation" @*ng-required="NomineeRelationReq"*@ ng-required="(NomineeName.length)" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Nominee Relation">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeRelation.$error.required && (userForm.NomineeRelation.$dirty || submitted)" class="help-block red">Please enter Nominee Relation</p>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Address <span class="red" ng-show="NomineeAddressReq">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeAddress.$dirty) && userForm.NomineeAddress.$invalid } ">
+                                                                    <textarea name="NomineeAddress" class="form-control" ng-model="NomineeAddress" @*ng-required="NomineeAddressReq"*@ ng-required="(NomineeName.length)" @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Nominee Address"></textarea>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeAddress.$error.required && (userForm.NomineeAddress.$dirty || submitted)" class="help-block red">Please enter Nominee Address </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12" id="Nominee">
+
+                                                            @Html.Partial("~/Views/Shared/_geoGraphicalNominee.cshtml")
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Demise Date </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.DeathDate.$dirty) && userForm.DeathDate.$invalid } ">
+                                                                    <div class="input-group input-medium date date-picker DeathDate">
+                                                                        <input type="text" name="DeathDate" id="DeathDate" class="form-control" ng-model="DeathDate" placeholder="Demise Date">
+                                                                        <span class=" input-group-btn">
+                                                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                                        </span>
+                                                                    </div>
+                                                                    @*<div class="help-block">
+                                                                            <p ng-show="userForm.DeathDate.$error.required && (userForm.DeathDate.$dirty || submitted)" class="help-block red">Please enter Demise Date.</p>
+
+                                                                        </div>*@
+                                                                </div>
+                                                                <script type="text/javascript">
+                                                                    $(document).ready(function () {
+
+                                                                        $('.DeathDate')
+                                                                            .datepicker({
+                                                                                format: "dd/mm/yyyy",
+
+                                                                                showButtonPanel: true,
+                                                                                autoclose: true,
+
+
+                                                                            })
+
+
+
+                                                                    });
+                                                                </script>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Email <span class="red" ng-show="NomineeEmailReq">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeEmail.$dirty) && userForm.NomineeEmail.$invalid } ">
+                                                                    <input type="text" name="NomineeEmail" class="form-control" ng-model="NomineeEmail" @*ng-required="NomineeEmailReq"*@ ng-required="(NomineeName.length)"
+                                                                           ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" placeholder="Nominee Email" maxlength="50">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeEmail.$error.required && (userForm.NomineeEmail.$dirty || submitted)" class="help-block red">Please enter Nominee Email</p>
+                                                                        <p ng-show="userForm.NomineeEmail.$error.pattern" class="help-block red">Please enter valid Nominee Email Id</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Phone </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineePhone.$dirty) && userForm.NomineePhone.$invalid } ">
+                                                                    <input type="text" name="NomineePhone" class="form-control" ng-model="NomineePhone" maxlength="15" ng-required="!(NomineePhone.length || NomineeMobile.length) && NomineeName.length" ng-pattern="/^[0-9\_\- ]*$/" placeholder="Nominee Phone">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineePhone.$error.required && (userForm.NomineePhone.$dirty || submitted)" class="help-block red">Please enter Nominee Phone</p>
+                                                                        <p ng-show="userForm.NomineePhone.$error.pattern" class="help-block red">Please enter valid Nominee Phone No.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5">Mobile <span class="red" ng-show="NomineeMobileReq">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeMobile.$dirty) && userForm.NomineeMobile.$invalid } ">
+                                                                    <input type="text" name="NomineeMobile" class="form-control Mobile" maxlength="15" ng-model="NomineeMobile" ng-required="!(NomineePhone.length || NomineeMobile.length) && NomineeName.length" @*ng-required="NomineeMobileReq"*@ @*ng-pattern="/^[789]\d{9}$/"*@ ng-pattern="/^[0-9\_\- ]*$/" placeholder="Nominee Mobile">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeMobile.$error.required && (userForm.BeneficiaryMobile.$dirty || submitted)" class="help-block red">Please enter Nominee Mobile</p>
+                                                                        <p ng-show="userForm.NomineeMobile.$error.pattern" class="help-block red">Please enter valid Nominee Mobile</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+
+                                                            <label class="control-label col-md-5">Fax </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeFax.$dirty) && userForm.NomineeFax.$invalid } ">
+                                                                    <input type="text" name="NomineeFax" class="form-control" ng-model="NomineeFax" ng-pattern="/^[0-9]+$/" placeholder="Nominee Fax" maxlength="50">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeFax.$error.required && (userForm.NomineeFax.$dirty || submitted)" class="help-block red">Please enter Nominee Fax</p>
+                                                                        <p ng-show="userForm.NomineeFax.$error.pattern" class="help-block red">Please enter valid Nominee Fax</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">PAN</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineePanNo.$dirty) && userForm.NomineePanNo.$invalid } ">
+                                                                    <input type="text" name="NomineePanNo" class="form-control" ng-model="NomineePanNo" maxlength="10" ng-required="(userForm.ResidencyStatus.$modelValue =='Resident') && NomineeName.length" ng-pattern="/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/" placeholder="Nominee PAN">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineePanNo.$error.required && (userForm.NomineePanNo.$dirty || submitted)" class="help-block red">Please enter Nominee PAN. </p>
+                                                                        <p ng-show="userForm.NomineePanNo.$error.pattern" class="help-block red">Please enter valid Nominee PAN.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Account No </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeAccountNo.$dirty) && userForm.NomineeAccountNo.$invalid } ">
+                                                                    <input type="text" name="NomineeAccountNo" class="form-control" maxlength="18" ng-pattern="/^[0-9]*$/" ng-model="NomineeAccountNo" ng-required="(userForm.ResidencyStatus.$modelValue =='Non-Resident') && NomineeName.length" placeholder="Nominee AccountNo">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeAccountNo.$error.required && (userForm.NomineeAccountNo.$dirty || submitted)" class="help-block red">Please enter Nominee Account No</p>
+                                                                        <p ng-show="userForm.NomineeAccountNo.$error.pattern && (userForm.NomineeAccountNo.$dirty || submitted)" class="help-block red">Please enter valid Nominee Account No</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Bank Name  </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeBankName.$dirty) && userForm.NomineeBankName.$invalid } ">
+                                                                    <input type="text" name="NomineeBankName" class="form-control" ng-model="NomineeBankName" ng-required="NomineeAccountNo.length" @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Nominee Bank Name">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeBankName.$error.required && (userForm.NomineeBankName.$dirty || submitted)" class="help-block red">Please enter Nominee Bank Name.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Branch Name </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeBranchName.$dirty) && userForm.NomineeBranchName.$invalid } ">
+                                                                    <input type="text" name="NomineeBranchName" class="form-control" ng-model="NomineeBranchName" ng-required="(NomineeAccountNo.length)" @*ng-pattern="/^[a-zA-Z'.\s]/"*@ placeholder="Nominee Branch Name">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeBranchName.$error.required && (userForm.NomineeBranchName.$dirty || submitted)" class="help-block red">Please enter Nominee Branch Name</p>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Swift / IFSC Code</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NomineeIFSECode.$dirty) && userForm.NomineeIFSECode.$invalid } ">
+                                                                    <input type="text" name="NomineeIFSECode" class="form-control" ng-model="NomineeIFSECode" ng-required="(NomineeAccountNo.length)" placeholder="Nominee Swift / IFSC Code" maxlength="20">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.NomineeIFSECode.$error.required && (userForm.NomineeIFSECode.$dirty || submitted)" class="help-block red">Please enter Nominee Swift / IFSC Code</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-2">Uploaded Document</label>
+                                                    <div class="col-md-10">
+                                                        <div @*id="fileuploadcontrol"*@ class="fileuploadcontrol" style=" padding-left: 29px;">
+
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="help-block">
+                                                            <p ng-show="UploadContractReq" class="help-block">Please Upload Nominee Document</p>
+                                                            <p ng-show="UploadExcelfileNameReq" class="help-block">Please enter file name</p>
+
+                                                        </div>
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                &nbsp;
+                                                            </div>
+                                                        </div>
+
+                                                        @*<div id="doclistid" ng-show="true" style=" padding-left: 29px;">*@
+                                                        <div id="doclistid" ng-show="Pendingdocumentshow" style=" padding-left: 29px;">
+                                                            <div class="panel panel-warning">
+                                                                <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                                                    <h3 class="panel-title">Uploaded Attachment</h3>
+                                                                </div>
+
+                                                                <div class="tools">
+
+                                                                    <a href="javascript:;" class="collapse"> </a>
+                                                                </div>
+
+                                                                <div class="panel-body">
+
+                                                                    <table class="table table-striped table-hover ">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>S.No</th>
+                                                                                <th>Document Name</th>
+                                                                                <th ng-if="'@ViewBag.Department'=='ad' || '@ViewBag.Department'=='sa'">Action</th>
+
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="url in Docurl1">
+                                                                                <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId1" value="{{url.DocId1}}" /></td>
+                                                                                <td>
+                                                                                    <a href="~/uploads/{{url.text1}} target="_blank" style="color: black;" class="hide_for_print"><span ng-bind="url.name1"></span></a>
+                                                                                    <a style="color: black; display:none;" class="show_for_print">{{url.name1}}</a>
+                                                                                </td>
+                                                                                <td><a style=" color: black; cursor:pointer;" ng-if="'@ViewBag.Department'=='ad' || '@ViewBag.Department'=='sa'" ng-click="RemoveDocumentLinkById(url.DocId1,url.text1)">Delete</a></td>
+
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <input type="hidden" id="hid_Authid" name="hid_Authid" ng-model="hid_Authid" />
+                            <input type="hidden" id="hid_Duplicity" name="hid_Duplicity" ng-model="hid_Duplicity" />
+                            <input type="hidden" id="hid_DocumentID" name="hid_DocumentID" ng-model="hid_DocumentID" />
+                            <input type="hidden" id="hid_fileUpload" name="hid_fileUpload" ng-model="hid_fileUpload" />
+                            <input type="hidden" id="hid_ResidencyStatus" name="hid_ResidencyStatus" ng-model="hid_ResidencyStatus" />
+                            <input type="hidden" id="hid_UpdateValue" name="hid_UpdateValue" ng-model="hid_UpdateValue" />
+                            <input type="hidden" id="hid_UploadsFile1" name="hid_UploadsFile1" ng-model="hid_UploadsFile1" />
+                            <input type="hidden" id="hid_UploadsFile2" name="hid_UploadsFile2" ng-model="hid_UploadsFile2" />
+
+                            <input type="hidden" id="hid_NomineeDoc" name="hid_NomineeDoc" ng-model="hid_NomineeDoc" />
+
+                            <input type="hidden" id="hid_NomineeDocumentId" name="hid_NomineeDocumentId" ng-model="hid_NomineeDocumentId" />
+
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"> &nbsp;</div>
+
+            </div>
+
+        </form>
+
+        <!--Author MAster detail View-->
+        <form name="userForm1" class="form-horizontal" id="FrmDisplay" style="display:none;" novalidate ng-submit="submitForm()" @*ng-controller="Load"*@>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Author Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class=" form-body ">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Author Code</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="AuthorCode"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-12">
+
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Type </label>
+
+
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="Type"></span></label>
+
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Author SAP Code</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="AuthorSAPCode"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">First Name </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="FirstName"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Last Name </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="LastName"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Address </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="Address"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Residency Status </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+
+
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="ResidencyStatus"></span></label>
+
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="Authorgeo">
+                                            <div class="col-md-12">
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Country </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="Country"></span></label>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="false">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="OtherCountry"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">State </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="State"></span></label>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="false">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> State</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="OtherState"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">City </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="City"></span></label>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="false">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> City</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="OtherCity"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> PIN Code</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="PinCode"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Email </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="Email"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Phone </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="Phone"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Mobile </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="Mobile"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">PAN </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="PANNo"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Adhar Card No </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="AdharCardNo"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Date of Birth</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="DateOfBirth"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Demise Date </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="DeathDate"></span></label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Account No</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="AccountNo"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Bank Name </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BankName"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Branch Name</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BranchName"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Swift / IFSC Code </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="IFSECode"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Fax </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="Fax"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12" id="doclistid" ng-show="documentshow">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Author Document
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class=" form-body ">
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Document Name</th>
+                                                @*<th>Action</th>*@
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="url in Docurl">
+                                                <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.DocId}}" /></td>
+                                                <td>
+                                                    <a href="~/uploads/{{url.text}}" target="_blank" style="color: black;" class="hide_for_print"><span ng-bind="url.name"></span></a>
+                                                    <a style="color: black; display:none;" class="show_for_print">{{url.name}}</a>
+                                                </td>
+                                                @*<td><a style=" color: black; cursor:pointer;" ng-click="RemoveDocumentById(url.DocId,url.text)">Delete</a></td>*@
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="clearfix">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Affiliation Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class=" form-body ">
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Institute </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="InstituteCompanyName"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Designation </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="AffiliationDesignation"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Department</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="AffiliationDepartment"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" id="Affiliation">
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Country </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="AffiliationCountry"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="AffiliationOtherCountryReq">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="AffiliationOtherCountry"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">State </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="AffiliationState"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="AffiliationOtherStateReq">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> State</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="AffiliationOtherState"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">City </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="AffiliationCity"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="AffiliationOtherCityReq">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> City</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="AffiliationOtherCity"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> PIN Code</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="AffiliationPinCode"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Address </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="AffiliationAddress"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Phone No. </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="AffiliationPhone"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Email</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="AffiliationEmail"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Website </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="AffiliationWebSite"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Beneficiary Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class=" form-body ">
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Name </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BeneficiaryName"></span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Relation</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="BeneficiaryRelation"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Email </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="BeneficiaryEmail"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Address </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="BeneficiaryAddress"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" id="Beneficiary">
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Country </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="BeneficiaryCountry"></span></label>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="BeneficiaryOtherCountryReq">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="BeneficiaryOtherCountry"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">State </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="BeneficiaryState"></span></label>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="BeneficiaryOtherStateReq">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> State</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="BeneficiaryOtherState"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">City </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="BeneficiaryCity"></span></label>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="BeneficiaryOtherCityReq">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> City</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="BeneficiaryOtherCity"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> PIN Code</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="BeneficiaryPinCode"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"> Phone </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BeneficiaryPhone"></span></label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Mobile </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BeneficiaryMobile"></span></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Fax </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BeneficiaryFax"></span></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">PAN</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BeneficiaryPanNo"></span></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Account No </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BeneficiaryAccountNo"></span></label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Bank Name</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BeneficiaryBankName"></span></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Branch Name </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BeneficiaryBranchName"></span></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Swift / IFSC Code</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="BeneficiaryIFSECode"></span></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Nominee Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class=" form-body ">
+                            <div class=" row">
+                                <div class="col-md-12">
+
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Name </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="NomineeName"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Relation </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="NomineeRelation"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Email </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="NomineeEmail"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Address </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+
+                                                        <label class="control-label"><span ng-bind="NomineeAddress"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12" id="Nominee">
+
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Country </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="NomineeCountry"></span></label>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="NomineeOtherCountryReq">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="NomineeOtherCountry"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">State </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="NomineeState"></span></label>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="NomineeOtherStateReq">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> State</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="NomineeOtherState"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">City </label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="NomineeCity"></span></label>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="NomineeOtherCityReq">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> City</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="NomineeOtherCity"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label col-md-5 col-xs-6 col-sm-6"> PIN Code</label>
+                                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="NomineePinCode"></span></label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Phone </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="NomineePhone"></span></label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Mobile </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="NomineeMobile"></span></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Fax </label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="NomineeFax"></span></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">PAN</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="NomineePanNo"></span></label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Account No.</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="NomineeAccountNo"></span></label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Branch Name</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="NomineeBranchName"></span></label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Bank Name</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="NomineeBankName"></span></label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Swift / IFSC Code</label>
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="NomineeIFSECode"></span></label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="clearfix">
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="col-md-12" id="doclistid" ng-show="Pendingdocumentshow">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Nominee Document
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class=" form-body ">
+                            <div class=" row">
+                                <div class="col-md-12">
+
+                                    <table class="table table-striped table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Document Name</th>
+                                                @*<th>Action</th>*@
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="url in Docurl1">
+                                                <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId1" value="{{url.DocId1}}" /></td>
+                                                <td>
+                                                    <a href="~/uploads/{{url.text1}}" target="_blank" style="color: black;" class="hide_for_print"><span ng-bind="url.name1"></span></a>
+                                                    <a style="color: black; display:none;" class="show_for_print">{{url.name1}}</a>
+                                                </td>
+                                                @*<td><a style=" color: black; cursor:pointer;" ng-click="RemoveDocumentLinkById(url.DocId1,url.text1)">Delete</a></td>*@
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="clearfix">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </form>
+
+
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+
+        renderFileUpload();
+        //$("#Mobile").mask("99-99-99-99");
+
+        //$('.Mobile').keyup(function () {
+        //    var cctlength = $(this).val().length; // get character length
+
+        //    switch (cctlength) {
+        //        case 2:
+        //            var cctVal = $(this).val();
+        //            var cctNewVal = cctVal + '-';
+        //            $(this).val(cctNewVal);
+        //            break;
+
+        //    }
+        //});
+
+
+
+    });
+
+    function renderFileUpload() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            contentType: 'application/html; charset=utf-8',
+            url: GlobalredirectPath + "/Master/Master/MultipleFileUpload",
+            data: {},
+            datatype: 'html',
+            success: function (result) {
+                $(".fileuploadcontrol").html(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+</script>
+
+<script type="text/javascript">
+
+    $('#btn_printPage').on('click', function () {
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.backToList').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+
+        $('.btnPrint').hide();
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+
+        window.print();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('.backToList').show();
+        $('footer').show();
+        $('.menu').show();
+        $('.top-header').show();
+
+        $('.btnPrint').show();
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+
+        $('.hide_for_print').show();
+        $('.show_for_print').hide();
+    });
+
+
+  
+</script>
+
+
+
+
+
+
+
+

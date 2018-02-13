@@ -1,0 +1,131 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "SubProductType";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/master/Master.ProductType.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/app.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getProductTypeList();
+    @*angular.element(document.getElementById('angularid')).scope().getSubProductTypeList();*@
+    @*angular.element(document.getElementById('angularid')).scope().getProductTypeMasterList();*@
+    angular.element(document.getElementById('angularid')).scope().getSubProductTypeMasterList();
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Sub-Product Type 
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Sub-Product Type
+                    </div>
+                </div>
+
+
+                <div class="portlet-body form">
+                    <form name="subProductForm" class=" form-horizontal" novalidate ng-submit="submitSubProductForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Product Type <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||subProductForm.productType.$dirty) && subProductForm.productType.$invalid } ">
+                                            <select class="form-control" name="productType" ng-model="productType" required>
+                                                <option value="">Please Select</option>
+                                                <option ng-repeat="prodType in ProductTypeList" ng-model="productType" value="{{prodType.Id}}">{{prodType.typeName}}</option>
+                                            </select>
+                                            <div class="help-block">
+                                                <p ng-show="subProductForm.productType.$error.required && (subProductForm.productType.$dirty || submitted)">Please select ProductType</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Sub-Product Type <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||subProductForm.subProductType.$dirty) && subProductForm.subProductType.$invalid } ">
+                                            <input type="text" name="subProductType" class="form-control" ng-model="subProductType" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Sub-Product Type">
+                                            <div class="help-block">
+                                                <p ng-show="subProductForm.subProductType.$error.required && (subProductForm.subProductType.$dirty || submitted)" class="help-block red">Please enter sub-product type</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_productType" name="hid_productType" ng-model="hid_productType" />
+                                    <input type="hidden" id="hid_level" name="hid_level" ng-model="hid_level" value="1" />
+                                    <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Sub-Product Type List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Sub-Product Type&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Product Type &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="subProdType in SubProductTypeList">
+                                <td>{{subProdType.subProductName}}</td>
+                                <td>{{subProdType.productName}}</td>
+                                <td><a ng-click="EditSubProductType(subProdType.subProductId)"><i class="fa fa-edit" title="Edit Sub-Product Type"></i></a></td>
+                                <td>
+                                    <a ng-click="DeleteSubProductType(subProdType.subProductId)" ng-if="subProdType.flag =='0'"><i class="fa fa-trash-o" title="Delete Sub-Product Type"></i></a>
+                                    <a ng-if="subProdType.flag =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Linked With Other Master"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

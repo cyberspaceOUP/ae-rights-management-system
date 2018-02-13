@@ -1,0 +1,169 @@
+﻿
+<input type="hidden" id="hid_SeriesCodeValue" value="@ViewBag.SeriesCode" />
+<div class="col-md-6 col-xs-6 col-sm-6">
+    <label class="control-label col-xs-5 col-xs-6 col-sm-6">Project Handled By </label>
+    <div class="col-xs-7 col-xs-6 col-sm-6">
+        <label class="control-label"><span ng-bind="HandledBy"></span></label>
+    </div>
+</div>
+
+<div class="col-md-12" ng-if="SeriesName!=undefined">
+
+    <div class="alert alert-info" role="alert">
+        <div class="caption">
+            <h4><span ng-bind="SeriesName"></span></h4>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-xs-12 col-sm-12" ng-if="'@ViewBag.SeriesCode'=='' && SeriesCode_Available==false">
+    @*@ViewBag.LicenceId==0 &&*@
+    @*@Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")*@
+    @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetailsForContract.cshtml")
+</div>
+
+<!--Kit Details List-->
+<div class="col-md-12 col-xs-12 col-sm-12" ng-if="KitISBNDetailsList.length">
+    @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+</div>
+
+<div class="col-md-12 col-xs-12 col-sm-12" ng-if="'@ViewBag.SeriesCode'!=''">
+    @Html.Partial("_ProductDetailsForSeries")
+</div>
+<div class="col-md-12 col-xs-12 col-sm-12" ng-if="'@ViewBag.SeriesCode'=='' && SeriesCode_Available==true">
+    <!-- call when ActhorContract has series -->
+    @Html.Partial("_ProductDetailsForSeries")
+</div>
+
+<div class="col-md-12 col-xs-12 col-sm-12" id="licenseBlock" style="display:none">
+    @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicense.cshtml")
+</div>
+
+<div class="col-md-12 col-xs-12 col-sm-12">
+    @Html.Partial("~/Areas/Contract/Views/Shared/_ContractInformation_view.cshtml")
+</div>
+
+<div class="col-md-12 col-xs-12 col-sm-12" ng-if="ContributorList.length>=1">
+    @Html.Partial("~/Areas/Contract/Views/Shared/_Contributor_view.cshtml")
+</div>
+
+<div class="col-md-12 col-xs-12 col-sm-12">
+    @Html.Partial("~/Areas/Contract/Views/Shared/_ProductInformation_view.cshtml")
+</div>
+
+@*<div class="col-md-12 col-xs-12 col-sm-12" ng-if="MaterialSuppliedByAuthorList.length>=1">
+        @Html.Partial("~/Areas/Contract/Views/Shared/_MaterialSuppliedByAuthor_view.cshtml")
+    </div>
+
+    <div class="col-md-12 col-xs-12 col-sm-12" ng-if="MenuScriptDeliveryFormatList.length>=1">
+        @Html.Partial("~/Areas/Contract/Views/Shared/ManuScriptDeliveryFormat_View.cshtml")
+    </div>*@
+
+<div class="col-md-12 col-xs-12 col-sm-12 AuthorBox" ng-repeat="div in AuthorBox">
+    @Html.Partial("~/Areas/Contract/Views/Shared/_AuthorBasicDetails_view.cshtml")
+</div>
+
+<div class="col-md-12 col-xs-12 col-sm-12">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Subsidiary Rights
+            </div>
+            <div class="tools">
+                <a href="#" class="collapse" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        
+        @Html.Partial("~/Areas/Contract/Views/Shared/_SubsidiaryRights_view.cshtml")
+    </div>
+</div>
+@if ((ViewBag.ContractIdId != 0 || ViewBag.SeriesCode != "") && (ViewBag.View == "dashboard" || ViewBag.View == "view" || ViewBag.View == "seriesview"))
+{
+    <div class="col-md-12">
+        @Html.Partial("_ContractAgreement_view")
+    </div>
+}
+
+
+
+
+<div class="col-md-12" ng-show="ImpressionList.length > 0">
+
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Impression Details
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="portlet-body clearfix">
+                    <div class="portlet-body flip-scroll">
+                        <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tblsubsidiary">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>Impression Date</th>
+                                    <th>Quantity Printed</th>
+                                    <th>Balance Quantity</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="obj in ImpressionList">
+                                    <td><span ng-bind="$index + 1"></span></td>
+                                    <td>
+                                        <span ng-bind="(obj.ImpressionDate)"></span>
+
+                                    </td>
+                                    <td ng-show="(obj.QunatityPrinted !=0 && obj.QunatityPrinted !=null)">
+                                        <span ng-bind="obj.QunatityPrinted"></span>
+                                    </td>
+                                    <td ng-show="(obj.QunatityPrinted ==0 || obj.QunatityPrinted ==null)">
+                                        --
+                                    </td>
+
+
+                                    <td ng-show="(obj.BalanceQty !=0 && obj.BalanceQty !=null)">
+                                        <span ng-bind="obj.BalanceQty"></span>
+                                    </td>
+
+                                    <td ng-show="(obj.BalanceQty ==0 || obj.BalanceQty == null)">
+                                        --
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+    var flag = 0;
+    $(document).ready(function () {
+
+        $(document).on('click', '.RoyaltySlabnotAdd', function () {
+            angular.element(document.getElementById('angularid')).scope().addroyalslabbyJquery($(this));
+        });
+
+        $(document).on('click', '.RoyaltySlabnotRemove', function () {
+
+            angular.element(document.getElementById('angularid')).scope().removeroyalslab($(this));
+        });
+
+
+    });
+</script>

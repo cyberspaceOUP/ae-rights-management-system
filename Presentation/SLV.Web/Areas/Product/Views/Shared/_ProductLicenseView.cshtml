@@ -1,0 +1,1086 @@
+﻿<div class="col-md-12">
+    <div class="portlet-body form">
+        <div class="form-body">
+            @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetailsForLicense.cshtml")
+
+            <!--Kit Details List-->
+            <div ng-if="KitISBNDetailsList.length">
+                @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-12">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                @*Publisher Details*@
+                Proprietor Details
+                <input type="hidden" id="hid_productId" name="productId" ng-model="ProductModel.ProductId" ng-init="ProductModel.ProductId=@ViewBag.ProductId" />
+                <input type="hidden" value="@ViewBag.LicenseId" id="hid_ProductLicenseId" name="hid_ProductLicenseId" />
+            </div>
+            <div class="tools">
+                <a href="javascript:void(0);" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class=" row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Proprietor Company </label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.CompanyName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Contact Person</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.ContactPerson"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Phone</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.Phone"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Mobile</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.Mobile"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Email</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.Email"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Address</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.Address"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.CountryName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">State</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.StateName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">City</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.CityName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">PIN Code</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.PinCode"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                License Details
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class=" row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">License Code</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.ProductLicensecode"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Request Date</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.Requestdate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Date </label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <span ng-bind="ProductModel.ContractDate"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Effective Date</label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <span ng-bind="ProductModel.effectivedate"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Period</label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <span ng-bind="ProductModel.contractperiodinmonth"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Expiry Date</label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <div class="form-group">
+                                            <span ng-bind="ProductModel.Expirydate"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Territory</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.TerritoryRights"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">First Impression Within Date</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.Impressionwithindate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">No of Impressions</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.noofimpressions"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Print Quantity Type</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.printquantitytype"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Print Quantity</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.printquantity"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Royalty Terms</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.RoyalityTerms"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">One-Time Payment Amount</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.PaymentAmount"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Advance Amount</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.AdvancedAmount"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Proprietor copies @*Copies for Licensor*@</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.copiesforlicensor"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Royalty Type</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.pricetype"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Price</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.price"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Currency</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        @*<span ng-bind="ProductModel.CurrencyName"></span>*@
+                                        <span ng-bind="ProductModel.CurrencySymbol"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Third Party Permission</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.thirdpartypermission"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Remarks</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.Remarks"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Subsidiary Rights</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductModel.SubsidiaryRights"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" ng-show="RoyalslabList.length > 0">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Royalty Slab
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="portlet-body clearfix">
+                    <div class="portlet-body flip-scroll">
+                        <table class="table table-striped table-bordered table-hover dataTable no-footer RoyaltySlab" id="TblOwnerList">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>S No.</th>
+                                    <th>Product Sub-Type</th>
+                                    <th>Copies From</th>
+                                    <th>Copies To</th>
+                                    <th>Percentage (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="div in RoyalslabList">
+                                    <td>
+                                        <span ng-bind="$index+1"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="div.typeName"></span>
+                                    </td>
+                                    <td ng-show="div.copiesfrom !=0">
+                                        <span ng-bind="div.copiesfrom"></span>
+                                    </td>
+
+                                    <td ng-show="div.copiesfrom ==0">
+                                       --
+                                    </td>
+
+                                    <td ng-show="div.copiesto !=0">
+
+                                        <span ng-bind="div.copiesto"></span>
+                                    </td>
+                                    <td ng-show="div.copiesto ==0">
+
+                                      --
+                                    </td>
+
+                                    <td ng-show="div.percentage !=0">
+                                        <span ng-bind="div.percentage"></span>
+                                    </td>
+
+                                    <td ng-show="div.percentage ==0">
+                                       --
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" ng-show="_SubsidiaryRightsList.length > 0">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Subsidiary Rights
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="portlet-body clearfix">
+                    <div class="portlet-body flip-scroll">
+                        <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tblsubsidiary">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo.</th>
+                                    <th>Subsidiary Rights</th>
+                                    <th>Proprietor (%)</th>
+                                    <th>OUP(%)</th>
+                                    <th>Total(%)</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="div in _SubsidiaryRightsList">
+                                    <td>
+                                        <span ng-bind="$index+1"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="div.SubsidiaryRights"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="div.publisherpercentage"></span>
+                                    </td>
+
+                                    <td>
+                                        <span ng-bind="div.ouppercentage"></span>
+                                    </td>
+
+                                    <td>
+                                        <span ng-bind="div.publisherpercentage + div.ouppercentage"></span>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" ng-show="OtherContractDeatilsViewByExpirydate != '--'">
+    @*ng-show="OtherContractDeatilsView.length"*@
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Other License Details
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class=" row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Agreement Date</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6" ng-show="ProductModel.AgreementDate !=null">
+                                    <span ng-bind="ProductModel.AgreementDate"></span>
+                                </div>
+                                <div class="col-md-7 col-xs-6 col-sm-6" ng-show="ProductModel.AgreementDate ==null">
+                                    <span>--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Effective Date</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6" ng-show="ProductModel.Effectivedate !=null">
+                                    <span ng-bind="ProductModel.Effectivedate"></span>
+                                </div>
+
+                                <div class="col-md-7 col-xs-6 col-sm-6" ng-show="ProductModel.Effectivedate ==null">
+                                    <span>--</span>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Period (in month)</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <span ng-bind="ProductModel.Contractperiodinmonth"></span>
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Expiry Date</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <span ng-bind="ProductModel.Expirydate"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">E-Files Cost</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <span ng-bind="ProductModel.EFilesCost"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">E-Files Request Date</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group" ng-show="ProductModel.EFilesRequestDate != null">
+                                        <span ng-bind="ProductModel.EFilesRequestDate"></span>
+                                    </div>
+
+                                    <div class="form-group" ng-show="ProductModel.EFilesRequestDate == null">
+                                        <span>--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">E-Files Received Date</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group" ng-show="ProductModel.EFilesReceivedDate !=null">
+                                        <span ng-bind="ProductModel.EFilesReceivedDate"></span>
+                                    </div>
+                                    <div class="form-group" ng-show="ProductModel.EFilesReceivedDate ==null">
+                                        <span>--</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Mode</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group" ng-show="ProductModel.Mode !=null && ProductModel.Mode !=''">
+                                        <span ng-bind="ProductModel.Mode"></span>
+                                    </div>
+
+                                    <div class="form-group" ng-show="ProductModel.Mode =='' || ProductModel.Mode ==null ">
+                                        <span>--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Proprietor Copies Sent Date</label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group" ng-show="ProductModel.LicensorCopiesSentDate !=null">
+                                        <span ng-bind="ProductModel.LicensorCopiesSentDate"></span>
+                                    </div>
+
+                                    <div class="form-group" ng-show="ProductModel.LicensorCopiesSentDate ==null">
+                                        <span>--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    @*<div class="col-md-12" id="doclistid" ng-show="documentshow">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                <h3 class="panel-title">Uploaded Attachments</h3>
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>*@
+                    <div class="panel-body" ng-show="documentshow">
+                        <table class="table table-striped table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Document Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="url in LicenseFileDetails">
+                                    <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.Id}}" /></td>
+                                    <td>
+                                        <a href="~/uploads/{{url.UploadFileName}}" target="_blank" style="color: black;" class="hide_for_print"><span ng-bind="url.FileName"></span></a>
+                                        <a style="color: black; display:none;" class="show_for_print">{{url.FileName}}</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                        @*</div>
+                    </div>*@
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-md-12" ng-show="ImpressionList.length > 0">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Impression Details
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="portlet-body clearfix">
+                    <div class="portlet-body flip-scroll">
+                        <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tblsubsidiary">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>Impression Date</th>
+                                    <th>Quantity Printed</th>
+                                    <th @*ng-if="ProductModel.printquantitytype!='Unrestricted'"*@>Balance Quantity</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="obj in ImpressionList">
+                                    <td><span ng-bind="$index + 1"></span></td>
+                                    <td>
+                                        <span ng-bind="(obj.ImpressionDate)"></span>
+                                    </td>
+
+                                    <td >
+                                        <span ng-show="(obj.QunatityPrinted !=0 && obj.QunatityPrinted !=null )" ng-bind="obj.QunatityPrinted" ></span>
+                                        <span ng-show="(obj.QunatityPrinted ==0 || obj.QunatityPrinted ==null)">&nbsp;</span>
+                                    </td>
+
+                                    <td @*ng-if="ProductModel.printquantitytype!='Unrestricted'"*@>
+                                        <span ng-show="(obj.BalanceQty !=0 && obj.BalanceQty !=null)" ng-bind="obj.BalanceQty"></span>
+                                        <span ng-show="(obj.BalanceQty ==0 || obj.BalanceQty ==null)">&nbsp;</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="portlet-body form">
+        <div class="form-body">
+            @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseAddendumDetails.cshtml")
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" ng-if="!(AddendumDetailsInLicense=='')">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Addendum Details
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class=" row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Addendum Date</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-bind="AddendumDate"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Addendum Type</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-bind="AddendumType"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Period of agreement</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-bind="Periodofagreement"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Expiry Date</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-bind="ExpiryDate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Remarks</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-bind="Remarks"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">First Impression Within Date</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-bind="FirstImpressionWithinDate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">No of Impressions</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-bind="NoOfImpressions"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="Checkprintquantitytype==true">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Balance Quantity Carry Forward</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-bind="BalanceQuantityCarryForward"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="Checkprintquantitytype==true">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Additional Number of Copies</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-show="AddendumQuantity !=0 && AddendumQuantity !=null" ng-bind="AddendumQuantity"></span>
+                                        <span ng-show="AddendumQuantity ==null || AddendumQuantity ==0">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Royalty Terms</label>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <span ng-bind="RoyaltyTerms"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    @*<div class="col-md-12" ng-show="Docurl.length">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                <h3 class="panel-title">Uploaded Attachments</h3>
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>*@
+                    <div class="panel-body" ng-show="Docurl.length">
+                        <table class="table table-striped table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Document Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="url in Docurl">
+                                    <td><span ng-bind="$index + 1"></span></td>
+                                    <td><a href="~/uploads/{{url.UploadFileName}}" target="_blank" style="color: black;"><span ng-bind="url.FileName"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                        @*</div>
+                    </div>*@
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    app.expandControllerViewProductDetails = function ($scope, AJService, $window) {
+        app.expandControllerProductDetails($scope, AJService, $window);
+        $scope.ProductLicenseId = $("input:hidden[id$=hid_ProductLicenseId]").val();
+
+        if ($scope.ProductLicenseId > 0) {
+            var ProductLicense = {
+                Id: $scope.ProductLicenseId,
+            }
+
+            var ProductLicenseDetails = AJService.PostDataToAPI("ProductLicense/ProductLicenseUpdateDetails", ProductLicense);
+            ProductLicenseDetails.then(function (ProductLicense) {
+                $scope.fillProductLicenseDetails(ProductLicense);
+               
+            }, function () {
+                //alert('Error in Getting Product License Details');
+            });
+
+        }
+
+
+
+        $scope.getImpressionDetails = function (ProductId, LicenseId, ContractId) {
+            var _ImpressionDetails = {
+                ProductId: ProductId,
+                LicenseId: LicenseId,
+                ContractId: ContractId
+            }
+            
+            var ImpressionDetails = AJService.PostDataToAPI("Addendum/ImpressionDetails", _ImpressionDetails);
+            ImpressionDetails.then(function (ImpressionData) {
+                //$scope.ImpressionList = ImpressionData.data;
+
+                if (ImpressionData.data[0].BalanceQuantityCarryForward != 'N') {
+                    var _Licenseprintquantity = ImpressionData.data[0].Licenseprintquantity;
+                    var _LicenseAddendumQuantity = 0;
+                    var _ImpressionQuantityPrinted = 0;
+
+                    if (ImpressionData.data[0].LicenseAddendumQuantity.length > 0) {
+                        for (var i = 0; i < ImpressionData.data[0].LicenseAddendumQuantity.length; i++) {
+                            _LicenseAddendumQuantity += ImpressionData.data[0].LicenseAddendumQuantity[i];
+                        }
+                    }
+
+                    if (_Licenseprintquantity != null && _Licenseprintquantity != 0) {
+                        _LicenseAddendumQuantity += _Licenseprintquantity;
+                    }
+
+                    if (_LicenseAddendumQuantity == null || _LicenseAddendumQuantity == 0) {
+                        $scope.ImpressionBalance = 0;
+                    }
+                    else {
+                        if (ImpressionData.data.length > 0) {
+                            for (var i = 0; i < ImpressionData.data.length; i++) {
+                                _ImpressionQuantityPrinted += ImpressionData.data[i].QunatityPrinted;
+                            }
+                        }
+
+                        $scope.ImpressionBalance = _LicenseAddendumQuantity - _ImpressionQuantityPrinted;
+
+                    }
+                }
+                else {
+                    var _LicenseAddendumQuantity1 = 0;
+                    var _ImpressionQuantityPrinted1 = 0;
+                    _LicenseAddendumQuantity1 = ImpressionData.data[0].LicenseAddendumQuantity1;
+
+                    if (ImpressionData.data.length > 0) {
+                        for (var i = 0; i < ImpressionData.data.length; i++) {
+                            if (ImpressionData.data[i].AddendumId == ImpressionData.data[0].CarryForwardAddendunId) {
+                                _ImpressionQuantityPrinted1 += ImpressionData.data[i].QunatityPrinted;
+                            }
+                        }
+                    }
+
+                    $scope.ImpressionBalance = _LicenseAddendumQuantity1 - _ImpressionQuantityPrinted1;
+                }
+                                
+                var temp_ImpressionData = [];
+                if (ImpressionData.data.length == 1) {
+                    for (var j = 0; j < ImpressionData.data.length; j++) {
+                        temp_ImpressionData.push({
+                            'ImpressionDate': ImpressionData.data[j].ImpressionDate,
+                            'QunatityPrinted': ImpressionData.data[j].QunatityPrinted,
+                            'BalanceQty': $scope.ImpressionBalance,
+                        });
+                    }
+                }
+                else {
+                    for (var j = 0; j < ImpressionData.data.length - 1; j++) {
+                        temp_ImpressionData.push({
+                            'ImpressionDate': ImpressionData.data[j].ImpressionDate,
+                            'QunatityPrinted': ImpressionData.data[j].QunatityPrinted,
+                            'BalanceQty': ImpressionData.data[j].BalanceQty,
+                        });
+                    }
+
+                    temp_ImpressionData.push({
+                        'ImpressionDate': ImpressionData.data[j].ImpressionDate,
+                        'QunatityPrinted': ImpressionData.data[j].QunatityPrinted,
+                        'BalanceQty': $scope.ImpressionBalance,
+                    });
+                }
+
+                $scope.ImpressionList = temp_ImpressionData;
+
+            }, function () {
+                //alert('Error in Getting Impression Details');
+            });
+
+        }
+
+
+        $scope.fillProductLicenseDetails = function (ProductLicenseObj) {
+
+            
+            $scope._SubsidiaryRightsList = [];
+            $scope.ProductModel = ProductLicenseObj.data.ProductLicenseDetails[0];
+            $scope.RoyalslabList = ProductLicenseObj.data.ProductLicenseRoyalslab;
+            $scope.SubsidiaryRightsList = ProductLicenseObj.data.ProductLicenseSubsidiaryRights;
+
+
+            $scope.OtherContractDeatilsView = ProductLicenseObj.data.ProductLicenseDetails[0].AgreementDate;
+
+            //if ($scope.ProductModel.AgreementDate == null) { 
+            //    $scope.ProductModel.AgreementDate = '--';
+            //}
+
+            if ($scope.ProductModel.Expirydate == '' || $scope.ProductModel.Expirydate == null) {
+                $scope.ProductModel.Expirydate = '--';
+            }
+            $scope.OtherContractDeatilsViewByExpirydate = $scope.ProductModel.Expirydate;
+
+            for (i = 0; i < $scope.SubsidiaryRightsList.length; i++)
+            {
+                if ($scope.SubsidiaryRightsList[i].ouppercentage != 100 && $scope.SubsidiaryRightsList[i].publisherpercentage!=0)
+                {
+                    $scope._SubsidiaryRightsList.push($scope.SubsidiaryRightsList[i]);
+                }
+            }
+
+            $scope.LicenseFileDetails = ProductLicenseObj.data.FileDetails;
+            if ($scope.LicenseFileDetails.length > 0) {
+                $scope.documentshow = true;
+            }
+            else {
+                $scope.documentshow = false;
+            }
+
+            if ($scope.ProductModel.PaymentAmount ==0)
+            {
+                $scope.ProductModel.PaymentAmount = '--';
+            }
+
+            if ($scope.ProductModel.AdvancedAmount == 0) {
+                $scope.ProductModel.AdvancedAmount = '--';
+            }
+
+            if ($scope.ProductModel.copiesforlicensor == 0) {
+                $scope.ProductModel.copiesforlicensor = '--';
+            }
+
+            if ($scope.ProductModel.price == 0) {
+                $scope.ProductModel.price = '--';
+            }
+
+
+            if ($scope.ProductModel.EFilesCost == 0) {
+                $scope.ProductModel.EFilesCost = '--';
+            }
+
+
+            if ($scope.ProductModel.noofimpressions == 0) {
+                $scope.ProductModel.noofimpressions = '--';
+            }
+
+
+            if ($scope.ProductModel.contractperiodinmonth == 0) {
+                $scope.ProductModel.contractperiodinmonth = '--';
+            }
+
+
+            if ($scope.ProductModel.printquantity == 0) {
+                $scope.ProductModel.printquantity = '--';
+            }
+
+
+            if ($scope.ProductModel.TerritoryRights== null)
+            {
+                $scope.ProductModel.TerritoryRights = '--';
+            }
+
+         
+            $scope.ProductModel.SubsidiaryRights = ($scope.SubsidiaryRightsList.length > 0 ? "Yes" : "No");
+            //angular.element(document.getElementById('angularid')).scope().ProductSerach($scope.ProductModel.productid, null, $scope.ProductModel.ProductLicensecode);
+            $scope.ViewMode = true;
+            angular.element(document.getElementById('angularid')).scope().ProductSerachLicense($scope.ProductModel.productid, null, $scope.ProductModel.ProductLicensecode);
+
+            $scope.getImpressionDetails($scope.ProductModel.productid, $scope.ProductModel.Id, null);
+
+
+        }
+
+
+
+       
+    }
+
+</script>

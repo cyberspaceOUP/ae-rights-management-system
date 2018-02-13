@@ -1,0 +1,149 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "ImprintMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<style type="text/css">
+    .fa {
+        color: black !important;
+    }
+
+    th {
+        text-align: left !important;
+    }
+
+    td {
+        text-align: left !important;
+    }
+</style>
+
+
+<script src="~/js/master/Master.Imprint.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+@section onInit
+{
+
+    @*angular.element(document.getElementById('angularid')).scope().GetPublishingCompanyList();     Commented By Ankush *@
+    angular.element(document.getElementById('angularid')).scope().getPublishingCompanyList();       @*Added by Ankush*@
+    angular.element(document.getElementById('angularid')).scope().GetPublishingCompanyImprintList();
+
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Imprint Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Imprint
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+
+                    <form name="userForm" class=" form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Proprietor Company <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.publishingCompany.$dirty) && userForm.publishingCompany.$invalid } ">
+                                            <select class="form-control" name="publishingCompany" ng-model="publishingCompany" required>
+                                                <option value="">Please Select</option>
+                                                <option ng-repeat="PublishingCompany in PublishingCompanyList" ng-model="publishingCompany" value="{{PublishingCompany.Id}}">{{PublishingCompany.CompanyName}}</option>
+                                            </select>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.publishingCompany.$error.required && (userForm.publishingCompany.$dirty || submitted)">Please Select Publishing Company</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5"> Imprint  <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && (userForm.name.$dirty || submitted)}">
+                                            <input type="text" name="name" class="form-control" ng-model="name" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Imprint">
+                                            <div class="help-block">
+                                                <p ng-show="userForm.name.$error.required && (userForm.name.$dirty || submitted)" class="help-block">Please Enter Imprint</p>
+                                                <p ng-show="userForm.name.$error.pattern  && (userForm.name.$dirty || submitted)"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_recordid" name="hid_recordid" ng-model="hid_recordid" />
+                                    <button type="submit" class="btn green" id="btnSubmit" name="btnSubmit" ng-model="btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Imprint List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Imprint&nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                <th>Proprietor Company&nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="Imprint in PublishingCompanyImprintList">
+                                <td>{{Imprint.ImprintName}}</td>
+                                <td>{{Imprint.PublishingCompanyName}}</td>
+                                <td><a ng-click="EditImprintData(Imprint.Id)" ng-if="Imprint.IsEditable =='0'"><i class="fa fa-edit" title="Edit Imprint"></i></a>
+                                    <a ng-if="Imprint.IsEditable =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Edit Disabled"></i></a>
+                                </td>
+                                <td>
+                                    <a ng-click="DeleteImprintData(Imprint.Id)" ng-if="Imprint.Flag =='0'"><i class=" fa fa-trash-o" title="Delete Imprint"></i></a>
+                                    <a ng-if="Imprint.Flag =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Linked With Other Master"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

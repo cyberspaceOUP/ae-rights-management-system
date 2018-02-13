@@ -1,0 +1,644 @@
+﻿
+@if (TempData["Addendum"] != null)
+{
+if (TempData["Addendum"].ToString().ToLower() == "addendumupdate")
+{
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Upload Addendum
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body clearfix AddendumDiv">
+
+        <div ng-if="(('@Session["UserDepartment"]'=='Rights'||'@Session["UserDepartment"]'=='admin'||'@Session["UserDepartment"]'=='Super Admin'))">  @*&& !AddendumDocumentList.length*@
+
+            <div class="col-md-12">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Addendum date <span class="red">*</span></label>
+                                <div class="col-md-7">
+                                    <div class="form-group date" ng-class="{ 'has-error' : userForm.AddendumDate.$invalid && (userForm.AddendumDate.$dirty || submitted)}">
+                                        <div class="input-group input-append date datePicker">
+                                            <input type="text" name="AddendumDate" id="AddendumDate" class="form-control" onchange="angular.element(document.getElementById('angularid')).scope().checkdate(this);" 
+                                                   ng-model="AddendumDate" placeholder="Addendum Date" /><span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+
+                                        </div>
+                                        <div class="help-block">
+                                            <p ng-show="userForm.AddendumDate.$error.required && (userForm.AddendumDate.$dirty || submitted)" class="help-block">Please Enter Addendum Date</p>
+                                            <p ng-show="userForm.AddendumDate.$error.pattern  && (userForm.AddendumDate.$dirty || submitted)"></p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Addendum Type <span class="red">*</span></label>
+                                <div class="col-md-7">
+                                    <div class="form-group" ng-class="{ 'has-error' : userForm.AddendumType.$invalid && (userForm.AddendumType.$dirty || submitted)}">
+                                        <select class="form-control" name="AddendumType" ng-model="AddendumType" ng-init="AddendumType=''" ng-change="AddendumTypeChange(AddendumType)" required>
+                                            <option value="">Please Select</option>
+                                            <option value="T">Term Addendum</option>
+                                            <option value="R">Royalty Change Addendum</option>
+                                            <option value="O">Other Changes</option>
+                                        </select>
+                                        <div class="help-block">
+                                            <p ng-show="userForm.AddendumType.$error.required && (userForm.AddendumType.$dirty || submitted)" class="help-block">Please Select Addendum Type</p>
+                                            <p ng-show="userForm.AddendumType.$error.pattern  && (userForm.AddendumType.$dirty || submitted)"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12 Royalty">
+                <div class="col-md-6">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="col-md-7">
+                                <div class="form-group" ng-class="{ 'has-error' : userForm.SameasEntry.$invalid && (userForm.SameasEntry.$dirty || submitted)}">
+                                    <input type="checkbox" name="SameasEntry" ng-model="SameasEntry" ng-checked="true" ng-change="SameasEntryChange(SameasEntry)" style="float: left; margin-right: 10px; margin-bottom: 7px; " /> As Request Entry
+
+                                </div>
+                                <div class="help-block">
+                                    <p ng-show="userForm.SameasEntry.$error.required && (userForm.SameasEntry.$dirty || submitted)" class="help-block">Please Enter Addendum Date</p>
+                                    <p ng-show="userForm.SameasEntry.$error.pattern  && (userForm.SameasEntry.$dirty || submitted)"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="col-md-12 RoyaltyChange">
+                <div class="caption">
+                    <strong>Royalty Slab</strong>
+                </div>
+                @Html.Partial("~/Areas/Product/Views/Shared/RoyaltySlab.cshtml")
+            </div>*@
+
+            <div class="col-md-12 Term">
+                <div class="row">
+
+                    @*<div class="col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Period of agreement (In Months)</label>
+                                <div class="col-md-7">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Periodofagreement.$dirty) && userForm.Periodofagreement.$invalid } ">
+                                        <input type="number" name="Periodofagreement" min="0" ng-change="CalculateExpiry()" class="form-control" 
+                                               ng-model="Periodofagreement" ng-required="userForm.AddendumType.$modelValue=='T'" placeholder="Enter period of agreement">
+                                        <div class="help-block">
+                                            <p ng-show="userForm.Periodofagreement.$error.required && (userForm.Periodofagreement.$dirty || submitted)">Please select period of agreement </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>*@
+
+
+                    <div class="col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Expiry Date @*<span class="red">*</span>*@</label>
+                                <div class="col-md-7">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ExpiryDate.$dirty) && userForm.ExpiryDate.$invalid } ">
+                                        @*<input type="text" name="ExpiryDate" class="form-control" ng-model="ExpiryDate"
+                                               placeholder="Expiry Date" disabled="disabled">*@
+                                        <div class="input-group input-append date datePicker">
+                                            <input type="text" name="ExpiryDate" id="ExpiryDate" class="form-control" @*ng-required="userForm.AddendumType.$modelValue=='T'"*@
+                                                   onchange="angular.element(document.getElementById('angularid')).scope().checkExpirydate(this);"
+                                                   ng-model="ExpiryDate" placeholder="Expiry Date" />
+                                            <span class="input-group-addon add-on"> <span class="glyphicon glyphicon-calendar"></span></span>
+
+                                        </div>
+
+                                        <div class="help-block">
+                                            @*<p ng-show="userForm.ExpiryDate.$error.required && (userForm.ExpiryDate.$dirty || submitted)" class="help-block">Please Enter Expiry Date</p>*@
+                                            <p ng-show="userForm.ExpiryDate.$error.pattern" class="help-block red">Please enter Expiry date</p>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5">Remarks</label>
+                        <div class="col-md-7">
+                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Remarks.$dirty) && userForm.Remarks.$invalid } ">
+                                <input type="text" name="Remarks" class="form-control" ng-model="Remarks" @*ng-init="Remarks=''"*@
+                                       ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Remarks">
+                                <div class="help-block">
+                                    <p ng-show="userForm.Remarks.$error.pattern" class="help-block red">Please enter remarks</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div ng-if="!((('@Session["UserDepartment"]'=='Rights' || '@Session["UserDepartment"]'=='admin' || '@Session["UserDepartment"]'=='Super Admin') && AddendumDocumentList.length))">
+
+
+            <div class="col-md-12" ng-if="SeriesCodeView!=null">
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <div class="col-md-12">
+                            <label class="control-label col-md-5">Series Name</label>
+                            <div class="control-label col-md-7">
+                                <span ng-bind="SeriesNameView"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="col-md-12">
+                            <label class="control-label col-md-5">Series Code</label>
+                            <div class="control-label col-md-7">
+                                <span ng-bind="SeriesCodeView"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12" ng-if="SeriesCodeView!=null">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Addendum date</label>
+                                <div class="control-label col-md-7">
+                                    <span ng-bind="AddendumDateView"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Addendum Type</label>
+                                <div class="control-label col-md-7">
+
+                                    <p ng-if="AddendumTypeView=='T'"> Term Addendum </p>
+                                    <p ng-if="AddendumTypeView=='R'"> Royalty Change Addendum </p>
+                                    <p ng-if="AddendumTypeView=='O'"> Other Changes </p>
+                                    <p ng-if="AddendumTypeView=='--'">--</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12" ng-if="SeriesCodeView!=null && PeriodofagreementView!='--' && AddendumTypeView=='T'">
+                <div class="row">
+
+                    <div class="col-md-6" ng-if="PeriodofagreementView!=null">
+                        <div class="row">
+
+                            <div class="control-label col-md-12">
+                                <label class="control-label col-md-5">Period of agreement (In Months)</label>
+                                <div class="control-label col-md-7">
+                                    <span ng-bind="PeriodofagreementView"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6" ng-if="ExpiryDateView!=null">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Expiry Date</label>
+                                <div class="control-label col-md-7">
+                                    <span ng-bind="ExpiryDateView"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-6" ng-if="SeriesCodeView!=null">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5">Remarks</label>
+                        <div class="control-label col-md-7">
+                            <span ng-bind="RemarksView"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div ng-repeat="div in AuthorBox_Detail" ng-if="RoyaltyslabList_Detail.length  && AddendumViewCheck==true">
+                @Html.Partial("~/Areas/Contract/Views/Shared/_AuthorBasicDetails_Addendumview.cshtml")
+            </div>
+
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12" id="Uploadfiles">
+                    
+                    <label class="control-label col-md-2" ng-show="UploadFIleReq" ng-if="('@Session["UserDepartment"]'=='Rights')"> Upload Addendum</label>  @*&& !AddendumDocumentList.length*@
+                    <div class="col-md-10 form-group uploadFileMutple" ng-if="('@Session["UserDepartment"]'=='Rights')" style=" margin-left:10px;" id="fileuploadcontrol">  @*&& !AddendumDocumentList.length*@
+
+                    </div>
+
+                    <label class="control-label col-md-2" ng-show="UploadFIleReq" ng-if="'@Session["UserDepartment"]'=='admin' || '@Session["UserDepartment"]'=='Super Admin'"> Upload Addendum</label>
+                    <div class="col-md-10 form-group uploadFileMutple" ng-if="'@Session["UserDepartment"]'=='admin' || '@Session["UserDepartment"]'=='Super Admin'" style=" margin-left:10px;" ng-show="UploadFIleReq" id="fileuploadcontrol">
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div id="doclistid" ng-show="documentshow" style=" padding-left: 29px;">
+                        <div>
+                            @*<div ng-if="('@Session["UserDepartment"]'=='admin' || '@Session["UserDepartment"]'=='Super Admin') && AddendumDocumentList.length" class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                <h3 class="panel-title">Uploaded Attachments</h3>
+                            </div>
+
+
+                            <div ng-if="('@Session["UserDepartment"]'=='Rights' || '@Session["UserDepartment"]'=='Editorial') && AddendumDocumentList.length" class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                <h3 class="panel-title">Uploaded Attachments</h3>
+                            </div>*@
+
+                            <div class="panel-body" ng-if="AddendumDocumentList.length>0">
+
+                                <table class="table table-striped table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Document Name</th>
+                                            <th ng-if="'@Session["UserDepartment"]'=='admin' || '@Session["UserDepartment"]'=='Super Admin'">Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="url in AddendumDocumentList">
+                                            <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.Id}}" /></td>
+                                            <td><a href="~/uploads/{{url.url}}" target="_blank" style="color: black;"><span ng-bind="url.name"></span></a></td>
+
+                                            @*<td><a style=" color: black; cursor:pointer;" ng-click="RemoveAddendumFileUploadById(url.Id,url.name)">Delete</a></td>*@
+
+                                            <td><a ng-if="'@Session["UserDepartment"]'=='admin' || '@Session["UserDepartment"]'=='Super Admin'" style=" color: black; cursor:pointer;" ng-click="RemoveAddendumFileUploadById(url.Id,url.name)">Delete</a></td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    <div ng-if="(('@Session["UserDepartment"]'=='Rights'||'@Session["UserDepartment"]'=='admin' || '@Session["UserDepartment"]'=='Super Admin'))"> @*&& !AddendumDocumentList.length*@
+        @*<div class="portlet box green RoyaltyChange">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Royalty Slab
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                    </div>
+                </div>
+                <div class="portlet-body clearfix">
+
+                    <div class="col-md-12">
+                        <div class="caption">
+                            <strong>Royalty Slab</strong>
+                        </div>
+                        @Html.Partial("~/Areas/Product/Views/Shared/RoyaltySlab.cshtml")
+                    </div>
+
+                </div>
+
+            </div>*@
+        <div class="RoyaltyChange">
+            <div ng-repeat="div in AuthorBox">
+                @Html.Partial("_AuthorBasicDetails_AddendumUpload")
+            </div>
+        </div>
+
+
+    </div>
+
+
+}
+else
+{
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    Addendum Details
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+
+            <div class="portlet-body clearfix">
+
+                @*<div class="col-md-12" ng-if="SeriesName!=undefined">
+
+                    <div>
+                        <span ng-bind="SeriesName"></span>
+                    </div>
+                </div>*@
+
+
+                <div class="col-md-12" ng-if="SeriesCodeView!=null">
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Series Name</label>
+                                <div class="control-label col-md-7">
+                                    <span ng-bind="SeriesNameView"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5">Series Code</label>
+                                <div class="control-label col-md-7">
+                                    <span ng-bind="SeriesCodeView"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Addendum date</label>
+                                            <div class="control-label col-md-7">
+                                                <span ng-bind="AddendumDateView"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Addendum Type</label>
+                                            <div class="control-label col-md-7">
+
+                                                <p ng-if="AddendumTypeView=='T'"> Term Addendum </p>
+                                                <p ng-if="AddendumTypeView=='R'"> Royalty Change Addendum </p>
+                                                <p ng-if="AddendumTypeView=='O'"> Other Changes </p>
+                                                <p ng-if="AddendumTypeView=='--'">--</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                <div class="col-md-12" ng-if="PeriodofagreementView!='--' && AddendumTypeView=='T'">
+                    <div class="row">
+
+                        @*<div class="col-md-6">
+                            <div class="row">
+
+                                <div class="control-label col-md-12">
+                                    <label class="control-label col-md-5">Period of agreement (In Months)</label>
+                                    <div class="control-label col-md-7">
+                                        <span ng-bind="PeriodofagreementView"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>*@
+
+
+                        <div class="col-md-6">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Expiry Date</label>
+                                    <div class="control-label col-md-7">
+                                        <span ng-bind="ExpiryDateView"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                        <div class="col-md-6">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Remarks</label>
+                                    <div class="control-label col-md-7">
+                                        <span ng-bind="RemarksView"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12" id="Uploadfiles">
+
+                                    <div class="clearfix"></div>
+
+                                    <div id="doclistid" ng-show="documentshow" style=" padding-left: 29px;">
+                                        <div>
+
+                                            @*<div ng-if="AddendumDocumentList.length">
+                                            <h3 class="panel-title">Uploaded Attachements</h3>
+                                        </div>*@
+
+                                            @*<div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important;" ng-if ="AddendumDocumentList.length">
+                                                <h3 class="panel-title">Uploaded Attachments</h3>
+                                            </div>*@
+
+
+
+                                            <div class="panel-body" ng-if="AddendumDocumentList.length>0">
+
+                                                <table class="table table-striped table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Document Name</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="url in AddendumDocumentList">
+                                                            <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.Id}}" /></td>
+                                                            <td><a href="~/uploads/{{url.url}}" target="_blank" style="color: black;"><span ng-bind="url.name"></span></a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+    
+    <div>
+</div>
+
+    <div ng-repeat="div in AuthorBox_Detail" ng-if="RoyaltyslabList_Detail.length && AddendumViewCheck==true">
+        @Html.Partial("~/Areas/Contract/Views/Shared/_AuthorBasicDetails_Addendumview.cshtml")
+    </div>
+
+}
+}
+
+
+
+
+
+
+                <script type="text/javascript">
+
+                    $(function () {
+                        renderFileUpload();
+
+                    });
+
+                    function renderFileUpload() {
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            contentType: 'application/html; charset=utf-8',
+                            url: GlobalredirectPath + "/Master/Master/MultipleFileUpload",
+                            data: {},
+                            datatype: 'html',
+                            success: function (result) {
+                                $(".uploadFileMutple").html(result);
+
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+
+                            }
+                        });
+
+                    }
+
+                    $(document).ready(function () {
+                        var today = new Date();
+                        $('.datePicker')
+                            .datepicker({
+                                format: "dd/mm/yyyy",
+                                
+                                showButtonPanel: true,
+                                autoclose: true,
+                                endDate: "today",
+                                maxDate: today
+
+                            })
+
+
+
+                    });
+
+                    //function CalculateExpiry() {
+                    //    angular.element(document.getElementById('angularid')).scope().CalculateExpiry();
+
+                    //}
+                </script>
+

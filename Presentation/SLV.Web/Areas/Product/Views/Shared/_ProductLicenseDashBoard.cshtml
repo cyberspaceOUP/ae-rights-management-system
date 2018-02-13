@@ -1,0 +1,38 @@
+﻿
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Product Licenses Which are Expiring Within 3 Month or for Which Balance Quantity is Less Then 25%
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th> License Code </th>
+                    <th> Product Code </th>
+                    <th> ISBN </th>
+                    <th> Working Product </th>
+                    <th> Expiry Date</th>
+                    <th> Quantity Blance </th>
+                  
+                </tr>
+                <tr ng-repeat="License in ProductLicensesList">
+                    <td class="table-color"><a href="javascript:void(0);"> <span ng-bind="(License.ProductLicensecode)"></span> </a></td>
+
+                    <td> <span ng-bind="(License.ProductCode)"></span> </td>
+                    <td> <span ng-bind="(License.ISBN)"></span></td>
+                    <td> <span ng-bind="(License.WorkingProduct)"></span> </td>
+                    <td> <span ng-bind="(License.Expirydate)"></span> </td>
+                    <td> <span ng-bind="(License.balanceqty)"></span> </td>
+
+                </tr>
+        </table>
+    </div>
+</div>
+</div>
+
+

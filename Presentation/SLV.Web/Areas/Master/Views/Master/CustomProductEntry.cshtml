@@ -1,0 +1,179 @@
+﻿@using ACS.Services.Master
+
+@{
+    ViewBag.Title = "Custom Product Entry";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<link href="~/Content/app.css" rel="stylesheet" />
+<div class="container-fluid" ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    @T("Custom.Product.Entry")
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Custom Product Entry
+
+                    </div>
+                </div>
+
+                <div class="portlet-body form">
+                    <div class=" form-body ">
+                        <h4 class="caption">
+                            Custom Product Entry
+                        </h4>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5"> Proprietor ISBN <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error' : userForm.propisbn.$invalid &amp;&amp; (userForm.propisbn.$dirty || submitted)}">
+                                                <input type="text" name="propisbn" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" maxlength="20" ng-model="propisbn" required="" ng-pattern="/^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|↵
+                                                        (?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|↵
+                                                        (?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?↵
+                                                        [0-9]+[- ]?[0-9]+[- ]?[0-9X]$/" placeholder="Proprietor ISBN">
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.propisbn.$error.required &amp;&amp; (userForm.propisbn.$dirty || submitted)" class="help-block ng-hide">Please Enter Proprietor ISBN</p>
+                                                    <p ng-show="userForm.propisbn.$error.pattern  &amp;&amp; (userForm.propisbn.$dirty || submitted)" class="ng-hide">Please Enter Valid Proprietor ISBN</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5"> Proprietor Product <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error' : userForm.propproduct.$invalid &amp;&amp; (userForm.propproduct.$dirty || submitted)}">
+                                                <input type="text" name="propproduct" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" maxlength="150" ng-model="propproduct" required placeholder="Proprietor Product">
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.propproduct.$error.required &amp;&amp; (userForm.propproduct.$dirty || submitted)" class="help-block ng-hide">Please Enter Proprietor Product</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5"> Proprietor Edition <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error' : userForm.propedition.$invalid &amp;&amp; (userForm.propedition.$dirty || submitted)}">
+                                                <input type="text" name="propedition" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" maxlength="150" ng-model="propedition" required placeholder="Proprietor Edition">
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.propedition.$error.required &amp;&amp; (userForm.propedition.$dirty || submitted)" class="help-block ng-hide">Please Enter Proprietor Edition</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5"> Proprietor Copyright Year <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error' : userForm.propcopyrightyear.$invalid &amp;&amp; (userForm.propcopyrightyear.$dirty || submitted)}">
+                                                <input type="text" name="propcopyrightyear" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" maxlength="150" ng-model="propcopyrightyear" required placeholder="Proprietor Copyright Year">
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.propcopyrightyear.$error.required &amp;&amp; (userForm.propcopyrightyear.$dirty || submitted)" class="help-block ng-hide">Please Enter Proprietor Edition</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5"> Publishing Company <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error' : userForm.publishingcompnay.$invalid &amp;&amp; (userForm.publishingcompnay.$dirty || submitted)}">
+                                                <input type="text" name="publishingcompnay" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" maxlength="150" ng-model="publishingcompnay" required placeholder="Publishing Company">
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.publishingcompnay.$error.required &amp;&amp; (userForm.publishingcompnay.$dirty || submitted)" class="help-block ng-hide">Please Enter Publishing Company</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5"> Publishing Centre <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error' : userForm.pubcenter.$invalid &amp;&amp; (userForm.pubcenter.$dirty || submitted)}">
+                                                <input type="text" name="pubcenter" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" maxlength="150" ng-model="pubcenter" required placeholder="Publishing Centre">
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.pubcenter.$error.required &amp;&amp; (userForm.pubcenter.$dirty || submitted)" class="help-block ng-hide">Please Enter Publishing Centre</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5"> Imprint <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error' : userForm.imprint.$invalid &amp;&amp; (userForm.imprint.$dirty || submitted)}">
+                                                <select ng-model="Country"
+                                                        ng-options="obj.Id as obj.geogName for obj in CountryList"
+                                                        ng-change="getCountryStates()"
+                                                        class="form-control"
+                                                        ng-required="true"
+                                                        id="imprint">
+                                                    <option value="">-- Choose Imprint --</option>
+                                                </select>
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.imprint.$error.required && (userForm.imprint.$dirty || submitted)">Please select imprint</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5"> Proprietor Author Category &nbsp; <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <label>
+                                                <input type="radio" name="propauthorcategory" class="form-controln" id="propauthorcategory" value="0"> Hardcopy
+                                            </label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label><input type="radio" name="propauthorcategory" class="form-controln" id="propauthorcategory" value="1">Digital</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5"> Publishing Centre <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error' : userForm.pubcenter.$invalid &amp;&amp; (userForm.pubcenter.$dirty || submitted)}">
+                                                <input type="text" name="pubcenter" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" maxlength="150" ng-model="pubcenter" required placeholder="Publishing Centre">
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.pubcenter.$error.required &amp;&amp; (userForm.pubcenter.$dirty || submitted)" class="help-block ng-hide">Please Enter Publishing Centre</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <button type="submit" class="btn green" id="btnSubmit" name="btnSubmit" ng-model="btnSubmit">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>

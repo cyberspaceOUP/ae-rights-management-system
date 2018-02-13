@@ -1,0 +1,28 @@
+﻿
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Manuscript Delivery Format
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body clearfix">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12" ng-repeat="M in MenuScriptDeliveryFormatList" ng-if="$even">
+                    <label class="control-label"> <span ng-bind="$index+1"></span>.  <span ng-bind="M.ManuscriptDeliveryFormat"></span></label>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12" ng-repeat="A in MenuScriptDeliveryFormatList" ng-if="$odd">
+                    <label class="control-label"><span ng-bind="$index+1"></span>.  <span ng-bind="A.ManuscriptDeliveryFormat"></span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

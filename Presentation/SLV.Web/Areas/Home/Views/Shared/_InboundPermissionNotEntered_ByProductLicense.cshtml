@@ -1,0 +1,45 @@
+﻿
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Inbound Permission Not Entered - License
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!InboundPermissionNotEnteredByProductLicense_List.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> License Code </th>
+                        <th> Product Code </th>
+                        <th> ISBN </th>
+                        <th> Working Product</th>
+                        <th> Author </th>
+                    </tr>
+
+                    <tr ng-repeat="Authot_IMNE in InboundPermissionNotEnteredByProductLicense_List">
+                        <td class="table-color"><a href="../../PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?Id={{Authot_IMNE.Id}}&type=P{{Authot_IMNE.ProductId}}"><span ng-bind="(Product.ProductLicensecode)"></span>   </a></td> @*javascript:void(0);*@
+                        <td class="table-color"><a href="../../PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?Id={{Authot_IMNE.Id}}&type=P{{Authot_IMNE.ProductId}}"> <span ng-bind="(Product.ProductCode)"></span>  </a></td> @*javascript:void(0);*@
+                        <td> <span ng-bind="(Product.ISBN)"></span>   </td>
+                        <td><span ng-bind="(Product.WorkingProduct)"></span>  </td>
+                        <td><span ng-bind="(Product.AuthorName)"></span> </td>
+                    </tr>
+                </table>
+                <a href="javascript:void(0);" ng-click="InboundPermissionNotEntered_ByProductLicense_submitForm();" class="moreDash">View More</a>
+            </div>
+            <div ng-hide="InboundPermissionNotEnteredByProductLicense_List.length">No result found</div>
+        </div>
+    </div>
+</div>
+
+

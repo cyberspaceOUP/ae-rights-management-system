@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E990D4C3-2A97-4D70-9B96-8EA16F3F81BA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SLV.Model</RootNamespace>
+    <AssemblyName>SLV.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthorContract\AuthorContractSearchmodel.cs" />
+    <Compile Include="AuthorContract\AuthorContractModel.cs" />
+    <Compile Include="Common\DashBoardModel.cs" />
+    <Compile Include="Common\ISBNBagModel.cs" />
+    <Compile Include="Common\AuthorModel.cs" />
+    <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\ListModel.cs" />
+    <Compile Include="Common\OtherContractDetailsModel.cs" />
+    <Compile Include="Common\Contract_Signed_By_Executive.cs" />
+    <Compile Include="Common\ExecutiveModel.cs" />
+    <Compile Include="Common\PermissionsInboundModel.cs" />
+    <Compile Include="Common\PermissionsOutboundModel.cs" />
+    <Compile Include="Common\PubCenterWithPublishingCompanyModel.cs" />
+    <Compile Include="Common\SeriesByDividionSubdivisionModel.cs" />
+    <Compile Include="Common\TerritoryRightsModel.cs" />
+    <Compile Include="Master\GeographicalModel.cs" />
+    <Compile Include="PaymentTaggingMaster\PaymentTaggingMasterModel.cs" />
+    <Compile Include="PermissionInboundModel\PermissionInboundModel.cs" />
+    <Compile Include="PermissionInboundModel\PermissionInboundSearchModel.cs" />
+    <Compile Include="Product\ProductLinkModel.cs" />
+    <Compile Include="Product\SeriesProductEntryModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\ReportModel.cs" />
+    <Compile Include="Report\InvoiceReportModel.cs" />
+    <Compile Include="Report\StatementModel.cs" />
+    <Compile Include="RightsSelling\RightsSellingModel.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\ACS.Core\VRV.Core.csproj">
+      <Project>{f1369bf6-dbcc-426a-8ea1-99dbdd1c1dfb}</Project>
+      <Name>VRV.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

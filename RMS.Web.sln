@@ -1,0 +1,123 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Web", "Presentation\SLV.Web\RMS.Web.csproj", "{B73274D2-E4D4-48D4-B54E-C93B4FCFD247}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A9063419-D8F0-4D4D-99D8-429DBDC7301F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Web.Framework", "Presentation\ACS.Web.Framework\RMS.Web.Framework.csproj", "{FF85C9C7-4BF6-47D0-8178-FB70ACF7555E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{25495BBD-15AC-4DF9-9DA8-27C8F2AE420C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRV.Core", "Libraries\ACS.Core\VRV.Core.csproj", "{F1369BF6-DBCC-426A-8EA1-99DBDD1C1DFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRV.Data", "Libraries\ACS.Data\VRV.Data.csproj", "{DA4A16D3-4523-42C2-9348-976850E85233}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRV.Services", "Libraries\ACS.Services\VRV.Services.csproj", "{43A232F6-2512-46B2-93AA-80880309BC52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CB093235-C266-4A05-83A5-E374B2176E57}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.API", "SLV.API\RMS.API.csproj", "{6159FFA4-F423-42A1-8475-232C0E2C9B73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Model", "Presentation\SLV.Model\RMS.Model.csproj", "{E990D4C3-2A97-4D70-9B96-8EA16F3F81BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Logger", "RMS.Logger\RMS.Logger.csproj", "{2821CBB0-1D95-4520-A679-AE23452550F8}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://vrvserver:8080/tfs/oup
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Libraries\\ACS.Core\\VRV.Core.csproj
+		SccProjectTopLevelParentUniqueName1 = RMS.Web.sln
+		SccProjectName1 = Libraries/ACS.Core
+		SccLocalPath1 = Libraries\\ACS.Core
+		SccProjectUniqueName2 = Libraries\\ACS.Data\\VRV.Data.csproj
+		SccProjectTopLevelParentUniqueName2 = RMS.Web.sln
+		SccProjectName2 = Libraries/ACS.Data
+		SccLocalPath2 = Libraries\\ACS.Data
+		SccProjectUniqueName3 = Libraries\\ACS.Services\\VRV.Services.csproj
+		SccProjectTopLevelParentUniqueName3 = RMS.Web.sln
+		SccProjectName3 = Libraries/ACS.Services
+		SccLocalPath3 = Libraries\\ACS.Services
+		SccProjectUniqueName4 = Presentation\\ACS.Web.Framework\\RMS.Web.Framework.csproj
+		SccProjectTopLevelParentUniqueName4 = RMS.Web.sln
+		SccProjectName4 = Presentation/ACS.Web.Framework
+		SccLocalPath4 = Presentation\\ACS.Web.Framework
+		SccProjectUniqueName5 = Presentation\\SLV.Model\\RMS.Model.csproj
+		SccProjectTopLevelParentUniqueName5 = RMS.Web.sln
+		SccProjectName5 = Presentation/SLV.Model
+		SccLocalPath5 = Presentation\\SLV.Model
+		SccProjectUniqueName6 = Presentation\\SLV.Web\\RMS.Web.csproj
+		SccProjectTopLevelParentUniqueName6 = RMS.Web.sln
+		SccProjectName6 = Presentation/SLV.Web
+		SccLocalPath6 = Presentation\\SLV.Web
+		SccProjectUniqueName7 = SLV.API\\RMS.API.csproj
+		SccProjectTopLevelParentUniqueName7 = RMS.Web.sln
+		SccProjectName7 = SLV.API
+		SccLocalPath7 = SLV.API
+		SccProjectUniqueName8 = RMS.Logger\\RMS.Logger.csproj
+		SccProjectTopLevelParentUniqueName8 = RMS.Web.sln
+		SccProjectName8 = RMS.Logger
+		SccLocalPath8 = RMS.Logger
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B73274D2-E4D4-48D4-B54E-C93B4FCFD247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B73274D2-E4D4-48D4-B54E-C93B4FCFD247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B73274D2-E4D4-48D4-B54E-C93B4FCFD247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B73274D2-E4D4-48D4-B54E-C93B4FCFD247}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF85C9C7-4BF6-47D0-8178-FB70ACF7555E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF85C9C7-4BF6-47D0-8178-FB70ACF7555E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF85C9C7-4BF6-47D0-8178-FB70ACF7555E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF85C9C7-4BF6-47D0-8178-FB70ACF7555E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1369BF6-DBCC-426A-8EA1-99DBDD1C1DFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1369BF6-DBCC-426A-8EA1-99DBDD1C1DFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1369BF6-DBCC-426A-8EA1-99DBDD1C1DFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1369BF6-DBCC-426A-8EA1-99DBDD1C1DFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA4A16D3-4523-42C2-9348-976850E85233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA4A16D3-4523-42C2-9348-976850E85233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA4A16D3-4523-42C2-9348-976850E85233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA4A16D3-4523-42C2-9348-976850E85233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43A232F6-2512-46B2-93AA-80880309BC52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43A232F6-2512-46B2-93AA-80880309BC52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43A232F6-2512-46B2-93AA-80880309BC52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43A232F6-2512-46B2-93AA-80880309BC52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6159FFA4-F423-42A1-8475-232C0E2C9B73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6159FFA4-F423-42A1-8475-232C0E2C9B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6159FFA4-F423-42A1-8475-232C0E2C9B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6159FFA4-F423-42A1-8475-232C0E2C9B73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E990D4C3-2A97-4D70-9B96-8EA16F3F81BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E990D4C3-2A97-4D70-9B96-8EA16F3F81BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E990D4C3-2A97-4D70-9B96-8EA16F3F81BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E990D4C3-2A97-4D70-9B96-8EA16F3F81BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2821CBB0-1D95-4520-A679-AE23452550F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2821CBB0-1D95-4520-A679-AE23452550F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2821CBB0-1D95-4520-A679-AE23452550F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2821CBB0-1D95-4520-A679-AE23452550F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B73274D2-E4D4-48D4-B54E-C93B4FCFD247} = {A9063419-D8F0-4D4D-99D8-429DBDC7301F}
+		{FF85C9C7-4BF6-47D0-8178-FB70ACF7555E} = {A9063419-D8F0-4D4D-99D8-429DBDC7301F}
+		{6159FFA4-F423-42A1-8475-232C0E2C9B73} = {A9063419-D8F0-4D4D-99D8-429DBDC7301F}
+		{E990D4C3-2A97-4D70-9B96-8EA16F3F81BA} = {A9063419-D8F0-4D4D-99D8-429DBDC7301F}
+		{2821CBB0-1D95-4520-A679-AE23452550F8} = {A9063419-D8F0-4D4D-99D8-429DBDC7301F}
+		{F1369BF6-DBCC-426A-8EA1-99DBDD1C1DFB} = {25495BBD-15AC-4DF9-9DA8-27C8F2AE420C}
+		{DA4A16D3-4523-42C2-9348-976850E85233} = {25495BBD-15AC-4DF9-9DA8-27C8F2AE420C}
+		{43A232F6-2512-46B2-93AA-80880309BC52} = {25495BBD-15AC-4DF9-9DA8-27C8F2AE420C}
+	EndGlobalSection
+EndGlobal

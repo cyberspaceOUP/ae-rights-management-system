@@ -1,0 +1,152 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "StateMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<style type="text/css">
+    .fa {
+        color: black !important;
+    }
+
+    th {
+        text-align: left !important;
+    }
+
+    td {
+        text-align: left !important;
+    }
+</style>
+
+
+<script src="~/js/master/Master.State.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+@section onInit
+{
+
+    angular.element(document.getElementById('angularid')).scope().GetCountryList();
+    angular.element(document.getElementById('angularid')).scope().GetCountryStateList();
+
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    State Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        State Master
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+
+                    <form name="stateForm" class=" form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Country Name <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||stateForm.country.$dirty) && stateForm.country.$invalid } ">
+                                            <select class="form-control" name="country" ng-model="country" required>
+                                                <option value="">Please Select</option>
+                                                <option ng-repeat="Country in CountryList" ng-model="country" value="{{Country.Id}}">{{Country.geogName}}</option>
+                                            </select>
+                                            <div class="help-block">
+                                                <p ng-show="stateForm.country.$error.required && (stateForm.country.$dirty || submitted)">Please Select Country</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5"> State Name <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error' : stateForm.name.$invalid && (stateForm.name.$dirty || submitted)}">
+                                            <input type="text" name="name" class="form-control" ng-model="name" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="State Name">
+                                            <div class="help-block">
+                                                <p ng-show="stateForm.name.$error.required && (stateForm.name.$dirty || submitted)" class="help-block">Please Enter State Name</p>
+                                                <p ng-show="stateForm.name.$error.pattern  && (stateForm.name.$dirty || submitted)"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_recordid" name="hid_recordid" ng-model="hid_recordid" />
+                                    <button type="submit" class="btn green" id="btnSubmit" name="btnSubmit" ng-model="btnSubmit">Submit</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        State List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Country&nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                <th>State&nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="State in CountryStateList">
+                                <td>{{State.CountryName}}</td>
+                                <td>{{State.StateName}}</td>
+                                <td><a ng-click="EditStateData(State.Id)"><i class="fa fa-edit" title="Edit State"></i></a></td>
+                                <td>
+                                    @*<a ng-click="DeleteStateData(State.Id)"><i class="fa fa-trash-o" title="Delete State"></i></a>*@
+
+                                    <a ng-click="DeleteStateData(State.Id)" ng-if="State.Flag =='0'"><i class="fa fa-trash-o" title="Delete State"></i></a>
+
+                                    <a ng-if="State.Flag =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Linked With Other Process"></i></a>
+
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

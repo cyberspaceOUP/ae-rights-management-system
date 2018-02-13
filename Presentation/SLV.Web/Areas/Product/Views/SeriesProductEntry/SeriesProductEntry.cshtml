@@ -1,0 +1,673 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "SeriesProductEntry";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/Product/SeriesProductEntry.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+
+<link href="~/Content/app.css" rel="stylesheet" />
+@section onInit{
+    angular.element(document.getElementById('angularid')).scope().getAllProductCategoryListEntry();
+}
+
+<style type="text/css">
+    .flip-content th {
+        vertical-align: top !important;
+    }
+        .flip-content th input {
+            vertical-align: bottom !important;
+        }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Series Product Entry
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <form name="userForm" class=" form-horizontal" ng-submit="SeriesEntryForm()" novalidate ng-cloak>
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Series Basic Details
+                            @*<input type="hidden" value="@ViewBag.Id" id="hid_ProductId" name="hid_ProductId" />*@
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @Html.Partial("~/Views/Shared/_divisionSubdivision.cshtml")
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product Category <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.ProductCategory.$dirty) && userForm.ProductCategory.$invalid } ">
+                                                    <select id="ProductCategory" class="form-control" name="ProductCategory" ng-model="ProductCategory" required>
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in ProductCategoryListEntry"
+                                                                catcode="{{div.ProductCategoryCode}}"
+                                                                @*ng-selected="{{  div.ProductCategory == ProductCategory.ProductCategory }}"*@
+                                                                @*ng-options="div.Id as div.ProductCategory for div in ProductCategoryListEntry"*@
+                                                                value="{{div.Id}}">
+                                                            {{div.ProductCategory}}
+                                                        </option>
+                                                    </select>
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProductCategory.$error.required && (userForm.ProductCategory.$dirty || submitted)">Please select Product Category</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" row">
+
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product Type <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group pt_radio">
+                                                    <label class="radio-inline" ng-repeat="Pt in ProductTypeList">
+                                                        <input type="radio" id="ProductType" name="ProductType" ng-click="getSubProductTypeList(Pt.Id);setProductTypeId(Pt.Id);" ng-model="ProductType" value="{{Pt.Id}}" required> {{Pt.typeName}}
+                                                    </label>
+                                                    <div ng-class="{ 'has-error' : userForm.ProductType.$invalid && (userForm.ProductType.$dirty || submitted)}">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ProductType.$error.required && (userForm.ProductType.$dirty || submitted)" class="help-block">Please Select Product Type</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    @*<div class=" row">&nbsp;</div>*@
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Sub-Product Type/Format <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SubProductType.$dirty) && userForm.SubProductType.$invalid } ">
+                                                    <select class="form-control" name="SubProductType" ng-model="SubProductType" required>
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in SubProductTypeList"  @*ng-selected="{{div.Id == SubProductType}}"*@ ng-model="SubProductType" value="{{div.Id}}">{{div.typeName}}</option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.SubProductType.$error.required && (userForm.SubProductType.$dirty || submitted)" class="help-block">Sub-Product Type/Format</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Series <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Series.$dirty) && userForm.Series.$invalid } ">
+                                                    <select class="form-control" name="Series" id="Series" ng-model="SeriesId" required>
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in SeriesList" ng-model="Series" value="{{div.SeriesId}}">{{div.SeriesName}}</option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Series.$error.required && (userForm.Series.$dirty || submitted)">Please select Series</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Series Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body clearfix">
+                        <div class="portlet-body flip-scroll">
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer SeriesDetail" id="TblOwnerList">
+                                <thead class="flip-content">
+                                    <tr>
+                                        @*<th>S No.</th>*@
+                                        <th style="display:none">ISBN</th>
+                                        <th>Working Product <input type="checkbox" id="SelectWorkingProject" /></th>
+                                        <th>Working SubProduct <input type="checkbox" id="SelectSubWorkingProject" /></th>
+                                        <th>Edition <input type="checkbox" id="SelectEdition" /></th>
+                                        <th>Project Publishing Date <input type="checkbox" id="SelectProjectPubDate" /></th>
+                                        <th>Copyright Year</th>
+                                        <th>Imprint <input type="checkbox" id="SelectImprint" /></th>
+                                        <th>Language <input type="checkbox" id="SelectLanguage" /></th>
+                                        <th>Projected Price</th>
+                                        <th>Projected Currency</th>
+                                        <th>Third Party Permission <input type="checkbox" id="chk_SelectTPP" /></th>
+                                        <th>Is the Product a Derivative <input type="checkbox" id="SelectDerivative" /></th>
+                                        <th>Author Category <input type="checkbox" id="SelectAuthorcategory" /></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="i in SeriesListControl" id="fulltr_{{$index}}">
+
+                                        @*<td>{{$index +1}}</td>*@
+
+                                        <td style="display:none">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OUPISBN.$dirty) && userForm.OUPISBN.$invalid }">
+                                                            <input type="number" id="OUPISBN_{{$index}}" max="9999999999999" name="OUPISBN" class="form-control" 
+                                                                   ng-model="OUPISBN[$index]" placeholder="OUP ISBN" 
+                                                                   onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForInputs(this);" />
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.OUPISBN.$error.required && (userForm.OUPISBN.$dirty || submitted)" class="help-block red">Please enter OUP ISBN</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.WorkingProduct.$dirty) && userForm.WorkingProduct.$invalid } ">
+                                                            <input type="text" min="0" id="WorkingProduct_{{$index}}" ng-required="WorkingProductReq" name="WorkingProduct" 
+                                                                   class="form-control" ng-model="WorkingProduct[$index]" placeholder="Working Product" 
+                                                                   onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForInputs(this);" style="width: 100px;">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.WorkingProduct.$error.required && (userForm.WorkingProduct.$dirty || submitted)" class="help-block red">Please enter working product</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" > @*ng-class="{ 'has-error': ( submitted ||userForm.WorkingSubProduct.$dirty) && userForm.WorkingSubProduct.$invalid } "*@
+                                                            <input type="text" min="0" id="WorkingSubProduct_{{$index}}" name="WorkingSubProduct" class="form-control" 
+                                                                   ng-model="WorkingSubProduct[$index]" placeholder="Working Sub-Product" 
+                                                                   onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForInputs(this);">
+                                                            @*ng-required="WorkingSubProductReq"*@
+                                                            @*<div class="help-block">
+                                                                <p ng-show="userForm.WorkingSubProduct.$error.required && (userForm.WorkingSubProduct.$dirty || submitted)" class="help-block red">Please enter working sub-product</p>
+                                                            </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OUPEdition.$dirty) && userForm.OUPEdition.$invalid } ">
+                                                            <input type="number" min="0" id="OUPEdition_{{$index}}" ng-required="OUPEditionReq" name="OUPEdition" 
+                                                                   class="form-control" ng-model="OUPEdition[$index]" placeholder="Edition" 
+                                                                   onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForInputs(this);" style="width:70px">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.OUPEdition.$error.required && (userForm.OUPEdition.$dirty || submitted)" class="help-block red">Please enter edition</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProjectPublishingDate.$dirty) && userForm.ProjectPublishingDate.$invalid } ">
+                                                            <div class="input-group input-medium date date-picker ProjectPublishingDate">
+                                                                <input type="text" onchange="RemoveValidation(this); angular.element(document.getElementById('angularid')).scope().SetCopyrightDate(this);" 
+                                                                       ng-required="ProjectPublishingDateReq" id="ProjectPublishingDate_{{$index}}" name="ProjectPublishingDate" 
+                                                                       ng-change="getCopyrightYear(ProjectPublishingDate,$index)" rowno="{{$index}}" class="form-control" 
+                                                                       ng-model="ProjectPublishingDate[$index]" 
+                                                                         @*onchange="angular.element(document.getElementById('angularid')).scope().SetCopyrightDate(this);"*@ 
+                                                                       placeholder="Projected Publishing Date" 
+                                                                        @*onchange="angular.element(document.getElementById('angularid')).scope().ChequeDateValue(this);"*@ style="width: 100px;">
+                                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ProjectedPublishingDate.$error.required && (userForm.ProjectedPublishingDate.$dirty || submitted)" class="help-block red">Please enter project publishing date</p>
+                                                            </div>
+                                                        </div>
+                                                        <script type="text/javascript">
+                                                            $(document).ready(function () {
+                                                                $('.ProjectPublishingDate')
+                                                                    .datepicker({
+                                                                        format: "dd/mm/yyyy",
+                                                                        showButtonPanel: true,
+                                                                        autoclose: true,
+                                                                    })
+                                                            });
+                                                        </script>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.CopyrightYear.$dirty) && userForm.CopyrightYear.$invalid } ">
+                                                            <input type="text" name="CopyrightYear" id="CopyrightYear_{{$index}}" ng-maxlength="4" class="form-control" 
+                                                                   ng-model="CopyrightYear[$index]" ng-pattern="^(19|20)\d{2}" placeholder="Copyright Year" 
+                                                                   ng-disabled="true" onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidation(this);" style="width:60px">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.CopyrightYear.$error.required && (userForm.CopyrightYear.$dirty || submitted)" class="help-block red">Please select project publishing date for Copyright Year</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.OUPImprint.$dirty) && userForm.OUPImprint.$invalid }">
+                                                            <select class="form-control" ng-required="OUPImprintReq" id="OUPImprint_{{$index}}" name="OUPImprint" 
+                                                                    ng-model="OUPImprint[$index]" style="width:75px">
+                                                                <option value="">Select Imprint</option>
+                                                                <option ng-repeat="div in OUPImprintList" value="{{div.Id}}">{{div.ImprintName}}</option>
+                                                            </select>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.OUPImprint.$error.required && (userForm.OUPImprint.$dirty || submitted)">Please select Imprint</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Language.$dirty) && userForm.Language.$invalid }">
+                                                            <select class="form-control" ng-required="LanguageReq" id="Language_{{$index}}" name="Language" 
+                                                                    ng-model="Language[$index]" style="width:75px">
+                                                                <option value="">Select Language</option>
+                                                                <option ng-repeat="div in LanguageList" value="{{div.Id}}">{{div.LanguageName}}</option>
+                                                            </select>
+
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.Language.$error.required && (userForm.Language.$dirty || submitted)">Please select Language</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <!--Added by Prakash on 09/11/2016-->
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProjectedPrice.$dirty) && userForm.ProjectedPrice.$invalid } ">                                                        
+                                                            <input type="number" name="ProjectedPrice" id="ProjectedPrice_{{$index}}" class="form-control" style="width:80px"
+                                                                   ng-model="ProjectedPrice[$index]" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" placeholder="Projected Price">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ProjectedPrice.$error.required && (userForm.ProjectedPrice.$dirty || submitted)" class="help-block red">Please enter Projected Price</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <select class="form-control" id="ProjectedCurrency_{{$index}}" name="ProjectedCurrency" 
+                                                                    ng-model="ProjectedCurrency[$index]">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in CurrencyList" ng-selected="{{div.Symbol == 'INR'}}" ng-model="ProjectedCurrency" value="{{div.Id}}" style="width: 70px;">{{div.CurrencyName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.thirdpartypermission{{$index}}.$dirty) && userForm.thirdpartypermission{{$index}}.$invalid }">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" class="thirdpartypermissionYes" ng-required="thirdpartypermissionReq" id="thirdpartypermission_{{$index}}"
+                                                                       name="thirdpartypermission{{$index}}" ng-model="thirdpartypermission[$index]" value="1"
+                                                                       onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForthirdpartypermission(this);" /> Yes
+                                                            </label><br />
+                                                            <label class="radio-inline">
+                                                                <input type="radio" class="thirdpartypermissionNo" ng-required="thirdpartypermissionReq" id="thirdpartypermission_{{$index}}"
+                                                                       name="thirdpartypermission{{$index}}" ng-model="thirdpartypermission[$index]" value="0"
+                                                                       onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForthirdpartypermission(this);" /> No
+                                                            </label>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.thirdpartypermission{{$index}}.$error.required && (userForm.thirdpartypermission{{$index}}.$dirty || submitted)">Please select third party permission</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <!--End by Prakash -->
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Derivatives{{$index}}.$dirty) && userForm.Derivatives{{$index}}.$invalid }">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" class="DerivativeYes" ng-required="DerivativesReq" id="Derivatives_{{$index}}" 
+                                                                       name="Derivatives{{$index}}" ng-model="Derivates[$index]" value="Yes" 
+                                                                       onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForRadioButtons(this);" /> Yes
+                                                            </label><br/>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" class="DerivativeNo" ng-required="DerivativesReq" id="Derivatives_{{$index}}" 
+                                                                       name="Derivatives{{$index}}" ng-model="Derivates[$index]" value="No" 
+                                                                       onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForRadioButtons2(this);" /> No
+                                                            </label>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.Derivatives{{$index}}.$error.required && (userForm.Derivatives{{$index}}.$dirty || submitted)">Please select derivative</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row derivativeshow" ng-show="Derivates[$index] == 'Yes'">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OrgISBNTiTle.$dirty) && userForm.OrgISBNTiTle.$invalid } ">
+                                                            <input type="text" min="0" id="OrgISBNTiTle_{{$index}}" name="Edition" class="form-control" 
+                                                                   ng-model="OrgISBNTiTle[$index]" placeholder="Original ISBN" 
+                                                                   onchange="angular.element(document.getElementById('angularid')).scope().ValidISBN(this);" ng-pattern="/^[0-9]{13}$/" maxlength="13">
+                                                            <div class="help-block">
+                                                                @*<p ng-show="userForm.OrgISBNTiTle.$error.required && (userForm.OrgISBNTiTle.$dirty || submitted)" class="help-block red">Please enter edition</p>*@
+
+                                                                <p ng-show="userForm.OrgISBNTiTle.$error.required && (userForm.OrgISBNTiTle.$dirty || submitted)" class="help-block red">Please enter Org ISBN</p>
+                                                                <p ng-show="userForm.OrgISBNTiTle.$error.pattern" class="help-block red">Please enter valid Orignal ISBN</p>
+                                                                @*<p ng-show="Req_ISBNNO" class="help-block red">Entered Orignal ISBN does not exist</p>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.AuthorCategory{{$index}}.$dirty) && userForm.AuthorCategory{{$index}}.$invalid }">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" id="AuthorCategory_{{$index}}" class="radio AuthorIndividual" 
+                                                                       name="AuthorCategory{{$index}}" ng-model="AuthorCategory[$index]" ng-click="ShowSuggestedAuthor('Y')" 
+                                                                       value="Individual" onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForRadioButtons(this);" 
+                                                                       ng-required="AuthorCatagoryReq"> Individual
+                                                            </label><br />
+                                                            <label class="radio-inline">
+                                                                <input type="radio" id="AuthorCategory_{{$index}}" class="radio-inline AuthorInstitute" 
+                                                                       name="AuthorCategory{{$index}}" ng-model="AuthorCategory[$index]" ng-click="ShowSuggestedAuthor('Y')" 
+                                                                       value="Institute" onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForRadioButtons2(this);" 
+                                                                       ng-required="AuthorCatagoryReq"> Institute
+                                                            </label>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.AuthorCategory{{$index}}.$error.required && (userForm.AuthorCategory{{$index}}.$dirty || submitted)">Please select author category</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="row authorshow" ng-show="AuthorCategory[$index] == 'Individual'">*@
+                                            <div class="row authorshow" ng-show="AuthorCategory[$index] == 'Individual' || AuthorCategory[$index] == 'Institute'">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SuggestedAuthorName.$dirty) && userForm.SuggestedAuthorName.$invalid } ">
+                                                            <input type="text" id="SuggestedAuthorName_{{$index}}" name="SuggestedAuthorName" class="form-control" 
+                                                                   ng-model="SuggestedAuthorName[$index]" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name" 
+                                                                   onchange="angular.element(document.getElementById('angularid')).scope().RemoveValidationForInputs(this);" style="width:100px">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.SuggestedAuthorName.$error.required && (userForm.SuggestedAuthorName.$dirty || submitted)" class="help-block red">Please enter author name</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <a href="" class="btn green" ng-click="getAuthorSuggesationList(SuggestedAuthorName[$index],$index,AuthorCategory[$index])">&nbsp;&nbsp;Search&nbsp;&nbsp;</a>
+                                                    </div>
+
+                                                    <div class="col-md-12" ng-if="AuthorSuggesationList[$index].length > 0" style="padding-top: 10px;">
+                                                        @*<label class=" control-label col-md-5"></label>*@
+                                                        <div class="col-md-12" style="height: 100px;overflow: auto; border: groove;">
+                                                            <div class="form-group" ng-repeat="auth in AuthorSuggesationList[$index]">
+                                                                <label class="radio-inline">
+                                                                    <input type="checkbox" authorid="{{auth.AuthorId}}" authorname="{{auth.AuthorName}}" name="AuthorName" 
+                                                                           ng-model="AuthorName" onchange="CheckboxBind(this)"> {{auth.AuthorName}} ({{auth.AuthorCode}})
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12" style="padding-top: 5px;">
+                                                            <div class="col-md-12" style="padding: 0;">
+                                                                <table class="table table-striped table-hover displaytable">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>SNO</th>
+                                                                            <th>Author Name</th>
+                                                                            <th></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @*dynamic tr will be added here*@
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>                                        
+
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="12">
+                                            <div class="row">
+                                                <div class="col-md-12 text-right">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <a class="SeriesAddLink contractPage" ng-click="AddMoreRow()" style="color: #ee5941; cursor: pointer; ">+ Add More Row</a>
+                                                            <a class="SeriesRemoveLink contractPage" id="anch_seriesremove" ng-click="RemoveRow()" style="color: #ee5941; display:none; cursor: pointer;">Remove</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+
+                            <input type="hidden" id="hid_submit" name="hid_submit" value="" />
+                            <input type="hidden" id="hid_ProductTypeId" name="hid_ProductTypeId" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped table-hover " style="display:none">
+    <thead>
+        <tr>
+            <th>SNO</th>
+            <th>Author Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="clonetr">
+            <td></td>
+            <td></td>
+            <td>
+                <button id="btnRemove" class="btn btn-default btn-sm" onclick="DeleteMe($(this))" type="button">X</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.displaytable').css("display", "none");
+        //setTimeout(function () {
+        //    //debugger; ProductCategory
+        //    //($('#ProductCategory').find('option:contains("Original")').attr('selected', 'selected');
+        //    //$('[name*=ProductCategory]').find('option:contains("Oxford University Press")').attr('selected', 'selected');
+
+        //  //  $('[name*=OUPImprint]').find('option:contains("Oxford University Press")').attr('selected', 'selected');
+
+        // //   $('[name*=Language]').find('option:contains("English")').attr('selected', 'selected');
+
+        //    //$('[name*=ProductCategory]').find('option:contains("Original")').attr('selected', 'selected');
+        //}, 100)
+        //$("select[name*=OUPImprint]").change(function () {
+        //     EveryRowValidation($("select[name*=OUPImprint]"));
+
+        //});
+
+        setTimeout(function () {
+            $('#ProductCategory :nth-child(2)').prop('selected', true);
+            angular.element(document.getElementById('angularid')).scope().Fn_setProductCategoryId();
+        }, 1000);
+
+        $(document).on("change", $("select[name*=OUPImprint]"), function () {
+            EveryRowValidation($("select[name*=OUPImprint]"));
+        });
+        $(document).on("change", $("select[name*=Language]"), function () {
+            EveryRowValidation($("select[name*=Language]"));
+        });
+
+        $(".SeriesAddLink").click(function () {
+            EveryRowValidation($("input[type=text][name*=WorkingProduct]"));
+            EveryRowValidation($("input[type=text][name*=OUPISBN]"));
+            EveryRowValidation($("input[type=text][name*=ProjectPublishingDate]"));
+            EveryRowValidation($("input[type=text][name*=OUPEdition]"));
+            EveryRowValidation($("select[name*=OUPImprint]"));
+            EveryRowValidation($("select[name*=Language]"));
+
+        });
+
+    });
+
+    function CheckboxBind(event) {
+        var obj = $(event);
+        $(obj).closest("td").find(".displaytable").css("display", "table-row");
+        var snodynamic = 0;
+        var sno = $(obj).closest("td").find(".displaytable").find("tr:last").find("td");
+        if (sno.length == 0) {
+            snodynamic = 1;
+        }
+        else {
+            snodynamic = parseInt($($(obj).closest("td").find(".displaytable").find("tr:last").find("td")[0]).html()) + 1;
+        }
+        var clonetr = $("#clonetr").clone(true);
+        $($(clonetr).find("td")[0]).html(snodynamic);
+        $($(clonetr).find("td")[0]).attr("authorid", obj.attr("authorid"))
+        $($(clonetr).find("td")[1]).html(obj.attr("authorname"));
+        $(obj).closest("td").find(".displaytable").append($(clonetr));
+    }
+
+    function DeleteMe(obj) {
+        var obj = $(obj);
+
+        $(obj).closest("tr").remove();
+        if ($(obj).closest("td").find(".displaytable").find("tr").not("first").find("td") == 0) {
+            $(obj).closest("td").find(".displaytable").css("display", "none");
+        }
+        else {
+            $(obj).closest("td").find(".displaytable").css("display", "table-row");
+            $(obj).closest(".displaytable").find("tr").not("first").each(function (index) {
+                $($(this).find("td")[0]).html(index + 1);
+            })
+
+        }
+    }
+
+    function EveryRowValidation(_foreachLoop) {
+        _foreachLoop.each(function () {
+            var obj = $(this);
+            if ($(obj).val() != "") {
+                $(obj).closest(".form-group").removeClass("has-error");
+                $(obj).closest(".form-group").find(".help-block").find("p").addClass("ng-hide").removeClass("ng-show");
+
+            }
+            else {
+                $(obj).closest(".form-group").addClass("has-error");
+                $(obj).closest(".form-group").find(".help-block").find("p").addClass("ng-show").removeClass("ng-hide");
+            }
+        });
+    }
+
+    function RemoveValidation(obj) {
+        EveryRowValidation($("input[type=text][name*=ProjectPublishingDate]"));
+    }
+
+</script>

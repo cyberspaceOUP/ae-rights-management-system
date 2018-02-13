@@ -1,0 +1,132 @@
+﻿ <div class=" row">
+   <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@Country&nbsp;<span class="red">*</span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.BeneficiaryCountry.$dirty) && userForm.BeneficiaryCountry.$invalid } ">
+                <select ng-model="BeneficiaryCountry"
+                        ng-change="getCountryStates()"
+                        class="form-control"
+                        ng-required="BeneficiaryCountryReq"
+                        name="BeneficiaryCountry"
+                        id="BeneficiaryCountry">
+                    <option value="">--Please Select--</option>
+                    <option ng-repeat="div in CountryList" ng-model="Country" value="{{div.Id}}" ng-selected="{{div.Id == BeneficiaryCountry}}">{{div.geogName}}</option>
+
+                </select>
+                <div class="help-block">
+                    <p ng-show="userForm.BeneficiaryCountry.$error.required && (userForm.BeneficiaryCountry.$dirty || submitted)">Please select country</p>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="BeneficiaryOtherCountry">
+    <div class="col-md-12">
+        <label class="control-label col-md-5"> Specify Country&nbsp;<span class="red" ng-show="BeneficiaryOthersNot">*</span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.BeneficiaryCountryName.$dirty) && userForm.BeneficiaryCountryName.$invalid } ">
+                <input type="text" id="CountryName" name="BeneficiaryCountryName" class="form-control" maxlength="6" ng-model="BeneficiaryCountryName" placeholder="city Name" max-length="100" />
+                <div class="help-block" ng-show="BeneficiaryOthersNot">
+                    <p ng-show="userForm.BeneficiaryCountryName.$error.required && (userForm.BeneficiaryCountryName.$dirty || submitted)">Specify Country</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class=" row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@State&nbsp;<span class="red" ng-show="OthersNot">*</span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-show="OthersNot" ng-class="{ 'has-error': (submitted ||userForm.BeneficiaryState.$dirty) && userForm.BeneficiaryState.$invalid } ">
+                <select ng-model="BeneficiaryState"
+                        ng-change="getStateCities()"
+                        class="form-control"
+                        ng-required="BeneficiaryStateReq"
+                        name="BeneficiaryState"
+                        id="BeneficiaryState">
+                    <option value="">--Please Select--</option>
+                    <option ng-repeat="div in BeneficiarysatesList" ng-model="State" value="{{div.Id}}" ng-selected="{{div.Id == BeneficiaryState}}">{{div.geogName}}</option>
+                </select>
+                <div class="help-block">
+                    <p ng-show="userForm.BeneficiaryState.$error.required && (userForm.BeneficiaryState.$dirty || submitted)">Please select state</p>
+                </div>
+            </div>
+            <div class="form-group" ng-show="OthersYes" ng-class="{ 'has-error': (submitted ||userForm.BeneficiaryState.$dirty) && userForm.BeneficiaryState.$invalid } ">
+                <input type="text" name="BeneficiarystateName" ng-model="BeneficiarystateName" id="stateName" class="form-control" placeholder="State Name" @*required*@ />
+                <div class="help-block">
+                    <p ng-show="userForm.BeneficiarystateName.$error.required && (userForm.BeneficiarystateName.$dirty || submitted)">Please enter state</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class=" row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@ City&nbsp;<span class="red" ng-show="OthersNot">*</span></label>
+        <div class="col-md-7">
+            <div class="form-group othersCityHide" ng-show="OthersNot" ng-class="{ 'has-error': (submitted ||userForm.Beneficiarycity.$dirty) && userForm.Beneficiarycity.$invalid } ">
+                <select ng-model="BeneficiaryCity"
+                        class="form-control"
+                        ng-change="ChangeCitiesCities()"
+                        ng-required="BeneficiaryCityReq"
+                        name="Beneficiarycity"
+                        id="city">
+                    <option value="">--Please Select--</option>
+                    <option ng-repeat="div in BeneficiaryCityList" ng-model="city" value="{{div.Id}}" ng-selected="{{div.Id == BeneficiaryCity}}">{{div.geogName}}</option>
+                </select>
+                <div class="help-block">
+                    <p ng-show="userForm.Beneficiarycity.$error.required && (userForm.Beneficiarycity.$dirty || submitted)">Please select city</p>
+                </div>
+            </div>
+            <div class="form-group BeneficiaryothersCityHide" ng-show="OthersYes" ng-class="{ 'has-error': (submitted ||userForm.BeneficiarycityName.$dirty) && userForm.BeneficiarycityName.$invalid } ">
+                <input type="text" name="BeneficiarycityName" ng-model="BeneficiarycityName" id="cityName" class="form-control" placeholder="City Name" @*required*@ />
+                <div class="help-block">
+                    <p ng-show="userForm.BeneficiarycityName.$error.required && (userForm.BeneficiarycityName.$dirty || submitted)">Please enter city</p>
+                </div>
+            </div>
+            <div class="form-group" ng-show="OthersStateYes" ng-class="{ 'has-error': (submitted ||userForm.BeneficiarycityName.$dirty) && userForm.BeneficiarycityName.$invalid } ">
+                <input type="text" name="cityName" ng-model="BeneficiarycityName" id="cityName" class="form-control" placeholder="City Name" @*required*@ />
+                <div class="help-block">
+                    <p ng-show="userForm.BeneficiarycityName.$error.required && (userForm.BeneficiarycityName.$dirty || submitted)">Please enter city</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" ng-show="BeneficiaryotherCities">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@ Specify City&nbsp;<span class="red" ng-show="OthersNot">*</span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.BeneficiarycityName.$dirty) && userForm.BeneficiarycityName.$invalid } ">
+                <input type="text" name="BeneficiarycityName" class="form-control" maxlength="6" ng-model="BeneficiarycityName" placeholder="city Name" max-length="100" />
+                <div class="help-block" ng-show="OthersNot">
+                    <p ng-show="userForm.BeneficiarycityName.$error.required && (userForm.BeneficiarycityName.$dirty || submitted)">Specify City</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class=" row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@ PIN Code&nbsp;<span class="red" ng-show="OthersNot">*</span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Beneficiarypincode.$dirty) && userForm.Beneficiarypincode.$invalid } ">
+                <input type="text" name="Beneficiarypincode" class="form-control" id="Beneficiarypincode" maxlength="15" ng-model="Beneficiarypincode" placeholder="Pincode" ng-required="BeneficiarypincodeReq" @*ng-pattern="/^(\d{3,10})$/"*@ ng-pattern="/^([a-zA-Z0-9 ]){3,15}$/" />
+                <div class="help-block" ng-show="OthersNot">
+                    <p ng-show="userForm.Beneficiarypincode.$error.required && (userForm.Beneficiarypincode.$dirty || submitted)">Please enter PIN Code</p>
+                    <p ng-show="userForm.Beneficiarypincode.$error.pattern" class="help-block red">Please enter valid PIN Code</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,231 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/Contract/AuthorContractViewMode.js"></script>
+<script src="~/js/Product/ProductDetails.js"></script>
+<script src="~/js/master/Master.AuhtorView.js"></script>
+<script src="~/js/common/Dashboard.js"></script>
+
+<script src="~/js/common/TopSearch.js"></script>
+<style>
+    /*Start for 'View More' button*/
+    .moreDash {
+        color: #ee5941;
+        float: right;
+        margin: -5px auto 10px auto;
+    }
+
+        .moreDash:hover {
+            color: #ee5941;
+        }
+    /*End for 'View More' button*/
+</style>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().GetNotEnteredSAPAgreementNoList();
+    angular.element(document.getElementById('angularid')).scope().GetNotEnteredISBNForProductList();
+    angular.element(document.getElementById('angularid')).scope().AuthorContractNotEntered();
+    angular.element(document.getElementById('angularid')).scope().AuthorContractRequestStatus();
+    angular.element(document.getElementById('angularid')).scope().ListProductLicenseNotEntered();
+    angular.element(document.getElementById('angularid')).scope().ListPendingRequestOtherContract();
+    angular.element(document.getElementById('angularid')).scope().getProductLicensesList();
+    angular.element(document.getElementById('angularid')).scope().getProductLicensesAddendumsList();
+    angular.element(document.getElementById('angularid')).scope().getProduct_ISBN_enteredList();
+    angular.element(document.getElementById('angularid')).scope().getProductWIthISBNList();
+    angular.element(document.getElementById('angularid')).scope().getProduct_SAP_Agr_No_Not_EnteredList();
+    angular.element(document.getElementById('angularid')).scope().getPermissionOutboundExpiryDate();
+
+    <!--  Added by Prakash -->
+    angular.element(document.getElementById('angularid')).scope().PendingAuthorContractRequest();
+    angular.element(document.getElementById('angularid')).scope().IssuedDraftAuthorContractDetails();
+    angular.element(document.getElementById('angularid')).scope().ListInboundPermissionNotEnteredByProductLicense();
+    angular.element(document.getElementById('angularid')).scope().ListInboundPermissionNotEntered();
+    angular.element(document.getElementById('angularid')).scope().ListFinalPublishingDateNotEntered();
+    angular.element(document.getElementById('angularid')).scope().ListImpressionNotEntered();
+    angular.element(document.getElementById('angularid')).scope().ListRightSaleContractExpiring();
+    angular.element(document.getElementById('angularid')).scope().ListRightSalePaymentNotReceiveByContractId();
+    angular.element(document.getElementById('angularid')).scope().ListRightSalePaymentNotReceiveByLicenseId();
+    angular.element(document.getElementById('angularid')).scope().ListPermissionOutboundPaymentNotReceiveByContractId();
+    angular.element(document.getElementById('angularid')).scope().ListPermissionOutboundPaymentNotReceiveByLicenseId();
+
+    @*Added by Ankush*@
+    angular.element(document.getElementById('angularid')).scope().ListImpressionNotEntered_AuthorContract();
+    angular.element(document.getElementById('angularid')).scope().ListRightSaleContractExpiring_License();
+    angular.element(document.getElementById('angularid')).scope().ProductLicenseExpired();
+    angular.element(document.getElementById('angularid')).scope().ProductLicenseAddendumExpired();
+    angular.element(document.getElementById('angularid')).scope().InboundPermissionQuantityLess25();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Dashboard
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start for Rights home page -->
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt' || '@TempData["Dashboard"]' == 'ed'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_PendingAuthorContractRequest.cshtml")
+</div>
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt' || '@TempData["Dashboard"]' == 'ed'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_IssuedDraftAuthorContractDetails.cshtml")
+</div>
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_ProductLicense.cshtml")
+</div>
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_ProductLicenseExpired.cshtml")
+</div>
+
+@*<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_ProductLicenseAddendumExpired.cshtml")
+</div>*@
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Product/Views/Shared/Product_ISBN_Not_EnteredDashBoard.cshtml")
+</div>
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Product/Views/Shared/Product_SAP_Agr_No_Not_EnteredDashBoard.cshtml")
+</div>
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_InboundPermissionNotEntered.cshtml")
+</div>
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_InboundPermissionQuantityLess25.cshtml")
+</div>
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_PermissionInboundExpiryDate.cshtml")
+</div>
+
+@*<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_InboundPermissionNotEntered_ByProductLicense.cshtml")
+</div>*@
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_PendingOtherRequest.cshtml")
+</div>
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_RightSaleContractExpire.cshtml")
+</div>
+
+@*<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_RightSaleContractExpire_License.cshtml")
+</div>*@
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_RightSalePaymentNotReceive_ByContractId.cshtml")
+</div>
+
+@*<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_RightSalePaymentNotReceive_ByLicenseId.cshtml")
+</div>*@
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_PermissionOutboundPaymentNotReceive_ByContractId.cshtml")
+</div>
+
+@*<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_PermissionOutboundPaymentNotReceive_ByLicenseId.cshtml")
+</div>*@
+
+@*<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseDashBoard.cshtml")
+    </div>
+
+    <div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseAddendumsDashBoard.cshtml")
+    </div>*@
+<!-- End for Rights home page -->
+
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'rt'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_AuthorContract.cshtml")
+</div>
+
+<!-- Start for Editorial home page -->
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'ed'">
+    @Html.Partial("~/Areas/Product/Views/Shared/Product_ISBN_Is_EnteredDashBoard.cshtml")
+</div>
+
+@*<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'ed'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_AuthorContractRequestStatus.cshtml")
+</div>*@
+<!-- End for Editorial home page -->
+
+<!-- Start for Production home page -->
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'pr'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_FinalPublishingDateNotEntered.cshtml")
+</div>
+
+@*<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'pr'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_FinalPublishingDateEntered_ImpressionNotEntered.cshtml")
+</div>*@
+
+<div class="col-md-12" ng-if="'@TempData["Dashboard"]' == 'pr'">
+    @Html.Partial("~/Areas/Home/Views/Shared/_FinalPublishingDateEntered_ImpressionNotEntered_Contract.cshtml")
+</div>
+<!-- End for Production home page -->
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="col-md-12">
+       <div class="col-md-6">
+            @Html.Partial("~/Areas/Home/Views/Shared/_SAPAgreement.cshtml")
+        </div>
+        <div class="col-md-6">
+            @Html.Partial("~/Areas/Home/Views/Shared/_ProductISBN.cshtml")
+        </div>
+    </div>*@
+
+
+
+@*<div class="modal fade bs-example-modal-lg" id="myModalAuthor" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" style="width:85%;">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Author Contract View</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        @Html.Partial("~/Areas/Contract/Views/Shared/AuthorContractView.cshtml")&hellip;
+                    </p>
+                </div>
+                <div class="modal-footer text-center">
+                   <p class="text-center"><button type="button" class="btn green" data-dismiss="modal">Close</button></p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->*@
+@*<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".moreDash").css("display", "none");
+    })
+</script>*@

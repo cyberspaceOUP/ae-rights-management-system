@@ -1,0 +1,1569 @@
+﻿@using ACS.Services.Master
+@model ACS.Core.Domain.Master.ExecutiveMaster
+@{
+    ViewBag.Title = "AuthorContractSearch";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/Product/ProductDetails.js"></script>
+<script src="~/js/Contract/AuthorContractSearch.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().GetSeriesList();
+    angular.element(document.getElementById('angularid')).scope().getContractType();
+    angular.element(document.getElementById('angularid')).scope().getTerritoryRightsList();
+    angular.element(document.getElementById('angularid')).scope().getSupplyMaterialList();
+    angular.element(document.getElementById('angularid')).scope().getMenuScriptDeliveryFormat();
+    angular.element(document.getElementById('angularid')).scope().handledBy(@Model.Id,@Model.DepartmentId);
+    angular.element(document.getElementById('angularid')).scope().getCurrencyList();
+}
+
+<input type="hidden" value="@TempData["PermissionsInbound"]" ng-model="hid_PermissionsInboundAuthor" id="hid_PermissionsInboundAuthor" name="hid_PermissionsInboundAuthor">
+<input type="hidden" value="@TempData["Addendum"]" ng-model="hid_Addendum" id="hid_Addendum" name="hid_Addendum">
+@*<input type="hidden" value="@TempData["Impression"]" ng-model="hid_Impression" id="hid_Impression" name="hid_Impression">*@
+<input type="hidden" value="@TempData["Rights"]" ng-model="hid_Rights" id="hid_Rights" name="hid_Rights">
+<input type="hidden" value="@TempData["permissionsoutbound"]" ng-model="hid_permissionsoutbound" id="hid_permissionsoutbound" name="hid_permissionsoutbound">
+<input type="hidden" value="@TempData["BackToList"]" ng-model="hid_BackToserach" id="hid_BackToserach" name="hid_BackToserach">
+<input type="hidden" value="@TempData["contractsearch"]" ng-model="hid_contractsearch" id="hid_contractsearch" name="hid_contractsearch">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    <span ng-show="ShowSearchForm">Assignment Contract Search</span>
+                    <span ng-show="ShowListForm">
+                        @if (ViewBag.Report == "report")
+                        {
+                            <span>Assignment Contract Report </span>
+                        }
+                        else
+                        {
+                            if (ViewBag.ViewMore == "notagreement")
+                            { 
+                                <span>@T("Dashboard.NoContract")</span>
+                            }
+                            if (ViewBag.ViewMore == "IssuedDraftAC")
+                            { 
+                                <span>Assignment Contract Request Status - Assignment Contract List @*- Draft and Issued Contract*@</span>
+                            }
+                            else if (ViewBag.ViewMore == "NoInbound")
+                            {
+                                <span>Assignment Contract - @T("Dashboard.InboundNotEntered") </span>
+                            }
+                            else if (ViewBag.ViewMore == "ACStatus")
+                            {
+                                <span>@T("Dashboard.AssignmentContractStatus") </span>
+                            }
+                            else if (ViewBag.ViewMore == "PendingSeries")
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (ViewBag.ViewMore == "IssuedDraftSeries")
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else
+                            { 
+                                <span>Assignment Contract List </span>
+                            }
+                        }
+                    </span>
+                    <span ng-show="ShowProductSeriesListForm">Series Contract</span>
+
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <form name="userForm" class=" form-horizontal" ng-show="ShowSearchForm" novalidate id="ProductLicense_search" ng-submit="submitForm(AuthorContract)" ng-cloak>
+
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Product Details
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">SAP Agreement No </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SAPAgreementNo.$dirty) && userForm.SAPAgreementNo.$invalid } ">
+                                                            <input type="text" name="SAPAgreementNo" class="form-control" ng-model="AuthorContract.SAPAgreementNo" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="SAP Agreement No">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.SAPAgreementNo.$error.pattern" class="help-block red">Please enter valid SAP Agreement No</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="false">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Project Code </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProjectCode.$dirty) && userForm.ProjectCode.$invalid } ">
+                                                            <input type="text" name="ProjectCode" class="form-control" ng-model="AuthorContract.ProjectCode" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Project Code">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ProjectCode.$error.pattern" class="help-block red">Please enter valid Project Code</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Product Code </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductCode.$dirty) && userForm.ProductCode.$invalid } ">
+                                                            <input type="text" name="ProductCode" class="form-control" ng-model="AuthorContract.ProductCode" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Product Code">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ProductCode.$error.pattern" class="help-block red">Please enter valid Product Name</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Product Name </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductName.$dirty) && userForm.ProductName.$invalid } ">
+                                                            <input type="text" name="ProductName" class="form-control" ng-model="AuthorContract.ProductName" ng-pattern="/^[a-zA-Z0-9'.\s]/" placeholder="Product Name">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ProductName.$error.pattern" class="help-block red">Please enter valid Product Name</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Sub-Product Name </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductName.$dirty) && userForm.ProductName.$invalid } ">
+                                                            <input type="text" name="SubProductName" class="form-control" ng-model="AuthorContract.SubProductName" ng-pattern="/^[a-zA-Z0-9'.\s]/" placeholder="Sub-Product Name">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.SubProductName.$error.pattern" class="help-block red">Please enter valid Sub-Product Name</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">ISBN </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ISBN.$dirty) && userForm.ISBN.$invalid } ">
+                                                            <input type="text" name="ISBN" class="form-control" ng-model="AuthorContract.ISBN" ng-maxlength="13" ng-pattern="/^[0-9]{13}$/" placeholder="ISBN">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ISBN.$error.pattern" class="help-block red">Please enter valid ISBN</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    @Html.Partial("~/Views/Shared/_divisionSubdivision.cshtml")
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Product Type</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductType.$dirty) && userForm.ProductType.$invalid } ">
+                                                            <input type="text" name="ProductType" class="form-control" ng-model="AuthorContract.ProductType" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Product Type">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ProductType.$error.pattern" class="help-block red">Please enter valid Product Type</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Sub-Product Type</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SubProductType.$dirty) && userForm.SubProductType.$invalid } ">
+                                                            <input type="text" name="SubProductType" class="form-control" ng-model="AuthorContract.SubProductType" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Sub-Product Type">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.SubProductType.$error.pattern" class="help-block red">Please enter valid Sub-Product Type</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Imprint</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <select class="form-control" name="ProprietorImprint" ng-model="AuthorContract.ProprietorImprint">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in ImprintList" ng-model="ProprietorImprint" value="{{div.Id}}">{{div.ImprintName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Language</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <select class="form-control" name="Language" ng-model="AuthorContract.Language">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in LanguageList" ng-model="Language" value="{{div.Id}}">{{div.LanguageName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Authors</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <select class="form-control" name="Authors" ng-model="AuthorContract.Authors">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in AuthorList" ng-model="Authors" value="{{div.Id}}">{{div.FirstName + " " + div.LastName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Series</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <select class="form-control" name="Series" ng-model="AuthorContract.Series" ng-change="changeItem(AuthorContract.Series)">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in SeriesList" ng-model="Series" value="{{div.Id}}">{{div.SeriesName}}</option>
+                                                            </select>
+                                                            <input type="hidden" name="hid_Series" id="hid_Series" value="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Price Type</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="PriceType" ng-model="AuthorContract.PriceType" value="L"> List Price
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="PriceType" ng-model="AuthorContract.PriceType" value="N"> Net Price
+                                                            </label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Price</label>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <select class="form-control" name="ProjectedPriceType" ng-model="AuthorContract.ProjectedPriceType">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-model="ProjectedPriceType" value="L">Less Than(<)</option>
+                                                                <option ng-model="ProjectedPriceType" value="E">Exactly(=)</option>
+                                                                <option ng-model="ProjectedPriceType" value="M">More Than(>)</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 pull-right">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProjectedPrice.$dirty) && userForm.ProjectedPrice.$invalid } ">
+                                                            <input type="text" name="ProjectedPrice" class="form-control" ng-model="AuthorContract.ProjectedPrice" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" placeholder="Projected Price">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ProjectedPrice.$error.pattern" class="help-block red">Please enter valid Projected Price</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Currency</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Currency.$dirty) && userForm.Currency.$invalid } ">
+                                                            <select class="form-control" name="Currency" ng-model="AuthorContract.CurrencyValue">
+                                                                <option value="">--Please Select--</option>
+                                                                <option ng-repeat="Currency in CurrencyList" @*ng-selected="Currency.CurrencyName=='INR'"*@ value="{{Currency.Id}}">{{Currency.CurrencyName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="@TempData["PermissionsInbound"]==''">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Third Party Permission</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ThirdPartyPermission.$dirty) && userForm.ThirdPartyPermission.$invalid } ">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="ThirdPartyPermission" ng-model="AuthorContract.ThirdPartyPermission" ng-value=1> Yes
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="ThirdPartyPermission" ng-model="AuthorContract.ThirdPartyPermission" ng-value=2> No
+                                                            </label>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ThirdPartyPermission.$error.required && (userForm.ThirdPartyPermission.$dirty || submitted)">Please select third party permission</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Contract Details
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Assignment Contract Code </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <input type="text" name="AuthorContractCode" class="form-control" ng-model="AuthorContract.AuthorContractCode" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Assignment Contract Code">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Author Name  </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorName.$dirty) && userForm.AuthorName.$invalid } ">
+                                                            <input type="text" name="AuthorName" class="form-control" ng-model="AuthorContract.AuthorName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.AuthorName.$error.pattern" class="help-block red">Please enter valid Author Name </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @*<label class="control-label col-md-5">Author Name </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorName.$dirty) && userForm.AuthorName.$invalid } ">
+
+                                                        <input type="text" name="AuthorName" ng-keyup="AutoComplete($event)" class="form-control SuggestedAuthorName" ng-model="AuthorName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.AuthorName.$error.required && (userForm.AuthorName.$dirty || submitted)" class="help-block red">Please enter valid Author Name</p>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                                </div>
+                                            </div>
+
+                                            @*<div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Author Name </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SuggestedAuthorName.$dirty) && userForm.SuggestedAuthorName.$invalid } ">
+
+                                                        <input type="text" name="SuggestedAuthorName" ng-keyup="AutoComplete($event)" class="form-control SuggestedAuthorName" ng-model="SuggestedAuthorName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.SuggestedAuthorName.$error.required && (userForm.SuggestedAuthorName.$dirty || submitted)" class="help-block red">Please enter valid Author Name</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>*@
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Request From Date</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group date">
+                                                            <div class="input-group input-append date datePicker">
+                                                                <input type="text" name="RequestFromDate" id="RequestFromDate" ng-required="false" class="form-control"
+                                                                       ng-model="AuthorContract.RequestFromDate" placeholder="Request From Date">
+                                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Request To Date</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group date">
+                                                            <div class="input-group input-append date datePicker">
+                                                                <input type="text" id="RequestToDate" name="RequestToDate" class="form-control" ng-model="AuthorContract.RequestToDate" ng-init="SetRequestDate()" placeholder="Request To Date">
+                                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <script type="text/javascript">
+                                                $(document).ready(function () {
+
+                                                    $("#RequestFromDate").datepicker({
+                                                        format: "dd/mm/yyyy",
+                                                        todayHighlight: true,
+                                                        autoclose: true
+
+                                                    });
+                                                    $("#RequestFromDate").datepicker().on('change', function (e) {
+                                                        mstrstartdate = $("#RequestFromDate").val();
+                                                        $("#RequestToDate").val('');
+                                                        $('#RequestToDate').datepicker('remove');
+                                                        $("#RequestToDate").attr("disabled", false);
+                                                        $("#RequestToDate").datepicker({
+                                                            format: "dd/mm/yyyy",
+                                                            // todayHighlight: true,
+                                                            autoclose: true,
+                                                            startDate: mstrstartdate
+                                                        });
+                                                    });
+
+                                                });
+
+
+
+
+
+
+                                            </script>
+
+
+                                            <div class="row" ng-show="false">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Contract Type   </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContactType.$dirty) && userForm.ContactType.$invalid } ">
+                                                            <select class="form-control" name="ContactType" ng-model="AuthorContract.contractType">
+                                                                <option value="">--Please Select--</option>
+                                                                <option ng-repeat="div in ContactType" value="{{div.Id}}">{{div.Contact}}</option>
+                                                            </select>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ContactType.$error.required && (userForm.ContactType.$dirty || submitted)">Please select contract type</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Date of Agreement From Date</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group date">
+                                                            <div class="input-group input-append date DateofAgreementFromDate">
+                                                                <input type="text" name="DateofAgreementFromDate" ng-required="false" class="form-control"
+                                                                       ng-model="AuthorContract.DateofAgreementFromDate" id="DateofAgreementFromDate" placeholder="Date of Agreement From Date">
+                                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Date of Agreement To Date</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group date">
+                                                            <div class="input-group input-append date DateofAgreementToDate">
+                                                                <input type="text" name="DateofAgreementToDate" id="DateofAgreementToDate" class="form-control" ng-model="AuthorContract.DateofAgreementToDate" placeholder="Date of Agreement To Date">
+                                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <script type="text/javascript">
+                                                $(document).ready(function () {
+
+                                                    $("#DateofAgreementFromDate").datepicker({
+                                                        format: "dd/mm/yyyy",
+                                                        todayHighlight: true,
+                                                        autoclose: true
+
+                                                    });
+                                                    $("#DateofAgreementFromDate").datepicker().on('change', function (e) {
+                                                        mstrstartdate = $("#DateofAgreementFromDate").val();
+                                                        $("#DateofAgreementToDate").val('');
+                                                        $('#DateofAgreementToDate').datepicker('remove');
+                                                        $("#DateofAgreementToDate").attr("disabled", false);
+                                                        $("#DateofAgreementToDate").datepicker({
+                                                            format: "dd/mm/yyyy",
+                                                            // todayHighlight: true,
+                                                            autoclose: true,
+                                                            startDate: mstrstartdate
+                                                        });
+                                                    });
+
+                                                });
+
+
+
+
+
+
+                                            </script>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Expiry Date</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group date">
+                                                            <div class="input-group input-append date datePicker">
+                                                                <input type="text" name="ExpiryDate" id="ExpiryDate" class="form-control"
+                                                                       ng-model="AuthorContract.ExpiryDate" placeholder="Expiry Date">
+
+                                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Territory</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Territoryrights.$dirty) && userForm.Territoryrights.$invalid } ">
+                                                            <select class="form-control" name="Territoryrights" ng-model="AuthorContract.Territoryrights">
+                                                                <option value="">--Please Select--</option>
+                                                                <option ng-repeat="div in TerritoryList" value="{{div.Id}}">{{div.Territoryrights}}</option>
+                                                            </select>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.Territoryrights.$error.required && (userForm.Territoryrights.$dirty || submitted)">Please select territory rights</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class=" row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Royalty</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Royalty.$dirty) && userForm.Royalty.$invalid } ">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="Royalty" ng-model="AuthorContract.Royalty" ng-value=1> Yes
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="Royalty" ng-model="AuthorContract.Royalty" ng-value=2> No
+                                                            </label>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.Royalty.$error.required && (userForm.Royalty.$dirty || submitted)">Please select Royalty</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Material to be Supplied by Author</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <select class="form-control" name="SupplyMaterial"
+                                                                    ng-options="obj as obj.SupplyMaterial for obj in SupplyMaterialList track by obj.Id"
+                                                                    ng-change="GetValue(SelectedSupplyMaterialByAuthor)" id="SupplyMaterial" multiple ng-model="SelectedSupplyMaterialByAuthor"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Medium of Delivery</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.MediumofDelivery.$dirty) && userForm.MediumofDelivery.$invalid } ">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="MediumofDelivery" ng-model="AuthorContract.MediumofDelivery" value="Hard Copy"> Hard Copy
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="MediumofDelivery" ng-model="AuthorContract.MediumofDelivery" value="Soft Copy"> Soft Copy
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="MediumofDelivery" ng-model="AuthorContract.MediumofDelivery" value="Both"> Both
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Manuscript Delivery Format</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <select class="form-control" id="MenuScriptDeliveryFormat" name="MenuScriptDeliveryFormat" ng-model="AuthorContract.MenuScriptDeliveryFormat">
+                                                                <option value="">--Please Select--</option>
+                                                                <option ng-repeat="Fr in _DeliveryFormat" value="{{Fr.Id}}">{{Fr.DeliveryFormat}}</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            @*<div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract status</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="Contractstatus" ng-model="AuthorContract.Contractstatus" value="Pending">Pending
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="Contractstatus" ng-model="AuthorContract.Contractstatus" value="Issued"> Issued
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="Contractstatus" ng-model="AuthorContract.Contractstatus" value="Cancelled">Cancelled
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Remarks</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Remarks.$dirty) && userForm.Remarks.$invalid } ">
+                                                            <input type="text" name="Remarks" class="form-control" ng-model="AuthorContract.Remarks" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Remarks">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.Remarks.$error.pattern" class="help-block red">Please enter valid Remarks</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Amendment </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Amendment.$dirty) && userForm.Amendment.$invalid } ">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="Amendment" ng-model="AuthorContract.Amendment" ng-value=1> Yes
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="Amendment" ng-model="AuthorContract.Amendment" ng-value=0> No
+                                                            </label>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.Amendment.$error.required && (userForm.Amendment.$dirty || submitted)">Please select Amendment</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class=" row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Project Handled By</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.HandledByExecutive.$dirty) && userForm.HandledByExecutive.$invalid } ">
+                                                            <select class="form-control" name="HandledByExecutive"
+                                                                    ng-model="AuthorContract.ByExecutive">
+                                                                <option value="">--Please Select--</option>
+                                                                <option ng-repeat="div in HandledBy" ng-selected="{{ByExecutive}}" value="{{div.Id}}">{{div.ExecutiveName}}</option>
+                                                            </select>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.HandledByExecutive.$error.required && (userForm.HandledByExecutive.$dirty || submitted)">Please select executive</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class=" row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Contract Status</label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Contractstatus.$dirty) && userForm.Contractstatus.$invalid } ">
+                                                            <div>
+                                                                <label class="radio-inline" style="display: inline-flex">
+                                                                    <input type="checkbox" style="margin-right: 10px;" name="Contractstatus" ng-model="Contractstatus.Draft" value="Draft"> Draft
+                                                                </label>
+                                                                <label class="radio-inline" style="display: inline-flex; margin-left: 33px !important;">
+                                                                    <input type="checkbox" style="margin-right: 10px;" name="Contractstatus" ng-model="Contractstatus.Pending" value="Pending"> Issued
+                                                                </label>
+                                                            </div>
+                                                            <div>
+                                                                <label class="radio-inline" style="display: inline-flex">
+                                                                    <input type="checkbox" style="margin-right: 10px;" name="Contractstatus" ng-model="Contractstatus.Issued" value="Issued"> Received
+                                                                </label>
+                                                                <label class="radio-inline" style="display: inline-flex">
+                                                                    <input type="checkbox" style="margin-right: 10px;" name="Contractstatus" ng-model="Contractstatus.Cancelled" value="Cancelled"> Cancelled
+                                                                </label>
+                                                                <div class="help-block">
+                                                                    <p ng-show="userForm.Contractstatus.$error.required && (userForm.Contractstatus.$dirty || submitted)">Please select Contract Status</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Search</button>
+                        </div>
+                    </div>
+                </div>
+
+        </form>
+
+        <form name="Serch" class="form-horizontal ShowAuthorContractList" id="search" ng-show="ShowListForm">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-12 backtoSearch">
+                        <div class="tools">
+                            <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 backtoDashboard" style="display:none;">
+                        <div class="tools">
+                            <span class="back-to-search" ng-click="BackToserch()"> Back To Dashboard </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+
+                                    @if (ViewBag.Report == "report")
+                                    {
+                                        <span>Assignment Contract Report </span>
+                                    }
+                                    else
+                                    {
+                                        if (ViewBag.ViewMore == "notagreement")
+                                        {
+                                            <span>@T("Dashboard.NoContract")</span>
+                                        }
+                                        if (ViewBag.ViewMore == "IssuedDraftAC")
+                                        {
+                                            <span>Assignment Contract Request Status - Assignment Contract List @*- Draft and Issued Contract*@</span>
+                                        }
+                                        else if (ViewBag.ViewMore == "NoInbound")
+                                        {
+                                            <span>Assignment Contract - @T("Dashboard.InboundNotEntered") </span>
+                                        }
+                                        else if (ViewBag.ViewMore == "ACStatus")
+                                        {
+                                            <span>@T("Dashboard.AssignmentContractStatus") </span>
+                                        }
+                                        else if (ViewBag.ViewMore == "PendingSeries")
+                                        {
+                                             <span>&nbsp;</span>
+                                        }
+                                        else if (ViewBag.ViewMore == "IssuedDraftSeries")
+                                        {
+                                             <span>&nbsp;</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Assignment Contract List </span>
+                                        }
+                                    }
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body flip-scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th>SNo</th>
+                                                <th>@*Assignment*@ Contract Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                @*<th>Project Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>*@
+                                                <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Working Product &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Author Name(s) &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th ng-if='!("@ViewBag.ViewMore" == "notagreement") && !("@ViewBag.ViewMore" == "IssuedDraftAC")'>Agreement date  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th ng-if='!("@ViewBag.ViewMore" == "notagreement") && !("@ViewBag.ViewMore" == "IssuedDraftAC")'>Expiry Date  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <!--Start Redirect from dashboard-->
+                                                <th ng-if='"@ViewBag.ViewMore" == "notagreement" || "@ViewBag.ViewMore" == "IssuedDraftAC"'>Requested Date  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th ng-if='"@ViewBag.ViewMore" == "notagreement" || "@ViewBag.ViewMore" == "IssuedDraftAC"'>Requested By  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th ng-if='"@ViewBag.ViewMore" == "notagreement" || "@ViewBag.ViewMore" == "IssuedDraftAC"'>Division  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th ng-if='"@ViewBag.ViewMore" == "IssuedDraftAC"'>Remarks  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <!--End Redirect from dashboard-->
+
+                                                <th ng-if="'@ViewBag.Report' != 'report'">Action</th>
+                                                <th ng-if="'@ViewBag.Report' == 'report'">Royalty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="obj in ProductLicenseList" class="tooltipclass">
+                                                <td><span ng-bind="$index + 1"></span></td>
+                                                @*<td ng-if="'@ViewBag.Report' != 'report'"><a href="javascript:void(0)" ng-click="GetAuthorContractDetails(obj.AuthorContractId)" style="color: #ee5941;" class="tooltip-btn authorModal "><span ng-bind="obj.AuthorContractCode"></span></a></td>
+                                                <td ng-if="'@ViewBag.Report' == 'report'"><a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.AuthorContractCode"></span></a></td>*@
+                                                <td><a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.AuthorContractCode"></span></a></td>
+                                                <td><a href="~/Product/ProductMaster/ProductDetailsView?Id={{obj.ProductId}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.ProductCode"></span></a></td>
+                                                <td><span ng-bind="obj.oupisbn"></span></td>
+                                                <td><span ng-bind="obj.WorkingTitle"></span><span style="font-size:11px;">  <br /><span ng-bind="(obj.WorkingSubProduct)"></span></span></td>
+                                                <td><span ng-bind="obj.AuthorName"></span></td>
+
+                                                <td ng-if='!("@ViewBag.ViewMore" == "notagreement") && !("@ViewBag.ViewMore" == "IssuedDraftAC")'><span class="sortDateHide" ng-bind="obj.DateOfAgreementForSort"></span>{{obj.DateOfAgreement}}</td>
+                                                <td ng-if='!("@ViewBag.ViewMore" == "notagreement") && !("@ViewBag.ViewMore" == "IssuedDraftAC")'><span class="sortDateHide" ng-bind="obj.ContractExpiryDateForSort"></span>{{obj.ContractExpiryDate}}</td>
+
+                                                <!--Start Redirect from dashboard-->
+                                                <td ng-if='"@ViewBag.ViewMore" == "notagreement" || "@ViewBag.ViewMore" == "IssuedDraftAC"'><span class="sortDateHide" ng-bind="obj.ContractEntryDate_EntryDateForSort"></span>{{obj.ContractEntryDate_EntryDate}}</td>
+                                                <td ng-if='"@ViewBag.ViewMore" == "notagreement" || "@ViewBag.ViewMore" == "IssuedDraftAC"'><span ng-bind="obj.ExecutiveName"></span></td>
+                                                <td ng-if='"@ViewBag.ViewMore" == "notagreement" || "@ViewBag.ViewMore" == "IssuedDraftAC"'><span ng-bind="obj.divisionName"></span></td>
+                                                <td ng-if='"@ViewBag.ViewMore" == "IssuedDraftAC"'><span ng-bind="obj.Remarks"></span></td>
+                                                <!--End Redirect from dashboard-->
+
+                                                <td ng-hide="TitleLinking" ng-if="'@ViewBag.Report' != 'report'">
+                                                    <div class="tooltip-container">
+                                                        <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                                        @*<label for="tooltip-toggle" ng-click="DisplayDiv($index+1)" class="tooltip-btn">*@
+                                                        <label for="tooltip-toggle" onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                            Action
+                                                        </label>
+                                                        <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                                        <div class="tooltip-content">
+                                                            <div class="linking">
+                                                                <ul>
+                                                                    <li><a href="~/Contract/AuthorContract/Index?Id={{obj.AuthorContractId}}&For=Update"
+                                                                            ng-if="('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'SA') && '@TempData["PermissionsOutbound"]' != 'PermissionsOutbound' && '@TempData["PermissionsInbound"]' != 'PermissionsInbound' && '@TempData["Rights"]' != 'Rights'">Update Assignment Contract</a></li>
+                                                                   
+                                                                    <li><a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}&For=Update"
+                                                                            ng-if="'@ViewBag.Department' == 'RT' && '@TempData["PermissionsOutbound"]' != 'PermissionsOutbound' && '@TempData["PermissionsInbound"]' != 'PermissionsInbound' && '@TempData["Rights"]' != 'Rights'">Update Assignment Contract</a></li>
+
+                                                                    <li><a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}&For=View">View Assignment Contract</a></li>
+
+                                                                    @*obj.Flag == '2' &&*@ 
+                                                                    <li ng-if="('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'SA') && '@TempData["PermissionsOutbound"]' != 'PermissionsOutbound' && '@TempData["PermissionsInbound"]' != 'PermissionsInbound' && '@TempData["Rights"]' != 'Rights'">
+                                                                        <a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}&For=AddendumUpdate&Addendum=New">Add Addendum</a>
+                                                                    </li>
+                                                                    <li ng-if="obj.Flag == '1' && ('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'SA') && '@TempData["PermissionsOutbound"]' != 'PermissionsOutbound' && '@TempData["PermissionsInbound"]' != 'PermissionsInbound' && '@TempData["Rights"]' != 'Rights'">
+                                                                        <a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}&For=AddendumUpdate&AddendumId={{obj.AddendumId}}">Update Addendum</a>
+                                                                    </li>
+                                                                    <li ng-if="obj.Flag == '1' && ('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'SA')">
+                                                                        <a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}&For=AddendumView">View Addendum</a>
+                                                                    </li>
+
+                                                                    <li><a href="~/RightsSelling/RightsSelling/RightsSellingMaster?Id={{obj.AuthorContractId}}&type={{'A'+obj.ProductId}}" ng-if="'@TempData["Rights"]' == 'Rights' && ('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'SA')">Add Rights Sales </a></li>
+                                                                    <li><a href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{obj.AuthorContractId}}&type={{'A'+obj.ProductId}}" ng-if="'@TempData["PermissionsOutbound"]' == 'PermissionsOutbound' && ('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'SA')">Add Permissions Out-bound </a></li>
+                                                                    <li><a href="~/PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?Id={{obj.AuthorContractId}}&type={{'C'+obj.ProductId}}" ng-if="'@TempData["PermissionsInbound"]' == 'PermissionsInbound' && ('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT'|| '@ViewBag.Department' == 'ED' || '@ViewBag.Department' == 'SA')">Add Permissions In-bound </a></li>
+
+                                                                    <li>
+                                                                        <a href="javascript:void(0);" ng-if="'@ViewBag.Department' == 'SA' && '@TempData["delete"]'=='delete'" ng-click="DeleteContract(obj.AuthorContractId,'sa',null)">Delete Assignment Contract</a>
+                                                                    </li>
+
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td ng-if="'@ViewBag.Report' == 'report'">
+                                                    <p ng-if="obj.Royalty.length == '0'">--</p>
+                                                    <p ng-repeat="rolyalty in obj.Royalty">
+                                                        <span ng-bind="rolyalty.SubProductType | uppercase"></span> - <span ng-bind="rolyalty.CopiesFrom"></span> to <span ng-show="rolyalty.CopiesTo == '' || rolyalty.CopiesTo == null"> above</span><span ng-show="rolyalty.CopiesTo != '' && rolyalty.CopiesTo != null"> <span ng-bind="rolyalty.CopiesTo"></span></span>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <input type="hidden" id="hid_ForACReport" value="@ViewBag.Report" />
+                                    @if (ViewBag.Report == "report")
+                                    {
+
+                                        <div class="PrintTableData" style="display:none">
+                                            <table class="table table-bordered table-striped table-condensed flip-content" id="TblForPrint">
+                                                <thead class="flip-content">
+                                                    <tr>
+                                                        <th>SNo</th>
+                                                        <th>Assignment Contract Code</th>
+                                                        <th>Product Code</th>
+                                                        <th>Working Title</th>
+                                                        <th>ISBN</th>
+                                                        <th>Date of Agreement</th>
+                                                        <th>Expiry Date </th>
+                                                        <th>Royalty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr ng-repeat="obj in ProductLicenseList">
+
+                                                        <td><span ng-bind="$index + 1"></span></td>
+                                                        <td><span ng-bind="obj.AuthorContractCode"></span></td>
+                                                        <td><span ng-bind="obj.ProductCode"></span></td>
+                                                        <td><span ng-bind="obj.WorkingTitle"></span></td>
+                                                        <td><span ng-bind="obj.oupisbn"></span></td>
+                                                        <td><span ng-bind="obj.ContractEntryDate"></span></td>
+                                                        <td><span ng-bind="obj.ContractExpiryDate"></span></td>
+                                                        <td>
+                                                            <p ng-if="obj.Royalty.length == '0'">--</p>
+                                                            <p ng-repeat="rolyalty in obj.Royalty">
+                                                                <span ng-bind="rolyalty.SubProductType | uppercase "></span> - <span ng-bind="rolyalty.CopiesFrom"></span> to <span ng-show="rolyalty.CopiesTo == '' || rolyalty.CopiesTo == null"> above</span><span ng-show="rolyalty.CopiesTo != '' && rolyalty.CopiesTo != null"> <span ng-bind="rolyalty.CopiesTo"></span></span>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @*@if (Session["PrintPermissions"] != null && ViewBag.Report == "report")
+                    {
+                        <div class="col-md-12 text-center btnPrint">
+                            <div class="tools">
+                                @* Click Event Is Define in ~/Views/Shared/Footer.cshtml File *@
+                    @*<input type="button" class="btn green" id="btn_printDataTable" value="Print" style=" margin: .5%; ">
+                            </div>
+                        </div>
+                    }*@
+
+                    @if (Session["GenerateExcelPermissions"] != null && ViewBag.Report == "report")
+                    {
+                        <div class="col-md-12 text-center btnPrint">
+                            <div class="tools">
+                                <input type="hidden" name="hid_Report" id="hid_Report" ng-model="hid_Report" />
+                                <button type="submit" class="btn green" ng-click="AuthorContractReportExcel()" id="btnSubmit">Generate Excel</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </form>
+
+
+
+        <form name="Serch" class="form-horizontal seriesSelect" ng-show="ShowProductSeriesListForm">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 backtoSearch">
+                        <div class="tools">
+                            <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 backtoDashboard" style="display:none;">
+                        <div class="tools">
+                            <span class="back-to-search" ng-click="BackToserch()"> Back To Dashboard </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Series Contract List
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body flip-scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="">
+
+                                    <table width="100%" datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th width="2%">SNo</th>
+                                                <th width="5%">Series Code</th>
+                                                <th width="5%">@*Assignment*@ Contract Code</th>
+                                                <th width="5%">Product Code</th>
+                                                <th width="5%">ISBN</th>
+                                                <th width="65%">Working Product @*Name*@</th>
+                                                <th width="5%">Assignment Contract Date</th>
+                                                <th width="5%">Assignment Contract Expiry Date</th>
+                                                <th width="3%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="obj in series_code" class="tooltipclass">
+
+                                                <td><span ng-bind="$index + 1"></span></td>
+
+                                                <td><span ng-bind="obj.SeriesCode"></span></td>
+
+                                                <td>
+                                                    <p ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.AuthorContractCode" ng-if="obj_AuthorData.AuthorContractCode!='---'"></span>
+                                                    </p>
+                                                </td>
+
+                                                <td>
+                                                    <p ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.ProductCode" ng-if="obj_AuthorData.ProductCode!='---'"></span>
+                                                    </p>
+                                                </td>
+
+                                                <td>
+                                                    <p ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.OUPISBN" ng-if="obj_AuthorData.OUPISBN!='---'"></span>
+                                                    </p>
+                                                </td>
+                                                
+                                                <td>
+                                                    <p ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.ProductName" ng-if="obj_AuthorData.ProductName!='---'"></span>
+                                                    </p>
+                                                </td>
+
+                                                <td>
+                                                    <p ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.ContractEntryDate" ng-if="obj_AuthorData.ContractEntryDate!='---'"></span>
+                                                    </p>
+                                                </td>
+
+                                                <td>
+                                                    <p ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.ContractExpiryDate" ng-if="obj_AuthorData.ContractExpiryDate!='---'"></span>
+                                                    </p>
+                                                </td>
+
+
+                                                <td ng-hide="TitleLinking">
+                                                    <div class="tooltip-container">
+                                                        <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                                        <label for="tooltip-toggle" onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                            Action
+                                                        </label>
+                                                        <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                                        <div class="tooltip-content">
+                                                            <div class="linking">
+                                                                <ul>
+                                                                    <li><a href="~/Contract/AuthorContract/Index?SeriesCode={{obj.SeriesCode}}&For=SeriesUpdate" ng-if="('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'SA')">Update Series Contract</a></li>
+                                                                    <li><a href="~/Contract/AuthorContract/View?SeriesCode={{obj.SeriesCode}}&For=SeriesUpdate" ng-if="('@ViewBag.Department' == 'RT')">Update Series Contract</a></li>
+                                                                    <li><a href="~/Contract/AuthorContract/View?SeriesCode={{obj.SeriesCode}}&For=SeriesView">View Series Contract</a></li>
+
+                                                                    @*obj.AuthorData[0].Flag == '2' &&*@  @*obj.Flag == '2' &&*@ 
+                                                                    <li ng-if="obj.Flag!='0' &&('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'SA')"><a href="~/Contract/AuthorContract/view?SeriesCode={{obj.SeriesCode}}&For=AddendumUpdate">Add Addendum</a></li>
+                                                                    <li ng-if="obj.Flag == '1' && ('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'SA')"><a href="~/Contract/AuthorContract/view?SeriesCode={{obj.SeriesCode}}&For=AddendumView">View Addendum</a></li>
+
+                                                                    <li ng-if="('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT' || '@ViewBag.Department' == 'SA')">
+                                                                        <a href="#" ng-click="getProductSeriesList(obj.SeriesCode)" data-toggle="modal" data-target="#myModal_ProductSeriesList">Add Product</a>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <a href="javascript:void(0);" ng-if="'@ViewBag.Department' == 'SA' && '@TempData["delete"]'=='delete'" ng-click="DeleteContract(null,'sa',obj.SeriesCode)">Delete Series Contract</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+
+                                            @*<tr ng-repeat="obj in series_code" class="tooltipclass">
+
+                                                <td><span ng-bind="$index + 1"></span></td>
+
+                                                <td><span ng-bind="obj.SeriesCode"></span></td>
+
+                                                <td>
+                                                    <div ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.AuthorContractCode" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode"></span>
+                                                        <br />
+                                                        <p ng-repeat="obj_AuthorChildData in ProductSeriesList" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                            <span ng-bind="obj_AuthorChildData.ChildAuthorContractCode"
+                                                                  ng-if="obj_AuthorChildData.ChildAuthorContractCode == obj_AuthorData.AuthorContractCode && obj_AuthorChildData.ChildAuthorContractCode!='---'"></span>
+                                                        </p>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.ProductCode"></span>
+                                                        <br />
+                                                        <p ng-repeat="obj_AuthorChildData in ProductSeriesList" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                            <span ng-bind="obj_AuthorChildData.ChildProductCode"
+                                                                  ng-if="obj_AuthorChildData.ChildAuthorContractCode == obj_AuthorData.AuthorContractCode && obj_AuthorChildData.ChildProductCode!='---'"></span>
+                                                        </p>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.OUPISBN"></span>
+                                                        <br />
+                                                        <p ng-repeat="obj_AuthorChildData in ProductSeriesList" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                            <span ng-bind="obj_AuthorChildData.ChildOUPISBN"
+                                                                  ng-if="obj_AuthorChildData.ChildAuthorContractCode == obj_AuthorData.AuthorContractCode && obj_AuthorChildData.ChildOUPISBN!='---'"></span>
+                                                        </p>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.ContractEntryDate"></span>
+                                                        <br />
+                                                        <p ng-repeat="obj_AuthorChildData in ProductSeriesList">
+                                                            <span ng-bind="obj_AuthorChildData.ChildContractEntryDate"
+                                                                  ng-if="obj_AuthorChildData.ChildAuthorContractCode == obj_AuthorData.AuthorContractCode && obj_AuthorChildData.ChildContractEntryDate!='---'"></span>
+                                                        </p>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.ProductName"></span>
+                                                        <br />
+                                                        <p ng-repeat="obj_AuthorChildData in ProductSeriesList">
+                                                            <span ng-bind="obj_AuthorChildData.ChildProductName"
+                                                                  ng-if="obj_AuthorChildData.ChildAuthorContractCode == obj_AuthorData.AuthorContractCode && obj_AuthorChildData.ChildProductName!='---'"></span>
+                                                        </p>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div ng-repeat="obj_AuthorData in obj.AuthorData" ng-if="obj.SeriesCode == obj_AuthorData.SeriesCode">
+                                                        <span ng-bind="obj_AuthorData.ContractExpiryDate"></span>
+                                                        <br />
+                                                        <p ng-repeat="obj_AuthorChildData in ProductSeriesList">
+                                                            <span ng-bind="obj_AuthorChildData.ChildContractExpiryDate"
+                                                                  ng-if="obj_AuthorChildData.ChildAuthorContractCode == obj_AuthorData.AuthorContractCode && obj_AuthorChildData.ChildContractExpiryDate!='---'"></span>
+                                                        </p>
+                                                    </div>
+                                                </td>*@
+
+                                            @*<tr ng-repeat="obj in ProductSeriesList" class="tooltipclass">
+
+                                                <td><span ng-bind="$index + 1"></span></td>
+
+                                                <td><span ng-bind="obj.SeriesCode"></span></td>
+
+                                                <td>
+
+                                                    <p ng-repeat="obj_AuthorCode in obj.AuthorContractCodeList">
+                                                        <span ng-bind="obj_AuthorCode.AuthorContractCode"></span>
+                                                        <br/>
+                                                        <span ng-bind="obj_AuthorCode.ChildAuthorContractCode" ng-if="obj_AuthorCode.ChildAuthorContractCode!='---'"></span>
+                                                    </p>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <p ng-repeat="obj_AuthorCode in obj.AuthorContractCodeList">
+                                                        <span ng-bind="obj_AuthorCode.ContractEntryDate"></span>
+                                                        <br/>
+                                                        <span ng-bind="obj_AuthorCode.ChildContractEntryDate" ng-if="obj_AuthorCode.ChildContractEntryDate!='---'"></span>
+                                                    </p>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <p ng-repeat="obj_AuthorCode in obj.AuthorContractCodeList">
+                                                        <span ng-bind="obj_AuthorCode.ProductName"></span>
+                                                        <br/>
+                                                        <span ng-bind="obj_AuthorCode.ChildProductName" ng-if="obj_AuthorCode.ChildProductName!='---'"></span>
+                                                    </p>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <p ng-repeat="obj_AuthorCode in obj.AuthorContractCodeList">
+                                                        <span ng-bind="obj_AuthorCode.ContractExpiryDate"></span>
+                                                        <br/>
+                                                        <span ng-bind="obj_AuthorCode.ChildContractExpiryDate" ng-if="obj_AuthorCode.ChildContractExpiryDate!='---'"></span>
+                                                    </p>
+
+                                                </td>
+
+                                                <td ng-hide="TitleLinking">
+                                                    <div class="tooltip-container">
+                                                        <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                                        <label for="tooltip-toggle" onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                            Action
+                                                        </label>
+                                                        <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                                        <div class="tooltip-content">
+                                                            <div class="linking">
+                                                                <ul>
+                                                                    <li><a href="~/Contract/AuthorContract/Index?SeriesCode={{obj.SeriesCode}}&For=SeriesUpdate" ng-if="('@ViewBag.Department' == 'AD')">Series Contract Update</a></li>
+                                                                    <li><a href="~/Contract/AuthorContract/View?SeriesCode={{obj.SeriesCode}}&For=SeriesUpdate" ng-if="('@ViewBag.Department' == 'RT')">Series Contract Update</a></li>
+                                                                    <li><a href="~/Contract/AuthorContract/View?SeriesCode={{obj.SeriesCode}}&For=SeriesView">Series Contract View</a></li>
+                                                                    <li ng-if="obj.AuthorContractCodeList[0].Flag == '2' && ('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT')"><a href="~/Contract/AuthorContract/view?SeriesCode={{obj.SeriesCode}}&For=AddendumUpdate">Add Addendum</a></li>
+                                                                    <li ng-if="obj.AuthorContractCodeList[0].Flag == '1' &&('@ViewBag.Department' == 'AD' || '@ViewBag.Department' == 'RT')"><a href="~/Contract/AuthorContract/view?SeriesCode={{obj.SeriesCode}}&For=AddendumView">View Addendum</a></li>
+                                                                </ul>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                            </tr>*@
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Session["GenerateExcelPermissions"] != null && ViewBag.Report == "report")
+                    {
+                        <div class="col-md-12 text-center btnPrint">
+                            <div class="tools">
+                                <input type="hidden" name="hid_Report" id="hid_Report" ng-model="hid_Report" />
+                                <button type="submit" class="btn green" ng-click="AuthorContractSeriesReportExcel()" id="btnSubmit">Generate Excel</button>
+                            </div>
+                        </div>
+                    }
+                    
+                </div>
+            </div>
+        </form>
+
+
+
+        @*<form name="Serch" class="form-horizontal seriesSelect" ng-show="ShowProductSeriesListForm">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tools">
+                                <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="portlet box green">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Series Contract List
+                                    </div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="collapse"> </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body flip-scroll">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                            <thead class="flip-content">
+                                                <tr>
+                                                    <th>SNo</th>
+                                                    <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                    <th>WorkingTitle &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                    <th>Product Category &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                    <th>Contract Type  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr ng-repeat="obj in ProductSeriesList" class="tooltipclass">
+
+                                                    <td>{{$index + 1}}</td>
+
+                                                    <td>{{obj.ProductCode}}</td>
+
+                                                    <td>{{obj.WorkingProduct}}</td>
+                                                    <td>{{obj.ProductCategory}}</td>
+                                                    <td>{{obj.Contract_Type}}</td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmitSeries">Submit</button>
+                            @Html.ActionLink(" ", "index", "AuthorContract",null,new {area="authorcontract", id = "JqueryClick" })
+                        </div>
+                    </div>
+                </div>
+            </form>*@
+        @*<th><input type="checkbox" id="chk_ProductIdParent" onclick="chk_Parent(this)" name="chk_ProductIdParent" ng-model="chk_ProductIdParent" /></th>*@
+        @*<td>
+                <input type="checkbox" class="chk_ProductId" id="chk_ProductIdChild" value="{{obj.Id}}" ng-required="req_Validation" onclick="chk_Child(this)" name="chk_ProductIdParent" ng-model="chk_ProductIdChild" />
+                <input type="hidden" name="hid_CkeckedVlaue" id="hid_CkeckedVlaue" value="" />
+            </td>*@
+
+
+
+
+
+
+
+    </div>
+</div>
+<input type="hidden" id="hid_from" />
+<input type="hidden" name="hid_show" id="hid_show" />
+<input type="hidden" name="hid_for" id="hid_for" value="@TempData["List"]" />
+<input type="hidden" name="hid_PendingSeries" id="hid_PendingSeries" value="@ViewBag.ViewMore" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.datePicker')
+            .datepicker({
+                format: "dd/mm/yyyy",
+                showButtonPanel: true,
+                autoclose: true,
+            })
+
+        $("#btnSubmitSeries").click(function () {
+            if ($(".seriesSelect").is(":visible"))
+            {
+                //redirect search result to author contract contracoller in web of authorcontract area
+                if ($('.chk_ProductId:checked').length > 0)
+                {
+                    //location.href = $("#JqueryClick").attr("href") + "?SeriesIds=" + $('.chk_ProductId:checked').map(function () { return this.value; }).get().join(',');
+
+                    angular.element(document.getElementById('angularid')).scope().setRestProductSeries($('.chk_ProductId:checked').map(function () { return this.value; }).get().join(','));
+                }
+                else {
+                    alert("Please select product to create series contract");
+                    return false;
+                }
+
+
+            }
+
+        });
+
+
+        //change button if come from Dashboard
+        if ($("#hid_show").val().toLowerCase() == "dashboard") {
+            $('.backtoSearch').hide();
+            $('.backtoDashboard').show();
+        }
+        else {
+            $('.backtoDashboard').hide();
+            $('.backtoSearch').show();
+        }
+
+
+    });
+
+
+
+    function chk_Parent(source) {
+
+        checkboxes = document.getElementsByName('chk_ProductIdParent');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+
+
+
+    }
+
+    function chk_Child(ID) {
+
+        if ($(".chk_ProductId").length == $(".chk_ProductId:checked").length) {
+            $("#chk_ProductIdParent").attr("checked", "checked");
+
+        } else {
+            $("#chk_ProductIdParent").removeAttr("checked");
+        }
+
+    }
+
+    //$("#chk_ProductIdParent").click(function () {
+
+    //});
+
+
+    $('#hid_from').val(GetParameterValues("from"))
+    $('#hid_show').val(GetParameterValues("show"))
+
+    //for get Query String Variable form Url
+    function GetParameterValues(param) {
+        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < url.length; i++) {
+            var urlparam = url[i].split('=');
+            if (urlparam[0] == param) {
+                return urlparam[1];
+            }
+        }
+    }
+
+    function fireMe(obj) {
+        var length = $(".customizeLink").length;
+        for (i = 0; i < $(".customizeLink").length; i++) {
+            $($(".customizeLink")[i]).attr("sequence", i);
+        }
+        angular.element(document.getElementById('angularid')).scope().DisplayDiv(parseInt($(obj).attr("sequence")) + 1);
+    };
+
+
+</script>
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/script/jquery-ui.js"></script>
+
+
+
+<div class="modal fade bs-example-modal-lg" id="myModalAuthor" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" style="width:85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-11">
+                    <h4 class="modal-title">Assignment Contract View</h4>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+
+            </div>
+
+            <div class="modal-body">
+                <p>
+                    @Html.Partial("~/Areas/Contract/Views/Shared/AuthorContractView.cshtml")&hellip;
+                </p>
+            </div>
+            <div class="modal-footer text-center">
+                <p class="text-center"><button type="button" class="btn green" data-dismiss="modal">Close</button></p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade bs-example-modal-lg" id="myModal_ProductSeriesList" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" style="width:85%;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div class="col-md-11">
+                    <h4 class="modal-title">Product Series List</h4>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-condensed flip-content">
+                    <thead class="flip-content">
+                        <tr>
+                            <th>SNo</th>
+                            <th><input type="checkbox" id="chk_ProductIdParent" onclick="chk_Parent(this)" name="chk_ProductIdParent" ng-model="chk_ProductIdParent" /></th>
+
+                            <th>Product Code </th>
+                            <th>ISBN </th>
+                            <th>Working Title </th>
+                            <th>Product Category </th>
+                            <th>Product Type </th>
+                            <th>Contract Type  </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr ng-repeat="obj in ProductSeries_List" class="tooltipclass">
+                            <td><span ng-bind="$index + 1"></span></td>
+                            <td>
+                                <input type="checkbox" class="chk_ProductId" id="chk_ProductIdChild" value="{{obj.Id}}" ng-required="req_Validation" 
+                                       onclick="chk_Child(this)" name="chk_ProductIdParent" ng-model="chk_ProductIdChild" />
+                                <input type="hidden" name="hid_CkeckedVlaue" id="hid_CkeckedVlaue" value="" />
+                            </td>
+
+                            <td><span ng-bind="obj.ProductCode"></span></td>
+                            <td><span ng-bind="obj.ISBN"></span></td>
+                            <td><span ng-bind="obj.WorkingProduct"></span><br /><span style="font-size:11px;" ng-bind="(obj.WorkingSubProduct)"></span></td>
+                            <td><span ng-bind="obj.ProductCategory"></span></td>
+                            <td><span ng-bind="obj.ProductType"></span></td>
+                            <td><span ng-bind="obj.Contract_Type"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer text-center">
+                <p class="text-center">
+                    <button type="submit" class="btn green" id="btnSubmitSeries">Submit</button>
+                    <button type="button" class="btn green" data-dismiss="modal">Close</button>
+                </p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

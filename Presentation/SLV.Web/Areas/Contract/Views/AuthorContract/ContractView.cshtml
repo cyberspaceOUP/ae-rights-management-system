@@ -1,0 +1,421 @@
+﻿@{
+    ViewBag.Title = "Author Contract View";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/Product/ProductDetails.js"></script>
+
+<script src="~/js/common/TopSearch.js"></script>
+
+<script src="~/js/master/Master.AuhtorView.js"></script>
+<script src="~/js/Contract/AuthorContractViewMode.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+<input type="hidden" id="ProductId" value="@ViewBag.ContractIdId" />
+<input type="hidden" id="hid_LicenceId" value="@ViewBag.LicenceId" />
+<input type="hidden" id="hid_SeriesCode" value="@ViewBag.SeriesCode" />
+@section onInit
+{
+    if(@ViewBag.ContractIdId!=0)
+    {
+        angular.element(document.getElementById('angularid')).scope().GetAuthorContractDetails(@ViewBag.ContractIdId);
+    }
+    if('@ViewBag.SeriesCode'!="")
+    {
+        angular.element(document.getElementById('angularid')).scope().GetAuthorContractDetailsbySeriesId('@ViewBag.SeriesCode');
+    }
+
+}
+<input type="hidden" id="hid_documentDeleteUrl" value="@T("DeleteDocument.fromFolderURL")" />
+<style>
+    .form-horizontal .control-label {
+        margin-bottom: 0;
+        padding-top: 0px;
+        text-align: left;
+    }
+
+    .portlet.box > .portlet-body {
+        background-color: #fff;
+        padding: 12px 0px 10px 0px;
+    }
+
+    .form-horizontal .control-label {
+        padding: 10px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+
+        <form name="userForm" class="form-horizontal" ng-submit="SubmitAgreementForm()" novalidate>
+            <div class="col-md-12">
+                <div class="main-title">
+                    <h1>
+                        Assignment Contract View
+                        @Html.Partial("pagedate")
+                    </h1>
+                </div>
+            </div>
+
+            @if (Session["PrintPermissions"] != null)
+            {
+                <div class="col-md-12 text-right btnPrint">
+                    <div class="tools">
+                        <input type="button" class="btn green" id="btn_printPage" value="Print">
+                    </div>
+                </div>
+            }
+            <div class="col-md-12">&nbsp;</div>
+
+            <div class="col-md-12 text-right backtolist" ng-if="'@TempData["ExpiryReport"]' != 'ExpiryReport'">
+                <div class="tools">
+                    <a href="@T("AuthorContract.FromContractSearch")" style="color:black;" ng-if="'@ViewBag.View' == 'dashboard'">Back To Dashboard</a>
+                    <a href="Javascript:void(0);" style="color:black;" ng-if="'@ViewBag.View' == 'view' || '@ViewBag.Update' == 'update'" ng-click="btn_BackToList()">Back To List</a>
+                    <a href="Javascript:void(0);" style="color:black;" ng-if="'@ViewBag.View' == 'seriesview' || '@ViewBag.Update' == 'seriesupdate'" ng-click="btn_BackToListSeries()">Back To List</a>
+                </div>
+            </div>
+
+
+            <div class="mainViewContent">
+                @Html.Partial("AuthorContractView")
+            </div>
+
+            <!--View Addendum List in case of multiple-->
+            <input type="hidden" id="hid_addendumIdForView" name="hid_addendumIdForView" value="@TempData["AddendumIdForView"]" />
+            <input type="hidden" id="hid_addendumNew" name="hid_addendumIdForView" value="@TempData["AddendumNew"]" />
+            <div ng-if="'@TempData["Addendum"]'=='AddendumView'">
+                <div class="col-md-12 col-xs-12 col-sm-12" ng-if="ContractAddendumList.length>1">
+                    @Html.Partial("_ContractAddendumList")
+                </div>
+            </div>
+            <div ng-if="'@TempData["Addendum"]'=='AddendumUpdate'">
+                <div class="col-md-12 col-xs-12 col-sm-12" ng-if="ContractAddendumList.length>0">
+                    @Html.Partial("_ContractAddendumList")
+                </div>
+            </div>
+
+
+            <!--Block For Addendum view with Contract View // added on 01 Sep, 2017-->
+            <div ng-if="'@ViewBag.View'=='view'||'@ViewBag.View'=='seriesview'">
+                <div class="col-md-12 col-xs-12 col-sm-12" ng-if="ContractAddendumList.length>1">
+                    @Html.Partial("_ContractAddendumList")
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12" ng-if="AddendumViewOnly && AddendumViewDataOnly">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Addendum Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                        </div>
+                    </div>
+
+                    <div class="portlet-body clearfix">
+
+                        @*<div class="col-md-12" ng-if="SeriesName!=undefined">
+
+                        <div>
+                            <span ng-bind="SeriesName"></span>
+                        </div>
+                    </div>*@
+
+
+                        <div class="col-md-12" ng-if="SeriesCodeView!=null">
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Series Name</label>
+                                        <div class="control-label col-md-7">
+                                            <span ng-bind="SeriesNameView"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Series Code</label>
+                                        <div class="control-label col-md-7">
+                                            <span ng-bind="SeriesCodeView"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Addendum date</label>
+                                            <div class="control-label col-md-7">
+                                                <span ng-bind="AddendumDateView"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Addendum Type</label>
+                                            <div class="control-label col-md-7">
+
+                                                <p ng-if="AddendumTypeView=='T'"> Term Addendum </p>
+                                                <p ng-if="AddendumTypeView=='R'"> Royalty Change Addendum </p>
+                                                <p ng-if="AddendumTypeView=='O'"> Other Changes </p>
+                                                <p ng-if="AddendumTypeView=='--'">--</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" ng-if="PeriodofagreementView!='--' && AddendumTypeView=='T'">
+                            <div class="row">
+
+                                @*<div class="col-md-6">
+                                    <div class="row">
+
+                                        <div class="control-label col-md-12">
+                                            <label class="control-label col-md-5">Period of agreement (In Months)</label>
+                                            <div class="control-label col-md-7">
+                                                <span ng-bind="PeriodofagreementView"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>*@
+
+
+                                <div class="col-md-6">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Expiry Date</label>
+                                            <div class="control-label col-md-7">
+                                                <span ng-bind="ExpiryDateView"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Remarks</label>
+                                    <div class="control-label col-md-7">
+                                        <span ng-bind="RemarksView"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12" id="Uploadfiles">
+
+                                    <div class="clearfix"></div>
+
+                                    <div id="doclistid" ng-show="documentshow" style=" padding-left: 29px;">
+                                        <div>
+
+                                            @*<div ng-if="AddendumDocumentList.length">
+                                            <h3 class="panel-title">Uploaded Attachements</h3>
+                                        </div>*@
+
+                                            @*<div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important;" ng-if="AddendumDocumentList.length">
+                                                <h3 class="panel-title">Uploaded Attachments</h3>
+                                            </div>*@
+
+                                            <div class="panel-body" ng-if="AddendumDocumentList.length>0">
+
+                                                <table class="table table-striped table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Document Name</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="url in AddendumDocumentList">
+                                                            <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.Id}}" /></td>
+                                                            <td><a href="~/uploads/{{url.url}}" target="_blank" style="color: black;"><span ng-bind="url.name"></span></a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div ng-repeat="div in AuthorBox_Detail" ng-if="RoyaltyslabList_Detail.length  && AddendumViewCheck==true">
+                    @Html.Partial("~/Areas/Contract/Views/Shared/_AuthorBasicDetails_Addendumview.cshtml")
+                </div>
+            </div>
+            <!--End For Addendum view with Contract View-->
+
+            @if ((ViewBag.Department == "ad" || ViewBag.Department == "rt") && TempData["Addendum"] == null && (ViewBag.Update == "update" || ViewBag.Update == "seriesupdate"))
+            {
+
+                <div class="col-md-12 col-xs-12 col-sm-12">
+                    @Html.Partial("_ContractAgreement")
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="portlet-body clearfix">
+                                    <button type="submit" class="btn green" id="btnSubmit" ng-click="submitted=true" name="btnsubmit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                @*<div class="col-md-12 col-xs-12 col-sm-12" ng-if="AgreementStatus!='Issued'">
+                    @Html.Partial("_ContractAgreement")
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="portlet-body clearfix">
+                                    <button type="submit" class="btn green" id="btnSubmit" ng-click="submitted=true" name="btnsubmit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12" ng-if="AgreementStatus=='Issued'">
+                    @Html.Partial("_ContractAgreement_view")
+                </div>*@
+            }
+            
+            <div class="col-md-12 col-xs-12 col-sm-12" ng-if="'@TempData["Addendum"]'=='Addendum'||'@TempData["Addendum"]'=='AddendumView'||'@TempData["Addendum"]'=='AddendumUpdate'">
+
+                @Html.Partial("_AddendumFileUpload")
+                
+                <div class="form-actions" ng-if="'@TempData["Addendum"]'=='AddendumUpdate'">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="portlet-body clearfix">
+                                <input type="hidden" id="hid_UploadsFile1" name="hid_UploadsFile1" ng-model="hid_UploadsFile1" />
+                                <input type="hidden" id="hid_Addendum" name="hid_Addendum" ng-model="hid_Addendum" value="@TempData["addendum"]" />
+                                <input type="hidden" id="hid_User" name="hid_User" ng-model="hid_User" value="@Session["UserDepartment"]" />
+                                <input type="hidden" id="hid_AuthorContractId" name="hid_AuthorContractId" ng-model="hid_AuthorContractId" value="@ViewBag.ContractIdId" />
+                                <button type="submit" class="btn green" id="btnSubmit" ng-click="submitted=true" name="btnsubmit" ng-if="(('@Session["UserDepartment"]'=='Rights'||'@Session["UserDepartment"]'=='admin'||'@Session["UserDepartment"]'=='Super Admin'))">Submit</button> @*&& !AddendumDocumentList.length*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </form>
+    </div>
+
+</div>
+
+<input type="hidden" name="hid_addendumView" id="hid_addendumView" value="@TempData["Addendum"]" />
+<input type="hidden" id="hid_AuthorContractIdValue" name="hid_AuthorContractIdValue" ng-model="hid_AuthorContractIdValue" value="@ViewBag.ContractIdId" />
+
+<style type="text/css">
+    .form-horizontal .radio-inline {
+        padding-top: 0px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .dropZone {
+        min-height: 175px !important;
+    }
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            if ($('button[id=btnSubmit]').is(':visible') == true) {
+                $('#btn_printPage').hide();
+            }
+        }, 3000)
+
+    });
+
+    $('#btn_printPage').on('click', function () {
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.backtolist').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+
+        $('.btnPrint').hide();
+        $('.caption').css('font-size', '13px');
+        $('.caption').css('font-weight', 'none');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+
+        window.print();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('.backtolist').show();
+        $('footer').show();
+        $('.menu').show();
+        $('.top-header').show();
+
+        $('.btnPrint').show();
+        $('.caption').removeAttr("style");
+        $('.subhead').css('font-weight', 'bold');
+        $('.subhead').css('margin', '20px');
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+
+        $('.hide_for_print').show();
+        $('.show_for_print').hide();
+    });
+
+</script>
+
+
+

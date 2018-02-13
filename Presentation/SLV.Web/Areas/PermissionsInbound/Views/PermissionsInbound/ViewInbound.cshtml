@@ -1,0 +1,212 @@
+﻿@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/PermissionsInbound/ViewInBound.js"></script>
+
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/common/TopSearch.js"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Permission Inbound View
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        @if (Session["PrintPermissions"] != null)
+        {
+            <div class="col-md-12 text-right btnPrint">
+                <div class="tools">
+                    <input type="button" class="btn green" id="btn_printPage" value="Print">
+                </div>
+            </div>
+        }
+        
+        <div class="col-md-12">&nbsp;</div>
+        <div class="col-md-12 text-right backtolist">
+            <div class="tools">
+                <a ng-if="'@TempData["For"]' != 'delete'" href="~/PermissionsInbound/PermissionsInbound/search?Type=View&For=BackToSearch" style="color:black;">Back To List</a>
+                <a ng-if="'@TempData["For"]' == 'delete'" href="~/PermissionsInbound/PermissionsInbound/search?Type=Delete&For=BackToSearch" style="color:black;">Back To List</a>
+            </div>
+        </div>
+
+        <div class="mainViewContent">
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div>   
+
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body" ng-if="Req_ContractDeatil">
+                        @Html.Partial("~/Areas/Contract/Views/Shared/_ContractDeatil.cshtml")
+                    </div>
+                    <div class="form-body" ng-if="Req_ProductLicense">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicense.cshtml")
+                    </div>
+                </div>
+            </div>*@
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("_InboundPermission")
+                    </div>
+                </div>
+            </div>
+
+            <!--Type view-->
+            <div class="col-md-12" style="display:none">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Type
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:void(0);" class="collapse"> </a>
+
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class=" row">
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Assets type</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{AssetstypeView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_ImageVideoBankView.cshtml")
+
+        
+                <div class="col-md-12 text-right" @*ng-show="false"*@ ng-if="PermissionInboundImageVideoBankDataList.length>0">
+                    <div class="form-actions">
+                       
+                           
+                            <button type="submit" class="btn green" ng-click="PermissionsInboundReportExcelImageVideo()" id="btnSubmitImageBank">Generate Excel</button>
+                            <br /> &nbsp;&nbsp;&nbsp;
+                        
+                    </div>
+                </div>
+           
+
+            @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_InboundOthersView.cshtml")
+
+
+
+            <div class="col-md-12 text-right" @*ng-show="false"*@ ng-if="OtherContractList.length>0">
+                <div class="form-actions">
+                   
+
+                        <button type="submit" class="btn green" ng-click="PermissionsInboundReportExcelCopyrightholderDetails()" id="btnSubmitImageBank">Generate Excel</button>
+                        <br /> &nbsp;&nbsp;&nbsp;
+                  
+                </div>
+            </div>
+
+
+
+
+            @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_ViewPendingRequestInsert.cshtml")
+
+        </div>
+
+        @*<input type="hidden" value="@TempData["id"]" ng-model="hid_AuthorContract" id="hid_AuthorContract" name="hid_AuthorContract">*@
+        <input type="hidden" value="@TempData["type"]" ng-model="hid_Type" id="hid_Type" name="hid_Type">
+        <input type="hidden" value="@TempData["ProductId"]" ng-model="hid_ProductId" id="hid_ProductId" name="hid_ProductId">
+        <input type="hidden" value="@TempData["InboundId"]" ng-model="hid_InboundId" id="hid_InboundId" name="hid_InboundId">
+        <input type="hidden" value="@TempData["User"]" ng-model="hid_User" id="hid_User" name="hid_User">
+
+    </div>
+
+</div>
+
+<div ng-show="false" class="col-md-12 text-center btnPrint">
+    <div class="tools">
+        <button type="submit" class="btn green" ng-click="PermissionsInboundReportExcelAll()" id="btnSubmit">Generate Excel</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+
+        //setTimeout(function () {
+        //    $('.table-striped').css("font-size", "11px");
+
+        //    $('.table-responsive').css("font-size", "11px");
+        //}, 1500);
+        
+       
+
+    });
+  
+
+    $('#btn_printPage').on('click', function () {
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.backtolist').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+
+        $('.btnPrint').hide();
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+
+        window.print();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('.backtolist').show();
+        $('footer').show();
+        $('.menu').show();
+        $('.top-header').show();
+
+        $('.btnPrint').show();
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+    });
+
+</script>

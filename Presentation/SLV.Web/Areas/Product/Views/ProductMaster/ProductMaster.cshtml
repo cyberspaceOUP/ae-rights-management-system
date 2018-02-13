@@ -1,0 +1,853 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "ProductMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/Product/ProductEntry.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/app.css" rel="stylesheet" />
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+
+<script src="~/js/common/TopSearch.js"></script>
+
+@*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />*@
+<h3 class="text-muted">@*@T("Form.CityMaster.Heading")*@</h3>
+
+<div class="container-fluid" ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Product Entry
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12 text-right backToList" style="display:none;">
+            <div class="tools">
+                <a href="@T("AuthorContract.BackSearchUrl")" style="color:black;" ng-if="'@TempData["update"]' == 'dashboard'">Back To List</a>
+                <a href="javascript:void(0);" style="color:black;" ng-if="'@TempData["update"]' == 'update'" ng-click="btn_BackToList()">Back To List</a>
+            </div>
+        </div>
+        <form name="userForm" class=" form-horizontal" ng-submit="productEntryForm(ProductModel)" novalidate ng-cloak>
+            <div class="row" ng-show="ProductCodeVisible">
+                <div class="form-body">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <label class="control-label col-md-5">Product Code</label>
+                            <div class="col-md-7">
+                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductCode.$dirty) && userForm.Volume.$invalid } ">
+                                    <input type="text" name="ProductCode" class=" form-control" ng-model="ProductModel.ProductCode" @*ng-pattern="/^[0-9]{1,7}$/"*@ placeholder="Product Code" ng-disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Product Master
+                            <input type="hidden" value="@ViewBag.Id" id="hid_ProductId" name="hid_ProductId" />
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @Html.Partial("~/Views/Shared/_divisionSubdivision.cshtml")
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product Category <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.ProductCategory.$dirty) && userForm.ProductCategory.$invalid } ">
+                                                    <select class="form-control" name="ProductCategory" ng-model="ProductModel.ProductCategory" ng-change="onchnageProductCategory()" required>
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in ProductCategoryListEntry"
+                                                                ng-model="ProductCategory"
+                                                                catcode="{{div.ProductCategoryCode}}"
+                                                                ng-init="setProductCategoryId(ProductModel,div)"
+                                                                ng-selected="{{  div.Id == ProductModel.ProductCategory || div.ProductCategoryCode == 'OR' }}"
+                                                                value="{{div.Id}}">
+                                                            {{div.ProductCategory}}
+                                                        </option>
+                                                    </select>
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProductCategory.$error.required && (userForm.ProductCategory.$dirty || submitted)">Please select Product Category</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product Type <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group pt_radio">
+                                                    <label class="radio-inline" ng-repeat="Pt in ProductTypeList">
+                                                        <!--Commented added By DHarmveer on 23 MAy 2016-->
+                                                        <input type="radio" name="ProductType" ng-checked="{{Pt.Id == ProductModel.ProductType}}" ng-click="getSubProductTypeList(Pt.Id);setProductTypeId(ProductModel);" ng-model="ProductModel.ProductType" ng-init="ProductModel.ProductType == ''" value="{{Pt.Id}}" required> {{Pt.typeName}}
+                                                    </label>
+                                                    <div ng-class="{ 'has-error' : userForm.ProductType.$invalid && (userForm.ProductType.$dirty || submitted)}">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ProductType.$error.required && (userForm.ProductType.$dirty || submitted)" class="help-block">Please Select Product Type</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Sub-Product Type/Format <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SubProductType.$dirty) && userForm.SubProductType.$invalid } ">
+                                                    <select class="form-control" name="SubProductType" ng-init="ProductModel.SubProductType == ''" ng-model="ProductModel.SubProductType" required>
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in SubProductTypeList" ng-selected="{{div.Id == ProductModel.SubProductType}}" ng-model="SubProductType" value="{{div.Id}}">{{div.typeName}}</option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.SubProductType.$error.required && (userForm.SubProductType.$dirty || submitted)" class="help-block">Sub-Product Type/Format</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 ProprietorDetailsMandatory">
+                <div class="portlet box green" ng-hide="Productcategory == 'OR'">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Proprietor Details <span ng-show="MultipleProprietor">1</span>
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form" ng-controller="ProprietorController">
+                        <div class="form-body">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_ProprietorDetailsProductMaster.cshtml")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" ng-show="MultipleProprietor">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Proprietor Details 2
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form" ng-controller="ProprietorController1">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Proprietor ISBN  <span class="red" ng-show="ProprietorISBN">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorISBN1.$dirty) && userForm.ProprietorISBN1.$invalid } ">
+                                                    <input type="text" id="ProprietorISBN1" name="ProprietorISBN1" class="form-control" maxlength="13" ng-init="ProprDetailCntrl1.ProprietorISBN1=''"
+                                                           ng-model="ProprDetailCntrl1.ProprietorISBN1" ng-pattern="/^[0-9]{13}$/" placeholder="Proprietor ISBN" ng-required="ProprietorISBN">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProprietorISBN1.$error.required && (userForm.ProprietorISBN1.$dirty || submitted)" class="help-block red">Please enter Proprietor ISBN</p>
+                                                        <p ng-show="userForm.ProprietorISBN1.$error.pattern" class="help-block red">Please enter valid ISBN should be 13 digit</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Proprietor Product <span class="red" ng-show="ProprietorProduct">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorProduct1.$dirty) && userForm.ProprietorProduct1.$invalid } ">
+                                                    <input type="text" name="ProprietorProduct1" class="form-control"
+                                                           ng-init="ProprDetailCntrl1.ProprietorProduct1=''"
+                                                           ng-model="ProprDetailCntrl1.ProprietorProduct1" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Proprietor Product" ng-required="ProprietorProduct">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProprietorProduct1.$error.required && (userForm.ProprietorProduct1.$dirty || submitted)" class="help-block red">Please enter Proprietor Product</p>
+                                                        <p ng-show="userForm.ProprietorProduct1.$error.pattern" class="help-block red">Please enter valid Proprietor Product</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Proprietor Edition <span class="red" ng-show="ProprietorEdition">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorEdition1.$dirty) && userForm.ProprietorEdition1.$invalid } ">
+                                                    <input type="text" name="ProprietorEdition1" class="form-control"
+                                                           ng-init="ProprDetailCntrl1.ProprietorEdition1=''"
+                                                           ng-model="ProprDetailCntrl1.ProprietorEdition1" maxlength="7" ng-pattern="/^[0-9]{1,7}$/" placeholder="Proprietor Edition" ng-required="ProprietorEdition">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProprietorEdition1.$error.required && (userForm.ProprietorEdition1.$dirty || submitted)" class="help-block red">Please enter Proprietor Edition</p>
+                                                        <p ng-show="userForm.ProprietorEdition1.$error.pattern" class="help-block red">Please enter valid Proprietor Edition</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Proprietor Copyright Year <span class="red" ng-show="ProprietorCopyrightYear">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorCopyrightYear1.$dirty) && userForm.ProprietorCopyrightYear1.$invalid } ">
+                                                    <input type="text" name="ProprietorCopyrightYear1" maxlength="4" class="form-control"
+                                                           ng-init="ProprDetailCntrl1.ProprietorCopyrightYear1=''"
+                                                           ng-model="ProprDetailCntrl1.ProprietorCopyrightYear1" ng-pattern="/^(19|20)\d{2}/" placeholder="Proprietor Copyright Year" ng-required="ProprietorCopyrightYear1">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProprietorCopyrightYear1.$error.required && (userForm.ProprietorCopyrightYear1.$dirty || submitted)" class="help-block red">Please enter Proprietor Copyright Year</p>
+                                                        <p ng-show="userForm.ProprietorCopyrightYear1.$error.pattern" class="help-block red">Please enter valid Proprietor Copyright Year</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Publishing Company <span class="red" ng-show="PublishingCompanyMandatory">*</span> </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.PublishingCompany1.$dirty) && userForm.PublishingCompany1.$invalid } ">
+                                                            <select class="form-control" id="PublishingCompany1" ng-change="getPubCenterByCompanyIdList()PublishPubCntrl.PubCenter='';" name="PublishingCompany1"
+                                                                    ng-init="ProprDetailCntrl1.PublishingCompany1=''"
+                                                                    ng-model="ProprDetailCntrl1.PublishingCompany1" ng-required="PublishingCompanyMandatory">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in PublishingCompanyList" ng-model="PublishingCompany1" ng-selected="{{div.Id == PublishPubCntrl.PublishingCompany1}}" value="{{div.Id}}">{{div.CompanyName}}</option>
+                                                            </select>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.PublishingCompany1.$error.required && (userForm.PublishingCompany1.$dirty || submitted)">Please select Publishing Company</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Publishing Centre<span class="red" ng-show="PubCenterMandatory">*</span> </label>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.PubCenter1.$dirty) && userForm.PubCenter1.$invalid } ">
+                                                            <select class="form-control" id="PubCenter1" name="PubCenter1"
+                                                                    ng-init="ProprDetailCntrl1.PubCenter1=''"
+                                                                    ng-model="ProprDetailCntrl1.PubCenter1" ng-required="PubCenterMandatory">
+                                                                <option value="">Please Select</option>
+                                                                <option ng-repeat="div in PubCenterList" ng-model="PubCenter1" ng-selected="{{div.Id == PublishPubCntrl.PubCenter1}}" value="{{div.Id}}">{{div.CenterName}}</option>
+                                                            </select>
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.PubCenter1.$error.required && (userForm.PubCenter1.$dirty || submitted)">Please select Publishing Centre</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Imprint <span class="red" ng-show="ProprietorImprint">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.ProprietorImprint1.$dirty) && userForm.ProprietorImprint1.$invalid } ">
+                                                    <select class="form-control" id="ProprietorImprint1" name="ProprietorImprint1"
+                                                            ng-init="ProprDetailCntrl1.ProprietorImprint1=''"
+                                                            ng-model="ProprDetailCntrl1.ProprietorImprint1" ng-required="ProprietorImprint">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in PROPImprintList" ng-hide="div.ImprintName=='Oxford University Press'" ng-model="ProprietorImprint1" value="{{div.Id}}">{{div.ImprintName}}</option>                                                       
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProprietorImprint1.$error.required && (userForm.ProprietorImprint1.$dirty || submitted)">Please select Imprint</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Author Name<span class="red" ng-show="ProprietorAuthorName1">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorAuthorName1.$dirty) && userForm.ProprietorAuthorName1.$invalid } ">
+                                                    <input type="text" name="ProprietorAuthorName1" class="form-control"
+                                                           ng-init="ProprDetailCntrl1.ProprietorAuthorName1=''"
+                                                           ng-model="ProprDetailCntrl1.ProprietorAuthorName1" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProprietorAuthorName1.$error.required && (userForm.ProprietorAuthorName1.$dirty || submitted)" class="help-block red">Please enter valid Author Name</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*<div class="col-md-2">
+                                                <div class="form-group pull-right">
+                                                    <a href="" class="btn green" ng-click="getAuthorSuggesationList()">&nbsp;&nbsp;Search&nbsp;&nbsp;</a>
+                                                </div>
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                    @*<div class="row">
+                                        <div class="col-md-12">
+                                            <label class="col-md-5">Author Categoty</label>
+                                            <div class="col-md-7 form-group">
+                                                <label class="radio-inline">
+                                                    <input type="radio" class="radio" name="AuthorCategory" ng-model="AuthorCategory" value="Individual"> Individual
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" class="radio-inline" name="AuthorCategory" ng-model="AuthorCategory" value="Institute"> Institute
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Author Name (s)</label>
+                                            <div class="col-md-5">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SuggestedAuthorName.$dirty) && userForm.SuggestedAuthorName.$invalid } ">
+                                                    <input type="text" ng-disabled="AuthorCategory !='Individual' && AuthorCategory !='Institute'" name="SuggestedAuthorName" class="form-control" ng-model="SuggestedAuthorName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.SuggestedAuthorName.$error.required && (userForm.SuggestedAuthorName.$dirty || submitted)" class="help-block red">Please enter valid Author Name</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group pull-right">
+                                                    <a href="" class="btn green" ng-click="getAuthorSuggesationList()">&nbsp;&nbsp;Search&nbsp;&nbsp;</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="AuthorSuggesationList.length > 0">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5"></label>
+                                            <div class="col-md-7" style="height: 200px; overflow: auto; border: groove;">
+                                                <div class="col-md-10 form-group" ng-repeat="auth in AuthorSuggesationList">
+                                                    <label class="radio-inline">
+                                                        <input type="checkbox" name="AuthorName" ng-model="AuthorName" ng-checked="CheckboxBind(auth.AuthorId)" ng-click="showCheckedAuthor(auth,AuthorName)"> {{auth.AuthorName}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="AuthorList.length > 0">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5"></label>
+                                            <div class="col-md-7">
+                                                <table class="table table-striped table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SNO</th>
+                                                            <th>Author Name</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="list in AuthorList">
+                                                            <td>{{$index + 1}}</td>
+                                                            <td>{{list.AuthorName}}</td>
+                                                            <td>
+                                                                <button id="btnRemove" class="btn btn-default btn-sm" type="button" ng-click="showCheckedAuthor(list,null)">Remove</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="userForm.SelectedAuthor1.$error.required && (userForm.SelectedAuthor1.$dirty || submitted)" ng-class="{ 'has-error': ( submitted ||userForm.SelectedAuthor1.$dirty) && userForm.SelectedAuthor1.$invalid } ">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5"></label>
+                                            <div class="col-md-7">
+                                                <input type="hidden" name="SelectedAuthor1" class="form-control" ng-model="SelectedAuthor1" ng-required="AuthorList.length == 0 && AuthorListMandatory">
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.SelectedAuthor1.$error.required && (userForm.SelectedAuthor1.$dirty || submitted)" class="help-block red">Please select at least one Author.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 OUPDetails">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            OUP Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row" ng-hide="true">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Project Code</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProjectCode.$dirty) && userForm.ProjectCode.$invalid } ">
+                                                    <input type="text" name="ProjectCode" class="form-control" ng-model="ProductModel.ProjectCode" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Project Code">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProjectCode.$error.required && (userForm.ProjectCode.$dirty || submitted)" class="help-block red">Please enter Project Code</p>
+                                                        <p ng-show="userForm.ProjectCode.$error.pattern" class="help-block red">Please enter valid Project Code</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">ISBN </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OUPISBN.$dirty) && userForm.OUPISBN.$invalid } ">
+                                                    <input type="text" name="OUPISBN" class="form-control" maxlength="13" ng-pattern="/^[0-9]{13}$/" ng-model="ProductModel.OUPISBN" placeholder="OUP ISBN">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.OUPISBN.$error.pattern" class="help-block red">Please enter valid ISBN should be 13 digit</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Working Product <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.WorkingProduct.$dirty) && userForm.WorkingProduct.$invalid } ">
+                                                    <input type="text" name="WorkingProduct" class="form-control" ng-model="ProductModel.WorkingProduct" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Working Product" required>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.WorkingProduct.$error.required && (userForm.WorkingProduct.$dirty || submitted)" class="help-block red">Please enter Working Product</p>
+                                                        <p ng-show="userForm.WorkingProduct.$error.pattern" class="help-block red">Please enter valid Working Product</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Working Sub-Product</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.WorkingSubProduct.$dirty) && userForm.WorkingSubProduct.$invalid } ">
+                                                    <input type="text" name="WorkingSubProduct" class="form-control" ng-model="ProductModel.WorkingSubProduct" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Working Sub-Product">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.WorkingSubProduct.$error.pattern" class="help-block red">Please enter valid Working Sub-Product</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Edition <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OUPEdition.$dirty) && userForm.OUPEdition.$invalid } ">
+                                                    <input type="text" name="OUPEdition" class="form-control" maxlength="7" ng-model="ProductModel.OUPEdition" ng-pattern="/^[0-9]{1,7}$/" placeholder="OUP Edition" required>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.OUPEdition.$error.required && (userForm.OUPEdition.$dirty || submitted)" class="help-block red">Please enter OUP Edition</p>
+                                                        <p ng-show="userForm.OUPEdition.$error.pattern" class="help-block red">Please enter valid OUP Edition</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Volume</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Volume.$dirty) && userForm.Volume.$invalid } ">
+                                                    <input type="text" name="Volume" class="form-control" maxlength="7" ng-model="ProductModel.Volume" ng-pattern="/^[0-9]{1,7}$/" placeholder="Volume">
+                                                    <div class="help-block">
+                                                  <p ng-show="userForm.Volume.$error.pattern" class="help-block red">Please enter valid number</p>@*Volume*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Imprint <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.OUPImprint.$dirty) && userForm.OUPImprint.$invalid } ">
+                                                    <select class="form-control" id="OUPImprint" ng-change="AddRemoveValidation($event)" name="OUPImprint" ng-model="ProductModel.OUPImprint">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in OUPImprintList" @*ng-init="setOUPImprintId(ProductModel,div)"*@ ng-selected="{{div.Id == ProductModel.OUPImprint}}" value="{{div.Id}}">{{div.ImprintName}}</option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.OUPImprint.$error.required && (userForm.OUPImprint.$dirty || submitted)">Please select Imprint</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Language {{LanguageDefaultValue}}<span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Language.$dirty) && userForm.Language.$invalid } ">
+                                                    <select class="form-control" id="Language" name="Language" ng-model="ProductModel.Language" ng-change="AddRemoveValidation($event)">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in LanguageList" ng-selected="{{div.LanguageCode=='ENG'}}" value="{{div.Id}}">
+                                                            {{div.LanguageName}}
+                                                        </option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Language.$error.required && (userForm.Language.$dirty || submitted)" class="help-block red">Please select Language</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Series</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Series.$dirty) && userForm.Series.$invalid } ">
+                                                    <select class="form-control" id="Series" name="Series" ng-model="ProductModel.Series">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in SeriesList" ng-model="Series" ng-selected="{{div.SeriesId == ProductModel.Series}}" value="{{div.SeriesId}}">{{div.SeriesName}}</option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Series.$error.required && (userForm.Series.$dirty || submitted)" class="help-block red">Please select Series</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Third Party Permission <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ThirdPartyPermission.$dirty) && userForm.ThirdPartyPermission.$invalid } ">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="ThirdPartyPermission" ng-model="ProductModel.ThirdPartyPermission" ng-value=1 required> Yes
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="ThirdPartyPermission" ng-model="ProductModel.ThirdPartyPermission" ng-value=0 required> No
+                                                    </label>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ThirdPartyPermission.$error.required && (userForm.ThirdPartyPermission.$dirty || submitted)">Please select third party permission</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Is the Product a Derivative? <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                @*<div class="form-group">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Derivaties" ng-checked="{{ProductModel.Derivaties == 'Yes'}}" ng-model="ProductModel.Derivaties" value="Yes" ng-disabled="ProductModel.LinkingWithProduct == 'Yes'" ng-required="ProductModel.LinkingWithProduct != 'Yes'"> Yes
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="Derivaties" ng-checked="{{ProductModel.Derivaties == 'No'}}" ng-model="ProductModel.Derivaties" value="No" ng-disabled="ProductModel.LinkingWithProduct == 'Yes'" ng-required="ProductModel.LinkingWithProduct != 'Yes'"> No
+                                                    </label>
+                                                </div>
+                                                <div ng-class="{ 'has-error' : userForm.Derivaties.$invalid && (userForm.Derivaties.$dirty || submitted)}">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Derivaties.$error.required && (userForm.Derivaties.$dirty || submitted)" class="help-block">Please select Derivaties</p>
+                                                    </div>
+                                                </div>*@
+                                                <div class="form-group" ng-class="{ 'has-error' : userForm.LinkingWithProduct.$invalid && (userForm.LinkingWithProduct.$dirty || submitted)}">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="LinkingWithProduct" ng-model="ProductModel.LinkingWithProduct" ng-checked="{{ProductModel.LinkingWithProduct == 'Yes'}}" value="Yes" ng-required="ProductModel.Derivaties != 'Yes'"> Yes
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="LinkingWithProduct" ng-model="ProductModel.LinkingWithProduct" ng-checked="{{ProductModel.LinkingWithProduct == 'No'}}" value="No" ng-required="ProductModel.Derivaties != 'Yes'"> No
+                                                    </label>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.LinkingWithProduct.$error.required && (userForm.LinkingWithProduct.$dirty || submitted)" class="help-block">Please select Derivaties</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="row" ng-show="ProductModel.Derivaties == 'Yes'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">ISBN of Original Titles <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OUPISBN.$dirty) && userForm.OrgISBN.$invalid } ">
+                                                    <input type="text" name="OrgISBN" class="form-control" maxlength="13" ng-change="ValidISBN(ProductModel.OrgISBN)"  ng-required="ProductModel.Derivaties == 'Yes'" ng-maxlength="13" ng-pattern="/^[0-9]{13}$/" ng-model="ProductModel.OrgISBN" placeholder="Original ISBN">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.OrgISBN.$error.required && (userForm.OrgISBN.$dirty || submitted)" class="help-block red">Please enter Org ISBN</p>
+                                                        <p ng-show="userForm.OrgISBN.$error.pattern" class="help-block red">Please enter valid Orignal ISBN</p>
+                                                        <p ng-show="Req_ISBNNO" class="help-block red">Entered Orignal ISBN does not exist</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="row" ng-show="ProductModel.LinkingWithProduct == 'Yes'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Link to original product <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted && userForm.PreviousProductISBN.$dirty) && userForm.PreviousProductISBN.$invalid } ">
+                                                    <input type="text" name="PreviousProductISBN" maxlength="13" ng-change="ValidISBN(ProductModel.PreviousProductISBN)" 
+                                                           ng-required="ProductModel.LinkingWithProduct == 'Yes'" class="form-control" 
+                                                           ng-model="ProductModel.PreviousProductISBN" ng-pattern="/^[0-9]{13}$/" placeholder="Link to original product">                                                    
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PreviousProductISBN.$error.required && (userForm.PreviousProductISBN.$dirty || submitted)" class="help-block">Please enter link to original product ISBN</p>
+                                                        <p ng-show="userForm.PreviousProductISBN.$error.pattern" class="help-block red">Please enter valid ISBN should be 13 digit</p>
+                                                        <p ng-show="Req_ISBNNO" class="help-block red">Entered ISBN does not exist</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="ProductModel.LinkingWithProduct == 'Yes' && ProductModel.PreviousProductISBN.length ==13">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5"></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" @*ng-class="{ 'has-error': ( submitted ||userForm.PreviousProductId.$dirty) && userForm.PreviousProductId.$invalid } "*@>
+                                                    <input type="hidden" min="1" name="PreviousProductId" class="form-control" 
+                                                           @*ng-required="ProductModel.LinkingWithProduct == 'Yes' && ProductModel.PreviousProductISBN.length ==13"*@ ng-model="PreviousProductId">
+                                                    @*<div class="help-block">
+                                                        <p ng-show="userForm.PreviousProductId.$error.required && (userForm.PreviousProductId.$dirty || submitted)" class="help-block red">Entered Orignal ISBN does not exist</p>
+                                                    </div>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="row" ng-show="ProductModel.Derivaties == 'Yes' && ProductModel.OrgISBN.length ==13">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5"></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.CheckOrgISBN.$dirty) && userForm.CheckOrgISBN.$invalid } ">
+                                                    <input type="hidden" min="1" name="CheckOrgISBN" class="form-control" ng-required="ProductModel.Derivaties == 'Yes' && ProductModel.OrgISBN.length ==13" ng-model="CheckOrgISBN" ng-pattern="/^[0-9]{13}$/">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.CheckOrgISBN.$error.required && (userForm.CheckOrgISBN.$dirty || submitted)" class="help-block red">Please enter valid Orignal ISBN</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Projected Publishing Date <span class="red">*</span></label>
+                                            @*<div class="col-md-7" >
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ProjectedPublishingDate.$dirty) && userForm.ProjectedPublishingDate.$invalid } ">
+                                                    <div  class="input-group input-append date datePicker">
+                                                        <input type="text" name="ProjectedPublishingDate" ng-change="getCopyrightYear(ProjectedPublishingDate)" class="form-control" ng-model="ProductModel.ProjectedPublishingDate" onchange="angular.element(document.getElementById('angularid')).scope().SetCopyrightDate(this);" placeholder="Projected Publishing Date">
+                                                        <span class="input-group-addon add-on "><span class="glyphicon glyphicon-calendar FInalProductentry"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProjectedPublishingDate.$error.required && (userForm.ProjectedPublishingDate.$dirty || submitted)" class="help-block red">Please enter Projected Publishing Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>*@
+
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ProjectedPublishingDate.$dirty) && userForm.ProjectedPublishingDate.$invalid } ">
+                                                    <div class="input-group input-append date datePicker">
+                                                        <input type="text" name="ProjectedPublishingDate" ng-change="getCopyrightYear(ProjectedPublishingDate)" 
+                                                               class="form-control" ng-model="ProductModel.ProjectedPublishingDate" 
+                                                               onchange="angular.element(document.getElementById('angularid')).scope().SetCopyrightDate(this);" 
+                                                               placeholder="Projected Publishing Date" required>
+                                                        @*<span class=" input-group-btn">
+                                                            <button class="btn default date-set FInalProductentry" type="button"><i class="fa fa-calendar"></i></button>
+                                                        </span>*@
+                                                        <span class="input-group-addon add-on FInalProductentry"><span class="glyphicon glyphicon-calendar"></span></span>
+
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProjectedPublishingDate.$error.required && (userForm.ProjectedPublishingDate.$dirty || submitted)" class="help-block red">Please enter Projected Publishing Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <script type="text/javascript">
+                                                $(document).ready(function () {
+                                                    $('.datePicker')
+                                                        .datepicker({
+                                                            format: 'dd/mm/yyyy',
+                                                            autoclose: true
+                                                        })
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Copyright Year <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OUPCopyrightYear.$dirty) && userForm.OUPCopyrightYear.$invalid } ">
+                                                    <input type="text" name="OUPCopyrightYear" maxlength="4" class="form-control" ng-model="ProductModel.OUPCopyrightYear" ng-pattern="^(19|20)\d{2}" placeholder="Copyright Year"  disabled>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.OUPCopyrightYear.$error.required && (userForm.OUPCopyrightYear.$dirty || submitted)" class="help-block red">Please enter Copyright Year</p>
+                                                        <p ng-show="userForm.OUPCopyrightYear.$error.pattern" class="help-block red">Please enter valid Copyright Year</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Projected Price <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProjectedPrice.$dirty) && userForm.ProjectedPrice.$invalid } ">
+                                                    <input type="text" name="ProjectedPrice" class="form-control" maxlength="10" ng-model="ProductModel.ProjectedPrice" 
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" placeholder="Projected Price" required>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProjectedPrice.$error.required && (userForm.ProjectedPrice.$dirty || submitted)" class="help-block red">Please enter Projected Price</p>
+                                                        <p ng-show="userForm.ProjectedPrice.$error.pattern " class="help-block red">Please enter valid number</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Projected Currency</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="ProjectedCurrency" name="ProjectedCurrency" ng-model="ProductModel.ProjectedCurrency">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in CurrencyList" ng-selected="{{div.Symbol == 'INR'}}" ng-model="ProjectedCurrency" value="{{div.Id}}">{{div.CurrencyName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Publishing Centre</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="OUPPubCenter" name="OUPPubCenter" ng-model="ProductModel.OUPPubCenter">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in OUPPubCenterList" ng-model="OUPPubCenter" ng-selected="{{div.Id == ProductModel.OUPPubCenter}}" value="{{div.Id}}">{{div.CenterName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" ng-controller="OUPAuthorSuggestionController" ng-show="OUPAuthorSuggestionCntrl">
+                                            @Html.Partial("~/Views/Shared/_AuthorSuggestion.cshtml")
+                                        </div>
+                                    </div>
+                                    @*<div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Linked Product to <br />Previous Edition <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="LinkingWithProduct" ng-model="ProductModel.LinkingWithProduct" ng-checked="{{ProductModel.LinkingWithProduct == 'No'}}" value="No" ng-disabled="ProductModel.Derivaties == 'Yes'" ng-required="ProductModel.Derivaties != 'Yes'"> New Product
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="LinkingWithProduct" ng-model="ProductModel.LinkingWithProduct" ng-checked="{{ProductModel.LinkingWithProduct == 'Yes'}}" value="Yes" ng-disabled="ProductModel.Derivaties == 'Yes'" ng-required="ProductModel.Derivaties != 'Yes'"> Link To Previous Product
+                                                    </label>
+                                                </div>
+                                                <div ng-class="{ 'has-error' : userForm.LinkingWithProduct.$invalid && (userForm.LinkingWithProduct.$dirty || submitted)}">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.LinkingWithProduct.$error.required && (userForm.LinkingWithProduct.$dirty || submitted)" class="help-block">Please select Linking With Product</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    @*<div class="row" ng-show="ProductModel.LinkingWithProduct == 'Yes'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Previous Product ISBN <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PreviousProductISBN.$dirty) && userForm.PreviousProductISBN.$invalid } ">
+                                                    <input type="text" name="PreviousProductISBN" maxlength="13" ng-change="ValidISBN(ProductModel.PreviousProductISBN)" ng-required="ProductModel.LinkingWithProduct == 'Yes'" class="form-control" ng-model="ProductModel.PreviousProductISBN" ng-pattern="/^[0-9]{13}$/" placeholder="Previous Product ISBN">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PreviousProductISBN.$error.required && (userForm.PreviousProductISBN.$dirty || submitted)" class="help-block red">Please enter Previous Product ISBN</p>
+                                                        <p ng-show="userForm.PreviousProductISBN.$error.pattern" class="help-block red">Please enter valid Previous Product ISBN</p>
+                                                        <p ng-show="Req_ISBNNO" class="help-block red">Entered ISBN does not exist</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="ProductModel.LinkingWithProduct == 'Yes' && ProductModel.PreviousProductISBN.length ==13">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5"></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PreviousProductId.$dirty) && userForm.PreviousProductId.$invalid } ">
+                                                    <input type="hidden" min="1" name="PreviousProductId" class="form-control" ng-required="ProductModel.LinkingWithProduct == 'Yes' && ProductModel.PreviousProductISBN.length ==13" ng-model="PreviousProductId">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PreviousProductId.$error.required && (userForm.PreviousProductId.$dirty || submitted)" class="help-block red">Entered Orignal ISBN does not exist</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" ng-click="sub(1);" id="btnSubmit">Submit</button>
+                            <button type="submit" class="btn green btn_contract" ng-click="sub(2);" id="btnSubmit">Submit and Create Author Contract</button>
+                            <button type="submit" class="btn green btn_licence" ng-click="sub(3);" id="btnSubmit">Submit and Create Product License</button>
+                            <input type="hidden" id="hid_submit" name="hid_submit" value="" />
+                            <input type="hidden" id="hid_ProductTypeId" name="hid_ProductTypeId" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.willmandatory').css("display", "initial")
+
+        setTimeout(function () {
+            $('#OUPImprint').find('option:contains("Oxford University Press")').attr('selected', 'selected');
+        }, 100)
+       
+        $(".OUPDetails").find("input[name*=SuggestedAuthorName]").change(function () {
+            var obj = $(this);
+    
+            if (obj.val() != "") {
+                obj.closest(".form-group").removeClass("has-error");
+                obj.next().find("p").removeClass("ng-show").addClass("ng-hide");
+            }
+            else {
+                obj.closest(".form-group").addClass("has-error");
+                obj.next().find("p").addClass("ng-show").removeClass("ng-hide");
+            }
+        });
+
+    });
+</script>

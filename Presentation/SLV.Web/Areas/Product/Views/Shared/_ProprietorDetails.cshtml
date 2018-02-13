@@ -1,0 +1,132 @@
+﻿
+
+<script src="~/js/Product/ProprietorDetails.js"></script>
+<div class="col-md-12">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Proprietor ISBN  <span class="red" ng-show="ProprietorISBN">*</span></label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorISBN.$dirty) && userForm.ProprietorISBN.$invalid } ">
+                        <input type="text" id="ProprietorISBN" name="ProprietorISBN" class="form-control" ng-maxlength="13" ng-init="ProprDetailCntrl.ProprietorISBN=''"
+                               ng-model="ProprDetailCntrl.ProprietorISBN" ng-pattern="/^[0-9]{13}$/" placeholder="Proprietor ISBN" ng-required="ProprietorISBN">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorISBN.$error.required && (userForm.ProprietorISBN.$dirty || submitted)" class="help-block red">Please enter Proprietor ISBN</p>
+                            <p ng-show="userForm.ProprietorISBN.$error.pattern" class="help-block red">Please enter valid Proprietor ISBN</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<input type="text" id="ProprietorISBN" name="ProprietorISBN" class="form-control" ng-maxlength="13" ng-init="ProprietorISBN='1234567891234'"
+            ng-model="ProprietorISBN" ng-pattern="/^[0-9]{13}$/" placeholder="Proprietor ISBN" ng-required="ProprietorISBN">*@
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Proprietor Product <span class="red" ng-show="ProprietorProduct">*</span></label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorProduct.$dirty) && userForm.ProprietorProduct.$invalid } ">
+                        <input type="text" name="ProprietorProduct" class="form-control"
+                               ng-init="ProprDetailCntrl.ProprietorProduct=''"
+                               ng-model="ProprDetailCntrl.ProprietorProduct" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Proprietor Product" ng-required="ProprietorProduct">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorProduct.$error.required && (userForm.ProprietorProduct.$dirty || submitted)" class="help-block red">Please enter Proprietor Product</p>
+                            <p ng-show="userForm.ProprietorProduct.$error.pattern" class="help-block red">Please enter valid Proprietor Product</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Proprietor Edition <span class="red" ng-show="ProprietorEdition">*</span> </label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorEdition.$dirty) && userForm.ProprietorEdition.$invalid } ">
+                        <input type="text" name="ProprietorEdition" class="form-control"
+                               ng-init="ProprDetailCntrl.ProprietorEdition=''"
+                               ng-model="ProprDetailCntrl.ProprietorEdition" ng-pattern="/^[0-9]{1,7}$/" placeholder="Proprietor Edition" ng-required="ProprietorEdition">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorEdition.$error.required && (userForm.ProprietorEdition.$dirty || submitted)" class="help-block red">Please enter Proprietor Edition</p>
+                            <p ng-show="userForm.ProprietorEdition.$error.pattern" class="help-block red">Please enter valid Proprietor Proprietor Edition</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Proprietor Copyright Year <span class="red" ng-show="ProprietorCopyrightYear">*</span> </label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorCopyrightYear.$dirty) && userForm.ProprietorCopyrightYear.$invalid } ">
+                        <input type="text" name="ProprietorCopyrightYear" ng-maxlength="4" class="form-control"
+                               ng-init="ProprDetailCntrl.ProprietorCopyrightYear=''"
+                               ng-model="ProprDetailCntrl.ProprietorCopyrightYear" ng-pattern="/^(19|20)\d{2}/" placeholder="Proprietor Copyright Year" ng-required="ProprietorCopyrightYear">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorCopyrightYear.$error.required && (userForm.ProprietorCopyrightYear.$dirty || submitted)" class="help-block red">Please enter Proprietor Copyright Year</p>
+                            <p ng-show="userForm.ProprietorCopyrightYear.$error.pattern" class="help-block red">Please enter valid Proprietor Proprietor Copyright Year</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/Shared/_PublishingCompanyPubCenter.cshtml")
+            </div>
+        </div>
+        @*<div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Imprint <span class="red" ng-show="ProprietorImprint">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Imprint.$dirty) && userForm.Imprint.$invalid } ">
+                            <select class="form-control" id="Imprint" name="Imprint"
+                                    ng-init="ProprDetailCntrl.ProprietorImprint=''"
+                                    ng-model="ProprDetailCntrl.ProprietorImprint" ng-required="ProprietorImprint">
+                                <option value="">Please Select</option>
+                                <option ng-repeat="div in PROPImprintList" ng-model="Imprint" value="{{div.Id}}">{{div.ImprintName}}</option>
+                            </select>
+
+                            <div class="help-block">
+                                <p ng-show="userForm.Imprint.$error.required && (userForm.Imprint.$dirty || submitted)">Please select Imprint</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+    <div class="col-md-6 ProprietorDetails" style="padding-right:40px;">
+        @*Commented & Added by rajneesh Singh on 22/08/2016*@
+        @*@{
+                if (ViewBag.For == 1)
+                {
+                    @Html.Partial("~/Views/Shared/_AuthorSuggestionAuthorSearch.cshtml");
+                }
+                else
+                {
+
+                    @Html.Partial("~/Views/Shared/_AuthorSuggestion.cshtml");
+                }
+            }*@
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Author Name </label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProprietorAuthorName.$dirty) && userForm.ProprietorAuthorName.$invalid } ">
+
+
+                        <input type="text" name="ProprietorAuthorName" class="form-control"
+                               ng-init="ProprDetailCntrl.ProprietorAuthorName=''"
+                               ng-model="ProprDetailCntrl.ProprietorAuthorName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+                        <div class="help-block">
+                            <p ng-show="userForm.ProprietorAuthorName.$error.required && (userForm.ProprietorAuthorName.$dirty || submitted)" class="help-block red">Please enter valid Author Name</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @*Ended by Rajneesh Singh*@
+    </div>
+</div>
+

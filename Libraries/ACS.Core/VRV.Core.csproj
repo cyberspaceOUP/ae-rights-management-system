@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F1369BF6-DBCC-426A-8EA1-99DBDD1C1DFB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ACS.Core</RootNamespace>
+    <AssemblyName>ACS.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.Mvc5.3.3.4\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACSException.cs" />
+    <Compile Include="ACSVersion.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="Caching\ACSNullCache.cs" />
+    <Compile Include="Caching\CacheExtensions.cs" />
+    <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\MemoryCacheManager.cs" />
+    <Compile Include="Caching\PerRequestCacheManager.cs" />
+    <Compile Include="CommonHelper.cs" />
+    <Compile Include="ComponentModel\GenericListTypeConverter.cs" />
+    <Compile Include="ComponentModel\WriteLockDisposable.cs" />
+    <Compile Include="Configuration\ISettings.cs" />
+    <Compile Include="Configuration\NopConfig.cs" />
+    <Compile Include="Data\BaseDataProviderManager.cs" />
+    <Compile Include="Data\DataSettings.cs" />
+    <Compile Include="Data\DataSettingsHelper.cs" />
+    <Compile Include="Data\DataSettingsManager.cs" />
+    <Compile Include="Data\IDataProvider.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Domain\Alert\AlertSchedulerMaster.cs" />
+    <Compile Include="Domain\Alert\ApplicationEmailSetup.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorAmendmentDocument.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractAddendumRoyality.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractAddendumDetails.cs" />
+    <Compile Include="Domain\AuthorContract\AddendumFileUpload.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractAgreement.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractContributor.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractauthordetails.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractDocument.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractHistory.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractmaterialdetails.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractOriginal.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractRoyality.cs" />
+    <Compile Include="Domain\AuthorContract\AuthorContractSubsidiaryRights.cs" />
+    <Compile Include="Domain\AuthorContract\DocumentTypeMaster.cs" />
+    <Compile Include="Domain\AuthorContract\ProductLicenceAuthorContractLink.cs" />
+    <Compile Include="Domain\Common\CommonSettings.cs" />
+    <Compile Include="Domain\Common\FulltextSearchMode.cs" />
+    <Compile Include="Domain\Common\GenericAttribute.cs" />
+    <Compile Include="Domain\Configuration\ApplicationActivities.cs" />
+    <Compile Include="Domain\Configuration\Setting.cs" />
+    <Compile Include="Domain\Configuration\UserProfile.cs" />
+    <Compile Include="Domain\Contact\ContactLoginResults.cs" />
+    <Compile Include="Domain\Contact\ContactRole.cs" />
+    <Compile Include="Domain\Contact\ContactSettings.cs" />
+    <Compile Include="Domain\Contact\ExternalAuthenticationRecord.cs" />
+    <Compile Include="Domain\Contact\ExternalAuthenticationSettings.cs" />
+    <Compile Include="Domain\Localization\ILocalizedEntity.cs" />
+    <Compile Include="Domain\Localization\ILocalizedEnum.cs" />
+    <Compile Include="Domain\Localization\Language.cs" />
+    <Compile Include="Domain\Localization\LocaleStringResource.cs" />
+    <Compile Include="Domain\Localization\LocalizationSettings.cs" />
+    <Compile Include="Domain\Localization\LocalizedProperty.cs" />
+    <Compile Include="Domain\Logging\ActivityLog.cs" />
+    <Compile Include="Domain\Logging\ActivityLogType.cs" />
+    <Compile Include="Domain\Logging\Log.cs" />
+    <Compile Include="Domain\Logging\LogLevel.cs" />
+    <Compile Include="Domain\Master\ApplicationSetUp.cs" />
+    <Compile Include="Domain\Master\AssetSubType.cs" />
+    <Compile Include="Domain\Master\AuhtorDocument.cs" />
+    <Compile Include="Domain\Master\AuthorDepartment.cs" />
+    <Compile Include="Domain\Master\AuthorMaster.cs" />
+    <Compile Include="Domain\Master\AuthorMasterDetail.cs" />
+    <Compile Include="Domain\Master\AuthorSearchHistory.cs" />
+    <Compile Include="Domain\Master\AuthorType.cs" />
+    <Compile Include="Domain\Master\ContractMaster.cs" />
+    <Compile Include="Domain\Master\FrequencyAlertMaster.cs" />
+    <Compile Include="Domain\Master\ContractType.cs" />
+    <Compile Include="Domain\Master\CopyRightHolderMaster.cs" />
+    <Compile Include="Domain\Master\CurrencyMaster.cs" />
+    <Compile Include="Domain\Master\CustomProduct.cs" />
+    <Compile Include="Domain\Master\DepartmentMaster.cs" />
+    <Compile Include="Domain\Master\DivisionMaster.cs" />
+    <Compile Include="Domain\Master\ExecutiveDivisionLink.cs" />
+    <Compile Include="Domain\Master\ExecutiveLoginHistory.cs" />
+    <Compile Include="Domain\Master\ExecutiveMaster.cs" />
+    <Compile Include="Domain\Master\ExecutiveReporting.cs" />
+    <Compile Include="Domain\Master\ExecutiveRoleMaster.cs" />
+    <Compile Include="Domain\Master\GeographicalMaster.cs" />
+    <Compile Include="Domain\Master\ImprintMaster.cs" />
+    <Compile Include="Domain\Master\ISBNBag.cs" />
+    <Compile Include="Domain\Master\FrequencyMaster.cs" />
+    <Compile Include="Domain\Master\LanguageMaster.cs" />
+    <Compile Include="Domain\Master\LicenseeMaster.cs" />
+    <Compile Include="Domain\Master\LoginHistory.cs" />
+    <Compile Include="Domain\Master\ManuscriptDeliveryFormatMaster.cs" />
+    <Compile Include="Domain\Master\NomineeAuthorDocumentMaster.cs" />
+    <Compile Include="Domain\Master\PageAccessMaster.cs" />
+    <Compile Include="Domain\Master\PaymentPeriod.cs" />
+    <Compile Include="Domain\Master\ProductCategoryMaster.cs" />
+    <Compile Include="Domain\Master\ProductSAPAgreementMaster.cs" />
+    <Compile Include="Domain\Master\ProductSearchDetails.cs" />
+    <Compile Include="Domain\Master\ProductTypeMaster.cs" />
+    <Compile Include="Domain\Master\ProfileMaster.cs" />
+    <Compile Include="Domain\Master\PubCenterMaster.cs" />
+    <Compile Include="Domain\Master\PublishingCompanyMaster.cs" />
+    <Compile Include="Domain\Master\SeriesMaster.cs" />
+    <Compile Include="Domain\Master\ServiceMaster.cs" />
+    <Compile Include="Domain\Master\StatusMaster.cs" />
+    <Compile Include="Domain\Master\SubServiceMaster.cs" />
+    <Compile Include="Domain\Master\SubsidiaryRightsMaster.cs" />
+    <Compile Include="Domain\Master\SupplyMaterialMaster.cs" />
+    <Compile Include="Domain\Master\TerritoryRightsMaster.cs" />
+    <Compile Include="Domain\Master\Ticker.cs" />
+    <Compile Include="Domain\Master\TypeOfRightsMaster.cs" />
+    <Compile Include="Domain\Master\UploadDocument.cs" />
+    <Compile Include="Domain\Master\Upload_ISBN_Back.cs" />
+    <Compile Include="Domain\Messages\EmailAccount.cs" />
+    <Compile Include="Domain\Messages\EmailAccountSettings.cs" />
+    <Compile Include="Domain\Messages\Events.cs" />
+    <Compile Include="Domain\Messages\MessageBoard.cs" />
+    <Compile Include="Domain\Messages\MessageTemplate.cs" />
+    <Compile Include="Domain\Messages\MessageTemplatesSettings.cs" />
+    <Compile Include="Domain\Messages\QueuedEmail.cs" />
+    <Compile Include="Domain\Messages\QueuedSms.cs" />
+    <Compile Include="Domain\Messages\SmsAccount.cs" />
+    <Compile Include="Domain\Messages\SmsTemplate.cs" />
+    <Compile Include="Domain\Messages\SmsUrlTemplate.cs" />
+    <Compile Include="Domain\OtherContract\OtherContractDivisionLink.cs" />
+    <Compile Include="Domain\OtherContract\OtherContractDocuments.cs" />
+    <Compile Include="Domain\OtherContract\OtherContractImageBank.cs" />
+    <Compile Include="Domain\OtherContract\OtherContractLink.cs" />
+    <Compile Include="Domain\OtherContract\OtherContractLinkDocument.cs" />
+    <Compile Include="Domain\OtherContract\OtherContractMaster.cs" />
+    <Compile Include="Domain\OtherContract\OtherContractSearch.cs" />
+    <Compile Include="Domain\PermissionInbound\PermissionInbound.cs" />
+    <Compile Include="Domain\PermissionsOutbound\PermissionsOutboundDocument.cs" />
+    <Compile Include="Domain\PermissionsOutbound\PermissionsOutboundLanguageMaster.cs" />
+    <Compile Include="Domain\PermissionsOutbound\PermissionsOutboundMaster.cs" />
+    <Compile Include="Domain\PermissionsOutbound\PermissionsOutboundSearchHistory.cs" />
+    <Compile Include="Domain\PermissionsOutbound\PermissionsOutboundPaymentTagging.cs" />
+    <Compile Include="Domain\PermissionsOutbound\PermissionsOutboundTypeOfRightsMaster.cs" />
+    <Compile Include="Domain\PermissionsOutbound\PermissionsOutboundUpdate.cs" />
+    <Compile Include="Domain\Product\AddendumDetails.cs" />
+    <Compile Include="Domain\Product\AddendumFileDetails.cs" />
+    <Compile Include="Domain\Product\AddendumRoyaltySlab.cs" />
+    <Compile Include="Domain\Product\ImpressionDetails.cs" />
+    <Compile Include="Domain\Product\ImpressionSearch.cs" />
+    <Compile Include="Domain\Product\KITISBN.cs" />
+    <Compile Include="Domain\Product\ProductLicense.cs" />
+    <Compile Include="Domain\Product\ProductLicenseAddendumLink .cs" />
+    <Compile Include="Domain\Product\ProductLicenseFileDetails.cs" />
+    <Compile Include="Domain\Product\ProductLicenseHistory.cs" />
+    <Compile Include="Domain\Product\ProductLicenseRoyality.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\Product\ProductLicenseSearch.cs" />
+    <Compile Include="Domain\Product\ProductLicenseSubsidiaryRights.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\Product\ProductLicenseUpdate.cs" />
+    <Compile Include="Domain\Product\ProductLicenseUpdateDetails.cs" />
+    <Compile Include="Domain\Product\ProductSapAgreementTemp.cs" />
+    <Compile Include="Domain\Product\ProprietorAuthorLink.cs" />
+    <Compile Include="Domain\Product\ProductAuthorLink.cs" />
+    <Compile Include="Domain\Product\ProductMaster.cs" />
+    <Compile Include="Domain\Product\ProductPreviousProductLink.cs" />
+    <Compile Include="Domain\Product\ProprietorMaster.cs" />
+    <Compile Include="Domain\Product\SearchHistory.cs" />
+    <Compile Include="Domain\RightsSelling\ProductCategoryRightMaster.cs" />
+    <Compile Include="Domain\RightsSelling\RightsSellingDocument.cs" />
+    <Compile Include="Domain\RightsSelling\RightsSellingHistory.cs" />
+    <Compile Include="Domain\RightsSelling\RightsSellingLanguageMaster.cs" />
+    <Compile Include="Domain\RightsSelling\RightsSellingMaster.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\RightsSelling\RightsSellingPaymentTagging.cs" />
+    <Compile Include="Domain\RightsSelling\RightsSellingRoyalty.cs" />
+    <Compile Include="Domain\RightsSelling\RightsSellingUpdate.cs" />
+    <Compile Include="Domain\Security\DefaultPermissionRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\Security\IAclSupported.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\Security\PermissionRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\Security\SecuritySettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\user\UserLoginResults.cs" />
+    <Compile Include="Domain\Tasks\ScheduleTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Fakes\Extensions.cs" />
+    <Compile Include="Fakes\FakeHttpContext.cs" />
+    <Compile Include="Fakes\FakeHttpRequest.cs" />
+    <Compile Include="Fakes\FakeHttpResponse.cs" />
+    <Compile Include="Fakes\FakeHttpSessionState.cs" />
+    <Compile Include="Fakes\FakeIdentity.cs" />
+    <Compile Include="Fakes\FakePrincipal.cs" />
+    <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
+    <Compile Include="Infrastructure\DependencyRegister\ContainerManager.cs" />
+    <Compile Include="Infrastructure\DependencyRegister\IDependencyRegister.cs" />
+    <Compile Include="Infrastructure\EngineContext.cs" />
+    <Compile Include="Infrastructure\IEngine.cs" />
+    <Compile Include="Infrastructure\IStartupTask .cs" />
+    <Compile Include="Infrastructure\ITypeFinder.cs" />
+    <Compile Include="Infrastructure\NopEngine.cs" />
+    <Compile Include="Infrastructure\Singleton.cs" />
+    <Compile Include="Infrastructure\WebAppTypeFinder.cs" />
+    <Compile Include="IWebHelper.cs" />
+    <Compile Include="IWorkContext.cs" />
+    <Compile Include="Plugins\BasePlugin.cs" />
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Plugins\IPluginFinder.cs" />
+    <Compile Include="Plugins\PluginDescriptor.cs" />
+    <Compile Include="Plugins\PluginExtensions.cs" />
+    <Compile Include="Plugins\PluginFileParser.cs" />
+    <Compile Include="Plugins\PluginFinder.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

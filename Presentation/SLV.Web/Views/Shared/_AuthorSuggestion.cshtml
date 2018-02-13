@@ -1,0 +1,82 @@
+﻿<script src="~/js/common/Common.AuthorSuggestion.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <label class="col-md-5">Author Category <span class="red willmandatory" style="display:none" @*ng-required="productId>0?false:true"*@ ng-show="AuthorReq">*</span></label>
+        <div class="col-md-7 form-group">
+            <label class="radio-inline">
+                <input type="radio" class="radio" name="AuthorCategory" ng-model="AuthorCategory" value="Individual"> Individual
+            </label>
+            <label class="radio-inline">
+                <input type="radio" class="radio-inline" name="AuthorCategory" ng-model="AuthorCategory" value="Institute"> Institute
+            </label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">Author Name (s) <span class="red willmandatory" @*style="display:none" ng-if="AuthorSuggesationList.length > 0"*@>*</span></label>
+        <div class="col-md-5">
+            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SuggestedAuthorName.$dirty) && userForm.SuggestedAuthorName.$invalid } ">
+                <input type="text" name="SuggestedAuthorName" ng-disabled="AuthorCategory !='Individual' && AuthorCategory !='Institute'" class="form-control"
+                       @*ng-required="productId>0?false:true"*@ ng-required="AuthorList.length == 0 && AuthorReq"
+                       ng-model="SuggestedAuthorName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+                <div class="help-block">
+                    <p ng-show="userForm.SuggestedAuthorName.$error.required && (userForm.SuggestedAuthorName.$dirty || submitted)" class="help-block red">Please enter valid Author Name</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group pull-right">
+                <a href="" class="btn green" ng-click="getAuthorSuggesationList()">&nbsp;&nbsp;Search&nbsp;&nbsp;</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-if="AuthorSuggesationList.length > 0">
+    <div class="col-md-12">
+        <label class="control-label col-md-5"></label>
+        <div class="col-md-7" style="height: 200px; overflow: auto; border: groove;">
+            <div class="col-md-10 form-group" ng-repeat="auth in AuthorSuggesationList">
+                <label class="radio-inline">
+                    <input type="checkbox" name="AuthorName" ng-model="AuthorName" ng-checked="CheckboxBind(auth.AuthorId)" ng-click="showCheckedAuthor(auth,AuthorName)"> 
+                    {{auth.AuthorName}} ({{auth.AuthorCode}})
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-if="AuthorList.length > 0">
+    <div class="col-md-12">
+        <label class="control-label col-md-5"></label>
+        <div class="col-md-7">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>SNO</th>
+                        <th>Author Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="list in AuthorList">
+                        <td><span ng-bind="$index + 1"></span></td>
+                        <td><span ng-bind="list.AuthorName"></span></td>
+                        <td><button id="btnRemove" class="btn btn-default btn-sm" type="button" ng-click="showCheckedAuthor(list,null)">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="userForm.SelectedAuthor.$error.required && (userForm.SelectedAuthor.$dirty || submitted)" ng-class="{ 'has-error': ( submitted ||userForm.SelectedAuthor.$dirty) && userForm.SelectedAuthor.$invalid } ">
+    <div class="col-md-12">
+        <label class="control-label col-md-5"></label>
+        <div class="col-md-7">
+            <input type="hidden" name="SelectedAuthor" class="form-control" ng-model="SelectedAuthor" ng-required="AuthorList.length == 0 && AuthorListMandatory">
+            <div class="help-block">
+                <p ng-show="userForm.SelectedAuthor.$error.required && (userForm.SelectedAuthor.$dirty || submitted)" class="help-block red">Please select at least one Author.</p>
+            </div>
+        </div>
+    </div>
+</div>

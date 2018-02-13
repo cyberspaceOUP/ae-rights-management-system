@@ -1,0 +1,197 @@
+﻿@{
+    ViewBag.Title = "ImpressionEntry";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/Product/ImpressionEntry.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().ProductSerach(@ViewBag.ProductId);
+    
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Impression Entry
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class="col-md-12 text-right">
+            <div class="tools">
+                <a href="ImpressionSearch" style="color:black;">Back To Search</a>
+            </div>
+        </div>
+
+        <form name="userForm" class=" form-horizontal" ng-submit="ImpressionEntryFrom()" novalidate ng-cloak>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+                        <input type="hidden" value="@ViewBag.LicenseId" ng-model="LicenseId" id="hid_licenseId" name="hid_licenseId">
+                        <input type="hidden" value="@ViewBag.LicenseId" ng-model="ImpressionEntryLicenseId" id="hid_ImpressionEntrylicenseId" name="hid_ImpressionEntrylicenseId">
+                        <input type="hidden" value="@ViewBag.ProductId" ng-model="ProductId" id="hid_productid" name="hid_productid">
+                        <input type="hidden" value="@ViewBag.ContractId" ng-model="ContractId" id="hid_AuthorContractId" name="hid_AuthorContractId">
+                        <input type="hidden" ng-model="AddendumId" id="hid_addendumId" name="hid_addendumId">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet-body form" ng-if="@ViewBag.LicenseId != 0">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseDetails.cshtml")
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet-body form" ng-if="@ViewBag.ContractId != 0">
+                    <div class="form-body">
+                       @Html.Partial("~/Areas/Contract/Views/Shared/_ContractDeatil.cshtml")
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Product Impression Entry 
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <div class="row">
+                            <div class="col-md-12">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>ISBN</th>
+                                    <th>Impression Date</th>
+                                    <th>Quantity Printed</th>
+                                    <th ng-if="@ViewBag.LicenseId != 0" ng-show="ImpressionBalanceHidden">Balance Quantity</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="obj in ImpressionList" class="tooltipclass">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{Impression_ISBN}}</td>
+                                    <td>
+                                        {{chnageDateFormat(obj.ImpressionDate)}}
+                                        <input type="hidden" ng-if="ImpressionList.length == $index + 1" ng-model="LastImpressionDate" 
+                                               ng-init="LastImpressionDate = obj.ImpressionDate" />
+                                    </td>
+                                    <td>{{obj.QunatityPrinted}}</td>
+                                    <td ng-if="@ViewBag.LicenseId != 0" ng-show="ImpressionBalanceHidden">{{obj.BalanceQty}}</td>
+                                </tr>
+                            </tbody>
+
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {{ImpressionList.length + 1}}
+                                        <input id="hid_impressionNo" type="hidden" ng-model="ImpressionNo" />
+                                    </td>
+                                    <td>{{Impression_ISBN}}</td>
+                                    <td class="col-md-6 form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-12">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.txtImpressionDate.$dirty) && userForm.txtImpressionDate.$invalid } ">
+                                                        <div class="input-group input-append date col-md-10 datePicker">
+                                                            <input type="text" name="txtImpressionDate" onchange="angular.element(document.getElementById('angularid')).scope().SetEffectiveDate(this);" class="form-control" ng-model="ImpressionDate" placeholder="Impression Date" required>
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.txtImpressionDate.$error.required && (userForm.txtImpressionDate.$dirty || submitted)" class="help-block red">Please enter Impression Date</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row form-group">
+                                            <div class="col-md-12">
+                                                <div class="col-md-12">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.txtImpressionQty.$dirty) && userForm.txtImpressionQty.$invalid } ">
+                                                        <input type="number" min="1" name="txtImpressionQty" class="form-control" ng-model="ImpressionQty" placeholder="Impression Quantity" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.txtImpressionQty.$error.required && (userForm.txtImpressionQty.$dirty || submitted)" class="help-block red">Please enter Impression Quantity</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td ng-if="@ViewBag.LicenseId != 0" ng-show="ImpressionBalanceHidden">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-12">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.txtImpressionBalance.$dirty) && userForm.txtImpressionBalance.$invalid } ">
+                                                        <input type="number" name="txtImpressionBalance" class="form-control" ng-model="ImpressionBalance" placeholder="Balance Quantity" disabled="disabled" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.txtImpressionBalance.$error.required && (userForm.txtImpressionBalance.$dirty || submitted)" class="help-block red">Please enter Balance Quantity</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var date = new Date();
+        var TodayDate = new Date();
+        date.setDate(date.getYear - 100);
+
+        $('.datePicker')
+            .datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+                showButtonPanel: true,
+                startDate: date,
+                endDate: TodayDate
+            })
+    });
+</script>

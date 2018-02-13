@@ -1,0 +1,836 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "RightsSellingSearch";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/RightsSelling/RightsSellingSearch.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getTerritoryRightsList();
+    @*angular.element(document.getElementById('angularid')).scope().GetTypeOfRightsList();
+        angular.element(document.getElementById('angularid')).scope().getLicenseeList();
+        angular.element(document.getElementById('angularid')).scope().getCurrencyList();*@
+    angular.element(document.getElementById('angularid')).scope().getLanguageList();
+    angular.element(document.getElementById('angularid')).scope().getAllProductCategoryList();
+    angular.element(document.getElementById('angularid')).scope().getListBack();
+}
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    @if (ViewBag.Report == "report")
+                    {
+                        <span>Rights Selling Report </span>
+                    }
+                    else
+                    {
+                        if (ViewBag.ViewMore == "RightsExpire")
+                        {
+                            <span> @T("Dashboard.RightsContractsExpired") </span>
+                        }
+                        else
+                        {
+                            <span>Rights Sales <span ng-bind="(ShowSearchForm ? 'Search' :'Listing')"></span></span>
+                        }
+                    }
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+
+
+        <form id="RightsSelling_search" ng-show="ShowSearchForm" name="userForm" class=" form-horizontal" ng-submit="RightSalesSearchForm()" novalidate ng-cloak>
+
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Rights Sales Search
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Rights Sales Code</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" name="ProductCode" class="form-control" ng-model="RightsSalesCode"
+                                                           placeholder="Rights Sales Code">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product Code </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" name="ProductCode" class="form-control" ng-model="ProductCode"
+                                                           placeholder="Product Code">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">ISBN </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" name="ISBN" class="form-control" ng-model="ISBN"
+                                                           placeholder="ISBN">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Working Product </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" name="WorkingProduct" class="form-control" ng-model="WorkingProduct"
+                                                           placeholder="Working Product">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Working Sub-Product </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" name="SUbWorkingProduct" class="form-control" ng-model="SUbWorkingProduct"
+                                                           placeholder="Sub Working Product">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Licensee </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" name="Licensee" class="form-control" ng-model="Licensee"
+                                                           placeholder="Licensee">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Contract From Date </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date">
+                                                    <div class="input-group input-append date datetimepicker">
+                                                        <input type="text" name="ContractFromDate" class="form-control" id="ContractFromDate" ng-model="ContractFromDate"
+                                                               onchange="angular.element(document.getElementById('angularid')).scope().SetContractFromDate(this);"
+                                                               placeholder="Contract From Date ">
+                                                        <span class=" input-group-btn">
+                                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Contract To Date</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date">
+                                                    <div class="input-group input-append date datetimepicker">
+                                                        <input type="text" name="ContractTodate" class="form-control" id="ContractTodate" ng-model="ContractTodate"
+                                                               onchange="angular.element(document.getElementById('angularid')).scope().SetContractTodate(this);"
+                                                               placeholder="Contract To date">
+                                                        <span class=" input-group-btn">
+                                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+
+                                            $("#ContractFromDate").datepicker({
+                                                format: "dd/mm/yyyy",
+                                                todayHighlight: true,
+                                                autoclose: true
+
+                                            });
+                                            $("#ContractFromDate").datepicker().on('change', function (e) {
+                                                mstrstartdate = $("#ContractFromDate").val();
+                                                $("#ContractTodate").val('');
+                                                $('#ContractTodate').datepicker('remove');
+                                                $("#ContractTodate").attr("disabled", false);
+                                                $("#ContractTodate").datepicker({
+                                                    format: "dd/mm/yyyy",
+                                                    // todayHighlight: true,
+                                                    autoclose: true,
+                                                    startDate: mstrstartdate
+                                                });
+                                            });
+
+                                        });
+
+
+
+
+
+
+                                    </script>
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Month for expiry</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+
+                                                    @*<div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Dateofexpiry_opr.$dirty) && userForm.Dateofexpiry.$dirty } ">*@
+
+                                                    <select name="Dateofexpiry_opr" id="Dateofexpiry_opr" class="form-control" ng-init="Dateofexpiry_opr=''" ng-model="Dateofexpiry_opr" style="float: left; width: 45%;" @*ng-required="Dateofexpiry!=''"*@>
+                                                        <option value="">Select</option>
+                                                        <option value="<"><</option>
+                                                        <option value=">">></option>
+                                                        <option value="<="><=</option>
+                                                        <option value=">=">>=</option>
+                                                        <option value="=">=</option>
+                                                    </select>&nbsp;&nbsp;
+                                                    <input type="number" name="Dateofexpiry" id="Dateofexpiry" min="0" class="form-control" ng-init="Dateofexpiry=''" ng-model="Dateofexpiry" style="float: right; width: 45%;" @*ng-required="Dateofexpiry_opr!=''"*@
+                                                           placeholder="Date of expiry">
+                                                    @*<div class="help-block">
+                                                                <p ng-show="userForm.ContactPerson.$error.required && (userForm.ContactPerson.$dirty || submitted)" class="help-block red">Must Enter Both Field</p>
+                                                            </div>
+                                                        </div>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Date of expiry</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group date">
+                                                        <div class="input-group input-append date datetimepickers">
+                                                            <input type="text" name="Dateofexpiry" class="form-control" id="Dateofexpiry" ng-model="Dateofexpiry"
+                                                                   onchange="angular.element(document.getElementById('angularid')).scope().SetDateofexpiry(this);"
+                                                                   placeholder="Date of expiry">
+                                                            <span class=" input-group-btn">
+                                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>*@
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product Category</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <select class="form-control" name="ProductCategory" ng-model="ProductCategory">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in ProductCategoryList" ng-model="ProductCategory" value="{{div.Id}}">{{div.ProductCategory}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Request From Date </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date">
+                                                    <div class="input-group input-append date datetimepicker">
+                                                        <input type="text" name="RequestFromDate" class="form-control" id="RequestFromDate" ng-model="RequestFromDate"
+                                                               onchange="angular.element(document.getElementById('angularid')).scope().SetRequestFromDate(this);"
+                                                               placeholder="Request From Date">
+                                                        <span class=" input-group-btn">
+                                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Request To Date </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date">
+                                                    <div class="input-group input-append date datetimepicker">
+                                                        <input type="text" name="RequestToDate" class="form-control" id="RequestToDate" ng-model="RequestToDate"
+                                                               onchange="angular.element(document.getElementById('angularid')).scope().SetRequestToDate(this);"
+                                                               placeholder="Request To Date">
+                                                        <span class=" input-group-btn">
+                                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+
+                                            $("#RequestFromDate").datepicker({
+                                                format: "dd/mm/yyyy",
+                                                todayHighlight: true,
+                                                autoclose: true
+
+                                            });
+                                            $("#RequestFromDate").datepicker().on('change', function (e) {
+                                                mstrstartdate = $("#RequestFromDate").val();
+                                                $("#RequestToDate").val('');
+                                                $('#RequestToDate').datepicker('remove');
+                                                $("#RequestToDate").attr("disabled", false);
+                                                $("#RequestToDate").datepicker({
+                                                    format: "dd/mm/yyyy",
+                                                    // todayHighlight: true,
+                                                    autoclose: true,
+                                                    startDate: mstrstartdate
+                                                });
+                                            });
+
+                                        });
+
+
+
+
+
+
+                                    </script>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Language</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <select class="form-control" name="Language" ng-model="Language">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in LanguageList" ng-model="RightSalesModel.Language" value="{{div.Id}}">{{div.LanguageName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Payment Term</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="radio-inline" style="padding-top: 0px !important;">
+                                                        <input type="radio" name="PaymentTerm " ng-model="PaymentTerm" value="One-time Payment"> One-Time Payment
+                                                    </label>
+                                                    <label class="radio-inline" style="padding-top: 0px !important;">
+                                                        <input type="radio" name="PaymentTerm " ng-model="PaymentTerm" value="Royalty"> Royalty
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Payment Amount</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="number" min="1" name="PaymentAmount" class="form-control" ng-model="PaymentAmount" placeholder="Payment Amount ">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Territory Rights</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <select id="ddlTerritory" class="form-control" required name="TerritoryRight" ng-model="TerritoryRight">
+                                                        <option value="">--Please Select--</option>
+                                                        <option ng-repeat="Territory in TerritoryList" value="{{Territory.Id}}" ng-selected="{{Territory.Id == TerritoryRight}}">{{Territory.Territoryrights}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Author </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" name="Author" class="form-control" ng-model="Author"
+                                                           placeholder="Author ">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Remarks</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" name="Remarks" class="form-control" ng-model="Remarks"
+                                                           placeholder="Remarks">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Contract Status</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContractStatus.$dirty) && userForm.ContractStatus.$invalid } ">
+                                                    <div>
+                                                        <label class="radio-inline" style="display: inline-flex">
+                                                            <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Draft" value="Draft"> Draft
+                                                        </label>
+                                                        <label class="radio-inline" style="display: inline-flex; margin-left: 33px !important;">
+                                                            <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Pending" value="Pending"> Issued
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="radio-inline" style="display: inline-flex">
+                                                            <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Issued" value="Issued"> Received
+                                                        </label>
+                                                        <label class="radio-inline" style="display: inline-flex">
+                                                            <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Cancelled" value="Cancelled"> Cancelled
+                                                        </label>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ContractStatus.$error.required && (userForm.ContractStatus.$dirty || submitted)">Please select Contract Status</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+
+
+
+        <form name="Serch" class="form-horizontal" id="search" ng-show="ShowListForm">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 backtoSearch">
+                        <div class="tools">
+                            <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 backtoDashboard" style="display:none;">
+                        <div class="tools">
+                            <span class="back-to-search" ng-click="BackToserch()"> Back To Dashboard </span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    @if (ViewBag.Report == "report")
+                                    {
+                                        <span>Rights Selling Report </span>
+                                    }
+                                    else
+                                    {
+                                        if (ViewBag.ViewMore == "RightsExpire")
+                                        {
+                                            <span> @T("Dashboard.RightsContractsExpired") </span>
+                                        }
+                                        else
+                                        {
+                                            <span>Rights Sales <span ng-bind="(ShowSearchForm ? 'Search' :'Listing')"></span></span>
+                                        }
+                                    }
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body flip-scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th>SNo</th>
+                                                <th>Right Sales Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Working Product &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Author Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Contract Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>License Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                @*<th>Requested Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>*@
+                                                <th>Agreement Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Expiry Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Licensee Name  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th ng-if="'@ViewBag.Report' != 'report' && ('@TempData["Action"]' != '' || '@TempData["BackToList"]' == 'backtolist' )">
+                                                    Action
+                                                </th>
+                                                <th ng-if="'@ViewBag.Report' == 'report'">Royalty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr ng-repeat="obj in RightsSellingList" class="tooltipclass">
+
+                                                <td><span ng-bind="$index + 1"></span></td>
+                                                
+                                                <td>
+                                                    <a ng-show="!(obj.ProductLicenseId==null)" href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.Id}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.RightsSellingCode"></span></a>
+                                                    <a ng-show="obj.ProductLicenseId==null" href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.Id}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.RightsSellingCode"></span></a>
+                                                </td>
+
+                                                <td>
+                                                    <a href="~/Product/ProductMaster/ProductDetailsView?Id={{obj.ProuductId}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.ProductCode"></span></a>
+                                                </td>
+
+                                                <td><span ng-bind="obj.ISBN"></span></td>
+                                                <td><span ng-bind="obj.WorkingProduct"></span> <br /> <span style="font-size:11px;"> <span ng-bind="obj.WorkingSubProduct"></span></span></td>
+
+                                                <td><span ng-bind="obj.AuthorName"></span></td>
+
+                                                <td>
+                                                    <a ng-if="!(obj.ContractId==null)" href="~/Contract/AuthorContract/view?Id={{obj.ContractId}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.AuthorContractCode"></span></a>
+                                                    <span ng-if="(obj.ContractId==null)" ng-bind="obj.AuthorContractCode"></span>
+                                                </td>
+
+                                                <td>
+                                                    <a ng-if="!(obj.ProductLicenseId==null)" href="~/Product/ProductLicense/view?Id={{obj.ProductLicenseId}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.ProductLicensecode"></span></a>
+                                                    <span ng-if="(obj.ProductLicenseId==null)" ng-bind="obj.ProductLicensecode"></span>
+                                                </td>
+
+                                                @*<td><span ng-bind="obj.RequestDate"></span></td>*@
+
+                                                <td><span class="sortDateHide" ng-bind="obj.DateContractForSort"></span>{{obj.DateContract}}</td>
+                                                <td><span class="sortDateHide" ng-bind="obj.DateExpiryForSort"></span>{{obj.DateExpiry}}</td>
+
+                                                <td><span ng-bind="obj.OrganizationName "></span></td>
+                                                <td ng-hide="TitleLinking" ng-if="'@ViewBag.Report' != 'report' && ('@TempData["Action"]' != '' || '@TempData["BackToList"]' == 'backtolist' )">
+                                                    <div class="tooltip-container">
+                                                        <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                                      
+                                                        <label for="tooltip-toggle" onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                            Action
+                                                        </label>
+                                                        <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                                        <div class="tooltip-content">
+                                                            <div class="linking">
+                                                                <ul>
+                                                                    <li ng-if="obj.Flag == '0' && '@TempData["UpdateRights"]'=='rt' && '@TempData["Action"]' == 'update'" ng-show="obj.ProductLicenseId==null"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">Update Rights Sales</a></li>
+                                                                    <li ng-if="obj.Flag == '0' && '@TempData["UpdateRights"]'=='rt' && '@TempData["Action"]' == 'update'" ng-show="!(obj.ProductLicenseId==null)"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">Update Rights Sales </a></li>
+
+                                                                    <li ng-if="obj.Flag == '1' && '@TempData["UpdateRights"]'=='rt' && '@TempData["Action"]' == 'update'" ng-show="obj.ProductLicenseId==null"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">View Rights Sales </a></li>
+                                                                    <li ng-if="obj.Flag == '1' && '@TempData["UpdateRights"]'=='rt' && '@TempData["Action"]' == 'update'" ng-show="!(obj.ProductLicenseId==null)"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">View Rights Sales</a></li>
+
+                                                                    <li ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]'=='sa') && '@TempData["Action"]' == 'update'" ng-show="obj.ProductLicenseId==null"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">Update Rights Sales</a></li>
+                                                                    <li ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]'=='sa') && '@TempData["Action"]' == 'update'" ng-show="!(obj.ProductLicenseId==null)"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">Update Rights Sales</a></li>
+
+                                                                    <li ng-if="'@TempData["Action"]' =='view'" ng-show="obj.ProductLicenseId==null"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">View Rights Sales</a></li>
+                                                                    <li ng-if="'@TempData["Action"]' =='view'" ng-show="!(obj.ProductLicenseId==null)"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">View Rights Sales</a></li>
+
+                                                                    <li ng-if="obj.Flag == '0' && '@TempData["UpdateRights"]'=='rt' && '@TempData["BackToList"]' == 'backtolist'" ng-show="obj.ProductLicenseId==null"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">Update Rights Sales</a></li>
+                                                                    <li ng-if="obj.Flag == '0' && '@TempData["UpdateRights"]'=='rt' && '@TempData["BackToList"]' == 'backtolist'" ng-show="!(obj.ProductLicenseId==null)"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">Update Rights Sales</a></li>
+
+                                                                    <li ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]'=='sa') && '@TempData["BackToList"]' == 'backtolist'" ng-show="obj.ProductLicenseId==null"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">Update Rights Sales</a></li>
+                                                                    <li ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]'=='sa') && '@TempData["BackToList"]' == 'backtolist'" ng-show="!(obj.ProductLicenseId==null)"><a href="~/RightsSelling/RightsSelling/RightsSellingUpdate?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">Update Rights Sales</a></li>
+
+                                                                    <li ng-if="'@TempData["BackToList"]' == 'backtolist'" ng-show="obj.ProductLicenseId==null"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">View Rights Sales</a></li>
+                                                                    <li ng-if="'@TempData["BackToList"]' == 'backtolist'" ng-show="!(obj.ProductLicenseId==null)"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.Id}}">View Rights Sales</a></li>
+
+                                                                    <li>
+                                                                        <a href="javascript:void(0);" ng-if="'@TempData["UpdateRights"]'=='sa' && '@TempData["Action"]' == 'delete'" ng-click="DeleteRightsSelling(obj.Id,'sa')">Delete Rights Sales</a>
+                                                                    </li>
+
+                                                                </ul>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+
+                                                <td ng-if="'@ViewBag.Report' == 'report'">
+                                                    <p ng-if="obj.Royalty.length == '0'">--</p>
+                                                    <p ng-repeat="rolyalty in obj.Royalty">
+                                                        <span ng-bind="rolyalty.SubProductType | uppercase "></span> - <span ng-bind="rolyalty.CopiesFrom"></span> to <span ng-show="rolyalty.CopiesTo == ''  || rolyalty.CopiesTo == null"> above</span><span ng-show="rolyalty.CopiesTo != '' && rolyalty.CopiesTo != null"> <span ng-bind="rolyalty.CopiesTo"></span></span>
+                                                    </p>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                    @if (ViewBag.Report == "report")
+                                    {
+
+                                        <div class="PrintTableData" style="display:none">
+                                            <table class="table table-bordered table-striped table-condensed flip-content" id="TblForPrint">
+                                                <thead class="flip-content">
+                                                    <tr>
+                                                        <th>SNo</th>
+                                                        <td ng-show="!(obj.ProductLicenseId==null)"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.Id}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.RightsSellingCode"></span></a></td>
+                                                        <td ng-show="obj.ProductLicenseId==null"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.Id}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.RightsSellingCode"></span></a></td>
+
+                                                        <td><a href="~/Product/ProductMaster/ProductDetailsView?Id={{obj.ProuductId}}" style="color: #ee5941;" target="_blank"><span ng-bind="obj.ProductCode"></span></a></td>
+                                                        <th>ISBN</th>
+                                                        <th>Working Product</th>
+
+                                                        <th>Author Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+
+                                                        <th>Contract Code</th>
+
+                                                        <th>License Code</th>
+
+                                                        <th>Requested Date</th>
+                                                        <th>Contract Date</th>
+                                                        <th>Date of expiry </th>
+                                                        <th>Licensee Name </th>
+                                                        <th>Royalty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr ng-repeat="obj in RightsSellingList" class="tooltipclass">
+
+                                                        <td><span ng-bind="$index + 1"></span></td>
+                                                        <td><span ng-bind="obj.RightsSellingCode "></span></td>
+                                                        <td><span ng-bind="obj.ProductCode"></span></td>
+                                                        <td><span ng-bind="obj.ISBN"></span></td>
+                                                        <td><span ng-bind="obj.WorkingProduct"></span> <br /> <span style="font-size:11px;"> <span ng-bind="obj.WorkingSubProduct"></span></span></td>
+                                                        <td><span ng-bind="obj.AuthorName"></span></td>
+                                                        <td><span ng-bind="obj.AuthorContractCode"></span></td>
+                                                        <td><span ng-bind="obj.ProductLicensecode "></span></td>
+                                                        <td><span ng-bind="obj.RequestDate"></span></td>
+                                                        <td><span ng-bind="obj.DateContract "></span></td>
+                                                        <td><span ng-bind="obj.DateExpiry"></span></td>
+                                                        <td><span ng-bind="obj.OrganizationName "></span></td>
+                                                        <td>
+                                                            <p ng-if="obj.Royalty.length == '0'">--</p>
+                                                            <p ng-repeat="rolyalty in obj.Royalty">
+                                                                <span ng-bind="rolyalty.SubProductType | uppercase "></span> - <span ng-bind="rolyalty.CopiesFrom"></span> to <span ng-show="rolyalty.CopiesTo == ''  || rolyalty.CopiesTo == null"> above</span><span ng-show="rolyalty.CopiesTo != '' && rolyalty.CopiesTo != null"> <span ng-bind="rolyalty.CopiesTo"></span></span>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @*@if (Session["PrintPermissions"] != null && ViewBag.Report == "report")
+                        {
+                            <div class="col-md-12 text-center btnPrint">
+                                <div class="tools">
+                                    @* Click Event Is Define in ~/Views/Shared/Footer.cshtml File *@
+                    @*<input type="button" class="btn green" id="btn_printDataTable" value="Print" style=" margin: .5%; ">
+                                </div>
+                            </div>
+                        }*@
+
+                    @if (Session["GenerateExcelPermissions"] != null && ViewBag.Report == "report")
+                    {
+                        <div class="col-md-12 text-center btnPrint">
+                            <div class="tools">
+                                <button type="submit" class="btn green" ng-click="RightsSellingReportExcel()" id="btnSubmit">Generate Excel</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<input type="hidden" value="@TempData["BackToList"]" ng-model="hid_BackToList" id="hid_BackToList" name="hid_BackToList">
+
+
+
+
+<input type="hidden" id="hid_from" />
+<input type="hidden" name="hid_show" id="hid_show" />
+<input type="hidden" id="hid_for" value="@TempData["Action"]" /> 
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //change button if come from Dashboard
+        if ($("#hid_show").val().toLowerCase() == "dashboard") {
+            $('.backtoSearch').hide();
+            $('.backtoDashboard').show();
+        }
+        else {
+            $('.backtoDashboard').hide();
+            $('.backtoSearch').show();
+        }
+
+
+    });
+
+
+
+
+
+
+    $('#hid_from').val(GetParameterValues("from"))
+    $('#hid_show').val(GetParameterValues("show"))
+
+    function GetParameterValues(param) {
+        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < url.length; i++) {
+            var urlparam = url[i].split('=');
+            if (urlparam[0] == param) {
+                return urlparam[1];
+            }
+        }
+    }
+
+
+    function fireMe(obj) {
+        var length = $(".customizeLink").length;
+        for (i = 0; i < $(".customizeLink").length; i++) {
+            $($(".customizeLink")[i]).attr("sequence", i);
+        }
+        angular.element(document.getElementById('angularid')).scope().DisplayDiv(parseInt($(obj).attr("sequence")) + 1);
+    };
+
+</script>
+
+
+
+
+
+
+
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        var date = new Date();
+        var TodayDate = new Date();
+        date.setDate(date.getYear - 100);
+
+        $('.datetimepicker')
+            .datepicker({
+                format: "dd/mm/yyyy",
+
+                showButtonPanel: true,
+                autoclose: true,
+                startDate: date,
+                endDate: TodayDate
+
+
+
+            })
+
+
+        $('.datetimepickers')
+    .datepicker({
+        format: "dd/mm/yyyy",
+
+        showButtonPanel: true,
+        autoclose: true
+
+
+
+    })
+
+    });
+
+</script>*@
+

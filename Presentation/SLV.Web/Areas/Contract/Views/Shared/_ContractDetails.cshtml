@@ -1,0 +1,118 @@
+﻿
+<script type="text/javascript">
+    app.expandControllerContractDetails = function ($scope, AJService, $window) {
+       
+        var getPaymentPeriodList = AJService.GetDataFromAPI("CommonList/getPaymentPeriodList", null);
+            getPaymentPeriodList.then(function (PaymentPeriod) {
+                $scope.PaymentPeriodeList = PaymentPeriod.data.query;
+
+
+            }, function () {
+                //alert('Error in getting Payment Period list');
+            });
+    }
+
+</script>
+
+<div class="portlet-body clearfix">
+    <div class="portlet-body flip-scroll">
+        <table class="table table-striped table-bordered table-hover dataTable no-footer authorContrractDetails" id="TblOwnerList">
+            <thead class="flip-content">
+                <tr>
+                    <th>Payment Period</th>
+                    <th>Author Copies <span class="red">*</span></th>
+                    <th>Seed Money</th>
+                    <th>One-Time Payment</th>
+                    <th>Advance Royalty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.PaymentPeriodType.$dirty) && userForm.PaymentPeriodType.$invalid } ">
+                                        <select class="form-control" id="PaymentPeriodType"  name="PaymentPeriodType" ng-model="PaymentPeriodType[$index]">
+                                            <option value="" >Please Select</option>
+                                            <option ng-repeat="div in PaymentPeriodeList" value="{{div.Id}}">{{div.PaymentType}}</option>
+                                        </select>
+                                        <div class="help-block">
+                                            <p ng-show="userForm.PaymentPeriodType.$error.required && (userForm.PaymentPeriodType.$dirty || submitted)" >Please select payment type</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.AuthorCopies.$dirty) && userForm.AuthorCopies.$invalid } ">
+                                        <input type="number" min="0" name="AuthorCopies" class="form-control" ng-model="AuthorCopies[$index]" 
+                                               ng-pattern="/^[0-9]{1,9}$/" placeholder="Author Copies" ng-required="true">
+                                        <div class="help-block">
+                                            <p ng-show="userForm.AuthorCopies.$error.required && (userForm.AuthorCopies.$dirty || submitted)" >Please enter author copies</p>
+                                            <p ng-show="userForm.AuthorCopies.$error.pattern">Please enter valid author copies</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.SendMoney.$dirty) && userForm.SendMoney.$invalid } ">
+                                        <input type="number" min="0" name="SendMoney" class="form-control" ng-model="SeedMoney[$index]" ng-pattern="/^[0-9]{1,9}$/" 
+                                               placeholder="Seed Money">
+                                        <div class="help-block">
+                                            @*<p ng-show="userForm.SendMoney.$error.required && (userForm.SendMoney.$dirty || submitted)" >Please enter seed money </p>*@
+                                            <p ng-show="userForm.SendMoney.$error.pattern" >Please enter valid seed money format</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.OneTimePayment.$dirty) && userForm.OneTimePayment.$invalid } ">
+                                        <input type="number" min="0" name="OneTimePayment" class="form-control " ng-model="OneTimePayment[$index]" maxlength="9" 
+                                               ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" placeholder="One-Time Payment"> @*oneTimePayment_validate*@
+                                        <div class="help-block">
+                                            @*<p ng-show="userForm.OneTimePayment.$error.required && (userForm.OneTimePayment.$dirty || submitted)" >Please enter One-Time Payment</p>*@
+                                            <p ng-show="userForm.OneTimePayment.$error.pattern">Please enter valid One-Time Payment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.AdvanceRoyalty.$dirty) && userForm.AdvanceRoyalty.$invalid } ">
+                                        <input type="number" min="0" name="AdvanceRoyalty" class="form-control" ng-model="AdvanceRoyalty[$index]" maxlength="9" 
+                                               ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" placeholder="Advance Royalty">
+                                        <div class="help-block">
+                                            @*<p ng-show="userForm.AdvanceRoyalty.$error.required && (userForm.AdvanceRoyalty.$dirty || submitted)" >Please enter advance royalty</p>*@
+                                            <p ng-show="userForm.AdvanceRoyalty.$error.pattern" >Please enter valid advance royalty</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,408 @@
+﻿
+@{
+    ViewBag.Title = "AddendumEntry";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/Product/ProductLicenseAddendumEntry.js"></script>
+@*<script src="~/js/Product/ProductLicenseUpdate.js"></script>*@
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/common/TopSearch.js"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Product License Addendum <span ng-bind="Title"></span>
+                    @Html.Partial("pagedate")</h1>
+            </div>
+        </div>
+        <div class="col-md-12 text-right" ng-if="'@TempData["BackToserach"]' == 'BackToserach'">
+            <div class="tools">
+                <a href="~/Product/ProductLicense/ProductLicenseSearch?For=BackToserach" style="color:black;">Back To List</a>
+            </div>
+        </div>
+
+        <form name="userForm" class=" form-horizontal" ng-submit="productAddendumEntryForm(ProductModel)" novalidate ng-cloak>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div>  
+
+                        <input type="hidden" value="@ViewBag.LicenseId" ng-model="ProductModel.ProductLicenseId" ng-init="ProductModel.ProductLicenseId = @ViewBag.LicenseId" id="hid_licenseId" name="hid_licenseId">
+                        <input type="hidden" value="@ViewBag.AddendumId" ng-model="ProductModel.AddendumId" ng-init="ProductModel.AddendumId = @ViewBag.AddendumId" id="hid_AddendumId" name="hid_AddendumId">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseDetails.cshtml")
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseAddendumDetails.cshtml")
+                    </div>
+                </div>
+            </div>
+
+            @*@Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseView.cshtml")*@
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Addendum Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form AddendumDetails">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Addendum Date <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.AddendumDate.$dirty) && userForm.AddendumDate.$invalid } ">
+                                                    <div class="input-group input-append date ContractDate">
+                                                        <input type="text" name="AddendumDate" class="form-control" onchange="angular.element(document.getElementById('angularid')).scope().SetAddendumDate(this);" 
+                                                               ng-model="ProductModel.AddendumDate" placeholder="Addendum Date" required>
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AddendumDate.$error.required && (userForm.AddendumDate.$dirty || submitted)" class="help-block red">Please enter Addendum Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Addendum Type <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AddendumType.$dirty) && userForm.AddendumType.$invalid } ">
+                                                    <select class="form-control" id="AddendumType" name="AddendumType" ng-model="ProductModel.AddendumType" ng-change="ddlAddendumTypeChange()">
+                                                        <option value="">Please Select</option>
+                                                        <option value="T">Term Addendum</option>
+                                                        <option value="Q">Quantity Addendum</option>
+                                                        <option value="B">Balance Stock Addendum</option>
+                                                        <option value="R">Royalty Change Addendum</option>
+
+                                                        <option value="TQ">Term and Quantity Addendum</option>
+                                                        <option value="TR">Term and Royalty Change Addendum</option>
+                                                        <option value="QR">Quantity and Royalty Change Addendum</option>
+                                                        <option value="TQR">Term, Quantity and Royalty Change Addendum</option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AddendumType.$error.required && (userForm.AddendumType.$dirty || submitted)" class="help-block red">Please select Addendum Type</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*ng-change="CalculateExpiry()"*@
+                                    @*<div class="row" ng-show="ProductModel.AddendumType =='T' || ProductModel.AddendumType =='TQ' || ProductModel.AddendumType =='TR' || ProductModel.AddendumType =='TQR'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">
+                                                Period of agreement
+                                                <span class="red" ng-show="ProductModel.AddendumType =='T' || ProductModel.AddendumType =='TQ' || ProductModel.AddendumType =='TR' || ProductModel.AddendumType =='TQR'">*</span>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Periodofagreement.$dirty) && userForm.Periodofagreement.$invalid } ">
+                                                    <input type="number" name="Periodofagreement" class="form-control" ng-model="ProductModel.Periodofagreement"
+                                                           placeholder="Period of Agreement (Months)"
+                                                           ng-required="ProductModel.AddendumType =='T' || ProductModel.AddendumType =='TQ' || ProductModel.AddendumType =='TR' || ProductModel.AddendumType =='TQR'">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Periodofagreement.$error.required && (userForm.Periodofagreement.$dirty || submitted)" class="help-block red">Please enter Period of Agreement</p>
+                                                        <p ng-show="userForm.Periodofagreement.$error.pattern" class="help-block red">Please enter valid Period of Agreement</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Expiry Date @*<span class="red" ng-show="ProductModel.AddendumType =='T'">*</span>*@</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ExpiryDate.$dirty) && userForm.ExpiryDate.$invalid } ">
+                                                    <div class="input-group input-append date datePicker">
+                                                        <input type="text" name="ExpiryDate" @*ng-disabled="true"*@ class="form-control" ng-model="ProductModel.ExpiryDate"
+                                                               placeholder="Expiry Date" @*ng-required="ProductModel.AddendumType =='T'"*@ ng-disabled="ProductModel.AddendumType =='Q'"
+                                                               onchange="angular.element(document.getElementById('angularid')).scope().SetExpiryDate(this);">
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar" @*ng-disabled="ProductModel.AddendumType =='Q'"*@></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ExpiryDate.$error.required && (userForm.ExpiryDate.$dirty || submitted)" class="help-block red">Please enter Expiry Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Remarks <span ng-show="ProductModel.AddendumType =='B' " class="red">*</span></label> @*|| ProductModel.AddendumType =='R'*@
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Remarks.$dirty) && userForm.Remarks.$invalid } ">
+                                                    <input type="text" name="Remarks" class="form-control" ng-pattern="/^[a-zA-Z'.\s]/" ng-model="ProductModel.Remarks" 
+                                                           placeholder="Remarks" ng-required="ProductModel.AddendumType =='B' "> @*|| ProductModel.AddendumType =='R'*@
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Remarks.$error.required && (userForm.Remarks.$dirty || submitted)" class="help-block red">Please enter Remarks</p>
+                                                        <p ng-show="userForm.Remarks.$error.pattern" class="help-block red">Please enter valid Remarks</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">First Impression Within Date</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" @*ng-class="{ 'has-error': ( submitted ||userForm.FirstImpressionWithinDate.$dirty) && userForm.FirstImpressionWithinDate.$invalid } "*@>
+                                                    <div class="input-group input-append date datePicker">
+                                                        <input type="text" max="userForm.ExpiryDate.$modelValue" name="FirstImpressionWithinDate" class="form-control" 
+                                                               onchange="angular.element(document.getElementById('angularid')).scope().SetFirstImpressionWithinDate(this);" 
+                                                               ng-model="ProductModel.FirstImpressionWithinDate" placeholder="First Impression Within Date">
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    @*<div class="help-block">
+                                                        <p ng-show="userForm.FirstImpressionWithinDate.$error.max" class="help-block red">Please enter First Impression Within Date Less Than Expiry Date</p>
+                                                    </div>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">No of Impressions @*<span class="red">*</span>*@</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" @*ng-class="{ 'has-error': ( submitted ||userForm.NoOfImpressions.$dirty) && userForm.NoOfImpressions.$invalid } "*@>
+                                                    <input type="number" min="0" name="NoOfImpressions" class="form-control" ng-model="ProductModel.NoOfImpressions" placeholder="No of Impressions" required maxlength="3">
+                                                    @*<div class="help-block">
+                                                        <p ng-show="userForm.NoOfImpressions.$error.required && (userForm.NoOfImpressions.$dirty || submitted)" class="help-block red">Please enter No of Impressions</p>
+                                                        <p ng-show="userForm.NoOfImpressions.$dirty && userForm.NoOfImpressions.$invalid" class="help-block red">Please enter valid No of Impressions</p>
+                                                    </div>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="Checkprintquantitytype==true">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Balance Quantity Carry Forward <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.BalanceQuantityCarryForward.$dirty) && userForm.BalanceQuantityCarryForward.$invalid } ">
+                                                    <select class="form-control" id="BalanceQuantityCarryForward" name="BalanceQuantityCarryForward" ng-model="ProductModel.BalanceQuantityCarryForward" required>
+                                                        <option value="">Please Select</option>
+                                                        <option value="Y">Yes</option>
+                                                        <option value="N">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.BalanceQuantityCarryForward.$error.required && (userForm.BalanceQuantityCarryForward.$dirty || submitted)" class="help-block red">Please select</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                    <div class="row" ng-show="Checkprintquantitytype==true && ProductModel.AddendumType =='Q' || ProductModel.AddendumType =='TQ' || ProductModel.AddendumType =='QR' || ProductModel.AddendumType =='TQR'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">
+                                                Additional Number of Copies
+                                                <span class="red" ng-show="ProductModel.AddendumType =='Q' || ProductModel.AddendumType =='TQ' || ProductModel.AddendumType =='QR' || ProductModel.AddendumType =='TQR'">*</span>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AddendumQuantity.$dirty) && userForm.AddendumQuantity.$invalid } ">
+                                                    <input type="number" min="0" name="AddendumQuantity" class="form-control" ng-model="ProductModel.AddendumQuantity"
+                                                           placeholder="Additional Number of Copies"
+                                                           ng-required="ProductModel.AddendumType =='Q' || ProductModel.AddendumType =='TQ' || ProductModel.AddendumType =='QR' || ProductModel.AddendumType =='TQR'">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AddendumQuantity.$error.required && (userForm.AddendumQuantity.$dirty || submitted)" class="help-block red">Please enter Additional Number of Copies</p>
+                                                        @*<p ng-show="userForm.AddendumQuantity.$error.min" class="help-block red">Please enter Addendum Quantity grater than 0.</p>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row" ng-show="ProductModel.AddendumType =='R' || ProductModel.AddendumType =='TR' || ProductModel.AddendumType =='QR' || ProductModel.AddendumType =='TQR'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">
+                                                Royalty Terms
+                                                <span class="red" ng-show="ProductModel.AddendumType =='R' || ProductModel.AddendumType =='TR' || ProductModel.AddendumType =='QR' || ProductModel.AddendumType =='TQR'">*</span>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="RoyaltyTerms" ng-checked="{{ProductModel.RoyaltyTerms == 'Royalty'}}" ng-model="ProductModel.RoyaltyTerms" value="Royalty"
+                                                               ng-required="ProductModel.AddendumType =='R' || ProductModel.AddendumType =='TR' || ProductModel.AddendumType =='QR' || ProductModel.AddendumType =='TQR'"> Royalty
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="RoyaltyTerms" ng-checked="{{ProductModel.RoyaltyTerms == 'OneTime'}}" ng-model="ProductModel.RoyaltyTerms" value="OneTime"
+                                                               ng-required="ProductModel.AddendumType =='R' || ProductModel.AddendumType =='TR' || ProductModel.AddendumType =='QR' || ProductModel.AddendumType =='TQR'"> One-Time Payment
+                                                    </label>
+                                                </div>
+                                                <div ng-class="{ 'has-error' : userForm.RoyaltyTerms.$invalid && (userForm.RoyaltyTerms.$dirty || submitted)}">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.RoyaltyTerms.$error.required && (userForm.RoyaltyTerms.$dirty || submitted)" class="help-block">Please select Royalty Terms</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-2">Uploaded Document</label>
+                                    <div class="col-md-10" style="padding-left:45px;">
+                                        <div id="fileuploadcontrol">
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                &nbsp;
+                                            </div>
+                                        </div>
+                                        @*<div id="doclistid" ng-show="documentshow" style=" padding-left: 29px;">
+                                            <div class="panel panel-warning">
+                                                <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                                    <h3 class="panel-title">Uploaded Attachment</h3>
+                                                </div>
+                                                <div class="tools">
+                                                    <a href="javascript:;" class="collapse"> </a>
+                                                </div>*@
+                                        <div class="panel-body" id="doclistid" ng-show="documentshow">
+                                            <table class="table table-striped table-hover ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Document Name</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="url in Docurl">
+                                                        <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.Id}}" /></td>
+                                                        <td><a href="~/uploads/{{url.UploadFileName}}" target="_blank" style="color: black;"><span ng-bind="url.FileName"></span></a></td>
+                                                        <td><a style=" color: black; cursor:pointer;" ng-click="RemoveDocumentById(url)">Delete</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                            @*</div>
+                                        </div>*@
+
+                                        <div class="help-block">
+                                            <p ng-show="UploadContractReq" class="help-block">Please Upload Document</p>
+                                            <p ng-show="UploadExcelfileNameReq" class="help-block">Please enter file name</p>
+                                        </div>
+
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" ng-show="ProductModel.RoyaltyTerms=='Royalty'">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Royalty Slab
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body AddendumDiv">
+                            @Html.Partial("~/Areas/Product/Views/Shared/RoyaltySlab_Addendum.cshtml")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.datePicker')
+            .datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+            })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var date = new Date();
+        var TodayDate = new Date();
+        date.setDate(date.getYear - 100);
+
+        $('.ContractDate')
+            .datepicker({
+                format: "dd/mm/yyyy",
+
+                showButtonPanel: true,
+                autoclose: true,
+                startDate: date,
+                endDate: TodayDate
+            })
+    });
+
+
+</script>
+<script type="text/javascript">
+
+    $(function () {
+        renderFileUpload();
+
+    });
+
+    function renderFileUpload() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            contentType: 'application/html; charset=utf-8',
+            url: GlobalredirectPath + "/Master/Master/MultipleFileUpload",
+            data: {},
+            datatype: 'html',
+            success: function (result) {
+                $("#fileuploadcontrol").html(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+
+    }
+
+</script>
+

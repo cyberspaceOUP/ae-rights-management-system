@@ -1,0 +1,341 @@
+﻿<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Previous Addendum List
+        </div>
+        <div class="tools">
+            <a href="javascript:void(0);" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>S.No</th>
+                    <th> Addendum Code </th>
+                    <th> Addendum Date </th>
+                    <th> Addendum Type </th>
+                    <th> Expiry Date </th>
+                    @*<th> File </th>*@
+                </tr>               
+                <tr ng-repeat="obj in ContractAddendumList">
+                    <td>{{$index +1}}</td>
+                    <td>                       
+                         @*href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}&For=AddendumView&AddendumId={{obj.Id}}" target="_blank" style="color: #ee5941;"*@
+                        <a ng-click="ViewAuthorContractAddenDumDetailsList(obj.Id, obj.AuthorContractId, obj.SeriesCode)" href="javascript:viod(0)" data-toggle="modal"
+                           data-target="#myLicenseIdView" style="color: #ee5941; cursor: pointer;">
+                            <span ng-bind="obj.AddendumCode"></span>
+                        </a>
+
+                        @*<a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}&For=AddendumView&AddendumId={{obj.Id}}" target="_blank" style="color: #ee5941;">
+                            <span ng-bind="obj.AddendumCode"></span>
+                        </a>*@
+                    </td>
+                    <td><span ng-bind="obj.AddendumDate | date:'dd/MM/yyyy'"></span></td>
+                    <td><span ng-bind="obj.AddendumType"></span></td>
+                    <td><span ng-if="obj.AddendumType=='Term Addendum'" ng-bind="obj.ExpiryDate | date:'dd/MM/yyyy'"></span></td>
+
+                    @*<td >
+
+                       
+                        <span >
+                            <a href="~/uploads/{{obj.AddenDumDocumnetFile}}" target="_blank" style="color: #ee5941; cursor: pointer;"><span ng-bind="obj.AddenDumDocumnetName"></span></a>
+                        </span>
+                       
+                    </td>*@
+                </tr>
+
+            </table>
+
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg" id="myLicenseIdView" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog " role="document" style="width:90%;">
+            <div class="modal-body ">
+                <button type="button" class="close CloseValue" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+
+                <div class="row panel">
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Addendum Details
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                                </div>
+                            </div>
+
+                            <div class="portlet-body clearfix">
+                                <div class="col-md-12" ng-if="SeriesCodeView!=null">
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Series Name</label>
+                                                <div class="control-label col-md-7">
+                                                    <span ng-bind="SeriesNameView_ListView"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Series Code</label>
+                                                <div class="control-label col-md-7">
+                                                    <span ng-bind="SeriesCodeView_ListView"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Addendum date</label>
+                                                    <div class="control-label col-md-7">
+                                                        <span ng-bind="AddendumDateView_ListView"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Addendum Type</label>
+                                                    <div class="control-label col-md-7">
+
+                                                        <p ng-if="AddendumTypeView_ListView=='T'"> Term Addendum </p>
+                                                        <p ng-if="AddendumTypeView_ListView=='R'"> Royalty Change Addendum </p>
+                                                        <p ng-if="AddendumTypeView_ListView=='O'"> Other Changes </p>
+                                                        <p ng-if="AddendumTypeView_ListView=='--'">--</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" ng-if="PeriodofagreementView_ListView!='--' && AddendumTypeView_ListView=='T'">
+                                    <div class="row">
+
+                                        @*<div class="col-md-6">
+                                            <div class="row">
+
+                                                <div class="control-label col-md-12">
+                                                    <label class="control-label col-md-5">Period of agreement (In Months)</label>
+                                                    <div class="control-label col-md-7">
+                                                        <span ng-bind="PeriodofagreementView_ListView"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>*@
+
+
+                                        <div class="col-md-6">
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5">Expiry Date</label>
+                                                    <div class="control-label col-md-7">
+                                                        <span ng-bind="ExpiryDateView_ListView"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Remarks</label>
+                                            <div class="control-label col-md-7">
+                                                <span ng-bind="RemarksView_ListView"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12" id="Uploadfiles">
+
+                                            <div class="clearfix"></div>
+
+                                            <div id="doclistid" ng-show="documentshow_ListView" style=" padding-left: 29px;">
+                                                <div>
+
+
+
+                                                    <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important;" ng-if="AddendumDocumentList_ListView.length">
+                                                        <h3 class="panel-title">Uploaded Attachment</h3>
+                                                    </div>
+
+                                                    <div class="panel-body" ng-if="AddendumDocumentList_ListView.length>0">
+
+                                                        <table class="table table-striped table-hover ">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Document Name</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="url in AddendumDocumentList_ListView">
+                                                                    <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.Id}}" /></td>
+                                                                    <td><a href="~/uploads/{{url.url}}" target="_blank" style="color: black;"><span ng-bind="url.name"></span></a></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div ng-repeat="div in AuthorBox_Detail_ListView" ng-if="RoyaltyslabList_Detail_ListView.length">
+                        <div class="col-md-12">
+
+                            <div class="portlet box green">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Author <span ng-bind="$index+1"></span> Basic Details
+                                    </div>
+                                    <div class="tools">
+                                        <a href="javascript:void(0);" class="collapse" data-original-title="" title=""> </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body clearfix">
+                                    <div class="col-md-12">
+                                        <div class="col-md-4 col-xs-4 col-sm-4">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"><strong>Name</strong></label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <label class="control-label">
+                                                            <span ng-bind="div.Name"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" ng-if="RoyaltyslabList_ListView.length>0 ">
+                                        <div class="caption">
+                                            <strong>Royalty Slab</strong>
+                                        </div>
+                                        <div class="portlet-body clearfix">
+                                            <div class="portlet-body flip-scroll">
+                                                <table class="table table-striped table-bordered table-hover dataTable no-footer RoyaltySlab" id="TblOwnerList">
+                                                    <thead class="flip-content">
+                                                        <tr>
+                                                            <th>S No.</th>
+                                                            <th>Product Sub-Type</th>
+                                                            <th>Copies From</th>
+                                                            <th>Copies To</th>
+                                                            <th>Percentage
+                                                            <th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="i in RoyaltyslabList_Detail_ListView | filter:{AuthorId:div.Id}">
+                                                            <td><span ng-bind="$index +1"></span></td>
+                                                            <td>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label><span ng-bind="i.SubProductType"></span></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="col-md-12">
+                                                                            <label><span ng-bind="i.CopiesFrom"></span></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="col-md-12">
+                                                                            <label><span ng-bind="i.CopiesTo==0?'---':i.CopiesTo"></span></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td colspan="2">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="col-md-12">
+                                                                            <label><span ng-bind="i.Percentage"></span></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+
+
+
+
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

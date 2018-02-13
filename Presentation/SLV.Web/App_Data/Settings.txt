@@ -1,0 +1,2 @@
+DataProvider: sqlserver
+DataConnectionString: Data Source=192.50.50.209;Initial Catalog=RMS;Integrated Security=False;Persist Security Info=False;User ID=rms;Password=rms

@@ -1,0 +1,371 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "ExecutiveMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+
+}
+
+
+<style type="text/css">
+    .fa {
+        color: black !important;
+    }
+
+    th {
+        text-align: left !important;
+    }
+
+    td {
+        text-align: left !important;
+    }
+
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+
+<script src="~/js/master/Master.Executive.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+
+    angular.element(document.getElementById('angularid')).scope().GetExecutiveList();
+
+    angular.element(document.getElementById('angularid')).scope().GetDepartmentList();
+
+    angular.element(document.getElementById('angularid')).scope().getDivisionListMst();
+
+    angular.element(document.getElementById('angularid')).scope().getRoleList();
+
+
+}
+
+@*<h3 class="text-muted">@T("Form.CityMaster.Heading")</h3>*@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Executive Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Basic Details
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+
+
+                <div class="portlet-body form">
+                    <form name="ExecutiveForm" class="form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Executive Name <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{'has-error': ( submitted ||ExecutiveForm.Name.$dirty) && ExecutiveForm.Name.$invalid } ">
+                                            <input type="text" name="Name" class="form-control" ng-model="Name" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Executive Name">
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Name.$error.required && (ExecutiveForm.Name.$dirty || submitted)" class="help-block red">Please enter executive name</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Executive Code <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||ExecutiveForm.Code.$dirty) && ExecutiveForm.Code.$invalid } ">
+                                            <input type="text" name="Code" class="form-control" ng-model="Code" required ng-pattern="" placeholder="Executive Code">
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Code.$error.required && (ExecutiveForm.Code.$dirty || submitted)" class="help-block red">Please enter executive code</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Executive Email <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||ExecutiveForm.Email.$dirty) && ExecutiveForm.Email.$invalid } ">
+                                            <input type="text" name="Email" class="form-control" ng-model="Email" required ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" placeholder="Email">
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Email.$error.required && (ExecutiveForm.Email.$dirty || submitted)" class="help-block red">Please enter email id</p>
+                                                <p ng-show="ExecutiveForm.Email.$error.pattern" class="help-block red">Please enter valid Email Id</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Password <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||ExecutiveForm.Password.$dirty) && ExecutiveForm.Password.$invalid } ">
+                                            <input type="password" name="Password" class="form-control" ng-model="Password" required ng-pattern="/^[a-zA-Z'.\s]/">
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Password.$error.required && (ExecutiveForm.Password.$dirty || submitted)" class="help-block red">Please enter password</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Mobile</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||ExecutiveForm.Mobile.$dirty) && ExecutiveForm.Mobile.$invalid } ">
+                                            <input type="text" name="Mobile" class="form-control" ng-model="Mobile" ng-pattern="/^[789]\d{9}$/">
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Mobile.$error.required && (ExecutiveForm.Mobile.$dirty || submitted)" class="help-block red">Please enter mobile</p>
+                                                <p ng-show="ExecutiveForm.Mobile.$error.pattern" class="help-block red">Please enter valid Mobile</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Phone <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||ExecutiveForm.Phone.$dirty) && ExecutiveForm.Phone.$invalid } ">
+                                            <input type="text" name="Phone" class="form-control" ng-model="Phone" required ng-pattern="/^[0-9]+$/">
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Phone.$error.required && (ExecutiveForm.Phone.$dirty || submitted)" class="help-block red">Please enter phone no</p>
+                                                <p ng-show="ExecutiveForm.Phone.$error.pattern" class="help-block red">Please enter valid Phone No.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Department <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||ExecutiveForm.Department.$dirty) && ExecutiveForm.Department.$invalid } ">
+                                            <select class="form-control" name="Department" id="ddlDepartment" ng-change="ResetRole()" ng-model="Department" required>
+                                                <option value="">--Please Select--</option>
+                                                <option ng-repeat="div in DepartmentList" ng-model="Department" value="{{div.Id}}">{{div.DepartmentName}}</option>
+                                            </select>
+
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Department.$error.required && (ExecutiveForm.Department.$dirty || submitted)">Please select department</p>
+                                                <p ng-show="ExecutiveForm.Department.$error.required"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Division <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||ExecutiveForm.Division.$dirty) && ExecutiveForm.Division.$invalid } ">
+                                            <select class="form-control" multiple id="sel_ddlDivision" name="Division" ng-model="Division" required>
+                                                <option value="">--Please Select--</option>
+                                                <option ng-repeat="div in DivisionList" value="{{div.Id}}">{{div.divisionName}}</option>
+                                            </select>
+
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Division.$error.required && (ExecutiveForm.Division.$dirty || submitted)">@T("Common.Executive.division")</p>
+                                                <p ng-show="ExecutiveForm.Division.$error.required"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row Rolcheck" ng-show="ReqRole">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Role <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||ExecutiveForm.Role.$dirty) && ExecutiveForm.Role.$invalid } ">
+                                            <label class="radio-inline" ng-repeat="g in RoleList">
+                                                <input type="radio" ng-disabled="Department==undefined" deptid="{{Department}}" onchange="ReportingTo(this);" name="Role" class="RoleChange" ng-model="ExecutiveRole" value="{{g.Role}}" ng-required="RoleReq"> {{g.Role}}
+                                            </label>
+
+                                        </div>
+                                        <div ng-class="{ 'has-error' : ExecutiveForm.Role.$invalid && (ExecutiveForm.Role.$dirty || submitted)}">
+
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Role.$error.required && (ExecutiveForm.Role.$dirty || submitted)" class="help-block">@T("Common.Role.RequiredMessage")</p>
+                                                <p ng-show="ReqRolValid" class="help-block">Please select division</p>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="reportingRow row" style="display:none">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Reporting To <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||ExecutiveForm.Division.$dirty) && ExecutiveForm.Division.$invalid } ">
+                                            <select class="form-control" id="managerList_ddl" name="ManagerList" ng-model="ManagerList" required>
+                                                <option value="">--Please Select--</option>
+                                                <option ng-repeat="div in mgrList" value="{{div.Id}}" ng-selected="{{div.Id==ManagerList}}">{{div.Manager}}</option>
+                                            </select>
+
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveForm.Division.$error.required && (ExecutiveForm.Division.$dirty || submitted)">@T("Common.Executive.division")</p>
+                                                <p ng-show="ExecutiveForm.Division.$error.required"></p>
+                                                <p ng-show="REQReportingValue">Please select Reporting To</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <input type="hidden" id="hid_Execid" name="hid_Execid" ng-model="hid_Execid" />
+                                        <button type="submit" class="btn green" id="btnSubmit">{{button}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                     
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Executive List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Executive Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Executive Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Email &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="Executive in ExecutiveList">
+                                <td>{{Executive.executiveName}}</td>
+                                <td>{{Executive.executivecode}}</td>
+                                <td class="table-color">
+                                    <a href="mailto:{{Executive.Emailid}}">{{Executive.Emailid}}</a>
+                                </td>
+                                <td><a href="javascript:void(0);" ng-click="EditExecutiveData(Executive.Id)" title="Edit Executive"><i class="fa fa-edit"></i></a></td>
+                                <td>
+                                    <a href="javascript:void(0);" ng-if="Executive.ProcessTransferTo==0" ng-click="DeleteExecutive(Executive.Id)" title="Delete Executive">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" ng-if="Executive.ProcessTransferTo==1" title="Delete Executive with transfer report to"
+                                       ng-click="TransferToExecutiveList(Executive)" data-toggle="modal" data-target="#myModal">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document">
+        <input type="hidden" id="hid_deletedExecutive" ng-model="deletedExecutive" />
+        <form name="TransferForm" ng-controller="MainCtrl" class="form-horizontal" novalidate ng-submit="DeleteExecutiveAfterTransfer()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Product Transfer</h4>
+                 </div>
+                <div class="modal-body clearfix">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5">Transfer To <span class="red">*</span></label>
+                        <div class="col-md-7">
+                            <div class="form-group" ng-class="{ 'has-error': (submitted ||TransferForm.Trensfer.$dirty) && TransferForm.Trensfer.$invalid } ">
+                                <select class="form-control" name="Trensfer" ng-model="TransferTo" required>
+                                    <option value="">--Please Select--</option>
+                                    <option ng-repeat="div in TransferList" value="{{div.Id}}">{{div.Name}}</option>
+                                </select>
+                                <div class="help-block">
+                                    <p ng-show="TransferForm.Trensfer.$error.required && (TransferForm.Trensfer.$dirty || submitted)">Please select executive to transer transaction</p>
+                                    <p ng-show="TransferForm.Trensfer.$error.required"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+                    <button type="submit" class="btn green ng-binding">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+            
+</div>
+</div>
+<!-- Modal -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input[type=text][name$=Email]').val("");
+        $('input[type=text][name$=Password]').val("");
+    })
+
+    function ReportingTo(rd)
+    {
+        if ($(rd).val() == "Manager")
+        {
+            $('.reportingRow').css("display", "none");
+        }
+        else
+        {
+            $('.reportingRow').css("display", "block");
+            angular.element(document.getElementById('angularid')).scope().ReportingTo($(rd).val(), $(rd).attr("deptid"));
+        }
+       
+    }
+</script>

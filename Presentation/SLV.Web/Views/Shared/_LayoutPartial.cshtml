@@ -1,0 +1,8 @@
+﻿@RenderBody()
+
+@RenderSection("pageScript", required: false)
+<script>
+    jQuery(document).ready(function () {
+        @RenderSection("onInit", required: false)
+    });
+    </script>

@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "AddendumList";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/Report/AddedumListView.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().GetProductLicenseAddendumExpired();
+}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Product License Addendum List
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Product License Addendums which will be expiring within 3 months or for which balance quantity is less than 25%
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-responsive">
+                        <div ng-hide="!ProductLicenseAddendumExpiredList.length">
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th> Product License code </th>
+                                    <th> Product Code </th>
+                                    <th> ISBN </th>
+                                    <th> Working Product</th>
+                                    <th> Author </th>
+                                    <th> Expiry Date </th>
+                                </tr>
+
+                                <tr ng-repeat="obj in ProductLicenseAddendumExpiredList">
+                                    <td><span ng-bind="$index + 1"></span></td>
+                                    <td class="table-color"><span ng-bind="obj.ProductLicensecode"></span></td>
+                                    <td> <span ng-bind="obj.ProductCode"></span> </td>
+                                    <td><span ng-bind="obj.ISBN"></span></td>
+                                    <td><span ng-bind="obj.WorkingProduct"></span></td>
+                                    <td><span ng-bind="obj.AuthorName"></span></td>
+                                    <td><span ng-bind="obj.Expirydate"></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-hide="ProductLicenseAddendumExpiredList.length">No result found</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*@if (Session["PrintPermissions"] != null)
+            {
+                <div class="col-md-12 text-center btnPrint">
+                    <div class="tools">
+                        <input type="button" class="btn green" id="btn_printPage" value="Print" style=" margin: .5%; ">
+                    </div>
+                </div>
+            }*@
+
+        <div ng-hide="!ProductLicenseAddendumExpiredList.length">
+            @if (Session["GenerateExcelPermissions"] != null)
+            {
+                <div class="col-md-12 text-center btnPrint">
+                    <div class="tools">
+
+                        <br />
+                        <button type="submit" class="btn green" ng-click="InvoiceReportReportExcel()" id="btnSubmit">Generate Excel</button>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+

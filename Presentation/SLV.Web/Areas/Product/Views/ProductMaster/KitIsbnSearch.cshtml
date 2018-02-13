@@ -1,0 +1,278 @@
+﻿@{
+    ViewBag.Title = "KitIsbnSearch";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/Product/KitIsbnSearch.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/app.css" rel="stylesheet" />
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Kit Search
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <form name="userForm" class=" form-horizontal" ng-submit="kitIsbnSearchForm()" novalidate ng-show="ShowKitISBNSearchForm" ng-cloak>
+
+            <div class="col-md-12 OUPDetails">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Kit Master
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                           @Html.Partial("~/Views/Shared/_divisionSubdivision.cshtml")
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product Category </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <select class="form-control" name="ProductCategory" ng-model="ProductCategory" >
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in ProductCategoryListEntry"
+                                                                ng-model="ProductCategory"
+                                                                catcode="{{div.ProductCategoryCode}}"
+                                                                ng-init="setProductCategoryId(ProductModel,div)"
+                                                                @*ng-selected="{{  div.Id == ProductCategory || div.ProductCategoryCode == 'OR' }}"*@
+                                                                value="{{div.Id}}">
+                                                            {{div.ProductCategory}}
+                                                        </option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product Type </label>
+                                            <div class="col-md-7">
+                                                <div class="row pt_radio">
+                                                    <label class="radio-inline" ng-repeat="Pt in ProductTypeList">
+                                                        <input type="radio" id="ProductType" name="ProductType" ng-change="getSubProductTypeList(Pt.Id)" 
+                                                               ng-model="ProductType" ng-value="{{Pt.Id}}" required> {{Pt.typeName}}
+                                                    </label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 OUPDetails">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Kit Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Kit ISBN </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.KitISBN.$dirty) && userForm.KitISBN.$invalid } ">
+                                                    <input type="text" name="KitISBN" class="form-control" maxlength="13" ng-pattern="/^[0-9]{13}$/" ng-model="KitISBN" placeholder="Kit ISBN">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.KitISBN.$error.pattern" class="help-block red">Please enter valid Kit ISBN</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Linked ISBN </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.LinkedISBN.$dirty) && userForm.LinkedISBN.$invalid } ">
+                                                    <input type="text" name="LinkedISBN" class="form-control" maxlength="13" ng-pattern="/^[0-9]{13}$/" ng-model="LinkedISBN" placeholder="Linked ISBN">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.LinkedISBN.$error.pattern" class="help-block red">Please enter valid Linked ISBN</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Working Product </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" >
+                                                    <input type="text" name="WorkingProduct" class="form-control" ng-model="WorkingProduct" ng-pattern="/^[a-zA-Z0-9'.\s]/" placeholder="Working Product">
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Working Sub-Product</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" >
+                                                    <input type="text" name="WorkingSubProduct" class="form-control" ng-model="WorkingSubProduct" ng-pattern="/^[a-zA-Z0-9'.\s]/" placeholder="Working Sub-Product">
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<form name="Serch" class="form-horizontal seriesSelect" ng-show="ShowKitISBNListForm">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 backtoSearch">
+                    <div class="tools">
+                        <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                    </div>
+                </div>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Kit List
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <div class="row">
+                            <div class="col-md-12">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="">
+
+                            <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                <thead class="flip-content">
+                                    <tr>
+                                        <th>SNo</th>
+                                        <th>Kit ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                        <th>Working Title &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                        <th>Linked ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                        <th>Product Type &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                        <th>Entry Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="obj in KitIsbnData" class="tooltipclass">
+                                        <td><span ng-bind="$index + 1"></span></td>
+
+                                        <td><span ng-bind="obj.ISBN"></span></td>
+
+                                        <td><span ng-bind="obj.WorkingProduct"></span><br /><span style="font-size:11px;" ng-bind="obj.SubWorkingProduct"></span></td>
+
+                                        @*<td>
+                                            <p ng-repeat="objP in KitIsbnData" ng-if="obj.ISBN == objP.ISBN">
+                                                <span ng-bind="objP.ProductISBN"></span>
+                                            </p>
+                                        </td>*@
+
+                                        <td>
+                                            <span ng-bind="obj.ProductISBN"></span>
+                                        </td>
+
+                                        <td>
+                                            <span ng-bind="obj.ProductTypeName"></span>
+                                        </td>
+
+                                        <td><span style="display:none;" ng-bind="obj.EntryDateforsort"></span>{{obj.EntryDate}}</td>
+
+                                        <td ng-hide="TitleLinking">
+                                            <div class="tooltip-container">
+                                                <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                                <label for="tooltip-toggle" onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                    Action
+                                                </label>
+                                                <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                                <div class="tooltip-content">
+                                                    <div class="linking">
+                                                        <ul>
+                                                            <li><a target="_blank" href="~/Product/ProductMaster/KitIsbn?Id={{obj.KitISBNId}}" ng-if="'@TempData["Action"]'=='update'">Update</a></li>
+                                                            <li ><a target="_blank" href="~/Product/ProductMaster/KitIsbnView?Id={{obj.KitISBNId}}" ng-if="'@TempData["Action"]'=='view'">View</a></li>
+                                                            <li ><a target="_blank" href="~/Product/ProductMaster/KitImpression?Id={{obj.KitISBNId}}" ng-if="'@TempData["Action"]'=='kitimpression'">Impression</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    function fireMe(obj) {
+        var length = $(".customizeLink").length;
+        for (i = 0; i < $(".customizeLink").length; i++) {
+            $($(".customizeLink")[i]).attr("sequence", i);
+        }
+        angular.element(document.getElementById('angularid')).scope().DisplayDiv(parseInt($(obj).attr("sequence")) + 1);
+    };
+</script>

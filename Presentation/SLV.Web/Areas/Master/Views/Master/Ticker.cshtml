@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "Ticker";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+
+<style type="text/css">
+    .fa {
+        color: black !important;
+    }
+
+    th {
+        text-align: left !important;
+    }
+
+    td {
+        text-align: left !important;
+    }
+</style>
+
+<script src="~/js/master/Master.Ticker.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().GetTickerList();
+
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Ticker Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Ticker
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+
+                    <form name="userForm" class=" form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-2">Title <span class="red">*</span></label>
+                                    <div class="col-md-10">
+                                        <div class="form-group" ng-class="{ 'has-error' : userForm.TickerTitle.$invalid && (userForm.TickerTitle.$dirty || submitted)}">
+                                            <input type="text" name="TickerTitle" class="form-control" ng-model="TickerTitle" required placeholder="Title">
+                                            <div class="help-block">
+                                                <p ng-show="userForm.TickerTitle.$error.required && (userForm.TickerTitle.$dirty || submitted)" class="help-block">Please Enter Title</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-4">From Date @*<span class="red">*</span>*@</label>
+                                    <div class="col-md-8" style="padding-left:20px;">
+                                        <div class="form-group">
+                                            <div class="input-group input-medium date date-picker FromDate" @*ng-class="{ 'has-error': ( submitted ||userForm.FromDate.$dirty) && userForm.FromDate.$invalid } "*@>
+                                                <input type="text" name="FromDate" id="FromDate" class="form-control" ng-model="FromDate"
+                                                       onchange="angular.element(document.getElementById('angularid')).scope().SetFromDate(this);" placeholder="From Date">
+                                                <span class=" input-group-btn">
+                                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            @*<div class="help-block">
+                                                    <p ng-show="userForm.FromDate.$error.required && (userForm.FromDate.$dirty || submitted)" style="color: #a94442;" class="help-block red">Please enter From Date</p>
+                                                </div>*@
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            $('.FromDate')
+                                                .datepicker({
+                                                    format: "dd/mm/yyyy",
+                                                    showButtonPanel: true,
+                                                    autoclose: true,
+                                                })
+                                        });
+                                    </script>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-4">To Date @*<span class="red">*</span>*@</label>
+                                    <div class="col-md-8" >
+                                        <div class="form-group">
+                                            <div class="input-group input-medium date date-picker ToDate" @*ng-class="{ 'has-error': ( submitted ||userForm.ToDate.$dirty) && userForm.ToDate.$invalid } "*@>
+                                                <input type="text" name="ToDate" id="ToDate" class="form-control" ng-model="ToDate"
+                                                       onchange="angular.element(document.getElementById('angularid')).scope().SetToDate(this);" placeholder="To Date">
+                                                <span class=" input-group-btn">
+                                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            @*<div class="help-block">
+                    <p ng-show="userForm.FromDate.$error.required && (userForm.FromDate.$dirty || submitted)" style="color: #a94442;" class="help-block red">Please enter From Date</p>
+                </div>*@
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            $('.ToDate')
+                                                .datepicker({
+                                                    format: "dd/mm/yyyy",
+                                                    showButtonPanel: true,
+                                                    autoclose: true,
+                                                })
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                            @*<div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-4">Order </label>
+                                    <div class="col-md-8" style="padding-left:20px;">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Order.$dirty) && userForm.Order.$invalid } ">
+                                            <input type="text" name="Order" maxlength="1" min="0" max="9" class="form-control" ng-model="Order" placeholder="Order"
+                                                   ng-pattern="/^[0-9]{0,1}$/">
+                                        </div>
+                                        <div class="help-block">
+                                            <p ng-show="userForm.Order.$error.pattern" class="help-block red">Please enter valid Order</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_recordid" name="hid_recordid" ng-model="hid_recordid" />
+                                    <button type="submit" class="btn green" id="btnSubmit" name="btnSubmit" ng-model="btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Ticker List
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <div class="row">
+                            <div class="col-md-12">
+                                &nbsp;
+                            </div>
+                        </div>
+
+                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>Title &nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                    <th>From Date &nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                    <th>To Date &nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                    @*<th>Order &nbsp;<span class="glyphicon glyphicon-sort"></th>*@
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="obj in TickerList">
+                                    <td>{{obj.Title}}</td>
+                                    <td>{{obj.FromDate}}</td>
+                                    <td>{{obj.ToDate}}</td>
+                                    @*<td>{{obj.Order}}</td>*@
+                                    <td><a ng-click="EditTickerData(obj.Id)"><i class="fa fa-edit" title="Edit Ticker"></i></a></td>
+                                    <td>
+                                        <a ng-click="DeleteTickerData(obj.Id)"><i class="fa fa-trash-o" title="Delete Ticker"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</div>
+
+

@@ -1,0 +1,39 @@
+﻿<script src="~/js/PermissionsOutbound/_PermissionsOutboundDetail.js"></script>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Permissions Outbound  Details
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Code</th>
+                    <th> Invoice Number</th>
+
+                    <th> Invoice Value</th>
+                    <th> Invoice Currency  </th>
+               
+                   
+                </tr>
+
+                <tr ng-repeat="obj in PermissionsOutboundList">
+                    <td>
+                        <a href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{obj.ContractId}}&type={{obj.Type}}&OutboundView={{obj.PermissionsOutboundId}}" target="_blank" style="color: #ee5941;" class="hide_for_print"><span ng-bind="obj.Code"></span></a>
+                     
+                    </td>
+                    <td><span ng-bind="obj.InvoiceNo"></span></td>
+                    <td><span ng-bind="obj.InvoiceValue"></span> </td>
+                    <td><span ng-bind="obj.CurrencyName"></span></td>
+                 
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1186 @@
+﻿
+<script src="~/js/master/Master.AuhtorView.js"></script>
+
+
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+
+            <div class="row panel">
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Author Details 
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:void(0);" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6 col-xs-6 col-sm-6">
+
+                                            <div class="row" ng-show="AuthorCodeReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Author Code</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="AuthorCodeView"></span></label>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class=" row" ng-show="TypeReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Type </label>
+
+
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="TypeView"></span></label>
+
+
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="FirstNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">First Name </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="FirstNameView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row" ng-show="LastNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Last Name </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="LastNameView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AddressReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Address </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="AddressView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="ResidencyStatusReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Residency Status </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="ResidencyStatusView"></span></label>
+
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" id="Authorgeo">
+                                                <div class="col-md-12">
+                                                    <div class=" row" ng-show="CountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Country </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="CountryView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-show="OtherCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="OtherCountryView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="StateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">State </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="StateView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="OtherStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> State</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="OtherStateView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="CityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">City </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="CityView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="OtherCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> City</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="OtherCityView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row" ng-show="PinCodeReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> PIN Code</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="PinCodeView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                            <div class="row" ng-show="EmailReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Email </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="EmailView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-xs-6 col-sm-6">
+
+                                            <div class="row" ng-show="PhoneReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Phone </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="PhoneView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="MobileReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Mobile </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="MobileView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="PANNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">PAN </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="PANNoView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AdharCardNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Adhar Card No </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="AdharCardNoView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="DateOfBirthReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Date of Birth</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="DateOfBirthView"></span></label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AccountNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Account No</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="AccountNoView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row" ng-show="BankNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Bank Name </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BankNameView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row" ng-show="BranchNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Branch Name</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BranchNameView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row" ng-show="IFSECodeReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Swift / IFSC Code </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="IFSECodeView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row" ng-show="FaxReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Fax </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="FaxView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="RemarkReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Remark </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="RemarkView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12" ng-show="ReqAffiliationDetailsView">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Affiliation Details 
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class=" row">
+                                    <div class="col-md-12">
+
+                                        <div class="col-md-6">
+                                            <div class="row" ng-show="InstituteReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Institute </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="InstituteCompanyNameView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AffiliationDesignationReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Designation </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="AffiliationDesignationView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AffiliationDepartmentReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Department</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="AffiliationDepartmentView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12" id="Affiliation">
+
+                                                    <div class=" row" ng-show="AffiliationCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Country </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="AffiliationCountryView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-show="AffiliationOtherCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="AffiliationOtherCountryView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="AffiliationStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">State </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="AffiliationStateView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="AffiliationOtherStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> State</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="AffiliationOtherStateView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="AffiliationCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">City </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="AffiliationCityView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="AffiliationOtherCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> City</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="AffiliationOtherCityView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row" ng-show="AffiliationPinCodeReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> PIN Code</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="AffiliationPinCodeView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                        </div>
+
+
+
+                                        <div class="col-md-6">
+
+
+                                            <div class="row" ng-show="AffiliationAddressReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Address </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="AffiliationAddressView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AffiliationPhoneReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Phone No. </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="AffiliationPhoneView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AffiliationEmailReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Email</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="AffiliationEmailView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="AffiliationWebSiteReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Website </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="AffiliationWebSiteView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Beneficiary Details 
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="row" ng-show="BeneficiaryNameReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Name </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="BeneficiaryNameView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="BeneficiaryRelationReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Relation</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="BeneficiaryRelationView"></span></label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryEmailReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Email </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="BeneficiaryEmailView"></span></label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryAddressReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Address </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="BeneficiaryAddressView"></span></label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12" id="Beneficiary">
+
+                                                    <div class=" row" ng-show="BeneficiaryCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Country </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="BeneficiaryCountryView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-show="BeneficiaryOtherCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="BeneficiaryOtherCountryView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="BeneficiaryStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">State </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="BeneficiaryStateView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="BeneficiaryOtherStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> State</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="BeneficiaryOtherStateView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="BeneficiaryCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">City </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="BeneficiaryCityView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="BeneficiaryOtherCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> City</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="BeneficiaryOtherCityView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row" ng-show="BeneficiaryPinCodeReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> PIN Code</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="BeneficiaryPinCodeView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div class="row" ng-show="BeneficiaryPhoneReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Phone </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BeneficiaryPhoneView"></span></label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="BeneficiaryMobileReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Mobile </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BeneficiaryMobileView"></span></label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryFaxReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Fax </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BeneficiaryFaxView"></span></label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                        <div class="col-md-6">
+                                            <div class="row" ng-show="BeneficiaryPanNoReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">PAN</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BeneficiaryPanNoView"></span></label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="BeneficiaryAccountNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Account No </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BeneficiaryAccountNoView"></span></label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="BeneficiaryBankNameReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Bank Name</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BeneficiaryBankNameView"></span></label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryBranchNameReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Branch Name </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BeneficiaryBranchNameView"></span></label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryIFSECodeReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Swift / IFSC Code</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="BeneficiaryIFSECodeView"></span></label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-show="NomineeDetailsValueReq">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Nominee Details
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class=" row">
+                                    <div class="col-md-12">
+
+                                        <div class="col-md-6">
+                                            <div class="row" ng-show="NomineeNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Name </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="NomineeNameView"></span></label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeRelationReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Relation </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="NomineeRelationView"></span></label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeEmailReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Email </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="NomineeEmailView"></span></label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="NomineeAddressReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Address </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label"><span ng-bind="NomineeAddressView"></span></label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12" id="Nominee">
+
+
+                                                    <div class=" row" ng-show="NomineeCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Country </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="NomineeCountryView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-show="NomineeOtherCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="NomineeOtherCountryView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="NomineeStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">State </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="NomineeStateView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="NomineeOtherStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> State</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="NomineeOtherStateView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="NomineeCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">City </label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="NomineeCityView"></span></label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="NomineeOtherCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> City</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="NomineeOtherCityView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row" ng-show="NomineePinCodeReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-6 col-sm-6"> PIN Code</label>
+                                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><span ng-bind="NomineePinCodeView"></span></label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-md-6">
+
+                                            <div class="row" ng-show="DeathDateReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Demise Date </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="DeathDateView"></span></label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row" ng-show="NomineePhoneReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Phone </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="NomineePhoneView"></span></label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeMobileReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Mobile </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="NomineeMobileView"></span></label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeFaxReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Fax </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="NomineeFaxView"></span></label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineePanNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">PAN</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="NomineePanNoView"></span></label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="NomineeAccountNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Account No.</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="NomineeAccountNo"></span></label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeBranchNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Branch Name</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="NomineeBranchName"></span></label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeBankNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Bank Name</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="NomineeBankName"></span></label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="NomineeIFSECodeReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">IFSE Code</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="NomineeIFSECode"></span></label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+

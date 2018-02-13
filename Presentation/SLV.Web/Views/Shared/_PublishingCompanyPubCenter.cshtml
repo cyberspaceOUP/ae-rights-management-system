@@ -1,0 +1,57 @@
+﻿<script src="~/js/common/Common.PublishingPubCenter.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">Publishing Company <span class="red" ng-show="PublishingCompanyMandatory">*</span> </label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.PublishingCompany.$dirty) && userForm.PublishingCompany.$invalid } ">
+                <select class="form-control" id="PublishingCompany" ng-change="getPubCenterByCompanyIdList();PublishPubCntrl.PubCenter='';getImprintByCompanyIdList();ProprDetailCntrl.ProprietorImprint=''" name="PublishPubCntrl.PublishingCompany"
+                        ng-init="PublishPubCntrl.PublishingCompany=''"
+                        ng-model="PublishPubCntrl.PublishingCompany" ng-required="PublishingCompanyMandatory">
+                    <option value="">Please Select</option>
+                    <option ng-repeat="div in PublishingCompanyList" ng-model="PublishingCompany" ng-selected="{{div.Id == PublishPubCntrl.PublishingCompany}}" value="{{div.Id}}">{{div.CompanyName}}</option>
+                </select>
+                <div class="help-block">
+                    <p ng-show="userForm.PublishingCompany.$error.required && (userForm.PublishingCompany.$dirty || submitted)">Please select Publishing Company</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">Publishing Centre<span class="red" ng-show="PubCenterMandatory">*</span> </label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.PubCenter.$dirty) && userForm.PubCenter.$invalid } ">
+                <select class="form-control" id="PubCenter" name="PubCenter"
+                        ng-init="PublishPubCntrl.PubCenter=''"
+                        ng-model="PublishPubCntrl.PubCenter" ng-required="PubCenterMandatory">
+                    <option value="">Please Select</option>
+                    <option ng-repeat="div in PubCenterList" ng-model="PubCenter" ng-selected="{{div.Id == PublishPubCntrl.PubCenter}}" value="{{div.Id}}">{{div.CenterName}}</option>
+                </select>
+                <div class="help-block">
+                    <p ng-show="userForm.PubCenter.$error.required && (userForm.PubCenter.$dirty || submitted)">Please select Publishing Centre</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Added by prakash Imprint depend on Publishing Company on 09/11/2016-->
+<div class="row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">Imprint <span class="red" ng-show="ProprietorImprint">*</span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Imprint.$dirty) && userForm.Imprint.$invalid } ">
+                <select class="form-control" id="Imprint" name="Imprint"
+                        ng-init="ProprDetailCntrl.ProprietorImprint=''"
+                        ng-model="ProprDetailCntrl.ProprietorImprint" ng-required="ProprietorImprint">
+                    <option value="">Please Select</option>
+                    <option ng-repeat="div in Imprint_List" ng-model="Imprint" value="{{div.Id}}">{{div.ImprintName}}</option>
+                </select>
+                <div class="help-block">
+                    <p ng-show="userForm.Imprint.$error.required && (userForm.Imprint.$dirty || submitted)">Please select Imprint</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

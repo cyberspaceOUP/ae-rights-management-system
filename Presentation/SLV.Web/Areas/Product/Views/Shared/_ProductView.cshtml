@@ -1,0 +1,390 @@
+﻿
+<script src="~/js/Product/ProductView.js"></script>
+
+<div class="row panel">
+    <div class="form-body" id="head_Product_Id">
+        <div class="col-md-12">
+            <div class="col-md-6 col-xs-6 col-sm-6">
+                <label class="control-label col-md-5 col-xs-6 col-sm-6">Product Code</label>
+                <div class="col-md-7 col-xs-6 col-sm-6">
+                    <label class="control-label"><span ng-bind="ProductCode"></span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 col-sm-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    Product Details
+                </div>
+                <div class="tools">
+                    <a href="javascript:void(0);" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Division  </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="Division"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Sub-Division </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="SubDivision"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Product Category </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProductCategory"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Product Type </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProductType"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Sub-Product Type/Format </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="SubProductType"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portlet box green Proprietor">
+            <div class="portlet-title">
+                <div class="caption">
+                    Proprietor Details
+                </div>
+                <div class="tools">
+                    <a href="javascript:void(0);" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="row">
+                        <div class=" col-md-12">
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Proprietor ISBN  </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProprietorIsbn"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Proprietor Product </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProprietorProduct"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Proprietor Edition </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProprietorEdition"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Proprietor Copyright Year </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProprietorCopyright"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Publishing Company </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProprietorPublishingCompany"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Publishing Centre </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProprietorPubCenter"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Imprint </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProprietorImprint"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <div class="row">
+                                    @*<div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Author Category </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProprietorAuthorCategory"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>*@
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Author Name (s) </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProprietorAuthorName"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+
+                                    @*<div class="col-md-12">
+                                            <table class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SNO</th>
+                                                        <th>Author Name</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="list in AuthorList">
+                                                        <td><span ng-bind="$index + 1"></span></td>
+                                                        <td><span ng-bind="list.AuthorName"></span></td>
+                                                        <td>
+                                                            <button id="btnRemove" class="btn btn-default btn-sm" type="button" ng-click="showCheckedAuthor(list,null)">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    OUP Details
+                </div>
+                <div class="tools">
+                    <a href="javascript:void(0);" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="row">
+                        <div class=" col-md-12">
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">ISBN  </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label">
+                                                <span ng-bind="OupIsbn"></span>
+                                                &nbsp;<span ng-if="!(OupIsbn=='--')" style="font-size:12px;">(&nbsp;<i>ISBN-10:&nbsp;{{IsbnConverted}}</i>&nbsp;)</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Working Product </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="WorkingProduct"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Working Sub-Product</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="WorkingSubProduct"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Edition</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="OupEdition"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Volume</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="Volume"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Imprint</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="imprintname"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Language  </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="Language"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Series</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="Series"></span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Third Party Permission</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="thirdpartypermission"></span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12" ng-show="PreviousProductISBNVisible">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Is the Product a Derivative?</label>
+                                        @*<div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="Derivatives"></span></label>
+                                        </div>*@
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="PreviousProductISBN"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    @*<div class="col-md-12" ng-show="orgisbnVisible">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">ISBN of Original Titles</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="orgisbn"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>*@
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Projected Publishing Date</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProjectedDate"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Copyright Year</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="CopyrightYear"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Projected Price</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="ProjectedPrice"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Projected Currency</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            @*<label class="control-label"><span ng-bind="ProjectedCurrency"></span></label>*@
+                                            <label class="control-label"><span ng-bind="ProjectedCurrencySymbol"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Publishing Centre</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="OUPPubCenter"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix" ng-show="OUPAuthorSuggestionCntrl">&nbsp;</div>
+                                    <div class="col-md-12" ng-show="OUPAuthorSuggestionCntrl">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Author Category</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="AuthorCategory"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body clearfix" ng-show="OUPAuthorSuggestionCntrl">&nbsp;</div>
+                                    <div class="col-md-12" ng-show="OUPAuthorSuggestionCntrl">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Author Name (s)</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            @*<label class="control-label"><span ng-bind="AuthorName"></span></label>*@
+                                            <p ng-repeat="item in AuthorName.split(',')">
+                                                <span ng-bind='item'></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    @*<div class="portlet-body clearfix" ng-show="LinkedProducttoPreviousEditionVisible">&nbsp;</div>
+                                    <div class="col-md-12" ng-show="LinkedProducttoPreviousEditionVisible">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Linked Product to Previous Edition </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="LinkedProducttoPreviousEdition"></span></label>
+                                        </div>
+                                    </div>*@
+                                    @*<div class="portlet-body clearfix" ng-show="PreviousProductISBNVisible">&nbsp;</div>
+                                    <div class="col-md-12" ng-show="PreviousProductISBNVisible">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Previous Product ISBN</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="PreviousProductISBN"></span></label>
+                                        </div>
+                                    </div>*@
+
+                                    <div class="portlet-body clearfix" ng-show="FinalPublishedTitleVisible">&nbsp;</div>
+                                    <div class="col-md-12" ng-show="FinalPublishedTitleVisible">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Final Published Title</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="FinalPublishedTitle"></span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="portlet-body clearfix" ng-show="FinalPublishingDateVisible">&nbsp;</div>
+                                    <div class="col-md-12" ng-show="FinalPublishingDateVisible">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Final Publishing Date</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <label class="control-label"><span ng-bind="FinalPublishingDate"></span></label>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="portlet-body clearfix">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

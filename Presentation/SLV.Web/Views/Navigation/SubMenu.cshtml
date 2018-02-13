@@ -1,0 +1,24 @@
+﻿@model ACS.Core.Domain.Configuration.ApplicationActivities
+
+@if (Model.ChildActivities.Count > 0)
+{
+    <li class="sub">
+        <a href="javascript:;">
+           &nbsp;
+            @Model.ActivityDesc
+        </a>
+        <ul>
+            @for (int counter = 0; counter < Model.ChildActivities.Count; counter++)
+            {
+                Html.RenderAction("SubMenu", new { SubMenu = Model.ChildActivities.ElementAt(counter) });
+            }
+        </ul>
+
+    </li>
+}
+else
+{
+    <li>
+        <a href="@Url.Action(Model.Action, Model.Controller, new { area = Model.Area})" class="MenuCreation" querystring="@(Model.QueryString==null?"":Model.QueryString)"><i class="@Model.IconClass"></i>&nbsp;@Model.ActivityDesc</a>
+    </li>
+}

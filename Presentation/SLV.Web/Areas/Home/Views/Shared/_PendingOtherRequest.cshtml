@@ -1,0 +1,44 @@
+﻿
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+           @T("Dashboard.PendingOtherRequest")
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>   
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!PendingRequestList.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Contract Code </th>
+                        <th> ISBN </th>
+                        <th> Vendor Name </th>
+                        <th> Contract Type </th>
+                        <th> Contract Date</th>
+                        <th> Expiry date </th>
+                    </tr>
+
+                    <tr ng-repeat="PendingRequest in PendingRequestList">
+                        <td class="table-color"><a href="~/Contract/OtherContract/OtherContractEntry?id={{PendingRequest.Id}}&for=update"><span ng-bind="(PendingRequest.othercontractcode)"></span>    </a></td>
+                        <td><span ng-bind="(PendingRequest.ProjectISBN)"></span> </td>
+                        <td> <span ng-bind="(PendingRequest.partyname)"></span></td>
+                        <td><span ng-bind="(PendingRequest.contractname)"></span></td>
+                        <td><span ng-bind="(PendingRequest.ContractDate)"></span></td>
+                        <td><span ng-bind="(PendingRequest.Expiredate)"></span></td>
+                    </tr>
+                </table>
+                <a href="javascript:void(0);" ng-click="PendingRequestOtherContract_submitForm();" class="moreDash">View More</a>
+            </div>
+            <div ng-hide="PendingRequestList.length">No result found</div>
+        </div>
+    </div>
+</div>
+

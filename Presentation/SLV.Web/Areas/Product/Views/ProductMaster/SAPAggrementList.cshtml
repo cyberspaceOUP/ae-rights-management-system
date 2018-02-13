@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "SAPAggrementList";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/Product/SAPAggrementList.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    SAP Agreement
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        
+
+        <form name="Serch" class="form-horizontal seriesSelect" ng-cloak>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    SAP Agreement List
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            
+
+                            <div class="portlet-body flip-scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="">
+
+                                    <table id="tbl_ISBNtable" datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th style="width:10%"> OUPISBN  &nbsp;<span class="glyphicon glyphicon-sort"></span> </th>
+                                                <th style="width:10%"> Product Category  &nbsp;<span class="glyphicon glyphicon-sort"></span> </th>
+                                                <th style="width:30%"> SAP Agreement No. &nbsp;<span class="glyphicon glyphicon-sort"></span> </th>
+                                                <th style="width:30%"> Author Code  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th style="width:25%"> Author Name  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th ng-if="'@ViewBag.Department'=='sa' || '@ViewBag.Department'=='ad' || '@ViewBag.Department'=='rt'" style="width:5%">Action</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="SapAggremen in ProductSapAggrementList">
+
+                                                <td style="width:10%">
+                                                    <span ng-bind="SapAggremen.OUPISBN"></span>
+                                                </td>
+                                                <td style="width:10%">
+                                                    <span ng-bind="SapAggremen.ProductCategory"></span>
+                                                </td>
+                                                <td style="width:20%"><span ng-bind="SapAggremen.SAPagreementNo"></span></td>
+
+                                                <td style="width:25%">
+                                                    <span ng-bind="SapAggremen.AuthorCode"></span>
+                                                </td>
+
+                                                <td style="width:30%"><span ng-bind="SapAggremen.AuthorName"></span> </td>
+
+                                                <td style="width:5%" ng-if="'@ViewBag.Department'=='sa' || '@ViewBag.Department'=='ad' || '@ViewBag.Department'=='rt'">
+                                                    <a style="color:black;" target="_blank" href="~/Product/ProductMaster/SAPAggrementUpdate?OUPISBN={{SapAggremen.OUPISBN}}"><i class="fa fa-edit" title="Edit"></i></a>
+                                                    &nbsp;
+                                                    <a ng-click="DeleteProductSAPAgreementMaster(SapAggremen.OUPISBN)" style="color:black!important;cursor:pointer;"><i class="fa fa-trash-o" title="Delete"></i></a>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+

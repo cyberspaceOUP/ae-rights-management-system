@@ -1,0 +1,59 @@
+﻿<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @T("Dashboard.NoContract")
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!PendingAuthorContractRequestList.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Contract Code </th>
+                        <th> Product Code </th>
+                        <th> ISBN </th>
+                        <th> Working Product </th>
+                        <th> Author </th>
+                        <th> Requested Date </th>
+                        <th> Requested By </th>
+                        <th> Division </th>
+                        @*<th> Remarks </th>*@
+                        @*<th> Last Date </th>*@
+                    </tr>
+
+                    <tr ng-repeat="PendingAC in PendingAuthorContractRequestList">
+                        <td class="table-color">
+                            <a href="~/Contract/AuthorContract/view?Id={{PendingAC.Id}}" ng-if="PendingAC.Id != '0'"><span ng-bind="(PendingAC.Contract_Code)"></span></a>
+                            <a href="~/Contract/AuthorContract/view?SeriesCode={{PendingAC.Contract_Code}}" ng-if="PendingAC.Id == '0'"><span ng-bind="(PendingAC.Contract_Code)"></span></a>
+                        </td> @*data-toggle="modal" data-target="#myModalAuthor"*@
+                        <td class="table-color"><a href="~/Product/ProductMaster/ProductDetailsView?Id={{PendingAC.ProductId}}"> <span ng-bind="(PendingAC.ProductCode)"></span>   </a></td>
+                        <td> <span ng-bind="(PendingAC.ISBN)"></span>  </td>
+                        <td>  <span ng-bind="(PendingAC.WorkingProduct)"></span> <span style="font-size:11px;">  <br /><span ng-bind="(PendingAC.WorkingSubProduct)"></span> </span></td>
+                        <td>  <span ng-bind="(PendingAC.AuthorName)" ng-if="!(PendingAC.AuthorName=='No Royalty Account ')"></span>   </td>
+                        <td> <span ng-bind="(PendingAC.EntryDate)"></span>    </td>
+                        <td>  <span ng-bind="(PendingAC.ExecutiveName)"></span>   </td>
+                        <td> <span ng-bind="(PendingAC.divisionName)"></span>  </td>
+                        @*<td> <span ng-bind="(PendingAC.Status)"></span>  </td>*@
+                        @*<td>{{PendingAC.EntryDate}}</td>*@
+                    </tr>
+                </table>
+                <div style="float:right;">
+                    <a href="javascript:void(0);" ng-click="PendingAuthorContract_submitForm();" ng-if="Pendingcontract" class="moreDash">Contract : View More</a>
+                    <br />
+                    <a href="javascript:void(0);" ng-click="PendingSeries_submitForm();" class="moreDash" ng-if="Pendingseries">Series : View More</a>
+                </div>
+            </div>
+            <div ng-hide="PendingAuthorContractRequestList.length">No result found</div>
+        </div>
+    </div>
+</div>
+

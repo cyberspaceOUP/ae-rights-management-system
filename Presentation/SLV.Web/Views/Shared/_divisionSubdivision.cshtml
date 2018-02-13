@@ -1,0 +1,33 @@
+﻿<script src="~/js/common/Common.DivisionSubdivision.js"></script>
+    <div class=" row">
+        <div class="col-md-12">
+            <label class="control-label col-md-5">Division <span class="red" ng-show="DivisionMandatory">*</span></label>
+            <div class="col-md-7">
+                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Division.$dirty) && userForm.Division.$invalid } ">
+                    <select class="form-control" id="Division" name="Division" ng-change="getSubDivisionbyDivisionIdList();DivSubDivCntrl.SubDivision=''" ng-init="DivSubDivCntrl.Division=''" ng-model="DivSubDivCntrl.Division" ng-required="DivisionMandatory">
+                        <option value="">Please Select</option>
+                        <option ng-repeat="div in DivisionList" ng-model="Division" ng-selected="{{div.Id == DivSubDivCntrl.Division}}" value="{{div.Id}}">{{div.divisionName}}</option>
+                    </select>
+                    <div class="help-block">
+                        <p ng-show="userForm.Division.$error.required && (userForm.Division.$dirty || submitted)">Please select division</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" row">
+        <div class="col-md-12">
+            <label class="control-label col-md-5">Sub-Division <span class="red" ng-show="SubDivisionMandatory">*</span></label>
+            <div class="col-md-7">
+                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.SubDivision.$dirty) && userForm.SubDivision.$invalid } ">
+                    <select class="form-control" id="SubDivision" name="SubDivision" ng-change="getSeriesbySubDivisionIdList()" ng-init="DivSubDivCntrl.SubDivision=''" ng-model="DivSubDivCntrl.SubDivision" ng-required="SubDivisionMandatory">
+                        <option value="">Please Select</option>
+                        <option ng-repeat="div in SubDivisionList" ng-model="SubDivision" ng-selected="{{div.SubDivisionId == DivSubDivCntrl.SubDivision}}" value="{{div.SubDivisionId}}">{{div.SubDivisionName}}</option>
+                    </select>
+                    <div class="help-block">
+                        <p ng-show="userForm.SubDivision.$error.required && (userForm.SubDivision.$dirty || submitted)">Please select sub-division</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

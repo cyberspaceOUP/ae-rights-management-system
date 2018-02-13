@@ -1,0 +1,1428 @@
+﻿
+<script src="~/js/Product/ProductDetails.js"></script>
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Product Details
+        </div>
+        <div class="tools">
+            <a href="javascript:void(0);" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    @*<th ></th>*@
+                    <th> Product Code </th>
+                    @*<th> Project Code </th>*@
+                    <th> Product Category </th>
+                    <th> ISBN </th>
+                    <th> Working Product</th>
+                    <th> Product Type </th>
+                    <th> Author Name </th>
+
+                    <th>Third Party Permission</th>
+                    @*<th ng-if="ProductDetailsThirdPartyPermsionMultiple">Third Party Permission</th>
+                    <th ng-if="ProductDetailsThirdPartyPermsionMultView">Third Party Permission</th>*@
+
+                </tr>
+                <!-- Series Product Listing -->
+                <tr ng-repeat="Product in ProductDetailsList" ng-if="ProductDetailsList">
+                    <td> 
+                     
+                        <a href="~/Product/ProductMaster/ProductDetailsView?Id={{Product.ProductId}}" target="_blank" style="color: #ee5941;" class="hide_for_print">
+                            <span ng-bind="Product.ProductCode"></span>
+                        </a>
+                        <a style="color: #ee5941; display:none;" class="show_for_print">{{Product.ProductCode}}</a>
+                        <br />
+                        <span style="font-size:11px;">&nbsp;</span>
+
+                        <br />
+                        <br/>
+                        <p ng-repeat="obj_ProductDetails in ProductDetailsListChild"
+                           ng-if="obj_ProductDetails.ProductCode == Product.ProductCode && obj_ProductDetails.Childproductcode!='---'">
+                            <a href="~/Product/ProductMaster/ProductDetailsView?Id={{obj_ProductDetails.ProductId}}" target="_blank" style="color: #ee5941;"
+                               class="hide_for_print">
+                                <span ng-bind="obj_ProductDetails.Childproductcode"></span>
+                            </a>
+                            <a style="color: #ee5941; display:none;" class="show_for_print">{{obj_ProductDetails.Childproductcode}}</a>
+                            <br />
+                            <span style="font-size:11px;">&nbsp;</span>
+                        </p>
+                    </td>
+
+                    <td>
+                        <span ng-bind="Product.ProductCategory"></span>
+                        <br/>
+                        <span style="font-size:11px;">&nbsp;</span>
+
+                        <br />
+                        <br />
+                        <p ng-repeat="obj_ProductDetails in ProductDetailsListChild"
+                           ng-if="obj_ProductDetails.ProductCode == Product.ProductCode && obj_ProductDetails.Childproductcode!='---'">
+                            <span ng-bind="obj_ProductDetails.Childproductcategory"></span>
+                            <br />
+                            <span style="font-size:11px;">&nbsp;</span>
+                        </p>
+                    </td>
+
+                    <td>
+                        <span ng-bind="Product.OupIsbn"></span>
+                        <br />
+                        <span style="font-size:11px;">&nbsp;</span>
+
+                        <br />
+                        <br />
+                        <p ng-repeat="obj_ProductDetails in ProductDetailsListChild"
+                           ng-if="obj_ProductDetails.ProductCode == Product.ProductCode && obj_ProductDetails.Childproductcode!='---'">
+                            <span ng-bind="obj_ProductDetails.ChildOupIsbn"></span>
+                            <br />
+                            <span style="font-size:11px;">&nbsp;</span>
+                        </p>
+                    </td>
+
+                    <td>
+                        <span ng-bind="Product.WorkingProduct"></span> 
+                        <br /> 
+                        <span style="font-size:11px;" ng-bind="Product.WorkingSubProduct"></span> <span style="font-size:11px;" ng-if="Product.WorkingSubProduct==''">&nbsp;</span>
+
+                        <br />
+                        <br />
+                        <p ng-repeat="obj_ProductDetails in ProductDetailsListChild"
+                           ng-if="obj_ProductDetails.ProductCode == Product.ProductCode && obj_ProductDetails.Childproductcode!='---'">
+                            <span ng-bind="obj_ProductDetails.Childworkingproduct"> </span> 
+                            <br /> 
+                            <span style="font-size:11px;" ng-bind="obj_ProductDetails.ChildWorkingSubProduct"></span>
+                            <span style="font-size:11px;" ng-if="obj_ProductDetails.ChildWorkingSubProduct==''">&nbsp;</span>
+                        </p>
+                    </td>
+
+                    <td>
+                        <span ng-bind="Product.ProductType"></span> 
+                        <br /> 
+                        <span style="font-size:11px;" ng-bind="Product.SubProductType"></span> <span style="font-size:11px;" ng-if="Product.SubProductType==''">&nbsp;</span>
+
+                        <br />
+                        <br />
+                        <p ng-repeat="obj_ProductDetails in ProductDetailsListChild"
+                           ng-if="obj_ProductDetails.ProductCode == Product.ProductCode && obj_ProductDetails.Childproductcode!='---'">
+                            <span ng-bind="obj_ProductDetails.ChildProductType"></span> 
+                            <br /> 
+                            <span style="font-size:11px;" ng-bind="obj_ProductDetails.ChildSubProductType"></span>
+                            <span style="font-size:11px;" ng-if="obj_ProductDetails.ChildSubProductType==''">&nbsp;</span>
+                        </p>
+                    </td>
+
+                    <td>
+                        
+                        <p ng-repeat="item in Product.AuthorName.split(',') track by $index">
+                            <a ng-if="Product.ProductCategory!='Reprint'" href="#" ng-click="ProductViewMode(item.split('#')[1])" data-toggle="modal" data-target="#myModal_Series" style="color:#ee5941;">
+                                <span ng-bind="item.split('#')[0]"></span>
+                            </a>
+                            <span ng-if="Product.ProductCategory=='Reprint'" ng-bind="item.split('#')[0]"></span>
+                        </p>
+
+                        <input type="hidden" id="hid_productid" price="{{Product.ProjectedPrice}}" currencyid="{{Product.ProjectedCurrencyId}}" value="{{Product.ProductId}}" />
+                        <input type="hidden" id="hid_currencyid" value="{{Product.ProjectedCurrencyId}}" />
+                        <input type="hidden" id="hid_price" value="{{Product.ProjectedPrice}}" />
+                        <input type="hidden" id="hid_ProjectedPublishingDate" value="{{Product.ProjectedPublishingDate}}" />
+                        <input type="hidden" name="hid_oupisbn" value="{{Product.OupIsbn}}" />
+                        <input type="hidden" name="hid_ProductCodeValue" id="hid_ProductCodeValue" value="{{Product.ProductCode}}" />
+                        <input type="hidden" name="hid_ThirdPartyPermsionLength" id="hid_ThirdPartyPermsionLength" value="{{ProductDetailsList.length}}" />
+
+                    </td>
+
+                    
+                   <td>
+                       <!--Update-->
+                       @*<div id="ThirdPartyPermissionValue_{{$index}}" style=" padding-left: 30px;" class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ThirdPartyPermission_{{$index}}.$dirty) && userForm.ThirdPartyPermission_{{$index}}.$invalid } "
+                            ng-if="SeriesUpdateMode">
+                           <label class="radio-inline">
+                               <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=1 ng-required="ProductDetailsThirdPartyPermsionMultiple"> Yes
+                           </label>
+                           <label class="radio-inline">
+                               <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=2 ng-required="ProductDetailsThirdPartyPermsionMultiple"> No
+                           </label>
+                           <div class="help-block">
+                               <p ng-show="userForm.ThirdPartyPermission_{{$index}}.$error.required && (userForm.ThirdPartyPermission_{{$index}}.$dirty || submitted)">Please select third party permission</p>
+                           </div>
+                       </div>*@
+                       <!--end Update-->
+
+                       <!--View-->
+                       @*<span ng-if="!SeriesUpdateMode" ng-bind="Product.thirdpartypermission"></span>*@
+                       <span ng-bind="Product.thirdpartypermission"></span>
+                       <!--end View-->
+                    </td>
+                 
+                    @*<td ng-if="ProductDetailsThirdPartyPermsionMultiple &&((Product.ProductId == ProductIdValuesCheck) == true ) ">
+
+        <div id="ThirdPartyPermissionValue_{{$index}}" style=" padding-left: 30px;" class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ThirdPartyPermission_{{$index}}.$dirty) && userForm.ThirdPartyPermission_{{$index}}.$invalid } ">
+            <label class="radio-inline">
+                <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=1 ng-required="ProductDetailsThirdPartyPermsionMultiple"> Yes
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=2 ng-required="ProductDetailsThirdPartyPermsionMultiple"> No
+            </label>
+            <div class="help-block">
+                <p ng-show="userForm.ThirdPartyPermission_{{$index}}.$error.required && (userForm.ThirdPartyPermission_{{$index}}.$dirty || submitted)">Please select third party permission</p>
+            </div>
+        </div>
+    </td>
+
+
+    <td ng-if="ProductDetailsThirdPartyPermsionMultiple &&((ProductIdValuesCheck) == false ) ">
+
+        <div id="ThirdPartyPermissionValue_{{$index}}" style=" padding-left: 30px;" class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ThirdPartyPermission_{{$index}}.$dirty) && userForm.ThirdPartyPermission_{{$index}}.$invalid } ">
+            <label class="radio-inline">
+                <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=1 ng-required="ProductDetailsThirdPartyPermsionMultiple"> Yes
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=2 ng-required="ProductDetailsThirdPartyPermsionMultiple"> No
+            </label>
+            <div class="help-block">
+                <p ng-show="userForm.ThirdPartyPermission_{{$index}}.$error.required && (userForm.ThirdPartyPermission_{{$index}}.$dirty || submitted)">Please select third party permission</p>
+            </div>
+        </div>
+    </td>
+
+
+    <td ng-if="ProductDetailsThirdPartyPermsionMultiple &&((Product.ProductId == ProductIdValuesCheck) == false ) &&( ProductIdValuesCheck != false) "></td>*@
+                </tr>                
+                <!-- End Series Product Listing -->
+
+                <!-- Series Entry page from series product Listing -->
+                <tr ng-repeat="Product in ProductDetailsList_BySeries" ng-if="ProductDetailsList_BySeries">
+                    <td>
+                        <a href="~/Product/ProductMaster/ProductDetailsView?Id={{Product.ProductId}}" target="_blank" style="color: #ee5941;" class="hide_for_print"><span ng-bind="Product.ProductCode"></span></a>
+                        <a style="color: #ee5941; display:none;" class="show_for_print">{{Product.ProductCode}}</a>
+                    </td>
+
+                    <td><span ng-bind="Product.ProductCategory"></span></td>
+                    <td><span ng-bind="Product.OupIsbn"></span></td>
+                    <td><span ng-bind="Product.WorkingProduct"></span> <br /> <span style="font-size:11px;" ng-bind="Product.WorkingSubProduct"></span></td>
+                    <td><span ng-bind="Product.ProductType"></span></td>
+
+                    <td>
+
+                        <p ng-repeat="item in Product.AuthorName.split(',')">
+                            <a href="#" ng-click="ProductViewMode(item.split('#')[1])" data-toggle="modal" data-target="#myModal_Series" style="color:#ee5941;"><span ng-bind='item.split("#")[0]'></span></a>
+                        </p>
+
+                        <input type="hidden" id="hid_productid" price="{{Product.ProjectedPrice}}" currencyid="{{Product.ProjectedCurrencyId}}" value="{{Product.ProductId}}" />
+                        <input type="hidden" id="hid_currencyid" value="{{Product.ProjectedCurrencyId}}" />
+                        <input type="hidden" id="hid_price" value="{{Product.ProjectedPrice}}" />
+                        <input type="hidden" id="hid_ProjectedPublishingDate" value="{{Product.ProjectedPublishingDate}}" />
+                        <input type="hidden" name="hid_oupisbn" value="{{Product.OupIsbn}}" />
+                        <input type="hidden" name="hid_ProductCodeValue" id="hid_ProductCodeValue" value="{{Product.ProductCode}}" />
+                        <input type="hidden" name="hid_ThirdPartyPermsionLength" id="hid_ThirdPartyPermsionLength" value="{{ProductDetailsList_BySeries.length}}" />
+
+                    </td>
+
+                    <!--View-->
+                    <td>
+                        <span ng-bind="Product.thirdpartypermission"></span>
+                    </td>
+                    <!--end View-->
+
+                    @*<td>
+                        <div style=" padding-left: 30px;" class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ThirdPartyPermission_{{$index}}.$dirty) && userForm.ThirdPartyPermission_{{$index}}.$invalid } ">
+                            <label class="radio-inline">
+                                <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=1 ng-required="ProductDetailsThirdPartyPermsionMultiple"> Yes
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=2 ng-required="ProductDetailsThirdPartyPermsionMultiple"> No
+                            </label>
+                            <div class="help-block">
+                                <p ng-show="userForm.ThirdPartyPermission_{{$index}}.$error.required && (userForm.ThirdPartyPermission_{{$index}}.$dirty || submitted)">Please select third party permission</p>
+                            </div>
+                        </div>
+                    </td>*@
+
+                    @*<td ng-if="ProductDetailsThirdPartyPermsionMultiple">
+                        
+                        <div  style=" padding-left: 30px;" class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ThirdPartyPermission_{{$index}}.$dirty) && userForm.ThirdPartyPermission_{{$index}}.$invalid } ">
+                            <label class="radio-inline">
+                                <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=1 ng-required="ProductDetailsThirdPartyPermsionMultiple"> Yes
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="ThirdPartyPermission_{{$index}}" ng-model="ThirdPartyPermission" ng-value=2 ng-required="ProductDetailsThirdPartyPermsionMultiple"> No
+                            </label>
+                            <div class="help-block">
+                                <p ng-show="userForm.ThirdPartyPermission_{{$index}}.$error.required && (userForm.ThirdPartyPermission_{{$index}}.$dirty || submitted)">Please select third party permission</p>
+                            </div>
+                        </div>
+                    </td>*@
+                    
+                </tr>
+                <!-- End Series Entry page from series product Listing -->
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-lg" id="myModal_Series" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document" style="width:90%;">
+
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+
+            <div class="row panel">
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Author Details
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+
+                                            <div class="row" ng-show="AuthorCodeReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Author Code</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{AuthorCode}}</label>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class=" row" ng-show="TypeReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Type </label>
+
+
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{Type}}</label>
+
+
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="FirstNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">First Name </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{FirstName}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row" ng-show="LastNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Last Name </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{LastName}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AddressReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Address </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{Address}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="ResidencyStatusReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Residency Status </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{ResidencyStatus}}</label>
+
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" id="Authorgeo">
+                                                <div class="col-md-12">
+                                                    <div class=" row" ng-show="CountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">Country </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{Country}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-show="OtherCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">Country</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{OtherCountry}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="StateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">State </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{State}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="OtherStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> State</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{OtherState}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="CityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">City </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{City}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="OtherCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> City</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{OtherCity}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row" ng-show="PinCodeReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> PIN Code</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{PinCode}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                            <div class="row" ng-show="EmailReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Email </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{Email}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+
+                                        <div class="col-md-6">
+
+
+
+                                            <div class="row" ng-show="PhoneReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Phone </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{Phone}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row" ng-show="MobileReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Mobile </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{Mobile}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="PANNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">PAN </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{PANNo}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row" ng-show="AdharCardNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Adhar Card No </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{AdharCardNo}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="DateOfBirthReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Date of Birth</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{DateOfBirth}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+                                            <div class="row" ng-show="AccountNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Account No</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{AccountNo}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div class="row" ng-show="BankNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Bank Name </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BankName}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="row" ng-show="BranchNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Branch Name</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BranchName}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="row" ng-show="IFSECodeReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">IFSC Code </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{IFSECode}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="row" ng-show="FaxReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Fax </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{Fax}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="RemarkReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Remark </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{RemarkView}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12" ng-show="ReqAffiliationDetailsView">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Affiliation Details
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class=" row">
+                                    <div class="col-md-12">
+
+                                        <div class="col-md-6">
+                                            <div class="row" ng-show="InstituteReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Institute </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{InstituteCompanyName}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AffiliationDesignationReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Designation </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{AffiliationDesignation}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AffiliationDepartmentReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Department</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{AffiliationDepartment}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12" id="Affiliation">
+
+                                                    <div class=" row" ng-show="AffiliationCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">Country </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{AffiliationCountry}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-show="AffiliationOtherCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">Country</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{AffiliationOtherCountry}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="AffiliationStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">State </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{AffiliationState}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="AffiliationOtherStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> State</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{AffiliationOtherState}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="AffiliationCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">City </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{AffiliationCity}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="AffiliationOtherCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> City</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{AffiliationOtherCity}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row" ng-show="AffiliationPinCodeReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> PIN Code</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{AffiliationPinCode}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                        </div>
+
+
+
+                                        <div class="col-md-6">
+
+
+                                            <div class="row" ng-show="AffiliationAddressReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Address </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{AffiliationAddress}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AffiliationPhoneReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Phone No. </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{AffiliationPhone}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="AffiliationEmailReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Email</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{AffiliationEmail}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="AffiliationWebSiteReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Website </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{AffiliationWebSite}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Beneficiary Details
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="row" ng-show="BeneficiaryNameReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Name </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{BeneficiaryName}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="BeneficiaryRelationReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Relation</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{BeneficiaryRelation}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryEmailReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Email </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{BeneficiaryEmail}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryAddressReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Address </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{BeneficiaryAddress}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12" id="Beneficiary">
+
+                                                    <div class=" row" ng-show="BeneficiaryCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">Country </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{BeneficiaryCountry}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-show="BeneficiaryOtherCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">Country</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{BeneficiaryOtherCountry}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="BeneficiaryStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">State </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{BeneficiaryState}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="BeneficiaryOtherStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> State</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{BeneficiaryOtherState}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="BeneficiaryCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">City </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{BeneficiaryCity}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="BeneficiaryOtherCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> City</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{BeneficiaryOtherCity}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row" ng-show="BeneficiaryPinCodeReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> PIN Code</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{BeneficiaryPinCode}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div class="row" ng-show="BeneficiaryPhoneReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5"> Phone </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BeneficiaryPhone}}</label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-show="BeneficiaryMobileReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Mobile </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BeneficiaryMobile}}</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryFaxReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Fax </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BeneficiaryFax}}</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                        <div class="col-md-6">
+                                            <div class="row" ng-show="BeneficiaryPanNoReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">PAN</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BeneficiaryPanNo}}</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="BeneficiaryAccountNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Account No </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BeneficiaryAccountNo}}</label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="BeneficiaryBankNameReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Bank Name</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BeneficiaryBankName}}</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryBranchNameReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Branch Name </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BeneficiaryBranchName}}</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="BeneficiaryIFSECodeReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">IFSC Code</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{BeneficiaryIFSECode}}</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-show="ReqNomineeDetails">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Nominee Details
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class=" row">
+                                    <div class="col-md-12">
+
+                                        <div class="col-md-6">
+                                            <div class="row" ng-show="NomineeNameReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Name </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{NomineeName}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeRelationReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Relation </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{NomineeRelation}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeEmailReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Email </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{NomineeEmail}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="DeathDateReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Death Date </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{DeathDate}}</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeAddressReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Address </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+
+                                                            <label class="control-label">{{NomineeAddress}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12" id="Nominee">
+
+
+                                                    <div class=" row" ng-show="NomineeCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">Country </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{NomineeCountry}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-show="NomineeOtherCountryReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">Country</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{NomineeOtherCountry}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="NomineeStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">State </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{NomineeState}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="NomineeOtherStateReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> State</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{NomineeOtherState}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class=" row" ng-show="NomineeCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5">City </label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{NomineeCity}}</label>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="NomineeOtherCityReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> City</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{NomineeOtherCity}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row" ng-show="NomineePinCodeReq">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5 col-xs-5 col-sm-5"> PIN Code</label>
+                                                            <div class="col-md-7 col-xs-7 col-sm-7">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">{{NomineePinCode}}</label>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-md-6">
+
+                                            <div class="row" ng-show="NomineePhoneReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Phone </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{NomineePhone}}</label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeMobileReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Mobile </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{NomineeMobile}}</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineeFaxReq">
+                                                <div class="col-md-12">
+
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">Fax </label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{NomineeFax}}</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="NomineePanNoReq">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-5 col-sm-5">PAN</label>
+                                                    <div class="col-md-7 col-xs-7 col-sm-7">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{NomineePanNo}}</label>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

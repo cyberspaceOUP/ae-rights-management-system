@@ -1,0 +1,456 @@
+﻿
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Contract Information
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body clearfix">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Request Date <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group date">
+                            @*<div class="input-group input-append date datePicker">*@
+                                <input type="text" class="form-control"   disabled id="Entrydate" ng-model="Entrydate" name="Entrydate"  />
+                                @*<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>*@
+                            @*</div>*@
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="display:none;" >
+                    <label class="control-label col-md-5">Contract Date <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group " id="ErrorContract" ng-class="{ 'has-error': ( submitted ||userForm.ContractDate.$dirty) &amp;&amp; userForm.ContractDate.$invalid } ">
+                            <div class="input-group input-append date" id="ContractDate">
+                                <input type="text" class="form-control"
+                                       name="ContractDate" id="ContractDate" ng-model="ContractDate" required>
+                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+
+                            </div>
+                            <div class="help-block">
+                                <p ng-show="userForm.ContractDate.$error.required && (userForm.ContractDate.$dirty || submitted)">Please enter contract date</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-md-12">
+                    <label class="control-label col-md-5">Contract Type <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContactType.$dirty) && userForm.ContactType.$invalid } ">
+                            <select class="form-control" name="ContactType" ng-model="contractType" required>
+                                <option value="">--Please Select--</option>
+                                <option ng-repeat="div in ContactType" ng-selected="{{contractType}}" value="{{div.Id}}">{{div.Contact}}</option>
+                            </select>
+                            <div class="help-block">
+                                <p ng-show="userForm.ContactType.$error.required && (userForm.ContactType.$dirty || submitted)">Please select contract type</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Number of Authors <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NoofAuthors.$dirty) && userForm.NoofAuthors.$invalid } ">
+                            <input type="number" min="1" max="10" name="NoofAuthors" ng-init="NoofAuthors=1" ng-change="CreateDynamicTable(NoofAuthors)" class="form-control" 
+                                   ng-model="NoofAuthors" required placeholder="Total No of Author">
+                            <div class="help-block">
+                                <p ng-show="userForm.NoofAuthors.$error.required && (userForm.NoofAuthors.$dirty || submitted)" class="help-block red">Please enter total number of author</p>
+                                <p ng-show="userForm.NoofAuthors.$error.min && (userForm.NoofAuthors.$dirty || submitted)" class="help-block red">Minimum one author is required</p>
+                                <p ng-show="userForm.NoofAuthors.$error.max && (userForm.NoofAuthors.$dirty || submitted)" class="help-block red">Maximum 10 author can be entered</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Royalty Type </label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label class="radio-inline">
+                                <input type="radio" name="PriceType" ng-model="PriceType" value="List Price"> List Price
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="PriceType" ng-model="PriceType" value="Net Price"> Net Price
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Term of Copyright <span class="red">*</span></label>
+                    <div class="col-md-7 ">
+
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.TemsOfCopyRight.$dirty) && userForm.TemsOfCopyRight.$invalid } ">
+                            <label class="radio-inline">
+                                <input type="radio" name="TemsOfCopyRight" ng-change="SetScopeVariable(TemsOfCopyRight)" ng-model="TemsOfCopyRight" ng-value=1 required> Periodic
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="TemsOfCopyRight" ng-change="SetScopeVariable(TemsOfCopyRight)" ng-checked="Copyright==2" ng-model="TemsOfCopyRight" ng-value=2 required> Perpetual
+                            </label>
+                            <div class="help-block">
+                                <p ng-show="userForm.TemsOfCopyRight.$error.required && (userForm.TemsOfCopyRight.$dirty || submitted)" class="help-block">Select Terms of Copyright</p>
+                            </div>
+                        </div>
+                     </div>
+
+                </div>
+               
+                <div class="col-md-12" ng-if="Copyright==1" style="display:none">
+                    <label class="control-label col-md-5">Period of Agreement (In Month) <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PeriodofAgreement.$dirty) && userForm.PeriodofAgreement.$invalid } ">
+                          
+                            <input type="number" name="PeriodOfAgreement" min="0" ng-init="PeriodOfAgreement=0" ng-change="CalculateExpiry(PeriodOfAgreement)" class="form-control" ng-model="PeriodOfAgreement" ng-required="Copyright==1" placeholder="Enter period of agreement">
+                            <div class="help-block">
+                                <p ng-show="userForm.PeriodofAgreement.$error.required && (userForm.PeriodofAgreement.$dirty || submitted)">Please select period of agreement </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-if="Copyright==1" style="display:none">
+                    <label class="control-label col-md-5">Expiry Date <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <input type="datetime" name="ExpiryDate" ng-init="ExpiryDate=Entrydate" readonly class="form-control" ng-model="ExpiryDate" ng-required="Copyright==1" placeholder="Enter expiry date">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Buyback</label>
+                    <div class="col-md-7">
+                        <div class="form-group " ng-class="{ 'has-error': ( submitted ||userForm.BuyBack.$dirty) && userForm.BuyBack.$invalid } ">
+                            <label class="radio-inline">
+                                <input type="radio" name="BuyBack" ng-model="BuyBack" value="Yes"> Yes
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="BuyBack"  ng-model="BuyBack" value="No"> No
+                            </label>
+                            <div class="help-block">
+                                <p ng-show="userForm.BuyBack.$error.required && (userForm.BuyBack.$dirty || submitted)">Please select buyback </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Nature of Work</label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <input type="text" name="NatureofWork" class="form-control" ng-model="NatureofWork" placeholder="Nature of work" maxlength="50">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Copyright Owner <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.CopyRightOwner.$dirty) && userForm.CopyRightOwner.$invalid } ">
+                            <label class="radio-inline">
+                                <input type="radio" name="CopyRightOwner"  ng-model="CopyRightOwner" value="P" required> Publisher
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="CopyRightOwner" ng-model="CopyRightOwner" value="A" required> Author
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="CopyRightOwner" ng-model="CopyRightOwner" value="J " required> Joint
+                            </label>
+                            <div class="help-block">
+                                <p ng-show="userForm.CopyRightOwner.$error.required && (userForm.CopyRightOwner.$dirty || submitted)">Please select copyright owner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Territory <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Territoryrights.$dirty) && userForm.Territoryrights.$invalid } ">
+                            <select class="form-control" name="Territoryrights" ng-model="Territoryrights" required>
+                                <option value="">--Please Select--</option>
+                                <option ng-repeat="div in TerritoryList" ng-selected="{{Territoryrights}}" value="{{div.Id}}">{{div.Territoryrights}}</option>
+                            </select>
+                            <div class="help-block">
+                                <p ng-show="userForm.Territoryrights.$error.required && (userForm.Territoryrights.$dirty || submitted)">Please select territory rights</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-md-12">
+                    <label class="control-label col-md-5">Third Party Permission <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ThirdPartyPermission.$dirty) && userForm.ThirdPartyPermission.$invalid } ">
+                            <label class="radio-inline">
+                                <input type="radio" name="ThirdPartyPermission" ng-model="ThirdPartyPermission" ng-value=1 required> Yes
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="ThirdPartyPermission" ng-model="ThirdPartyPermission" ng-value=2 required> No
+                            </label>
+                            <div class="help-block">
+                                <p ng-show="userForm.ThirdPartyPermission.$error.required && (userForm.ThirdPartyPermission.$dirty || submitted)">Please select third party permission</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Contributors Details <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Contributor.$dirty) && userForm.Contributor.$invalid } ">
+                            <label class="radio-inline">
+                                <input type="radio" name="Contributor" ng-model="Contributor" ng-value=1 required> Yes
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="Contributor"  ng-model="Contributor" ng-value=0 required> No
+                            </label>
+                            <div class="help-block">
+                                <p ng-show="userForm.Contributor.$error.required && (userForm.Contributor.$dirty || submitted)">Please select contributor</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-if="Contributor==1" ng-repeat="div in ContractNameList">
+                    <label class="control-label col-md-5">Contributor {{$index + 1}} <span class="red" ng-if="$index==0">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group contributor" ng-class="{ 'has-error': ( submitted ||userForm.ContributorName.$dirty) && userForm.ContributorName.$invalid } ">
+                            <input type="text" name="ContributorName" required class="form-control" ng-model="ContributorName[$index]" placeholder="Enter contributor name">
+                           
+                            <div class="help-block" ng-if="$index==0">
+                                <p ng-show="ContributorNamevalid && userForm.ContributorName.$error.required && (userForm.ContributorName.$dirty || submitted)">Please enter contributor name</p>
+                            </div>
+                           
+                        </div>
+                      
+                    </div>
+                   
+                </div>
+                <div class="col-md-12" ng-if="Contributor==1">
+                    <div class="col-md-8">&nbsp;</div>
+                    <div class="col-md-4">
+                        <a style="color: #ee5941; cursor: pointer; " class="text-right" ng-click="addContributorrow()">+ Add More Contributor</a>
+                    </div>
+                       
+                    </div>
+               
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Amendment to standard clauses<span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Amendment.$dirty) && userForm.Amendment.$invalid } ">
+                            <label class="radio-inline">
+                                <input type="radio" name="Amendment"  ng-model="Amendment" ng-value=1 required> Yes
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="Amendment" ng-model="Amendment" ng-value=0 required> No
+                            </label>
+                            <div class="help-block">
+                                <p ng-show="userForm.Amendment.$error.required && (userForm.Amendment.$dirty || submitted)">Please select Amendment</p>
+                            </div>
+                            <label ng-show="Amendment=='1'" class="radio-inline">
+                                <span data-toggle="modal" style="color: #ee5941;" data-target="#myAuthorContract">Upload Document</span>
+                            </label>
+
+                            <label ng-show="Amendment=='1' && Docurl1.length"class="radio-inline">
+                                <span data-toggle="modal" style="color: #ee5941;" data-target="#myAuthorContractView">View Document </span>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-if="Amendment==1">
+                    <label class="control-label col-md-5">Remarks <span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AmendmentRemarks.$dirty) && userForm.AmendmentRemarks.$invalid } ">
+                            <textarea name="AmendmentRemarks" class="form-control" ng-required="Amendment==1" ng-model="AmendmentRemarks" placeholder="Amendment remarks"></textarea>
+                            <div class="help-block">
+                                <p ng-show="userForm.AmendmentRemarks.$error.required && (userForm.AmendmentRemarks.$dirty || submitted)">Please enter amendment remarks</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Restrictions</label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <input type="text" name="Restriction" class="form-control" ng-model="Restriction" placeholder="Enter restriction" maxlength="100">                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-lg" id="myAuthorContract" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document" style="width:90%;">
+        <div class="modal-body ">
+            <button type="button" class="close CloseValue" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+
+            <div class="row panel">
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Amendment File Upload
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:void(0);" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class=" row">
+                                    <div class="col-md-12">
+
+
+
+
+                                        <label class="control-label col-md-2"> Upload Document @*&nbsp; <span class="red">*</span>*@</label>
+                                        <div class="col-md-10 form-group uploadFileMutple" id="uploadFileMutple">
+
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="help-block">
+                                            <p ng-show="UploadContractReq" id="UploadContractReq" class="help-block">Please Upload Document</p>
+                                            <p ng-show="UploadExcelfileNameReq" class="help-block">Please enter file name</p>
+
+                                        </div>
+                                        
+
+
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+
+
+                                                <button type="button" ng-click="fun_AddAmendmentFile()" class="btn green" id="btnSubmit">Submit</button>
+
+                                                <div class="clearfix">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade bs-example-modal-lg" id="myAuthorContractView" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document" style="width:90%;">
+        <div class="modal-body ">
+            <button type="button" class="close CloseValue" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+
+            <div class="row panel">
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Amendment Attached Document
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:void(0);" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class=" row">
+                                 
+
+
+                                        <div class="col-md-12" ng-show="Docurl1.length">
+                                            <div id="doclistid" style=" padding-left: 29px;">
+                                                <div class="panel-body">
+
+                                                    <table class="table table-striped table-hover ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>Document Name</th>
+                                                                <th>Action</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="url in Docurl1">
+                                                                <td>{{ $index + 1 }} <input type="hidden" name="DocId1" value="{{url.DocId1}}" /></td>
+                                                                <td><a href="~/uploads/{{url.text1}}" target="_blank" style="color: black;">{{url.name1}}</a></td>
+                                                                <td><a style=" color: black; cursor:pointer;" ng-click="RemoveDocumentLinkById(url.DocId1,url.text1)">Delete</a></td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#ContractDate").datepicker({
+            endDate: '+0d',
+            autoclose: true,
+            format: 'dd/mm/yyyy',
+            onSelect: function () {
+                $('input[name$=ContractDate]').change();
+            }
+
+        });
+
+        $('input[name$=ContractDate]').change(function () {
+
+            if ($(this).val() != "") {
+                $('#ErrorContract').removeClass("has-error");
+                $(this).closest('div').next().find('p').removeClass('ng-show').addClass("ng-hide");
+            }
+        });
+    });
+
+
+    
+
+
+</script>

@@ -1,0 +1,433 @@
+﻿@using ACS.Services.Master
+@model ACS.Core.Domain.Master.ExecutiveMaster
+@{
+    ViewBag.Title = "Author Contract";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+
+
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/Product/ProductDetails.js"></script>
+<script src="~/js/Contract/Contract.js"></script>
+
+<script src="~/js/common/TopSearch.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+@*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />*@
+<input type="hidden" id="hid_productid_AC" value="@ViewBag.ProductId" />
+<input type="hidden" id="hid_ContractId" value="@ViewBag.ContractIdId" />
+<input type="hidden" id="hid_documentDeleteUrl" value="@T("DeleteDocument.fromFolderURL")" />
+<input type="hidden" id="hid_licenceId" value="@ViewBag.LicenceId" />
+<input type="hidden" id="hid_productIds" value="@ViewBag.SeriesIds" />
+<input type="hidden" id="hid_SeriesCode" value="@ViewBag.SeriesCode" />
+<input type="hidden" id="hid_contractUpdate" value="@ViewBag.Update" />
+<input type="hidden" name="hid_productidValue" id="hid_productidValue" value="@ViewBag.ProductId" />
+
+@section onInit
+{
+    if (@ViewBag.ProductId!=0)
+    {
+    @*angular.element(document.getElementById('angularid')).scope().ProductSerach(@ViewBag.ProductId);*@
+    angular.element(document.getElementById('angularid')).scope().ProductSerachContract(@ViewBag.ProductId);
+    angular.element(document.getElementById('angularid')).scope().AuthorListProductBased();
+
+              
+    @*//fetch Kit Details List*@    
+    angular.element(document.getElementById('angularid')).scope().KitISBNDetailsList(@ViewBag.ProductId);
+           
+
+    }
+    if (@ViewBag.ContractIdId!=0)
+    {
+    angular.element(document.getElementById('angularid')).scope().GetAuthorContractDetails(@ViewBag.ContractIdId);
+    }
+    if ('@ViewBag.SeriesIds'!="")
+    {
+    angular.element(document.getElementById('angularid')).scope().ShowProductsDetailMultiple();
+    angular.element(document.getElementById('angularid')).scope().ShowProductsDetailMultipleBySeries(@ViewBag.SeriesIds);
+    angular.element(document.getElementById('angularid')).scope().AuthorListProductBased(@ViewBag.ProductId);
+    }
+    if ('@ViewBag.SeriesCode'!="")
+    {
+    angular.element(document.getElementById('angularid')).scope().GetAuthorContractDetailsbySeriesId('@ViewBag.SeriesCode');
+    }
+
+    angular.element(document.getElementById('angularid')).scope().handledBy(@Model.Id,"@Model.executiveName");
+    angular.element(document.getElementById('angularid')).scope().getContractType();
+    angular.element(document.getElementById('angularid')).scope().gettermsofCopyright();
+    angular.element(document.getElementById('angularid')).scope().getPeriodofAgreement();
+    angular.element(document.getElementById('angularid')).scope().getTerritoryRightsList();
+    angular.element(document.getElementById('angularid')).scope().getSubsidiaryList();
+    angular.element(document.getElementById('angularid')).scope().GetAuthorTypeList();
+    angular.element(document.getElementById('angularid')).scope().AuthorListProductBased();
+    angular.element(document.getElementById('angularid')).scope().getSupplyMaterialList();
+    angular.element(document.getElementById('angularid')).scope().getCurrencyList();
+    angular.element(document.getElementById('angularid')).scope().getMenuScriptDeliveryFormat();
+    angular.element(document.getElementById('angularid')).scope().SubProductTypeList();
+    angular.element(document.getElementById('angularid')).scope().getSeriesDetails();
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Assignment Contract
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class="col-md-12 text-right backtolist" ng-if="@ViewBag.ProductId!=0 || @ViewBag.LicenceId!=0 || '@ViewBag.SeriesIds'!=''">
+            <div class="tools">
+                <a href="@T("AuthorContract.BackSearchUrl")" style="color:black;">Back To List</a>
+            </div>
+        </div>
+        <div class="col-md-12 text-right backtolist" ng-if="@ViewBag.ContractIdId!=0  || '@ViewBag.SeriesCode'!=''">
+            <div class="tools">
+                <a href="@T("AuthorContract.FromContractSearch")" style="color:black;" ng-if="'@ViewBag.Update' == 'dashboard'">Back To List</a>
+                <a href="javascript:void(0);" style="color:black;" ng-if="'@ViewBag.Update' == 'update'" ng-click="btn_BackToList()">Back To List</a>
+                <a href="Javascript:void(0);" style="color:black;" ng-if="'@ViewBag.Update' == 'seriesupdate'" ng-click="btn_BackToListSeries()">Back To List</a>
+            </div>
+        </div>
+
+        <form name="userForm" class="form-horizontal" ng-submit="SubmitForm()" novalidate>
+
+
+            <div class="col-md-6">
+                <label class="control-label col-md-5">Project Handled By <span class="red">*</span></label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.HandledByExecutive.$dirty) && userForm.HandledByExecutive.$invalid } ">
+                        <select class="form-control" name="HandledByExecutive"
+                                ng-model="ByExecutive" required>
+                            <option value="">--Please Select--</option>
+                            <option ng-repeat="div in HandledByList" ng-selected="{{ByExecutive}}" value="{{div.Id}}">{{div.ExecutiveName}}</option>
+                        </select>
+                        <div class="help-block">
+                            <p ng-show="userForm.HandledByExecutive.$error.required && (userForm.HandledByExecutive.$dirty || submitted)">Please select executive</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" ng-if="SeriesName!=undefined">
+
+                <div class="alert alert-info" role="alert">
+                    <div class="caption">
+                        <h4>{{ SeriesName }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            @*for single product by product/license code *@
+            <div class="col-md-12" ng-if="@ViewBag.ProductId!=0 || @ViewBag.ContractIdId!=0 || @ViewBag.LicenceId!=0">
+                <div ng-show="SeriesCode_Available==false">
+                    @*@Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")*@
+                    @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetailsForContract.cshtml")
+
+                    <!--Kit Details List-->
+                    <div class="col-md-12" ng-if="KitISBNDetailsList.length">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                    </div>
+
+                </div>
+            </div>   
+
+            @*for multipe product by Seriescode code*@
+            <div class="col-md-12" ng-if="@ViewBag.ProductId==0 && @ViewBag.LicenceId==0 && @ViewBag.ContractIdId==0">
+                @{
+                    if (ViewBag.SeriesCode != null)
+                    {
+                          @Html.Partial("_ProductDetailsForSeries")
+                    }
+                }                              
+            </div>
+
+            @*for multipe product by product code*@
+            <div class="col-md-12" ng-if="@ViewBag.ProductId!=0 || @ViewBag.ContractIdId!=0  && SeriesCode_Available==true">
+                @{
+                    <!--Product Code with SeriesId-->
+                    if (ViewBag.SeriesIds != null)
+                    {
+                        @Html.Partial("_ProductDetailsForSeries")
+                    }
+
+                    <!--Product Code with SeriesCode-->
+                    if (ViewBag.SeriesIds == null)
+                    {
+                        <div ng-show="SeriesCode_Available_Update==true">
+                            @Html.Partial("_ProductDetailsForSeries")
+                        </div>
+                    }
+                } 
+            </div>
+
+            <div class="col-md-12" ng-if="'@ViewBag.LicenceId'!=0">
+                @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicense.cshtml")
+            </div>
+            <div class="col-md-12">
+                @Html.Partial("_ContractInformation")
+            </div>
+            <div class="col-md-12">
+                @Html.Partial("_ProductInformation")
+            </div>
+            <div class="col-md-12 AuthorBox" ng-repeat="div in AuthorBox">
+                @Html.Partial("_AuthorBasicDetails")
+            </div>
+
+            @*<div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <div class="portlet-body clearfix">
+                                <button type="button" class="btn green" ng-click="AddMoreAuthor()" name="btnSubmit" style="margin:20px;"> + Add More Author</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Subsidiary Rights
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                        </div>
+                    </div>
+
+                    @Html.Partial("_SubsidiaryRights")
+                </div>
+            </div>
+            <div class="col-md-12" ng-if="@ViewBag.ContractIdId!='0' || '@ViewBag.SeriesCode'!='' ">
+                @Html.Partial("_ContractAgreement")
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="portlet-body clearfix">
+                            <button type="submit" class="btn green" id="btnSubmit" ng-click="submitted=true" name="btnsubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    //$(function () {
+    //    $('body').on('click', '.datePicker', function () {
+    //        $(this).datepicker('destroy').datepicker({ showOn: 'focus' }).focus();
+    //    });
+    //});
+
+    $(window).bind('beforeunload', function () {
+
+        // window.history.pushState("", "", localStorage.getItem("url"));
+
+    });
+    //$(document).ready(function () {
+    $(function (){
+    //setTimeout(function () {
+
+        $('.datePickerSupply').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+        });
+            // EncriptUrl();
+        //},5000);
+
+    });
+    function EncriptUrl() {
+        localStorage.setItem("url", window.location.href);
+        var QueryString = window.location.href.slice(window.location.href.indexOf('?') + 1)
+        var UrlWithoutQueryString = window.location.href.substr(0, window.location.href.indexOf('?'));
+        var strMD5 = $.md5(QueryString);
+        var ActualUrl = UrlWithoutQueryString + "?value=" + strMD5;
+        window.history.pushState("", "", ActualUrl);
+    }
+
+
+
+    //$(document).on("click", ".datePicker", function () {
+    //    //toastr.info("Initializing " + this.id);
+
+    //    $(this).datepicker({
+    //        minDate: moment().subtract("months", 1).toDate(),
+    //        maxDate: moment().add("months", 1).toDate(),
+    //        dateFormat: "d M, y",
+    //        constrainInput: true,
+    //        beforeShowDay: $.datepicker.noWeekends
+    //    });
+    //});
+
+    //$(document).on('click', '.datePicker', function () {
+    //    alert('.datePicker')
+    //    $('.datePicker').datepicker({
+    //        format: 'dd/mm/yyyy',
+    //        autoclose: true,
+    //        // onSelect: function () {
+    //        //        ComparisionOfDate($(this).find('input'));
+
+    //        //}
+
+    //    });
+    //});
+
+
+    //$(document).on('changeDate', ".datePicker", function () {
+    //    alert('event fired');
+    //});
+
+    //$(window).load(function () {
+    //    $(".datePicker").datepicker({
+    //        format: 'dd/mm/yyyy',
+    //        autoclose: true,
+    //    });
+    //});
+
+    //$('body').on('focus',".datePicker", function(){
+    //    $(this).datepicker();
+    //});
+
+
+    //function GenerateIframe(obj)
+    //{
+    //    if ($(this).val() == "")
+    //    {
+    //        return false;
+    //    }
+
+    //}
+    //$('body').on('click', ".datePicker", function () {
+    //    $(this).datepicker({
+    //        format: 'dd/mm/yyyy',
+    //        autoclose: true,
+    //        onSelect: function () {
+    //            RemoveValidation($(this).find('input'));
+    //        }
+
+    //    });
+    //});
+
+   
+
+
+    //$(".datePicker").datepicker({
+    //    format: 'dd/mm/yyyy',
+    //    autoclose: true,
+    //    //onSelect: function () {
+    //    //    RemoveValidation($(this).find('input'));
+    //    //}
+
+    //});
+
+    function RemoveValidation(obj) {
+        $('input[name*=SupplyMaterialByAuthordate]').each(function () {
+            var obj = $(this);
+            if (obj.val() != "") {
+                obj.closest(".form-group").removeClass("has-error");
+                obj.closest('div').next().find('p').removeClass('ng-show').addClass("ng-hide");
+                obj.removeAttr("required");
+            }
+            else {
+                obj.attr("required", "true");
+                obj.closest(".form-group").addClass("has-error");
+                obj.closest('div').next().find('p').addClass('ng-show').removeClass("ng-hide");
+            }
+        });
+
+    }
+
+
+    function convertDate(date) {
+        var datearray = date.split("/");
+        return datearray[1] + '/' + datearray[0] + '/' + datearray[2];
+    }
+    setTimeout(function () {
+
+        if ($("#hid_ContractId").val() != "" || $("#hid_SeriesCode").val() != "") {
+            $('.AuthorBox').each(function () {
+                var obj = $(this);
+                $(obj).find(".RoyaltySlab").find("tbody tr").each(function (index) {
+
+                    if (index == $(obj).find(".RoyaltySlab").find("tbody tr").length - 1) {
+                        $(this).find(".RoyaltySlabnotRemove").css("display", "none");
+                    }
+                    else {
+                        $(this).find(".RoyaltySlabnotAdd").css("display", "none");
+                    }
+
+                });
+
+            });
+        }
+    }, 5000);
+
+    function RoyaltySlab(obj) {
+        angular.element(document.getElementById('angularid')).scope().ValidateRoyaltySlabInsert($(obj));
+    };
+
+    function FillOutTo(obj) {
+        _crrTr = $(obj).closest("tr");
+        if (_crrTr.find('input[name*=CopiesTo]').val() != "") {
+            if (parseInt(_crrTr.find('input[name*=CopiesFrom]').val()) >= parseInt(_crrTr.find('input[name*=CopiesTo]').val())) {
+                alert("Please enter copies to value greater than copies from");
+                //_crrTr.find('input[name*=CopiesTo]').focus();
+                return false;
+            }
+        }
+    }
+
+    function RemoveValidationRoyaltySlab(obj) {
+        var obj = $(obj);
+        obj.closest("tr").removeClass("has-error");
+    };
+
+
+</script>
+
+
+
+<script type="text/javascript">
+
+
+
+    $(function () {
+        renderFileUpload();
+
+
+    });
+
+    function renderFileUpload() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            contentType: 'application/html; charset=utf-8',
+            url: GlobalredirectPath + "/Master/Master/MultipleFileUpload",
+            data: {},
+            datatype: 'html',
+            success: function (result) {
+                $(".uploadFileMutple").html(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+
+    }
+
+
+</script>
+
+
+
+
+

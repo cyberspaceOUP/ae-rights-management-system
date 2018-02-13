@@ -1,0 +1,85 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "CopyrightHolderList";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/list/List.CopyrightHolder.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getAllCopyrightHolder();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Copyright Holder List
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Copyright Holder List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Copyright Holder Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Contact Person &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Country &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>State &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>City &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Mobile &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Email &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>URL &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="CopyrightHolder in CopyrightHolderList">
+
+                                <td><span ng-bind="CopyrightHolder.CopyRightHolderName"></span></td>
+                                <td><span ng-bind="CopyrightHolder.ContactPerson"></span></td>
+                                <td><span ng-bind="CopyrightHolder.Country"></span></td>
+                                <td><span ng-bind="CopyrightHolder.State"></span></td>
+                                <td><span ng-bind="CopyrightHolder.City"></span></td>
+                                <td><span ng-bind="CopyrightHolder.Mobile"></span></td>
+                                <td><span ng-bind="CopyrightHolder.Email"></span></td>
+                                <td><span ng-bind="CopyrightHolder.URL"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="col-md-12" id="div_btnExcel">
+            <div class="form-group text-center">
+                <form name="userForm" class=" form-horizontal" ng-show="CopyrightHolderList.length != 0" ng-submit="CopyrightHolderListExcel()">
+                    <button type="submit" class="btn green" id="btnSubmit">Generate Excel</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

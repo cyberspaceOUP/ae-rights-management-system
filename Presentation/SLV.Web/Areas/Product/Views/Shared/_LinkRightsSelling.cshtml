@@ -1,0 +1,31 @@
+﻿@*<div ng-hide="!RightsSellingMasterLinks_List.length">
+
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Rights Selling Links
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="table-responsive">*@
+
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Rights Selling Code </th>
+                    </tr>
+
+                    <tr ng-repeat="P in RightsSellingMasterLinks_List">
+                        <td class="table-color"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{P.AuthorContractId}}&type=P{{P.ProductLicenseId}}&RightsSellingId={{P.RightsSellingId}}" target="_blank"><span ng-bind="P.RightsSellingCode"></span></a></td>
+                    </tr>
+                </table>
+            @*</div>
+        </div>
+    </div>
+
+</div>*@
+@*<div ng-hide="RightsSellingMasterLinks_List.length">No result found</div>*@
+
+

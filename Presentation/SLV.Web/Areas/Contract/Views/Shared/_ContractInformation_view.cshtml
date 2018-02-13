@@ -1,0 +1,202 @@
+﻿
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Contract Information
+        </div>
+        <div class="tools">
+            <a href="javascript:void(0);" class="collapse" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body clearfix">
+        <div class="col-md-6 col-xs-6 col-sm-6">
+            <div class="row">
+
+                <div class="col-md-12" ng-if="AuthorContractCode!=undefined">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Code </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span id="ContractCodeValue" ng-bind="AuthorContractCode"></span> </label>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-if="SeriesCode!=undefined">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Series Code </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="SeriesCode"></span> </label>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Request Date </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="EntryDate"></span>  </label>
+                    </div>
+                </div>
+                <div class="col-md-12" style="display:none;">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Date</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="ContractDate"></span> </label>
+                    </div>
+                </div>
+                @*<div class="col-md-12">
+                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Type </label>
+                        <div class="col-md-7 col-xs-6 col-sm-6">
+                              <label class="control-label">{{ContractType}} </label>
+                        </div>
+                    </div>*@
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Number of Authors</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="NoOfAuthors"></span>  </label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Term of Copyright </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6 ">
+                        @*<label class="control-label"><span ng-bind='TemsOfCopyRight==1?"Periodic":"Perpetual"'></span>  </label>*@
+                        <label class="control-label"><span ng-bind='TemsOfCopyRight | Filter_TermsOfCopyRight'></span>  </label>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-if="TemsOfCopyRight==1" style="display:none;">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Period of Agreement (In Month) </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="PeriodInMonth"></span>  </label>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-if="TemsOfCopyRight==1" style="display:none;">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Expiry Date</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="ContractExpiry"></span>  </label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Buyback</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="BuyBack"></span> </label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Nature of Work</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind='NatureOfWork==undefined?"---": NatureOfWork'></span>  </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-6 col-sm-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Copyright Owner</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        @*<label class="control-label"><span ng-bind='CopyRightOwner=="J"?"Joint":CopyRightOwner=="P"?"Publisher":"Author"'></span>  </label>*@
+                        <label class="control-label"><span ng-bind='CopyRightOwner | Filter_CopyRightOwner'></span>  </label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Territory</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="Teriterry"></span></label>
+                    </div>
+                </div>
+                @*<div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Third Party Permission</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind='ThirdPartyPermission==1?"Yes":"No"'></span>  </label>
+                    </div>
+                </div>*@
+
+                <!--Contributer Details For Rights Team-->
+                <div ng-if="'@ViewBag.Department'=='rt' && '@ViewBag.Update'=='update'">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Contributors Details <span class="red">*</span></label>
+                        <div class="col-md-6 col-xs-6 col-sm-6" style="margin-left:4%;">
+                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Contributor.$dirty) && userForm.Contributor.$invalid } ">
+                                <label class="radio-inline">
+                                    <input type="radio" name="Contributor" ng-model="Contributor" ng-value=1 required> Yes
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="Contributor" ng-model="Contributor" ng-value=0 required> No
+                                </label>
+                                <div class="help-block">
+                                    <p ng-show="userForm.Contributor.$error.required && (userForm.Contributor.$dirty || submitted)">Please select contributor</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" ng-if="Contributor==1" ng-repeat="div in ContractNameList">
+                        <label class="control-label col-md-5  col-xs-6 col-sm-6">Contributor {{$index + 1}} <span class="red" ng-if="$index==0">*</span></label>
+                        <div class="col-md-6  col-xs-6 col-sm-6" style="margin-left:4%;">
+                            <div class="form-group contributor" ng-class="{ 'has-error': ( submitted ||userForm.ContributorName.$dirty) && userForm.ContributorName.$invalid } ">
+                                <input type="text" name="ContributorName" required class="form-control" ng-model="ContributorName[$index]" placeholder="Enter contributor name">
+
+                                <div class="help-block" ng-if="$index==0">
+                                    <p ng-show="ContributorNamevalid && userForm.ContributorName.$error.required && (userForm.ContributorName.$dirty || submitted)">Please enter contributor name</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" ng-if="Contributor==1">
+                        <div class="col-md-8">&nbsp;</div>
+                        <div class="col-md-4">
+                            <a style="color: #ee5941; cursor: pointer; " class="text-right" ng-click="addContributorrow()">+ Add More Contributor</a>
+                        </div>
+                    </div>
+                </div>
+                <!--End Contributor Details-->
+
+                <div class="col-md-12" ng-if="Amendment!=false">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Amendment to standard clauses Remarks</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="AmendmentRemarks"></span>  </label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Restrictions</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind='Restriction==""?"---":Restriction'></span> </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" ng-show="Docurl1.length">
+            <div id="doclistid" style=" padding-left: 29px;">
+                <div class="panel panel-warning">
+                    <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                        <h3 class="panel-title">Amendment Attached Document</h3>
+                    </div>
+
+                    <div class="tools">
+
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <table class="table table-striped table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Document Name</th>
+                                    @*<th>Action</th>*@
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="url in Docurl1">
+                                    <td>{{ $index + 1 }} <input type="hidden" name="DocId1" value="{{url.DocId1}}" /></td>
+                                    <td><a href="~/uploads/{{url.text1}}" target="_blank" style="color: black;">{{url.name1}}</a></td>
+                                    @*<td><a style=" color: black; cursor:pointer;" ng-click="RemoveDocumentLinkById(url.DocId1,url.text1)">Delete</a></td>*@
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "ISBNConveter";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    ISBN Converter
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            <div class="col-md-12 OUPDetails">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            ISBN Converter
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-4">ISBN(s)</label>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" rows="5" name="txa_ISBN" id="txa_ISBN">@TempData["RequestISBN"]</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-4">ISBN-10</label>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" rows="5" name="txa_10ISBN" id="txa_10ISBN">@TempData["Isbn10"]</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-4">ISBN-13</label>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" rows="5" name="txa_13ISBN" id="txa_13ISBN">@TempData["Isbn13"]</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" class="btn green" title="Convert" id="btn_submit" name="btn_ISBN" value="Convert" />
+                            @{
+                                if (TempData["Isbn10"] != "" && TempData["Isbn10"] != null)
+                                {
+                                    <input type="submit" class="btn green" title="Export to CSV" id="btn_Export_to_CSV"
+                                           name="btn_ISBN" value="Export to CSV" />
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

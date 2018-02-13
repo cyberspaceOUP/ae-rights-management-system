@@ -1,0 +1,101 @@
+﻿@*Create By Saddam on 03/05/2016*@
+@using ACS.Core;
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<script>
+    var timer1 = "44:59";
+    var interval = setInterval(function () {
+        var timer = timer1.split(':');
+        var minutes = parseInt(timer[0], 10);
+        var seconds = parseInt(timer[1], 10);
+
+        if (minutes == 0 && seconds == 0)
+            return
+
+        --seconds;
+        minutes = (seconds < 0) ? --minutes : minutes;
+        if (minutes < 0) clearInterval(interval);
+        seconds = (seconds < 0) ? 59 : seconds;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+
+        $('.countdown').html(minutes + ':' + seconds);
+        timer1 = minutes + ':' + seconds;
+    }, 1000);
+</script>
+
+    <div class="top-header">
+        <div class="container-fluid">
+            <div class="row">
+
+
+                <div class="col-md-4 col-sm-5 col-xs-12">
+                    <div class="logo"><a href="~/Home/Dashboard/Dashboard"><img src="~/Content/images/logo.jpg" class="img-responsive center-block" alt="" /></a></div>
+                </div>
+                @*<div class="col-md-4"><div class="name-box"><p>@Session["UserName"] (@Session["UserDepartment"])</p></div></div>*@
+                <div class="loginheader" style="float:left;">
+                    <ul>
+                        <li>@Session["UserName"] (@Session["UserDepartment"])</li>
+                        <li class="nobg">Session expires in <span class="countdown"></span></li>
+                    </ul>
+                </div>
+                <div class="loginheader" style="float:right; margin-right:30px;">
+                    <ul>                        
+                        <li > <i aria-hidden="true" class="fa fa-key"></i><a href="~/Login/ChangePassword">Change Password</a></li>
+                        <li class="nobg"><i aria-hidden="true" class="fa fa-lock"></i><a href="~/Login/logout">Logout</a></li>
+                    </ul>
+                </div>
+                <input type="hidden" id="fileUploadPath" value="@Session["FileUploadPath"]" />
+
+
+            
+                @*<form name="userForm" style="padding-right: 2px;" novalidate class="search" ng-submit="TopSearchsubmitForm()">
+                    <div class="col-md-12" style="padding-left: 0px; padding-right: 23px;">
+                        <div class="col-md-5" style="padding: 0px;">
+                            <input type="name" style="border:none; width:124px; font-size:13px; border-radius:5px; padding:0 10px 0 10px; " id="txt_TopSearchValue" placeholder="Enter Keyword" name="query" class="form-control">
+                        </div>
+                        <div class="col-md-5">
+                            <select ng-model="TopSearch"
+                                    class="form-control"
+                                    name="TopSearch"
+                                    id="TopSearch" style="border: none; width: 103px; border-radius: 5px; padding: 0 0px 0 0px; margin-left: 3px; ">
+                                <option value="">Please Select</option>
+                                <option value="Product">Product</option>
+                                <option value="OtherContract">Other Contract</option>
+                                <option value="AuthorContract">Author Contract</option>
+                                <option value="ProductLicense">Product License</option>
+                                <option value="RightsSelling">Rights Selling</option>
+                                <option value="PermissionsOutbound">Permissions Outbound</option>
+                                <option value="PermissionsInbound">Permissions In bound</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button id="btnTopSearch" style="border:none; font-size:12px; border-radius:5px; " class="btn btn-default btn-sm" type="submit">Search</button>
+
+                        </div>
+                    </div>
+
+
+
+
+
+                </form>*@
+            
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        GlobalredirectPath = $('#fileUploadPath').val();
+
+
+    })
+</script>
+

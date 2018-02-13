@@ -1,0 +1,184 @@
+﻿<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @*Product Information*@
+            Detailed Specifications and Delivery
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body clearfix">
+        <div class="col-md-6 col-xs-6 col-sm-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Subject Matter & Treatment  </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label" style="text-align: justify;"><span ng-bind="SubjectMatterandTreatment"></span></label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Min. number of words </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="MinWords"></span></label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Max. number of words </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="MaxWords"></span></label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Min. number of pages </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="MinPages"></span></label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Max. number of pages </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="MaxPages"></span></label>
+                    </div>
+                </div>
+                @*<div class="col-md-12">
+                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Manuscript Delivery Format </label>
+                        <div class="col-md-7 col-xs-6 col-sm-6">
+                            <label class="control-label"><span ng-bind="MenuScriptDelivery"></span></label>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-6 col-sm-6">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Price Type </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="PriceType"></span></label>
+                    </div>
+                </div>
+
+                @if(ViewBag.SeriesCode=="")
+                {
+
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Currency </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        @*<label class="control-label"><span ng-bind="Currency"></span></label>*@
+                        <label class="control-label"><span ng-bind="CurrencySymbol"></span></label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Price </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="Price"></span></label>
+                    </div>
+                </div>
+                }
+
+
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Medium of Delivery </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="MediumofDelivery"></span></label>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Delivery Schedule </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="Deliveryschedule"></span></label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Remarks </label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="control-label"><span ng-bind="ProductRemarks"></span></label>
+                    </div>
+                </div>
+
+                @if (ViewBag.SeriesCode != "")
+                {
+
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5 col-xs-6 col-sm-6"></label>
+                        <div class="col-md-7 col-xs-6 col-sm-6">
+                            <label class="control-label"></label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5 col-xs-6 col-sm-6"></label>
+                        <div class="col-md-7 col-xs-6 col-sm-6">
+                            <label class="control-label"></label>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+        <div class="col-md-12 col-xs-12 col-sm-12">
+            <div class="row">
+                <div class="clearfix" ng-if="MaterialSuppliedByAuthorList.length>=1">
+                    @*<h5 style="margin:20px;font-weight:bold">Material Supplied by Author</h5>*@
+                    <div class="caption" style="margin:20px;font-weight:bold">Material Supplied by Author</div>
+                    <hr style="color: black;">
+                    <div class="portlet-body clearfix">
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <div class="row">
+                                <div class="col-md-12" ng-repeat="M in MaterialSuppliedByAuthorList" ng-if="$even">
+                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Date of Submission of <span ng-bind="M.Material"></span></label>
+                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                        <label class="control-label"><span ng-bind="M.SuppliedDate"></span></label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <div class="col-md-12" ng-repeat="A in MaterialSuppliedByAuthorList" ng-if="$odd">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Date of Submission of <span ng-bind="A.Material"></span></label>
+                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                    <label class="control-label"><span ng-bind="A.SuppliedDate"></span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        <div class="col-md-12 col-xs-12 col-sm-12">
+            <div class="row">
+                <div class="clearfix" ng-if="MenuScriptDeliveryFormatList.length>=1">
+                    @*<h5 style="margin:20px;font-weight:bold">Manuscript Delivery Format</h5>*@
+                    <div class="caption subhead" style="margin:20px;font-weight:bold">Manuscript Delivery Format</div>
+                    <hr style="color: black;">
+                    <div class="portlet-body clearfix">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12" ng-repeat="M in MenuScriptDeliveryFormatList" ng-if="$even">
+                                    <label class="control-label"> <span ng-bind="$index+1"></span>.  <span ng-bind="M.ManuscriptDeliveryFormat"></span></label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12" ng-repeat="A in MenuScriptDeliveryFormatList" ng-if="$odd">
+                                    <label class="control-label"><span ng-bind="$index+1"></span>.  <span ng-bind="A.ManuscriptDeliveryFormat"></span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+
+
+        </div>
+</div>
+

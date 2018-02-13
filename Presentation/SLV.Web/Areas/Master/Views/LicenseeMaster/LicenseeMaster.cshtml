@@ -1,0 +1,290 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "LicenseeMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/master/Master.LicenseeMaster.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/app.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getAllLicenseeList();
+    angular.element(document.getElementById('angularid')).scope().GeogList();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Licensee Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Licensee Master
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <form name="userForm" class="form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Licensee Name <span class="red">*</span> </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.OrganizationName.$dirty) && userForm.OrganizationName.$invalid } ">
+                                                        <input type="text" name="OrganizationName" class="form-control" ng-model="OrganizationName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Licensee Name" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.OrganizationName.$error.required && (userForm.OrganizationName.$dirty || submitted)" class="help-block red">Please enter Licensee Name</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contact Person <span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.contactPerson.$dirty) && userForm.contactPerson.$invalid } ">
+                                                        <input type="text" name="contactPerson" class="form-control" ng-model="contactPerson" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Contact Person" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.contactPerson.$error.required && (userForm.contactPerson.$dirty || submitted)" class="help-block red">Please enter contact person</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Email <span class="red">*</span></label>
+                                                <div class="col-md-7">
+
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Email.$dirty) && userForm.Email.$invalid } ">
+                                                        <input type="text" name="Email" class="form-control" ng-model="Email" ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" placeholder="Email" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Email.$error.pattern && (userForm.Email.$dirty || submitted)" class="help-block red">Please enter valid email id</p>
+                                                            <p ng-show="userForm.Email.$error.required && (userForm.Email.$dirty || submitted)" class="help-block red">Please enter email id</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Telephone number <span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Mobile.$dirty) && userForm.Mobile.$invalid } ">
+                                                        <input type="text" name="Mobile" @*maxlength="12"*@ class="form-control" ng-model="Mobile"
+                                                               ng-pattern="/^[0-9\_\- ]*$/" @*ng-pattern="/^[1-9][0-9]{9,12}$/"*@ placeholder="Telephone number" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Mobile.$error.required && (userForm.Mobile.$dirty || submitted)" class="help-block red">Please enter telephone number</p>
+                                                            <p ng-show="userForm.Mobile.$error.pattern" class="help-block red">Please enter valid telephone number</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Website URL</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.URL.$dirty) && userForm.URL.$invalid } ">
+                                                        <input type="text" name="URL" class="form-control" ng-model="URL" ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" placeholder="http://">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.URL.$error.pattern && (userForm.URL.$dirty || submitted)" class="help-block red">Please enter valid URL</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Address <span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Address.$dirty) && userForm.Address.$invalid } ">
+                                                        @*<input type="text" name="Address" class="form-control" ng-model="Address" required ng-pattern="[a-zA-Z0-9]+" placeholder="Address">*@
+
+                                                        <textarea  name="Address" class="form-control" ng-model="Address" required ng-pattern="[a-zA-Z0-9]+" placeholder="Address"></textarea>
+
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Address.$error.required && (userForm.Address.$dirty || submitted)" class="help-block red">Please enter author address </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="publisherGeo">
+                                            <div class="col-md-12">
+                                                @Html.Partial("~/Views/Shared/_geoGraphicalNominee.cshtml")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <input type="hidden" id="hid_recordid" name="hid_recordid" ng-model="hid_recordid" />
+                                        <button type="submit" class="btn green" id="btnSubmit" ng-model="btnSubmit">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Licensee List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>Licensee Code</th>
+                                    <th>Licensee Name</th>
+                                    <th>Contact Person</th>
+                                    <th>Address</th>
+                                    <th>Country</th>
+                                    <th>State</th>
+                                    <th>City</th>
+                                    <th>PIN Code</th>
+                                    <th>Telephone Number</th>
+                                    <th>Email</th>
+                                    <th>URL</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    <th>Document</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="Licensee in LicenseeData">
+                                    <td>{{Licensee.Licenseecode}}</td>
+                                    <td>{{Licensee.OrganizationName}}</td>
+                                    <td>{{Licensee.ContactPerson}}</td>
+                                    <td>{{Licensee.Address}}</td>
+                                    <td>{{Licensee.Country}}</td>
+                                    <td>{{Licensee.State}}</td>
+                                    <td>{{Licensee.City}}</td>
+                                    <td>{{Licensee.Pincode}}</td>
+                                    <td>{{Licensee.Mobile}}</td>
+                                    <td>{{Licensee.Email}}</td>
+                                    <td>{{Licensee.URL}}</td>
+                                    <td><a ng-click="EditLicensee(Licensee.Id)"><i class="fa fa-edit" title="Edit Licensee"></i></a></td>
+                                    <td>
+                                        <a ng-click="DeleteLicensee(Licensee.Id)" ng-if="Licensee.flag==0"><i class="fa fa-trash-o" title="Delete Licensee"></i></a>
+
+                                        <a ng-if="Licensee.flag==1"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Linked With Other Process"></i></a>
+                                    </td>
+                                    <td>
+                                        <a ng-click="GetCommonUploadDocumentList('Licensee',Licensee.Id)" data-toggle="modal" data-target="#myModalDocument"><i class="fa fa-download" title="Download Document"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<div class="modal fade bs-example-modal-lg" id="myModalDocument" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document" style="width:90%;">
+
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+            <div class="row panel">
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Uploaded Document
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+
+                        <div class="portlet-body form">
+                            <div class=" form-body ">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        
+                                        <div class="panel-body" ng-show="Docurl.length">
+                                            <table class="table table-striped table-hover ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SNo</th>
+                                                        <th>Document Name</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="url in Docurl">
+                                                        <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.Id}}" /></td>
+                                                        <td><a href="~/uploads/{{url.UploadFileName}}" target="_blank" style="color: black;"><span ng-bind="url.FileName"></span></a></td>
+                                                        <td><a style=" color: black; cursor:pointer;" ng-click="RemoveCommonUploadDocument(url.Id)">Delete</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div ng-show="!Docurl.length">
+                                            <p>No result found</p>
+                                        </div>
+                                         
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->

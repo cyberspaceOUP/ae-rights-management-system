@@ -1,0 +1,70 @@
+﻿
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @T("Dashboard.InboundNotEntered")
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!InboundPermissionNotEntered_List.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        @*<th> Contract Code </th>*@
+                        <th> Product Code </th>
+                        <th> ISBN </th>
+                        <th> Working Product</th>
+                        <th> Author </th>
+                        @*<th> Type </th>*@
+                    </tr>
+                    <tr ng-repeat="Authot_IMNE in InboundPermissionNotEntered_List">
+                        <td class="table-color"><a href="~/PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?type=P{{Authot_IMNE.ProductId}}"> <span ng-bind="(Authot_IMNE.ProductCode)"></span></a></td>
+                        <td><span ng-bind="(Authot_IMNE.ISBN)"></span> </td>
+                        <td><span ng-bind="(Authot_IMNE.WorkingProduct)"></span> <span style="font-size:11px;">  <br /> <span ng-bind="(Authot_IMNE.WorkingSubProduct)"></span></span></td>
+                        <td><span ng-bind="(Authot_IMNE.AuthorName)"></span> </td>                        
+                    </tr>
+                    @*<tr ng-repeat="Authot_IMNE in InboundPermissionNotEntered_List">
+                        <td class="table-color"><a href="~/PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?Id={{Authot_IMNE.Id}}&type=C{{Authot_IMNE.ProductId}}"><span ng-bind="(Authot_IMNE.Contract_Code)"></span>      </a></td> 
+                        <td class="table-color"><a href="~/PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?Id={{Authot_IMNE.Id}}&type=C{{Authot_IMNE.ProductId}}"> <span ng-bind="(Authot_IMNE.ProductCode)"></span></a></td> 
+                        <td><span ng-bind="(Authot_IMNE.ISBN)"></span> </td>
+                        <td><span ng-bind="(Authot_IMNE.WorkingProduct)"></span> <span style="font-size:11px;">  <br /> <span ng-bind="(Authot_IMNE.WorkingSubProduct)"></span></span></td>
+                        <td><span ng-bind="(Authot_IMNE.AuthorName)"></span> </td>
+                        <td>Contract</td>
+                    </tr>
+                    <tr ng-repeat="Authot_IMNE in InboundPermissionNotEnteredByProductLicense_List">
+                        <td class="table-color"><a href="../../PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?Id={{Authot_IMNE.Id}}&type=P{{Authot_IMNE.ProductId}}"> <span ng-bind="(Authot_IMNE.ProductLicensecode)"></span></a></td> 
+                        <td class="table-color"><a href="../../PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?Id={{Authot_IMNE.Id}}&type=P{{Authot_IMNE.ProductId}}"><span ng-bind="(Authot_IMNE.ProductCode)"></span> </a></td> 
+                        <td><span ng-bind="(Authot_IMNE.ISBN)"></span> </td>
+                        <td> <span ng-bind="(Authot_IMNE.WorkingProduct)"></span><span style="font-size:11px;">  <br /> <span ng-bind="(Authot_IMNE.WorkingSubProduct)"></span></span></td>
+                        <td> <span ng-bind="(Authot_IMNE.AuthorName)"></span></td>
+                        <td>License</td>
+                    </tr>*@
+                </table>
+
+                <div style="float:right">
+                    @*<a ng-show="InboundPermissionNotEntered_List.length" href="javascript:void(0);" ng-click="InboundPermissionNotEntered_submitForm();" title="Contract" class="moreDash">Contract : View More</a>
+                    <br />
+                    <a ng-show="InboundPermissionNotEnteredByProductLicense_List.length" href="javascript:void(0);" ng-click="InboundPermissionNotEntered_ByProductLicense_submitForm();" title="License" class="moreDash">License : View More</a>*@
+
+                    <a ng-show="InboundPermissionNotEntered_List.length" href="javascript:void(0);" ng-click="Inbound_Permission_Not_Entered_dash();" target="_blank" title="View More" class="moreDash">View More</a>
+                   
+                </div>
+
+             
+                
+            </div>
+            <div ng-hide="InboundPermissionNotEntered_List.length">No result found</div>
+        </div>
+    </div>
+</div>
+

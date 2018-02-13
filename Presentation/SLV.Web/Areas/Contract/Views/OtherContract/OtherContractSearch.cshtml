@@ -1,0 +1,1059 @@
+﻿@{
+    ViewBag.Title = "OtherContractSearch";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+    //Layout = null;
+}
+
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+<link href="~/Scripts/select2.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/app.css" rel="stylesheet" />
+
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/Contract/OtherContractSearch.js"></script>
+
+
+<script src="~/js/common/TopSearch.js"></script>
+@*<script src="~/js/common/Geographical.js"></script>*@
+
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().GeogList();
+    angular.element(document.getElementById('angularid')).scope().getDivisionList();
+    angular.element(document.getElementById('angularid')).scope().ExecutiveDepartment();
+    angular.element(document.getElementById('angularid')).scope().getCurrencyList();
+    angular.element(document.getElementById('angularid')).scope().GetAllPaymentPeriodList();
+    angular.element(document.getElementById('angularid')).scope().GetContractTypeList();
+    angular.element(document.getElementById('angularid')).scope().getTerritoryRightsList();
+    angular.element(document.getElementById('angularid')).scope().GetServiceList();
+
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title" id="OtherContractSearchHeading">
+                <h1>
+                    Other Contract Search
+                    @Html.Partial("pagedate")
+                </h1>
+
+                <input type="hidden" id="hid_DepartmentId" name="hid_DepartmentId" ng-model="hid_DepartmentId" value="@TempData["DepartmentId"]" />
+            </div>
+
+            <div class="main-title" id="OtherContractViewHeading" style="display : none;">
+                <h1>
+
+                    @if (ViewBag.Report == "report")
+                    {
+                        <span>Other Contract Report </span>
+                    }
+                    else
+                    {
+                        if (ViewBag.ViewMore == "PendingOC")
+                        {
+                            <span>@T("Dashboard.PendingOtherRequest") </span>
+                        }
+                        else
+                        {
+                            <span>Other Contract List</span>
+                        }
+                    }
+
+                    @Html.Partial("pagedate")
+                </h1>
+
+                <input type="hidden" id="hid_updateRight" name="hid_updateRight" ng-model="hid_updateRight" value="@TempData["UpdateRights"]" />
+            </div>
+        </div>
+        
+        <form name="userForm" class="form-horizontal" novalidate ng-submit="submitForm(ReportModel)" id="OtherContractSerch" ng-cloak>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Vendor Details Search
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-group">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract Code</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.ContractCode.$dirty) && userForm.ContractCode.$invalid } ">
+                                                        <input type="text" name="ContractCode" class="form-control" ng-model="ContractCode" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Contract Code">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Vendor Name</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.PartyName.$dirty) && userForm.PartyName.$invalid } ">
+                                                        <input type="text" name="PartyName" class="form-control" ng-model="PartyName" ng-pattern="/^[0-9a-zA-Z'.\s]/" placeholder="Vendor Name">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Nature of Service</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Service.$dirty) && userForm.Service.$invalid } ">
+                                                        <select id="ddlService" class="form-control" name="Service" ng-model="Service" ng-change="GetSubServiceListByServiceId(Service)">
+                                                            <option value="">--Please Select--</option>
+                                                            <option ng-repeat="service in _serviceList" value="{{service.Id}}">{{service.ServiceName}}</option>
+                                                        </select>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Nature of Sub-Service</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.sub_service.$dirty) && userForm.sub_service.$invalid } ">
+                                                        <select id="ddlSubService" class="form-control" name="sub_service" ng-model="sub_service">
+                                                            <option value="">--Please Select--</option>
+                                                            <option ng-repeat="service in _SubServiceListBySewrviceId" value="{{service.Id}}">{{service.ServiceName}}</option>
+                                                        </select>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5"> Address</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Address.$dirty) && userForm.Address.$invalid } ">
+
+                                                        <textarea class="form-control" name="Address" ng-model="Address" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Address"></textarea>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row" id="publisherGeo">
+                                            <div class="col-md-12">
+
+                                                @Html.Partial("~/Views/Shared/_geoGraphicalSearch.cshtml")
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Email</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Email.$dirty) && userForm.Email.$invalid } ">
+                                                        <input type="text" name="Email" class="form-control" ng-model="Email" ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" placeholder="Email">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Email.$error.required && (userForm.Email.$dirty || submitted)" class="help-block red">Please enter email id</p>
+                                                            <p ng-show="userForm.Email.$error.pattern" class="help-block red">Please enter valid email id</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Mobile</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Mobile.$dirty) && userForm.Mobile.$invalid } ">
+                                                        <input type="text" name="Mobile" maxlength="10" class="form-control" ng-model="Mobile" ng-pattern="/^[789]\d{9}$/" placeholder="Mobile">
+                                                        <div class="help-block">
+
+                                                            <p ng-show="userForm.Mobile.$error.pattern" class="help-block red">Please enter valid mobile number</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">PAN</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.PanNo.$dirty) && userForm.PanNo.$invalid } ">
+                                                        <input type="text" name="PanNo" class="form-control" ng-model="PanNo" ng-pattern="^[\w]{3}(p|P|c|C|h|H|f|F|a|A|t|T|b|B|l|L|j|J|g|G)[\w][\d]{4}[\w]$" placeholder="PAN">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.PanNo.$error.pattern" class="help-block red">Please enter valid PAN</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Contract Details Search
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-group">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Request From Date </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.RequestFromDate.$dirty) && userForm.RequestFromDate.$invalid } ">
+                                                        <div class="input-group input-append date RequestFromDate">
+                                                            <input type="text" class="form-control" name="RequestFromDate" id="RequestFromDate" ng-model="RequestFromDate" placeholder="Request From Date">
+                                                            @*<span class=" input-group-btn">
+                                                                <button class="btn default date-set" type="button" ><i class="fa fa-calendar"></i></button>
+                                                            </span>*@
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.RequestDate.$error.required && (userForm.RequestDate.$dirty || submitted)" class="help-block red">Please enter Addendum Date</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Request To Date </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (userForm.RequestToDate.$dirty || submitted) && userForm.RequestToDate.$invalid }">
+                                                        <div class="input-group input-medium date date-picker RequestToDate">
+                                                            <input type="text" class="form-control" name="RequestToDate" id="RequestToDate" ng-model="RequestToDate" placeholder="Request To Date">
+                                                            @*<span class=" input-group-btn">
+                                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                            </span>*@
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="RequestToDateReq">Request to date should not be less then request from date </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <script type="text/javascript">
+                                            $(document).ready(function () {
+
+                                                $("#RequestFromDate").datepicker({
+                                                    format: "dd/mm/yyyy",
+                                                    todayHighlight: true,
+                                                    autoclose: true
+
+                                                });
+                                                $("#RequestFromDate").datepicker().on('change', function (e) {
+                                                    mstrstartdate = $("#RequestFromDate").val();
+                                                    $("#RequestToDate").val('');
+                                                    $('#RequestToDate').datepicker('remove');
+                                                    $("#RequestToDate").attr("disabled", false);
+                                                    $("#RequestToDate").datepicker({
+                                                        format: "dd/mm/yyyy",
+                                                        // todayHighlight: true,
+                                                        autoclose: true,
+                                                        startDate: mstrstartdate
+                                                    });
+                                                });
+
+                                            });
+
+
+
+
+
+
+                                        </script>
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Project Title</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.ProjectTitle.$dirty) && userForm.ProjectTitle.$invalid } ">
+                                                        <input type="text" name="ProjectTitle" class="form-control" ng-model="ProjectTitle" placeholder="Project Title">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ProjectTitle.$error.pattern" class="help-block red">Please enter valid mobile number</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Project ISBN</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.ProjectIsbn.$dirty) && userForm.ProjectIsbn.$invalid } ">
+                                                        <input type="text" name="ProjectIsbn" class="form-control" ng-model="ProjectIsbn" maxlength="13" ng-pattern="/^[0-9]{13}$/" placeholder="Project ISBN">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ProjectIsbn.$error.pattern" class="help-block red">Please enter valid ISBN number</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract Type</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContractType.$dirty) && userForm.ContractType.$invalid } ">
+                                                        <select id="ddlContractType" class="form-control" name="ContractType" ng-model="ContractType" ng-change="GetForImageBank(ContractType)">
+                                                            <option value="">--Please Select--</option>
+                                                            <option ng-repeat="ContractType in ContractTypeList" value="{{ContractType.Id}}">{{ContractType.ContractName}}</option>
+
+
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        @*<div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract From Date</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (userForm.ContractFromDate.$dirty || submitted) && userForm.ContractFromDate.$invalid }">
+                                                        <div class="input-group input-medium date date-picker ContractFromDate">
+                                                            <input type="text" size="16" class="form-control" name="ContractFromDate" id="ContractFromDate" ng-model="ContractFromDate">
+                                                            <span class=" input-group-btn">
+                                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                            </span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="ContractFromDaterReq">Please select Contract to date </p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract From Date </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ContractFromDate.$dirty) && userForm.ContractFromDate.$invalid } ">
+                                                        <div class="input-group input-append date ContractFromDate">
+                                                            <input type="text" name="ContractFromDate" id="ContractFromDate" class="form-control" ng-model="ContractFromDate" placeholder="Contract From Date">
+                                                            @*<span class=" input-group-btn">
+                                                                <button class="btn default date-set" type="button" ><i class="fa fa-calendar"></i></button>
+                                                            </span>*@
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.RequestDate.$error.required && (userForm.RequestDate.$dirty || submitted)" class="help-block red">Please Enter Contract From Date</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract To Date</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (userForm.ContractToDate.$dirty || submitted) && userForm.ContractToDate.$invalid }">
+                                                        <div class="input-group input-medium date date-picker ContractToDate">
+                                                            <input type="text" size="16" class="form-control" name="ContractToDate" id="ContractToDate"
+                                                                   ng-model="ContractToDate" placeholder="Contract To Date">
+                                                            @*<span class=" input-group-btn">
+                                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                            </span>*@
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="ContractToDateReq"> Contract to date should not be less then Contract from date</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <script type="text/javascript">
+                                            $(document).ready(function () {
+
+                                                $("#ContractFromDate").datepicker({
+                                                    format: "dd/mm/yyyy",
+                                                    todayHighlight: true,
+                                                    autoclose: true
+
+                                                });
+                                                $("#ContractFromDate").datepicker().on('change', function (e) {
+                                                    mstrstartdate = $("#ContractFromDate").val();
+                                                    $("#ContractToDate").val('');
+                                                    $('#ContractToDate').datepicker('remove');
+                                                    $("#ContractToDate").attr("disabled", false);
+                                                    $("#ContractToDate").datepicker({
+                                                        format: "dd/mm/yyyy",
+                                                        // todayHighlight: true,
+                                                        autoclose: true,
+                                                        startDate: mstrstartdate
+                                                    });
+                                                });
+
+                                            });
+
+
+
+
+
+
+                                        </script>
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Period of Agreement </br> (In months)</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.MonthEntered.$dirty) && userForm.MonthEntered.$invalid } ">
+                                                        <input id="MonthEnteredId" type="text" name="MonthEntered" maxlength="2" class="form-control" ng-model="AgreementPeriod" ng-pattern="/^[0-9]+$/" placeholder="Agreement Period In Months">
+                                                        <div class=" help-block">
+                                                            <p ng-show="userForm.MonthEntered.$error.required && (userForm.AgreementPeriod.$dirty || submitted)">Please enter agreement period</p>
+                                                            <p ng-show="userForm.MonthEntered.$error.pattern">Period of agreement must be numeric only.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Expiry Date </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (userForm.ExpiryDate.$dirty || submitted) && userForm.ExpiryDate.$invalid }">
+                                                        <div class="input-group input-medium date date-picker ExpiryDate" id="ExpiryDateId">
+                                                            <input type="text" size="16" class="form-control" name="ExpiryDate" id="ExpiryDate" placeholder="Expiry Date"
+                                                                   ng-model="ExpiryDate">
+                                                            @*<span class=" input-group-btn">
+                                                                <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                            </span>*@
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ExpiryDate.$error.required && (userForm.ExpiryDate.$dirty || submitted)">Please select expiry date</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-show="false">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Division</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Division.$dirty) && userForm.Division.$invalid } ">
+                                                        <select id="ddldivision" class="form-control" name="Division" ng-model="Division">
+                                                            <option value="">--Please Select--</option>
+                                                            <option ng-repeat="division in DivisionList" value="{{division.Id}}">{{division.divisionName}}</option>
+                                                        </select>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract handled by</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Executive.$dirty) && userForm.Executive.$invalid } ">
+                                                        <select id="ddlexecutive" class="form-control" name="Executive" ng-model="Executive">
+                                                            <option value="">--Please Select--</option>
+                                                            <option ng-repeat="Executive in ExecutiveDepartment" value="{{Executive.Id}}">{{Executive.executiveName}}</option>
+                                                        </select>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Print Run Quantity</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.printQuantity.$dirty) && userForm.printQuantity.$invalid } ">
+                                                        <input type="text" name="printQuantity" class="form-control" ng-model="printQuantity" ng-pattern="/^[0-9]+$/" placeholder="Print Run Quantity">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.printQuantity.$error.pattern" class="help-block red">Please print quantity number must be numeric</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+
+                                            $('.ExpiryDate')
+                                                .datepicker({
+                                                    format: "dd/mm/yyyy",
+
+                                                    showButtonPanel: true,
+                                                    autoclose: true,
+                                                })
+
+                                        });
+
+
+                                    </script>
+
+
+
+
+
+
+
+                                    <div class="col-md-6">
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5"> Print Rights</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PrintRights.$dirty) && userForm.PrintRights.$invalid } ">
+
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="PrintRights" ng-model="PrintRights" ng-click="function_PaymentYes()" value="Yes"> Yes
+
+                                                        </label>
+
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="PrintRights" ng-model="PrintRights" value="No" ng-change="function_PaymentNo()"> No
+
+                                                        </label>
+                                                        <div ng-class="{ 'has-error' : userForm.PrintRights.$invalid && (userForm.PrintRights.$dirty || submitted)}">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.PrintRights.$error.required && (userForm.PrintRights.$dirty || submitted)" class="help-block red">Please select print rights</p>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5"> Electronic Rights</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ElectronicRights.$dirty) && userForm.ElectronicRights.$invalid } ">
+
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="ElectronicRights" ng-model="ElectronicRights" ng-click="function_PaymentYes()" value="Yes"> Yes
+
+                                                        </label>
+
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="ElectronicRights" ng-model="ElectronicRights" value="No" ng-change="function_PaymentNo()"> No
+
+                                                        </label>
+                                                        <div ng-class="{ 'has-error' : userForm.ElectronicRights.$invalid && (userForm.ElectronicRights.$dirty || submitted)}">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.ElectronicRights.$error.required && (userForm.ElectronicRights.$dirty || submitted)" class="help-block red">Please select electronic rights</p>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5"> E-Book Rights</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.EBookRights.$dirty) && userForm.EBookRights.$invalid } ">
+
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="EBookRights" ng-model="EBookRights" ng-click="function_PaymentYes()" value="Yes"> Yes
+
+                                                        </label>
+
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="EBookRights" ng-model="EBookRights" value="No" ng-change="function_PaymentNo()"> No
+
+                                                        </label>
+                                                        <div ng-class="{ 'has-error' : userForm.EBookRights.$invalid && (userForm.EBookRights.$dirty || submitted)}">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.EBookRights.$error.required && (userForm.EBookRights.$dirty || submitted)" class="help-block red">Please select e-book rights</p>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Cost</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Cost.$dirty) && userForm.Cost.$invalid } ">
+                                                        <input type="text" name="Cost" class="form-control" ng-model="Cost" placeholder="Cost" ng-pattern="/^[0-9]+$/">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Cost.$error.required && (userForm.Cost.$dirty || submitted)" class="help-block red">Please enter cost</p>
+                                                            <p ng-show="userForm.Cost.$error.pattern">Cost must be numeric only.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Currency</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Currency.$dirty) && userForm.Currency.$invalid } ">
+                                                        <select id="ddlCurrency" class="form-control" name="Currency" ng-model="Currency">
+                                                            <option value="">--Please Select--</option>
+
+                                                            <option ng-repeat="currency in CurrencyList" value="{{currency.Id}}" ng-selected="{{currency.Id == Currency}}">{{currency.CurrencyName}}</option>
+                                                        </select>
+
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Currency.$error.required && (userForm.Currency.$dirty || submitted)">Please select currency</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Restricitions </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Restricitions.$dirty) && userForm.Restricitions.$invalid } ">
+                                                        <input type="text" name="Restricitions" class="form-control" ng-model="Restricitions" placeholder="Restricitions">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Restricitions.$error.required && (userForm.Restricitions.$dirty || submitted)" class="help-block red">Please enter restricitions</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Territory</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.TerritoryRight.$dirty) && userForm.TerritoryRight.$invalid } ">
+                                                        <select id="ddlTerritory" class="form-control" name="TerritoryRight" ng-model="TerritoryRight">
+                                                            <option value="">--Please Select--</option>
+                                                            <option ng-repeat="Territory in TerritoryList" value="{{Territory.Id}}">{{Territory.Territoryrights}}</option>
+                                                        </select>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Payment period</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PaymentPeriod.$dirty) && userForm.PaymentPeriod.$invalid } ">
+                                                        <select id="ddlPaymentPeriod" class="form-control" name="PaymentPeriod" ng-model="PaymentPeriod">
+                                                            <option value="">--Please Select--</option>
+                                                            <option ng-repeat="PaymentPeriode in PaymentPeriodeList" value="{{PaymentPeriode.Id}}">{{PaymentPeriode.PaymentType}}</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Nature of Work </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.AgreementPeriod.$dirty) && userForm.AgreementPeriod.$invalid } ">
+                                                        <input type="text" name="AgreementPeriod" class="form-control" ng-model="NatureOfWork" placeholder="Nature of Work">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5"> Remarks</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Remarks.$dirty) && userForm.Remarks.$invalid } ">
+
+                                                        <textarea class="form-control" name="Remarks" ng-model="Remarks" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Remarks"></textarea>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract Status</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContractStatus.$dirty) && userForm.ContractStatus.$invalid } ">
+                                                        <div>
+                                                            <label class="radio-inline" style="display: inline-flex">
+                                                                <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Draft" value="Draft"> Draft
+                                                            </label>
+                                                            <label class="radio-inline" style="display: inline-flex; margin-left: 33px !important;">
+                                                                <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Pending" value="Pending"> Issued
+                                                            </label>
+                                                        </div>
+                                                        <div>
+                                                            <label class="radio-inline" style="display: inline-flex">
+                                                                <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Issued" value="Issued"> Received
+                                                            </label>
+                                                            <label class="radio-inline" style="display: inline-flex">
+                                                                <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Cancelled" value="Cancelled"> Cancelled
+                                                            </label>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ContractStatus.$error.required && (userForm.ContractStatus.$dirty || submitted)">Please select Contract Status</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <input type="hidden" id="hid_publishingid" name="hid_publishingid" ng-model="hid_publishingid" />
+                        <input type="hidden" id="hid_OtherContractId" name="hid_OtherContractId" ng-model="hid_OtherContractId" />
+                        <input type="hidden" id="hid_OtherContractBackToSearch" name="hid_OtherContractBackToSearch" ng-model="hid_OtherContractBackToSearch" value="@TempData["BackToSearch"]" />
+                        <input type="hidden" id="hid_TopSearch" name="hid_TopSearch" ng-model="hid_TopSearch" value="@TempData["TopSearch"]" />
+                        <input type="hidden" name="hid_show" id="hid_show" />
+
+                        <button type="submit" class="btn green" id="btnSubmit">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+<form name="Serch" class="form-horizontal" id="search">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 backtoSearch">
+                <div class="tools">
+                    <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                </div>
+            </div>
+
+            <div class="col-md-12 backtoDashboard" style="display:none;">
+                <div class="tools">
+                    <span class="back-to-search" ng-click="BackToserch()"> Back To Dashboard </span>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            @if (ViewBag.Report == "report")
+                            {
+                                <span>Other Contract Report </span>
+                            }
+                            else
+                            {
+                                if (ViewBag.ViewMore == "PendingOC")
+                                {
+                                    <span>@T("Dashboard.PendingOtherRequest")</span>
+                                }
+                                else
+                                {
+                                    <span>Other Contract List</span>
+                                }
+                            }
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <div class="row">
+                            <div class="col-md-12">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="">
+                            <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                <thead class="flip-content">
+                                    <tr>
+
+                                        <th>Contract Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                        <th>Contract Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                        <th>Contract Type &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                        <th>Expiry Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                        <th>Vendor Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                        <th>Nature of Work &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                        <th ng-if="'@ViewBag.Report' != 'report' && ('@TempData["Action"]' != '' || '@TempData["BackToSearch"]' == 'backtosearch' )">Action</th>
+
+                                        @*<th>Delete</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="OtherContract in OtherContractList" class="tooltipclass">
+                                        <td><span ng-bind="OtherContract.Othercontractcode"></span></td>
+                                        <td><span class="sortDateHide" ng-bind="OtherContract.contractdateForSort"></span>{{OtherContract.contractdate}}</td>
+                                        <td><span ng-bind="OtherContract.contractname"></span></td>
+                                        <td><span class="sortDateHide" ng-bind="OtherContract.ExpirydateForSort"></span>{{OtherContract.Expirydate}}</td>
+                                        <td><span ng-bind="OtherContract.partyname"></span></td>
+                                        <td><span ng-bind="OtherContract.NatureOfWork"></span></td>
+
+                                        @*<td ng-if="'@TempData["Report"]' != 'Report'">
+                    <a ng-if="OtherContract.Flag == '0'" ng-click="EditOtherContractData(OtherContract.Id)"><i class="fa fa-edit" title="edit"></i></a>
+                        <a ng-if="OtherContract.Flag == '1'" ng-click="EditOtherContractData(OtherContract.Id)">
+                            <img src="~/Content/images/View.png" class="img-responsive" style="height:19px;" title="View" alt="View" />
+                        </a>
+                    </td>*@
+
+                                        @*<td ng-if="'@ViewBag.Report' != 'report'" ng-hide="TitleLinking">*@
+                                        <td ng-if="'@ViewBag.Report' != 'report' && ('@TempData["Action"]' != '' || '@TempData["BackToSearch"]' == 'backtosearch' )">
+                                            <div class="tooltip-container">
+                                                <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                                @*<label for="tooltip-toggle" ng-click="DisplayDiv($index+1)" class="tooltip-btn">*@
+                                                <label for="tooltip-toggle" onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                    Action
+                                                </label>
+                                                <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                                <div class="tooltip-content">
+                                                    <div class="linking">
+                                                        <ul>
+                                                            <li><a ng-if="OtherContract.Flag == '0' && '@TempData["UpdateRights"]'=='rt' && '@TempData["Action"]' == 'update'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
+                                                            <li><a ng-if="OtherContract.Flag == '1' && '@TempData["UpdateRights"]'=='rt' && '@TempData["Action"]' == 'update'" ng-click="ViewOtherContractData(OtherContract.Id)  " style="cursor: pointer">View Other Contract</a></li>
+
+                                                            <li><a ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]'=='sa')  && '@TempData["Action"]' == 'update'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
+                                                            <li><a ng-click="ViewOtherContractData(OtherContract.Id)  " ng-if="'@TempData["Action"]' =='view'" style=" cursor :pointer">View Other Contract</a></li>
+                                                            
+                                                            <li><a ng-if="OtherContract.Flag == '0' && '@TempData["UpdateRights"]'=='rt'  && '@TempData["BackToSearch"]' == 'backtosearch'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
+                                                            <li><a ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]'=='sa')  && '@TempData["BackToSearch"]' == 'backtosearch'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
+                                                            <li><a ng-click="ViewOtherContractData(OtherContract.Id)  " ng-if="'@TempData["BackToSearch"]' == 'backtosearch'" style=" cursor :pointer">View Other Contract</a></li>
+
+                                                            <li>
+                                                                <a ng-if="'@TempData["UpdateRights"]'=='sa' && '@TempData["Action"]'=='delete'" ng-click="DeleteOtherContract(OtherContract.Id,'sa')" style="cursor:pointer;">Delete Other Contract</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        @*<td>
+                        <a ng-click="DeleteOtherContract(OtherContract.Id)"><i class="fa fa-trash-o" title="delete Other Contract"></i></a>
+                    </td>*@
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                            @if (ViewBag.Report == "report")
+                            {
+                                <div class="PrintTableData" style="display:none">
+                                    <table class="table table-bordered table-striped table-condensed flip-content" id="TblForPrint">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th>Contract Code</th>
+
+                                                <th>Contract Date</th>
+                                                <th>Contract Type</th>
+
+                                                <th>Expiry Date</th>
+                                                <th>Vendor Name</th>
+                                                <th>Nature of Work</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr ng-repeat="OtherContract in OtherContractList" class="tooltipclass">
+
+                                                <td><span ng-bind="OtherContract.Othercontractcode"></span></td>
+                                                <td><span ng-bind="OtherContract.contractdate"></span></td>
+                                                <td><span ng-bind="OtherContract.contractname"></span></td>
+                                                <td><span ng-bind="OtherContract.Expirydate"></span></td>
+                                                <td><span ng-bind="OtherContract.partyname"></span></td>
+                                                <td><span ng-bind="OtherContract.NatureOfWork"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            @*@if (Session["PrintPermissions"] != null && ViewBag.Report == "report")
+                {
+                    <div class="col-md-12 text-center btnPrint">
+                        <div class="tools">
+                            @* Click Event Is Define in ~/Views/Shared/Footer.cshtml File *@
+            @*<input type="button" class="btn green" id="btn_printDataTable" value="Print" style=" margin: .5%; ">
+                        </div>
+                    </div>
+                }*@
+
+            @if (Session["GenerateExcelPermissions"] != null && ViewBag.Report == "report")
+            {
+                <div class="col-md-12 text-center btnPrint">
+                    <div class="tools">
+                        <button type="submit" class="btn green" ng-click="OtherContractReportExcel()" id="btnSubmit">Generate Excel</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+</form>
+
+
+<script type="text/javascript">
+
+    (document).ready(function () {
+       
+
+    });
+
+    function fireMe(obj) {
+        var length = $(".customizeLink").length;
+        for (i = 0; i < $(".customizeLink").length; i++) {
+            $($(".customizeLink")[i]).attr("sequence", i);
+        }
+        angular.element(document.getElementById('angularid')).scope().DisplayDiv(parseInt($(obj).attr("sequence")) + 1);
+    };
+
+</script>

@@ -1,0 +1,61 @@
+﻿<script src="~/js/Product/_KitISBNList.js"></script>
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Kit ISBN Details
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+
+        <div ng-show="productDetailsByKit" class="row" style="margin-bottom:20px;">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Product Code</label>
+                        <div class="col-md-7 col-xs-6 col-sm-6">
+                            <label class="control-label"><span ng-bind="KitISBNDetailsList[0].LinkedProductCode"></span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5 col-xs-6 col-sm-6">ISBN</label>
+                        <div class="col-md-7 col-xs-6 col-sm-6">
+                            <label class="control-label"><span ng-bind="KitISBNDetailsList[0].LinkedProductISBN"></span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th> Division  </th>
+                    <th> Sub-Division </th>
+                    <th> Product Category</th>
+                    <th> ISBN</th>
+                    <th> Product Type </th>
+                    <th> Working Product</th>                   
+                </tr>
+
+                <tr ng-repeat="KitISBN in KitISBNDetailsList">
+                    <td><span ng-bind="KitISBN.Division"></span></td>
+                    <td><span ng-bind="KitISBN.SubDivision"></span> </td>
+                    <td><span ng-bind="KitISBN.ProductCategory"></span></td>
+                    <td><span ng-bind="KitISBN.ISBN"></span></td>
+                    <td><span ng-bind="KitISBN.ProductTypeName"></span></td>   
+                    <td><span ng-bind="KitISBN.WorkingProduct"></span> <br/> <span style="font-size:11px;" ng-bind="KitISBN.SubWorkingProduct"></span> </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>

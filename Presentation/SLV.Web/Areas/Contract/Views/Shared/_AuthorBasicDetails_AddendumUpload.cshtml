@@ -1,0 +1,35 @@
+﻿
+<div class="portlet box green AuthorBoxAddendum">
+    <div class="portlet-title">
+        <div class="caption">
+            Author <span ng-bind="$index+1"></span> Basic Details</div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body clearfix">
+        <div class="col-md-12">
+            <div class="col-md-6 ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-5">Name</label> 
+                        <div class="col-md-7">
+                            <span ng-bind="authorNameAddendum[$index]"></span>
+                            <input type="hidden" name="hid_authorid_addendum" id="hid_authorid_addendum{{$index}}" value="{{authorIdAddendum[$index]}}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="caption">
+                <strong>Royalty Slab</strong>
+            </div>
+            @Html.Partial("~/Areas/Contract/Views/Shared/_RoyaltySlab_Addendum.cshtml")
+        </div>
+
+
+    </div>
+</div>
+
+
+

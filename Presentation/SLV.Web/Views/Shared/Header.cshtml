@@ -1,0 +1,17 @@
+﻿@*Create By Saddam on 03/05/2016*@ 
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+@Html.Partial("HeaderTop")
+<input type="hidden" id="enterdBy" value=@Session["UserId"] />
+<input type="hidden" id="hid_DepartmentId" value="@Session["DepartmentId"]" />
+<input type="hidden" id="hid_sessionId" value="@Session["SessionId"]" />
+<input type="hidden" id="hid_deptCode" value="@Session["deptCode"]" />
+@*@Html.Partial("HeaderMenu")*@
+
+@{Html.RenderAction("PartialTicker", "navigation", new { area = "" });}
+
+@{Html.RenderAction("PartialMenu", "navigation", new { area = "" });}

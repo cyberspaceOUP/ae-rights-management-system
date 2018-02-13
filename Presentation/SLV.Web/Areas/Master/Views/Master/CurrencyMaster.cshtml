@@ -1,0 +1,148 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "Currency Master";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<style type="text/css">
+    .fa {
+        color: black !important;
+    }
+
+    th {
+        text-align: left !important;
+    }
+
+    td {
+        text-align: left !important;
+    }
+</style>
+
+<script src="~/js/master/Master.Currency.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getCurrencyMasterList();
+}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Currency Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Currency Master
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+
+                    <form name="userForm" class=" form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5"> Currency Name <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error' : userForm.Currencyname.$invalid && (userForm.Currencyname.$dirty || submitted)}">
+                                            <input type="text" name="Currencyname" class="form-control" ng-model="Currencyname" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Currency Name">
+                                            <div class="help-block">
+                                                <p ng-show="userForm.Currencyname.$error.required && (userForm.Currencyname.$dirty || submitted)" class="help-block">Please Enter Currency Name</p>
+                                                @*<p ng-show="userForm.Currencyname.$error.pattern  && (userForm.Currencyname.$dirty || submitted)"></p>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5"> Symbol Name <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error' : userForm.Symbolname.$invalid && (userForm.Symbolname.$dirty || submitted)}">
+                                            <input type="text" name="Symbolname" class="form-control" ng-model="Symbolname" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Symbol Name">
+                                            <div class="help-block">
+                                                <p ng-show="userForm.Symbolname.$error.required && (userForm.Symbolname.$dirty || submitted)" class="help-block">Please Enter Symbol Name</p>
+                                                @*<p ng-show="userForm.Symbolname.$error.pattern  && (userForm.Symbolname.$dirty || submitted)"></p>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_recordid" name="hid_recordid" ng-model="hid_recordid" />
+                                    <button type="submit" class="btn green" id="btnSubmit" name="btnSubmit" ng-model="btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Currency List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Currency Name&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Symbol Name&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Symbol</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="obj in currencyMasterList">
+                                <td>{{obj.CurrencyName}}</td>
+                                <td>{{obj.SymbolName}}</td>
+                                <td> <i class="fa fa-{{obj.Symbol}}"></i> </td>
+                                <td>
+                                    <a href="javascript:void(0);" ng-click="EditCurrencyMasterData(obj.Id)" title="Edit Currency"><i class="fa fa-edit"></i></a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" ng-click="DeleteCurrencyMasterData(obj.Id)" ng-if="obj.flag==0" title="Delete Currency"><i class="fa fa-trash-o"></i></a>
+
+                                    <a href="javascript:void(0);" ng-if="obj.flag==1" title="Linked With Other Process"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

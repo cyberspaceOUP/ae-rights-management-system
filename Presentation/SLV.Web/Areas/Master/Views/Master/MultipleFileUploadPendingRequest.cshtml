@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "MultipleFileUpload";
+    Layout = null;
+}
+<script src="~/Content/script/jquery-2.1.0.minNew.js"></script>
+<script src="~/Content/script/DocUploaderGalleryV3New.js"></script>
+<link href="~/Content/DocUploaderGalleryV3.css" rel="stylesheet" />
+
+
+<form name="userform1" class="form-horizontal" novalidate>
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-12">
+                <input type="button" id="btn_Uploader_1" value="Select file" class="btn green UploadFile1" />
+                <div class='help-block'><p style='color:red;margin-left:20%' id='fileid1'></p></div>
+                <input type="hidden" id="hid_Uploads1" />
+                @*Please do not give here any folder name in below hidden field.Folder namewill be  given on your page 
+                   where uploader when it render  by Jquery then your document will store in particular folder*@
+                <input type="hidden" name="hid_foldername" id="hid_foldername" value="" />
+                @*end*@
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    //Start For only Safari browser
+    if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
+        setTimeout(function () {
+
+            $('.laksDocUploader').css('display', 'block');
+            $('.laksDocUploader').css('left', '-999px');
+
+        }, 1000);
+    }
+    //End For only Safari browser
+
+    $(document).ready(function () {
+
+    });
+
+    $(".UploadFile1").each(
+           function () {
+               $(this).multfileUpload({
+                 
+                   isDragNDrop: true, DragNDropWidth: "100%"
+                   , uploadPath: GlobalredirectPath + '/Common/uploadExcel'
+                   , DragNDropHeight: "150px"
+                   , allowedExtensions: "xlsx" //,xls
+                   , replaceLast: true
+                   , multiFile: false
+                   , fileSize: 1
+                   , progressBarClass: "cstmProgressBar"
+                   , onInit: function (settings) {
+                      
+                       var FileTypes = $("<span style='display: inline-block; margin-left:10px'></span>").html("(Only xlsx)"); //xls,
+                       $(FileTypes).insertAfter(settings.triggeringDom);
+                      
+
+                   }
+                    
+
+                 , onEachFileComplete: function (_NewAllSettings, returnString, xmlIndx) {
+                     
+                 //    alert(returnString);
+                    /// $("#hid_Uploads1").val($("#hid_Uploads1").val() + returnString + ',');
+                     $("#hid_Uploads1").val(returnString);
+                     if (returnString.trim() == "no login") {
+                         return false;
+                     }
+                     var hid_Uploads = $("[id$='hid_Uploads1']");
+                     var hid_UploadsVal = hid_Uploads.val();
+                     if (typeof hid_UploadsVal === "undefined" && hid_UploadsVal.length <= 0) {
+                         hid_UploadsVal = "";
+                     }
+
+                     var crrnt_progresstable = $($(_NewAllSettings.progressBars).not(".progresstable[returnstring]")[0]);
+                     crrnt_progresstable.attr("returnString", returnString);
+                 }
+                   , onUploadDelete: function (_DEle) {
+                       var crrnt_progresstable = $(_DEle).parents(".progresstable");
+                       var returnString = $(crrnt_progresstable).attr("returnString");
+
+
+                       ////
+
+                       var obj = {};
+
+                       obj.filename = $("#hid_Uploads1").val();
+                       
+                       $.ajax({
+                           cache: false,
+                           type: "POST",
+                           contentType: 'application/json; charset=utf-8',
+                           url: GlobalredirectPath + "/Common/deletedocument",
+                           data: JSON.stringify(obj),
+                           dataType: "json",
+                           success: function (result) {
+                               if (result == "Deleted") {
+                                   /// if deleted then follow the code
+                               }
+
+                           },
+                           error: function (xhr, ajaxOptions, thrownError) {
+                           }
+                       });
+
+
+                       ////
+
+
+
+
+                       if (typeof returnString !== "undefined" && returnString.length > 0) {
+                         
+                           var crrnt_progresstable1 = $(_DEle).parents(".progresstable");
+                           var triggeringDom1 = crrnt_progresstable1.data("triggeringDom");
+                           var crrntSettings1 = $(triggeringDom1).data("NewMultipleuploadOptionDate");
+
+                           var hid_Uploads = $("[id$='hid_Uploads1']");
+                           if (typeof hid_Uploads === "undefined" && hid_Uploads.length <= 0) {
+                               return false;
+                           }
+                           var hid_UploadsVal = hid_Uploads.val();
+                           var hid_UploadsArr = [];
+                           if (!whiteSpaceRegex.test(hid_UploadsVal)) {
+                               hid_UploadsArr = hid_UploadsVal.split(",");
+                           }
+                           var indx = hid_UploadsArr.indexOf(returnString.toString());
+                           if (indx > -1) {
+                               hid_UploadsArr.splice(indx, 1);
+                           }
+                           hid_UploadsVal = hid_UploadsArr.join(",");
+                           hid_Uploads.val(hid_UploadsVal);
+                       }
+
+
+
+                   }
+                   , onBeforeFileSend: function (_NewAllSettings, totalFiles, file_index) {
+                       var ceentBtn = _NewAllSettings.triggeringDom;
+                       var crrnt_progresstable = $(_NewAllSettings.progressBars[_NewAllSettings.progressBars.length - totalFiles + file_index]);
+                       crrnt_progresstable.append(
+                               $("<div></div>").append("<div style='width:auto'><div style='float:left;width:50%'><input type='text' class='form-control fileNameClass ExcelFIleName' style='width:80%' placeholder='File Name' mendatory='filename'></div> <div style='float:left;widht:30%'><div></div>"));
+                       $(crrnt_progresstable.next(".uploadedFileName")).addClass("text-left");
+                       crrnt_progresstable.focus();
+                       _NewAllSettings.DragNDropHeight += ($(crrnt_progresstable).find("select").height() + 80);
+                       //_NewAllSettings.DragNDropHeight ='auto;';
+                       $(_NewAllSettings.dragBox).animate({ "height": _NewAllSettings.DragNDropHeight + "px" }, "fast", "linear");
+                       //$(_NewAllSettings.dragBox).animate({ "height": 'auto' }, "fast", "linear");
+                   }
+               });
+           }
+       );
+
+
+
+
+</script>
+

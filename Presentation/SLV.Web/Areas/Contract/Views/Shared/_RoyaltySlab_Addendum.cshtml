@@ -1,0 +1,191 @@
+﻿
+
+<div class="portlet-body clearfix">
+    <div class="portlet-body flip-scroll">
+        <table class="table table-striped table-bordered table-hover dataTable no-footer RoyaltySlab" id="TblOwnerList">
+            <thead class="flip-content">
+                <tr>
+                    <th>S No.</th>
+                    <th>Product Sub-Type</th>
+                    <th>Copies From</th>
+                    <th>Copies To</th>
+                    <th>Percentage (%)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="RoyaltyslabList_Detail.length" ng-repeat="i in RoyaltyslabList_Detail">
+                    <td>
+                        <span ng-bind="$index +1"></span>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <select class="form-control" id="SubProductType_{{$index}}" ng-change="RemoveValidationRoyaltySlab($event)" onchange="RoyaltySlab($(this))" name="SubProductType" ng-model="SubProductType">
+                                            <option value="">Please Select</option>
+                                            <option ng-repeat="div in SubProductTypeList" value="{{div.subProductId}}">{{div.subProductName}}</option>
+                                        </select>
+                                        <input type="hidden" id="SubProductTypeId_{{$index}}" name="SubProductTypeId" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.CopiesFrom.$dirty) && userForm.CopiesFrom.$invalid } ">
+                                        <input type="number" min="0" id="CopiesFrom_{{$index}}" ng-change="RemoveValidationRoyaltySlab($event)" name="CopiesFrom" class="form-control" ng-model="CopiesFrom" placeholder="Copies From">
+                                        <div class="help-block">
+                                            <p ng-show="userForm.CopiesFrom.$error.required && (userForm.CopiesFrom.$dirty || submitted)" class="help-block red">Please enter copies from</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.CopiesTo.$dirty) && userForm.CopiesTo.$invalid } ">
+                                        <input type="number" min="0" max="9999999" onblur="FillOutTo(this)" id="CopiesTo_{{$index}}" ng-change="RemoveValidationRoyaltySlab($event)" name="CopiesTo" class="form-control" ng-model="CopiesTo" placeholder="Copies To">
+                                        <div class="help-block">
+                                            <p ng-show="userForm.CopiesTo.$error.required && (userForm.CopiesTo.$dirty || submitted)" class="help-block red">Please enter copies to</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.RyPercentage.$dirty) && userForm.RyPercentage.$invalid } ">
+                                        <input type="number" min="0" id="RyPercentage_{{$index}}" ng-change="RemoveValidationRoyaltySlab($event)" name="RyPercentage" class="form-control" max="100" ng-model="RyPercentage" placeholder="Percentage">
+                                        <div class="help-block">
+                                            <p ng-show="userForm.RyPercentage.$error.required && (userForm.RyPercentage.$dirty || submitted)" class="help-block red">Please enter Percentage</p>
+                                            <p ng-show="userForm.RyPercentage.$error.max && (userForm.RyPercentage.$dirty || submitted)" class="help-block red">Percentage can't be greater than 100</p>
+                                            @*<p ng-show="userForm.RyPercentage.$error.min && (userForm.RyPercentage.$dirty || submitted)" class="help-block red">Percentage can't be zero</p>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <a class="RoyaltySlabnotAdd contractPage" style="color: #ee5941; cursor: pointer; ">+ Add More Row</a>
+                                        <a class="RoyaltySlabnotRemove contractPage" style="color: #ee5941; display: none; cursor: pointer;">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr ng-if="!RoyaltyslabList_Detail.length">
+                    <td>
+                        <span ng-bind="$index +1"></span>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <select class="form-control" id="SubProductType_{{$index}}" ng-change="RemoveValidationRoyaltySlab($event)" onchange="RoyaltySlab($(this))" name="SubProductType" ng-model="SubProductType">
+                                            <option value="">Please Select</option>
+                                            <option ng-repeat="div in SubProductTypeList" value="{{div.subProductId}}">{{div.subProductName}}</option>
+                                        </select>
+                                        <input type="hidden" id="SubProductTypeId_{{$index}}" name="SubProductTypeId" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.CopiesFrom.$dirty) && userForm.CopiesFrom.$invalid } ">
+                                        <input type="number" min="0" id="CopiesFrom_{{$index}}" ng-change="RemoveValidationRoyaltySlab($event)" name="CopiesFrom" class="form-control" ng-model="CopiesFrom" placeholder="Copies From">
+                                        <div class="help-block">
+                                            <p ng-show="userForm.CopiesFrom.$error.required && (userForm.CopiesFrom.$dirty || submitted)" class="help-block red">Please enter copies from</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.CopiesTo.$dirty) && userForm.CopiesTo.$invalid } ">
+                                        <input type="number" min="0" max="9999999" onblur="FillOutTo(this)" id="CopiesTo_{{$index}}" ng-change="RemoveValidationRoyaltySlab($event)" name="CopiesTo" class="form-control" ng-model="CopiesTo" placeholder="Copies To">
+                                        <div class="help-block">
+                                            <p ng-show="userForm.CopiesTo.$error.required && (userForm.CopiesTo.$dirty || submitted)" class="help-block red">Please enter copies to</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.RyPercentage.$dirty) && userForm.RyPercentage.$invalid } ">
+                                        <input type="number" min="0" id="RyPercentage_{{$index}}" ng-change="RemoveValidationRoyaltySlab($event)" name="RyPercentage" class="form-control" max="100" ng-model="RyPercentage" placeholder="Percentage">
+                                        <div class="help-block">
+                                            <p ng-show="userForm.RyPercentage.$error.required && (userForm.RyPercentage.$dirty || submitted)" class="help-block red">Please enter Percentage</p>
+                                            <p ng-show="userForm.RyPercentage.$error.max && (userForm.RyPercentage.$dirty || submitted)" class="help-block red">Percentage can't be greater than 100</p>
+                                            @*<p ng-show="userForm.RyPercentage.$error.min && (userForm.RyPercentage.$dirty || submitted)" class="help-block red">Percentage can't be zero</p>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <a class="RoyaltySlabnotAdd contractPage" style="color: #ee5941; cursor: pointer; ">+ Add More Row</a>
+                                        <a class="RoyaltySlabnotRemove contractPage" style="color: #ee5941; display: none; cursor: pointer;">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function RoyaltySlab(obj)
+    {
+        angular.element(document.getElementById('angularid')).scope().ValidateRoyaltySlabInsert($(obj));
+    };
+
+    function FillOutTo(obj) {
+        _crrTr = $(obj).closest("tr");
+        if (_crrTr.find('input[name*=CopiesFrom]').val() >= _crrTr.find('input[name*=CopiesTo]').val() && _crrTr.find('input[name*=CopiesTo]').val() != "") {
+            alert("Please enter copies to value greater than copies from");
+            _crrTr.find('input[name*=CopiesTo]').focus();
+            return false;
+        }
+    }
+
+</script>

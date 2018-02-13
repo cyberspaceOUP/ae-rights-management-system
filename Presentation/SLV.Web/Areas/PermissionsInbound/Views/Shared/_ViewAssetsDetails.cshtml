@@ -1,0 +1,536 @@
+﻿
+
+<script src="~/js/PermissionsInbound/ViewAssetsDetails.js"></script>
+<div class="modal-body">
+    <button type="button" class="close" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+    <div class="row panel">
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Assets Details
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">	Status</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{StatusView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Asset Sub-Type</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{AssetSubTypeView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Asset Description </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{AssetDescriptionView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Extent </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{ExtentView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Gratis copies to be sent</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{GratiscopytobesentView}} </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Number of copies </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{NoofcopyView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Original Source </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{OriginalSourceView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Restriction </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{RestrictionView}} </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Sub-Licensing</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{SubLicensingView}} </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Fee  </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{FeeView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Currency</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{CurrencyView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Territory</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{TerritoryRightsView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Invoice Number   </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{InvoiceNumberView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Invoice Value   </label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{InvoiceValueView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Permission Expiry date</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{PermissionExpirydateView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Acknowledgement line</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{AcknowledgementlineView}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5 col-xs-6 col-sm-6">Remarks</label>
+                                        <div class="col-md-7 col-xs-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">{{InboundRemarks}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" ng-if="(PermissionInboundOthersRightsDataList.length)">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Other Details
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                    </div>
+                </div>
+                <div class="portlet-body clearfix">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer SeriesDetail" id="TblOwnerList">
+                                <thead class="flip-content">
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>Rights Types</th>
+                                        <th>Status</th>
+                                        <th>Granted For </th>
+                                        <th>Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="M in PermissionInboundOthersRightsDataList">
+                                        <td>{{$index +1}}</td>
+                                        <td>{{M.RightsName}}</td>
+                                        <td>{{M.status}}</td>
+                                        <td>{{M.RunGranted}}</td>
+                                        <td>{{M.Number}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" ng-if="(OtherContractDateRequestList.length)">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Date Request Details
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                    </div>
+                </div>
+                <div class="portlet-body clearfix">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer SeriesDetail" id="TblOwnerList">
+                                <thead class="flip-content">
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>Date of Request</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr ng-repeat="M in OtherContractDateRequestList">
+                                        <td>{{$index +1}}</td>
+                                        <td>{{M.dateOf}}</td>
+                                        <td>{{M.dateValue}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+
+
+
+
+@*<div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+        <div class="row panel">
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Assets Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">	Status</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{StatusView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Asset Sub-Type</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{AssetSubTypeView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Asset Description </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{AssetDescriptionView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Extent </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{ExtentView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Gratis copies to be sent</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{GratiscopytobesentView}} </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Number of copies </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{NoofcopyView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Original Source </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{OriginalSourceView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Restriction </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{RestrictionView}} </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Sub-Licensing</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{SubLicensingView}} </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Fee  </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{FeeView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Currency</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{CurrencyView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Invoice Number   </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{InvoiceNumberView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Invoice Value   </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{InvoiceValueView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Permission Expiry date</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{PermissionExpirydateView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Acknowledgement line</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{AcknowledgementlineView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="row rightsObject" ng-if="PermissionInboundOthersRightsDataList.length>0" ng-repeat="div in PermissionInboundOthersRightsDataList" rightsid="{{div.Id}}">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-8">{{div.RightsName}}</label>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{div.status}} </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" ng-if="div.RightsName !='All Future Rights Granted'">
+                                            <label class="control-label col-md-8">{{div.RightsName}} Granted For   </label>
+                                            <div class="col-md-4">
+
+                                                <div class="form-group">
+                                                    <label class="control-label">{{div.RunGranted}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" ng-if="div.RightsName !='All Future Rights Granted'">
+                                            <label class="control-label col-md-8">Number </label>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{div.Number}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12" ng-repeat="div in OtherContractDateRequestList">
+                                            <label class="control-label col-md-8">Date of {{div.dateOf}} Request</label>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{div.dateValue}} </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>*@

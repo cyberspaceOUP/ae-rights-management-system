@@ -1,0 +1,103 @@
+.linking{ width:100%;}
+.linking ul{ width:100%; list-style:none}
+.linking ul li{ font-size:13px; line-height:24px; text-align:left;}
+.linking ul li a{  color:#ee5941}
+.linking ul li a:hover{  color:#222}
+
+.tooltip-container {
+	padding-top: 0;
+	position: relative;
+}
+.tooltip-container .tooltip-btn {
+	color: #ee5941;
+	font-size: 13px;
+	cursor: pointer
+}
+.tooltip-container .tooltip-btn.tooltip-toggle:hover ~ .tooltip-content {
+	background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);
+	cursor: auto;
+	left: calc(50% - 100px);
+	padding: 10px;
+	opacity: 1;
+	overflow: visible;
+
+	pointer-events: auto;
+	position: absolute;
+	top: 145%;
+	visibility: visible;
+	z-index: 999;
+}
+.tooltip-container .tooltip-btn.tooltip-toggle:hover ~ .tooltip-content::before {
+	border-color: transparent transparent #fff;
+	border-style: solid;
+	border-width: 0 10px 10px;
+	`
+	height: 0;
+	left: 30px;
+	position: absolute;
+	top: -10px;
+	width: 0;
+}
+.tooltip-container .tooltip-content, .tooltip-container .tooltip-backdrop {
+	height: 0;
+	opacity: 0;
+	overflow: hidden;
+	transition: opacity 0.2s ease-in 0s;
+	visibility: hidden;
+	width: 0;
+}
+.tooltip-container #tooltip-toggle {
+	display: none;
+}
+.tooltip-container #tooltip-toggle.active ~ .tooltip-backdrop, .tooltip-container #tooltip-toggle:checked ~ .tooltip-backdrop {
+	background-color: transparent;
+	height: 100vh;
+	left: 0;
+	opacity: 1;
+	position: fixed;
+	top: 0;
+	transition: opacity 0.2s ease-in 0s;
+	visibility: visible;
+	width: 100vw;
+	z-index: 9;
+}
+.tooltip-container #tooltip-toggle.active ~ .tooltip-content, .tooltip-container #tooltip-toggle:checked ~ .tooltip-content {
+	background-color: #fff;
+	border-radius: 4px; border:#ee5941 solid 1px;
+
+	right: calc(50% - 64px);
+	max-width: 400px;
+	min-height:200px;
+	opacity: 1;
+	overflow: visible;
+	padding:10px 20px;
+	pointer-events: auto;
+	position: absolute;
+	top: 145%;
+	visibility: visible;
+	width: 260px;
+	z-index: 999; text-align:left
+}
+.tooltip-container #tooltip-toggle.active ~ .tooltip-content::before, .tooltip-container #tooltip-toggle:checked ~ .tooltip-content::before {
+	border-color: transparent transparent #ee5941;
+	border-style: solid;
+	border-width: 0 10px 10px;
+	content: "";
+	height: 0;
+	right: 55px;
+	position: absolute;
+	top: -11px;
+	width: 0;
+}
+
+/*Start For only Safari browser*/
+        /*for Action in listing (dropdown menu)*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .tooltip-content {
+        right: 0px;
+    }
+}
+/*End For only Safari browser*/ 
+

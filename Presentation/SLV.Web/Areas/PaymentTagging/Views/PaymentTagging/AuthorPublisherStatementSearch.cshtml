@@ -1,0 +1,265 @@
+﻿@{
+    ViewBag.Title = "AuthorPublisherStatementSearch";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/PaymentTagging/AuthorPublisherStatementSearch.js"></script>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Author / Publisher Statement Search
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class=" col-md-12 text-right" id="backToSearch" style="display:none;">
+            <div class="tools">
+                <a href="javascript:void(0);" ng-click="func_GoBack();" style="color:black; ">Back To Search</a>
+            </div>
+        </div>
+
+        <form id="AuthorPublisherStatement_Search" name="userForm" class=" form-horizontal" ng-submit="AuthorPublisherStatementSearchForm()" novalidate ng-cloak>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Author / Publisher Statement Search
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <label class="control-label col-md-5">Year &nbsp; <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Year.$dirty) && userForm.Year.$invalid } ">
+                                                    <input type="number" name="Year" ng-model="Year" required class="form-control" placeholder="Year" ng-pattern="/^[0-9]{4}$/" maxlength="4">
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Year.$error.required && (userForm.Year.$dirty || submitted)" class="help-block red">Please enter year </p>
+                                                        <p ng-show="userForm.Year.$error.pattern" class="help-block red">Please enter valid year</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="control-label col-md-5">Month &nbsp; <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Month.$dirty) && userForm.Month.$invalid } ">
+                                                    <select name="Month" ng-model="Month" required class="form-control">
+                                                        <option value>Select Month</option>
+                                                        <option value='01'>Janaury</option>
+                                                        <option value='02'>February</option>
+                                                        <option value='03'>March</option>
+                                                        <option value='04'>April</option>
+                                                        <option value='05'>May</option>
+                                                        <option value='06'>June</option>
+                                                        <option value='07'>July</option>
+                                                        <option value='08'>August</option>
+                                                        <option value='09'>September</option>
+                                                        <option value='10'>October</option>
+                                                        <option value='11'>November</option>
+                                                        <option value='12'>December</option>
+                                                    </select>
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Month.$error.required && (userForm.Month.$dirty || submitted)" class="help-block red">Please select month </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class=" row" style="margin-left:2px;">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-md-6">
+                                                    <label class="radio-inline" style="padding-top: 0px !important;">
+                                                        <input type="radio" name="ContractCodeOrLicenseCodeChk " ng-model="ContractCodeOrLicenseCodeChk" ng-click="func_AuthorContractCodeChk()" value="AuthorContractCode" required> Author Contract Code
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="radio-inline" style="padding-top: 0px !important;">
+                                                        <input type="radio" name="ContractCodeOrLicenseCodeChk " ng-model="ContractCodeOrLicenseCodeChk" ng-click="func_ProductLicenseCodeChk()" value="ProductLicenseCode" required> Product License Code
+                                                    </label>
+                                                </div>
+
+                                                <div ng-class="{ 'has-error' : userForm.ContractCodeOrLicenseCodeChk .$invalid && (userForm.ContractCodeOrLicenseCodeChk .$dirty || submitted)}">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ContractCodeOrLicenseCodeChk .$error.required && (userForm.ContractCodeOrLicenseCodeChk.$dirty || submitted)" class="help-block">Please select one of these </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-show="ReqAuthorContractCode">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Author Contract Code &nbsp; <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorContractCode.$dirty) && userForm.AuthorContractCode.$invalid } ">
+                                                    <input type="text" name="AuthorContractCode" ng-model="AuthorContractCode" ng-required="ReqAuthorContractCode&&!AuthorCode&&!AuthorName" class="form-control" placeholder="Author Contract Code">
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AuthorContractCode.$error.required && (userForm.AuthorContractCode.$dirty || submitted)" class="help-block red">Please enter author contract code </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Author Code &nbsp; <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorCode.$dirty) && userForm.AuthorCode.$invalid } ">
+                                                    <input type="text" name="AuthorCode" class="form-control" ng-required="ReqAuthorContractCode&&!AuthorName&&!AuthorContractCode" ng-model="AuthorCode" placeholder="Author Code">
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AuthorCode.$error.required && (userForm.AuthorCode.$dirty || submitted)" class="help-block red">Please enter author code </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Author Name &nbsp; <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorName.$dirty) && userForm.AuthorName.$invalid } ">
+                                                    <input type="text" name="AuthorName" class="form-control" ng-required="ReqAuthorContractCode&&!AuthorCode&&!AuthorContractCode" ng-model="AuthorName" placeholder="Author Name">
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AuthorName.$error.required && (userForm.AuthorName.$dirty || submitted)" class="help-block red">Please enter author name </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-show="ReqLicenseCode">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product License Code &nbsp; <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductLicenseCode.$dirty) && userForm.ProductLicenseCode.$invalid } ">
+                                                    <input type="text" name="ProductLicenseCode" class="form-control" ng-model="ProductLicenseCode" ng-required="ReqLicenseCode&&!PublishingCompanyName&&!PublishingCompanyCode" placeholder="Product License Code">
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProductLicenseCode.$error.required && (userForm.ProductLicenseCode.$dirty || submitted)" class="help-block red">Please enter product license code </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Publishing Company Code &nbsp; <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PublishingCompanyCode.$dirty) && userForm.PublishingCompanyCode.$invalid } ">
+                                                    <input type="text" name="PublishingCompanyCode" class="form-control" ng-required="ReqLicenseCode&&!PublishingCompanyName&&!ProductLicenseCode" ng-model="PublishingCompanyCode" placeholder="Publishing Company Code">
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PublishingCompanyCode.$error.required && (userForm.PublishingCompanyCode.$dirty || submitted)" class="help-block red">Please enter publishing company code </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Publishing Company Name &nbsp; <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PublishingCompanyName.$dirty) && userForm.PublishingCompanyName.$invalid } ">
+                                                    <input type="text" name="PublishingCompanyName" class="form-control" ng-required="ReqLicenseCode&&!PublishingCompanyCode&&!ProductLicenseCode" ng-model="PublishingCompanyName" placeholder="Publishing Company Name">
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PublishingCompanyName.$error.required && (userForm.PublishingCompanyName.$dirty || submitted)" class="help-block red">Please enter publishing company name </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <form id="AuthorPublisherStatement_List" style="display:none;" name="userForm" class=" form-horizontal" >
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Author / Publisher Statement List
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+
+                            <table class="table table-bordered table-striped table-condensed flip-content">
+                                <thead>
+                                    <tr>
+                                        <th>S. No.</th>
+                                        <th>Author Contract Code</th>
+                                        <th>Author Name</th>
+                                        <th>Total Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="items in AuthorPublisherStatement_List">
+                                        <td>{{index + 1}}</td>
+                                        <td>
+                                            <a href="~/PaymentTagging/PaymentTagging/AuthorPublisherStatementView?Id={{items.AuthorContractId}}" target="_blank" style="color: #ee5941;">{{items.AuthorContractCode}}</a>
+                                        </td>
+                                        <td>
+                                            <a href="~/PaymentTagging/PaymentTagging/AuthorPublisherStatementView?Id={{items.AuthorContractId}}" target="_blank" style="color: #ee5941;">{{items.AuthorName}}</a>
+                                        </td>
+                                        <td>{{items.TotalAmount}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+

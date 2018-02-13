@@ -1,0 +1,46 @@
+﻿
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+           @T("Dashboard.AssignmentContractStatus")
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!AuthorContractRequestStatusList.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Contract Code </th>
+                        <th> Contract Date </th>
+                        <th> Expiry Date </th>
+                        <th> Product Code </th>
+                        <th> ISBN </th>
+                        <th> Working Product</th>
+                    </tr>
+
+                    <tr ng-repeat="Contract in AuthorContractRequestStatusList">
+                        <td class="table-color"><a href="~/Contract/AuthorContract/view?Id={{Contract.Id}}"> <span ng-bind="(Contract.Contract_Code)"></span> </a></td>
+                        <td><span ng-bind="(Contract.ContractDate)"></span>  </td>
+                        <td><span ng-bind="(Contract.Expirydate)"></span>  </td>
+                        <td> <span ng-bind="(Contract.ProductCode)"></span>  </td>
+                        <td><span ng-bind="(Contract.ISBN)"></span>  </td>
+                        <td><span ng-bind="(Contract.WorkingProduct)"></span>   <span style="font-size:11px;">  <br />  <span ng-bind="(Contract.WorkingSubProduct)"></span> </span></td>
+                    </tr>
+                </table>
+                <a href="javascript:void(0);" ng-click="AuthorContractRequiestStatus_submitForm();" class="moreDash">View More</a>
+            </div>
+            <div ng-hide="AuthorContractRequestStatusList.length">No result found</div>
+        </div>
+    </div>
+</div>
+
+

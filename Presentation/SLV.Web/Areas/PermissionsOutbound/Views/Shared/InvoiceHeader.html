@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script>
+    function subst() {
+        var vars = {};
+        var x = document.location.search.substring(1).split('&');
+        for (var i in x) { var z = x[i].split('=', 2); vars[z[0]] = unescape(z[1]); }
+        var x = ['frompage', 'topage', 'page', 'webpage', 'section', 'subsection', 'subsubsection'];
+        for (var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for (var j = 0; j < y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+    }
+    </script>
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    
+</head>
+<body style="border: 0; margin: 0;" onload="subst()" >
+
+
+    <table style="width: 100%;font-size: 14px;font-family: 'open_sansregular';color: #4c4c4c;">
+        <tr>
+            <td align="left" width="150" height="80" style="vertical-align:top"><img src="../../../../Content/images/InvoiceLogo.png" width="150" height="80" /></td>
+            <td align="left" style="width:50%">
+                <table>
+                    <tr><td align="left"><label class="control-label"><b>Oxford University Press</b></label></td></tr>
+                    <tr><td align="left"><label class="control-label">World Trade Tower (12th Floor) </label></td></tr>
+                    <tr><td align="left"><label class="control-label">C-1, Sector 16, Main DND Road</label> </td></tr>
+                    <tr><td align="left"><label class="control-label">Rajnigandha Chowk, Noida</label></td></tr>
+                    <tr><td align="left"><label class="control-label">Uttar Pradesh – 201306 (India)</label></td></tr>
+                    <tr><td align="left"><label class="control-label">&nbsp;</label></td></tr>
+                    <!--<tr><th align="right"><label class="control-label">Customer Copy</label></th></tr>-->
+                    <tr><td align="left"><label class="control-label">Customer Care Helpline No. : +91-9910337034, +91-9910337035 </label></td></tr>
+                    <tr><td align="left"><label class="control-label">Customer Care Email ID: northcare.in@oup.com</label></td></tr>
+                </table>
+            </td>
+            <td align="left">
+                <table>
+                    <tr><th align="left" colspan="3">TAX INVOICE</th></tr>
+                    <tr><td colspan="2">&nbsp;</td><td align="right">&nbsp;</td></tr>
+                    <!--<tr><td align="left">Customer Copy</td><td colspan="2">&nbsp;</td></tr>-->
+                    <tr><td colspan="2">&nbsp;</td><td align="right">VAT RC. NO. 06501340123 </td></tr>
+                    <tr><td colspan="2">&nbsp;</td><td align="right">CST RC NO. 06501340123</td></tr>
+                    <tr><td colspan="2">&nbsp;</td><td align="right">&nbsp;</td></tr>
+                    <tr><td colspan="2">&nbsp;</td><td align="right">PAN: AAACO3278K</td></tr>
+                    <td colspan="2">&nbsp;</td>
+                    <td align="right">Page <span class="page"></span>of <span class="topage"></span></td>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+            <th align="center" colspan="3"><label class="control-label">Customer Copy</label></th>
+        </tr>
+        <tr>
+            <td align="center" colspan="3">&nbsp;</td>
+        </tr>
+</body>
+</html>

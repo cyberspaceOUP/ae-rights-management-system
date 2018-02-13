@@ -1,0 +1,180 @@
+﻿<div class=" row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">E-Files Cost</label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error' : userForm.EFilesCost.$invalid && (userForm.EFilesCost.$dirty || submitted)}">
+                        <input type="number" min="0" name="EFilesCost" class="form-control" ng-model="ProductModel.EFilesCost" placeholder="E-Files Cost" ng-init="Mode=''"
+                               @*ng-required="(ProductModel.EFilesCost > 0 || ProductModel.EFilesReceivedDate.length || ProductModel.EFilesRequestDate.length || ProductModel.Mode.length )"*@ />
+                        <div class="help-block">
+                            <p ng-show="userForm.EFilesCost.$error.required && (userForm.EFilesCost.$dirty || submitted)" class="help-block">Please Enter E-Files Cost</p>
+                            <p ng-show="userForm.EFilesCost.$error.pattern  && (userForm.EFilesCost.$dirty || submitted)"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">E-Files Request Date</label>
+                <div class="col-md-7">
+                    <div class="form-group date" ng-class="{ 'has-error' : userForm.EFilesRequestDate.$invalid && (userForm.EFilesRequestDate.$dirty || submitted)}">
+                        <div class="input-group input-append date datePicker">
+                            <input type="text" name="EFilesRequestDate" class="form-control" onchange="angular.element(document.getElementById('angularid')).scope().SetEFilesRequestDate(this);"
+                                   ng-model="ProductModel.EFilesRequestDate" placeholder="E-Files Request Date"
+                                   @*ng-required="(ProductModel.EFilesCost > 0 || ProductModel.EFilesReceivedDate.length || ProductModel.EFilesRequestDate.length || ProductModel.Mode.length )"*@ />
+                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                            
+                        </div>
+                        <div class="help-block">
+                            <p ng-show="userForm.EFilesRequestDate.$error.required && (userForm.EFilesRequestDate.$dirty || submitted)" class="help-block">Please Enter E-Files Request Date</p>
+                            <p ng-show="userForm.EFilesRequestDate.$error.pattern  && (userForm.EFilesRequestDate.$dirty || submitted)"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">E-Files Received Date</label>
+                <div class="col-md-7">
+                    <div class="form-group date" ng-class="{ 'has-error' : userForm.EFilesReceivedDate.$invalid && (userForm.EFilesReceivedDate.$dirty || submitted)}">
+                        <div class="input-group input-append date datePicker">
+                            <input type="text" name="EFilesReceivedDate" class="form-control" onchange="angular.element(document.getElementById('angularid')).scope().SetEFilesReceivedDate(this);"
+                                   ng-model="ProductModel.EFilesReceivedDate" placeholder="E-Files Received Date"
+                                   @*ng-required="(ProductModel.EFilesCost > 0 || ProductModel.EFilesReceivedDate.length || ProductModel.EFilesRequestDate.length || ProductModel.Mode.length )"*@>
+                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                            
+                        </div>
+                        <div class="help-block">
+                            <p ng-show="userForm.EFilesReceivedDate.$error.required && (userForm.EFilesReceivedDate.$dirty || submitted)" class="help-block">Please Enter E-Files Received Date</p>
+                            <p ng-show="userForm.EFilesReceivedDate.$error.pattern  && (userForm.EFilesReceivedDate.$dirty || submitted)"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Mode</label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error' : userForm.Mode.$invalid && (userForm.Mode.$dirty || submitted)}">
+                        <select class="form-control" name="Mode" ng-model="ProductModel.Mode" @*ng-init="userForm.Mode.$modelValue=''"*@ @*ng-init="Mode=''"*@
+                                ng-required="(ProductModel.EFilesCost > 0  || ProductModel.EFilesReceivedDate.length || ProductModel.EFilesRequestDate.length || ProductModel.Mode.length )">
+                            <option value="">Please Select</option>
+                            <option value="FTP">FTP</option>
+                            <option value="CD">CD</option>
+                            <option value="DVD">DVD</option>
+                        </select>
+                        <div class="help-block">
+                            <p ng-show="userForm.Mode.$error.required && (userForm.Mode.$dirty || submitted)" class="help-block">Please Enter Mode</p>
+                            <p ng-show="userForm.Mode.$error.pattern  && (userForm.Mode.$dirty || submitted)"></p>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">Proprietor Copies Sent Date</label>
+                <div class="col-md-7">
+                    <div class="form-group date">
+                        <div class="input-group input-append date datePicker">
+                            <input type="text" name="LicensorCopiesSentDate" class="form-control" ng-model="ProductModel.LicensorCopiesSentDate" onchange="angular.element(document.getElementById('angularid')).scope().SetLicensorCopiesSentDate(this);"
+                                   placeholder="Licensor Copies Sent Date">
+                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label class="control-label col-md-2">Uploaded Document</label>
+        <div class="col-md-10" style="padding-left:45px;">
+            <div id="fileuploadcontrol">
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    &nbsp;
+                </div>
+            </div>
+            @*<div id="doclistid" ng-show="documentshow" style=" padding-left: 29px;">
+                <div class="panel panel-warning">
+                    <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                        <h3 class="panel-title">Uploaded Attachments</h3>
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>*@
+            <div class="panel-body" id="doclistid" ng-show="documentshow">
+                <table class="table table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Document Name</th>
+                            <th ng-if="'@ViewBag.Department'=='ad' || '@ViewBag.Department'=='sa'"> action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="url in Docurl">
+                            <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.Id}}" /></td>
+                            <td><a href="~/uploads/{{url.UploadFileName}}" target="_blank" style="color: black;"><span ng-bind="url.FileName"></span></a></td>
+                            <td ng-if="'@ViewBag.Department'=='ad' || '@ViewBag.Department'=='sa'"><a style=" color: black; cursor:pointer;" ng-click="RemoveDocumentById(url)">Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                @*</div>
+            </div>*@
+            <div class="help-block">
+                <p ng-show="UploadContractReq" class="help-block">Please Upload Document</p>
+                <p ng-show="UploadExcelfileNameReq" class="help-block">Please enter file name</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+   
+    $(function () {
+        setTimeout(function () { 
+        renderFileUpload();
+
+        }, 5000);
+      
+    });
+
+    function renderFileUpload() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            contentType: 'application/html; charset=utf-8',
+            url: GlobalredirectPath + "/Master/Master/MultipleFileUpload",
+            data: {},
+            datatype: 'html',
+            success: function (result) {
+                $("#fileuploadcontrol").html(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+
+    }
+
+</script>

@@ -1,0 +1,33 @@
+﻿<script src="~/js/common/Common.AuthorSuggestion.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <label class="col-md-5">Author Category</label>
+        <div class="col-md-7 form-group">
+            <label class="radio-inline">
+                <input type="radio" class="radio" name="AuthorCategory" ng-model="AuthorCategory" value="Individual"> Individual
+            </label>
+            <label class="radio-inline">
+                 <input type="radio" class="radio-inline" name="AuthorCategory" ng-model="AuthorCategory" value="Institute"> Institute
+            </label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">Author Name </label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SuggestedAuthorName.$dirty) && userForm.SuggestedAuthorName.$invalid } ">
+               
+                <input type="text" name="SuggestedAuthorName" ng-keyup="AutoComplete($event)" class="form-control SuggestedAuthorName" ng-model="SuggestedAuthorName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Author Name">
+                    <div class="help-block">
+                        <p ng-show="userForm.SuggestedAuthorName.$error.required && (userForm.SuggestedAuthorName.$dirty || submitted)" class="help-block red">Please enter valid Author Name</p>
+                    </div>
+                </div>
+        </div>
+       
+    </div>
+</div>
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/script/jquery-ui.js"></script>
+

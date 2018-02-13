@@ -1,0 +1,88 @@
+﻿
+.progresstable {
+    width: 95%;
+    padding: 0px;
+    border-spacing: 0px;
+    margin: 0px 2.5%;
+    display: table;
+}
+/*Modified By Rajneesh Singh on 10/03/2016*/
+@media (max-width: 700px) 
+{
+    .td_1_uploadProgress {
+        width: 100%;
+        display: block;
+    }
+}
+@media (min-width: 700px) 
+{
+    .td_1_uploadProgress {
+        width: 30%;
+        padding-right: 4%;
+        display: table-cell;
+    }
+}
+/*Ended By Rajneesh Singh on 10/03/2016*/
+    .td_1_uploadProgress .progress {
+        width: 95%;
+        display: block;
+        margin: 0 0 0 17px;
+        height: 10px !important;
+    }
+
+    .td_1_uploadProgress .meter {
+        background: #4d9db7;
+        display: block;
+    }
+
+
+.crossUpload {
+    border-radius: 50%;
+    content: "";
+    color: white;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background: #4d9db7 !important;
+    position: absolute;
+    margin-top: -16px;
+}
+
+    .crossUpload:after, .crossUpload:before {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 10px;
+        z-index: 1000;
+        margin: 5px 0 0 auto;
+        left: 9px;
+        background-color: white;
+    }
+
+    .crossUpload:before {
+        transform: rotate(-45deg);
+    }
+
+    .crossUpload:after {
+        transform: rotate(45deg);
+    }
+
+    .crossUpload:hover:after, .crossUpload:hover:before {
+        background-color: black;
+    }
+
+.uploadedFileName {
+    width: 98%;
+    margin-left: 2%;
+    color: rgba(0,0,0,0.8);
+    margin-top: 5px;
+    font-size: 14px;
+}
+.uploadedFileName u{
+       word-break: break-all;
+}
+/*---------------Custom Css-----------------*/
+.cstmProgressBar {
+    margin-top: 10px;
+}

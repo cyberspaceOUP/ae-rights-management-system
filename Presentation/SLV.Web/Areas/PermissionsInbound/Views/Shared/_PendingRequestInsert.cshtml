@@ -1,0 +1,658 @@
+﻿
+<script src="~/js/PermissionsInbound/PendingRequestInsert.js"></script>
+
+<div class="col-md-12" ng-show="InsertPenddingRequest">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                @*Pending Request for Permissions Inbound*@ @*Permission letters can be uploaded*@ Upload Document
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5"> Document Description @*<span class="red">*</span>*@</label>
+                                    <div class="col-md-7">
+                                        <div style="margin-left: -54px;" @*class="form-group" ng-class="{ 'has-error': ( submitted || userForm.PendingRemarks.$dirty) && userForm.PendingRemarks.$invalid } "*@>
+
+                                            <textarea class="form-control" name="PendingRemarks" @*ng-required="true"*@ ng-model="PendingRemarks" placeholder="Document Description" ng-change="keyChange()"></textarea>
+                                            @*<div class="help-block">
+                            <p ng-show="PendingRemarkRrequired" class="help-block">Please enter Remarks </p>
+                        </div>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5"> Contract Status&nbsp;<span class="red">*</span> </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Contractstatus.$dirty) && userForm.Contractstatus.$invalid } ">
+
+                                            <label class="radio-inline">
+                                                <input type="radio" class="Contractstatus" name="Contractstatus" ng-model="PermissionsInboundModel.Contractstatus" value="Pending" ng-click="fun_Pending()" @*ng-required="ContractstatusReq"*@> Pending
+
+                                            </label>
+
+                                            <label class="radio-inline">
+                                                <input type="radio" class="Contractstatus" name="Contractstatus" ng-model="PermissionsInboundModel.Contractstatus" value="Issued" ng-click="fun_issued()" @*ng-required="ContractstatusReq"*@> Issued
+
+                                            </label>
+
+                                            <label class="radio-inline">
+                                                <input type="radio" class="Contractstatus" name="Contractstatus" ng-model="PermissionsInboundModel.Contractstatus" value="Cancelled" ng-click="fun_Cancelled()" @*ng-required="ContractstatusReq"*@> Cancelled
+
+                                            </label>
+
+                                            <div ng-class="{ 'has-error' : userForm.Contractstatus.$invalid && (userForm.Contractstatus.$dirty || submitted)}">
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.Contractstatus.$error.required && (userForm.Contractstatus.$dirty || submitted)" class="help-block red">Please select Contract Status</p>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Agreement Date <span class="red" ng-show="(PermissionsInboundModel.Contractstatus =='Issued')">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (userForm.DateOfAgreement.$dirty || submitted) && userForm.DateOfAgreement.$invalid }">
+                                            <div class="input-group input-medium date date-picker DateOfAgreement" id="DateOfAgreement">
+                                                <input ng-disabled="!(PermissionsInboundModel.Contractstatus == 'Issued')" type="text" size="16" ng-required="(PermissionsInboundModel.Contractstatus =='Issued')" class="form-control" name="DateOfAgreement" id="DateOfAgreementValue"
+                                                       ng-model="PermissionsInboundModel.DateOfAgreement" onchange="angular.element(document.getElementById('angularid')).scope().DateOfAgreement(this);"
+                                                       placeholder="Agreement Date ">
+                                                <span class=" input-group-btn">
+                                                    <button class="btn default date-set" ng-disabled="!(PermissionsInboundModel.Contractstatus == 'Issued')" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.DateOfAgreement.$error.required && (userForm.DateOfAgreement.$dirty || submitted)">Please select Agreement Date </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+
+                                    $('.DateOfAgreement')
+                                        .datepicker({
+                                            format: "dd/mm/yyyy",
+
+                                            showButtonPanel: true,
+                                            autoclose: true,
+
+
+                                        })
+
+
+
+                                });
+
+
+                            </script>
+
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Effective Date  &nbsp;<span class="red" ng-show="(PermissionsInboundModel.Contractstatus =='Issued')">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.EffectiveDate.$dirty) && userForm.EffectiveDate.$invalid } ">
+                                            <div class="input-group input-append date EffectiveDate date-set">
+                                                <input type="text" name="EffectiveDate" class="form-control" id="EffectiveDate" ng-model="PermissionsInboundModel.EffectiveDate"
+                                                       onchange="angular.element(document.getElementById('angularid')).scope().SetContractDate(this);"
+                                                       placeholder="Effective Date"
+                                                       ng-disabled="!(PermissionsInboundModel.Contractstatus == 'Issued')" ng-required="(PermissionsInboundModel.Contractstatus == 'Issued')">
+                                                <span class=" input-group-btn">
+                                                    <button class="btn default date-set" type="button" ng-disabled="!(PermissionsInboundModel.Contractstatus == 'Issued')"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.EffectiveDate.$error.required && (userForm.EffectiveDate.$dirty || submitted)" class="help-block red">Please enter Effective Date</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+
+                                        $('.EffectiveDate')
+                                            .datepicker({
+                                                format: "dd/mm/yyyy",
+
+                                                showButtonPanel: true,
+                                                autoclose: true,
+
+
+                                            })
+
+
+
+                                    });
+
+
+                                </script>
+                            </div>
+
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Contract period (In months)&nbsp;<span class="red" ng-show="(PermissionsInboundModel.Contractstatus =='Issued')">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContractperiodUpload.$dirty) && userForm.ContractperiodUpload.$invalid } ">
+                                            <input type="number" ng-disabled="!(PermissionsInboundModel.Contractstatus == 'Issued')" ng-required="(PermissionsInboundModel.Contractstatus == 'Issued')" name="ContractperiodUpload" class="form-control" min="1" ng-model="PermissionsInboundModel.ContractperiodUpload" ng-change="CalculateExpiry()" placeholder="Contract Period (Months)">
+                                            <div class="help-block">
+                                                <p ng-show="userForm.ContractperiodUpload.$error.required && (userForm.ContractperiodUpload.$dirty || submitted)" class="help-block red">Please enter Contract Period</p>
+                                                <p ng-show="userForm.ContractperiodUpload.$error.pattern" class="help-block red">Please enter valid Contract Period</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Expiry Date&nbsp;<span class="red" ng-show="(PermissionsInboundModel.Contractstatus =='Issued')">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ExpiryDate.$dirty) && userForm.ExpiryDate.$invalid } ">
+                                            <div class="input-group input-append date datePicker">
+                                                <input type="text" name="ExpiryDate" id="ExpiryDate" ng-required="(PermissionsInboundModel.Contractstatus == 'Issued')" ng-disabled="true" class="form-control" ng-model="PermissionsInboundModel.ExpiryDate" placeholder="Expiry Date">
+                                                @*<span class="input-group-addon add-on"><span ng-disabled="true" class="glyphicon glyphicon-calendar"></span></span>*@
+                                                <span class=" input-group-btn">
+                                                    <button class="btn default date-set" type="button" ng-disabled="true"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.ExpiryDate.$error.required && (userForm.ExpiryDate.$dirty || submitted)" class="help-block red">Please enter Expiry Date</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Signed Contract Sent Date <span class="red" ng-show="(PermissionsInboundModel.Contractstatus =='Issued' || PermissionsInboundModel.Contractstatus =='Pending' )">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (userForm.Signed_Contract_Sent_Date.$dirty || submitted) && userForm.Signed_Contract_Sent_Date.$invalid }">
+                                            <div class="input-group input-medium date date-picker Signed_Contract_Sent_Date" id="ContractDateId">
+                                                <input type="text" size="16" ng-required="(PermissionsInboundModel.Contractstatus =='Issued' || PermissionsInboundModel.Contractstatus =='Pending' )" class="form-control" name="Signed_Contract_Sent_Date" id="Signed_Contract_Sent_DateValue"
+                                                       ng-model="PermissionsInboundModel.Signed_Contract_Sent_Date" onchange="angular.element(document.getElementById('angularid')).scope().SetSigned_Contract_Sent_DateDate(this);"
+                                                       ng-disabled="!(PermissionsInboundModel.Contractstatus =='Issued' || PermissionsInboundModel.Contractstatus =='Pending' )"
+                                                       placeholder="Signed Contract Sent Date">
+                                                <span class=" input-group-btn">
+                                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.Signed_Contract_Sent_Date.$error.required && (userForm.Signed_Contract_Sent_Date.$dirty || submitted)">Please select Signed Contract Sent Date</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+
+                                    $('.Signed_Contract_Sent_Date')
+                                        .datepicker({
+                                            format: "dd/mm/yyyy",
+
+                                            showButtonPanel: true,
+                                            autoclose: true,
+
+
+                                        })
+
+
+
+                                });
+
+
+                            </script>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+
+
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Signed Contract Received Date <span class="red" ng-show="(PermissionsInboundModel.Contractstatus =='Issued')">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (userForm.Signed_Contract_received_Date.$dirty || submitted) && userForm.Signed_Contract_received_Date.$invalid }">
+                                            <div class="input-group input-medium date date-picker Signed_Received_Sent_Date">
+                                                <input type="text" size="16" ng-required="(PermissionsInboundModel.Contractstatus =='Issued')" class="form-control" name="Signed_Contract_received_Date" id="Signed_Received_Sent_DateValue"
+                                                       ng-model="PermissionsInboundModel.Signed_Contract_received_Date" onchange="angular.element(document.getElementById('angularid')).scope().SetSigned_Received_Sent_Date(this);"
+                                                       ng-disabled="!(PermissionsInboundModel.Contractstatus == 'Issued')"
+                                                       placeholder="Signed Contract Received Date">
+                                                <span class=" input-group-btn">
+                                                    <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.Signed_Contract_received_Date.$error.required && (userForm.Signed_Contract_received_Date.$dirty || submitted)">Please select Signed Received Sent Date</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+
+                                    $('.Signed_Received_Sent_Date')
+                                        .datepicker({
+                                            format: "dd/mm/yyyy",
+
+                                            showButtonPanel: true,
+                                            autoclose: true,
+
+
+                                        })
+
+
+
+                                });
+
+
+                            </script>
+
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Cancellation Date&nbsp;<span class="red" ng-show="(PermissionsInboundModel.Contractstatus =='Cancelled')">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (userForm.Cancellation_Date.$dirty || submitted) && userForm.Cancellation_Date.$invalid }">
+                                            <div class="input-group input-medium date date-picker Cancellation_Date">
+                                                <input type="text" size="16" ng-disabled="!(PermissionsInboundModel.Contractstatus =='Cancelled')" ng-required="(PermissionsInboundModel.Contractstatus =='Cancelled')" class="form-control" name="Cancellation_Date" id="Cancellation_DateValue"
+                                                       ng-model="PermissionsInboundModel.Cancellation_Date" onchange="angular.element(document.getElementById('angularid')).scope().SetCancellation_Date(this);"
+                                                       placeholder="Cancellation Date">
+                                                <span class=" input-group-btn">
+                                                    <button class="btn default date-set" ng-disabled="!(PermissionsInboundModel.Contractstatus =='Cancelled')" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.Cancellation_Date.$error.required && (userForm.Cancellation_Date.$dirty || submitted)">Please select Cancellation Date</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+
+                                    $('.Cancellation_Date')
+                                        .datepicker({
+                                            format: "dd/mm/yyyy",
+
+                                            showButtonPanel: true,
+                                            autoclose: true,
+
+
+                                        })
+
+
+
+                                });
+
+
+                            </script>
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5"> Cancellation Reason <span class="red" ng-show="(PermissionsInboundModel.Contractstatus =='Cancelled')">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Cancellation_Reason.$dirty) && userForm.Cancellation_Reason.$invalid } ">
+
+                                            <textarea class="form-control" name="Cancellation_Reason" ng-disabled="!(PermissionsInboundModel.Contractstatus =='Cancelled')" ng-required="(PermissionsInboundModel.Contractstatus =='Cancelled')" ng-model="PermissionsInboundModel.Cancellation_Reason" placeholder="Cancellation Reason"></textarea>
+                                            <div class="help-block">
+                                                <p ng-show="userForm.Cancellation_Reason.$error.required && (userForm.Cancellation_Reason.$dirty || submitted)" class="help-block red">Please enter Cancellation Reason </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+                        </div>
+
+                        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                        <div class="col-md-12" id="multipleUploadfiles">
+
+                            <label class="control-label col-md-2"> Document &nbsp; <span class="red">*</span></label>
+                            <div class="col-md-10 form-group uploadPendingRequestFileMutple" id="fileUploadPending">
+
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="help-block">
+                                <p ng-show="UploadContractReq" id="UploadContractReq" class="help-block">Please Upload Document</p>
+                                <p ng-show="UploadExcelfileNameReq" class="help-block">Please enter file name</p>
+
+                            </div>
+                            @*<div id="doclistid" ng-show="Pendingdocumentshow" style=" padding-left: 29px;">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                        <h3 class="panel-title">Attached Document</h3>
+                                    </div>
+
+                                    <div class="tools">
+
+                                        <a href="javascript:;" class="collapse"> </a>
+                                    </div>*@
+
+                            <div class="panel-body" id="doclistid" ng-show="Pendingdocumentshow">
+
+                                <table class="table table-striped table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Document Name</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="url in Docurl1">
+                                            <td>{{ $index + 1 }} <input type="hidden" name="DocId1" value="{{url.DocId1}}" /></td>
+                                            <td><a href="~/uploads/{{url.text1}}" target="_blank" style="color: black;">{{url.name1}}</a></td>
+                                            <td><a style=" color: black; cursor:pointer;" ng-click="RemoveDocumentLinkById(url.DocId1,url.text1)">Delete</a></td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                                @*</div>
+
+                            </div>*@
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="col-md-12" id="PenddingRemarksViewValue" ng-show="Docurl1.length"> @*PenddingRemarksView.length*@
+
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                @*Pending Request for Permissions Inbound*@ @*Permission letters can be uploaded*@ Attached Document
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5"> Document Description </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{PenddingRemarksView}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5"> Contract Status </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{ContractStatusView}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Agreement Date </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{AgreementDateView}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Effective Date </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{EffectiveDateView}} </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Contract period (In months)</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{ContractperiodView}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Expiry Date</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{ExpiryDateView}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Signed Contract Sent Date </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{SignedContractSentDateView}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Signed Contract Received Date </label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{SignedContractReceivedDateView}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5">Cancellation Date</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{CancellationDateView}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row" ng-show="false">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-5"> Cancellation Reason</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label">{{CancellationReasonView}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" id="multipleUploadfiles">
+
+
+
+                                <div id="doclistid" ng-show="Pendingdocumentshow" style=" padding-left: 29px;">
+                                    @*<div class="panel panel-warning">
+                                        <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                            <h3 class="panel-title">Attached Document</h3>
+                                        </div>
+
+                                        <div class="tools">
+
+                                            <a href="javascript:;" class="collapse"> </a>
+                                        </div>
+
+                                        <div class="panel-body">*@
+
+                                            <table class="table table-striped table-hover ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Document Name</th>
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="url in Docurl1">
+                                                        <td>{{ $index + 1 }} <input type="hidden" name="DocId1" value="{{url.DocId1}}" /></td>
+                                                        <td><a href="~/uploads/{{url.text1}}" target="_blank" style="color: black;">{{url.name1}}</a></td>
+
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        @*</div>
+                                    </div>*@
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+
+    $(function () {
+        renderFileUpload();
+        setTimeout(function () { $('#fileid').attr("style", "color:#a94442;") }, 1200)
+        
+        //   renderFileUploadOther();
+    });
+
+    function renderFileUpload() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            contentType: 'application/html; charset=utf-8',
+            url: GlobalredirectPath + "/Master/Master/MultipleFileUpload",
+            data: {},
+            datatype: 'html',
+            success: function (result) {
+                $(".uploadPendingRequestFileMutple").html(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+
+    }
+
+
+</script>

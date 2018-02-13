@@ -1,0 +1,53 @@
+﻿
+<script src="~/js/PermissionsOutbound/SubsidiaryRightsProductLicense.js"></script>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Subsidiary Rights
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="form-body">
+            <div class="portlet-body clearfix">
+                <div class="portlet-body flip-scroll">
+
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tblsubsidiary">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>SNo.</th>
+                                <th>Subsidiary Rights</th>
+                                <th>Publisher (%)</th>
+                                <th>OUP (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="div in SubsidiaryProductLicenseDataDetails" ng-if="SubsidiaryProductLicenseDataDetails.length > 0">
+                                <td>
+                                    <span ng-bind="$index+1"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="div.SubsidiaryRights"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="div.publisherpercentage"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="div.Ouppercentage"></span>
+                                </td>
+                            </tr>
+                            <tr ng-if="SubsidiaryProductLicenseDataDetails.length == 0">
+                                <td colspan="4">
+                                    No Subsidiary Rights Exist
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

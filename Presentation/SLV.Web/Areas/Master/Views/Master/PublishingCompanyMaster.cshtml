@@ -1,0 +1,254 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "PublishingCompanyMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/master/Master.Publishing.js"></script>
+@*<script src="~/js/common/Geographical.js"></script>*@
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/app.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+@section onInit
+{
+ angular.element(document.getElementById('angularid')).scope().GeogList();
+ @*angular.element(document.getElementById('angularid')).scope().getCountryStates();
+ angular.element(document.getElementById('angularid')).scope().getStateCities();*@
+ angular.element(document.getElementById('angularid')).scope().getAllPublishingCompany();
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Proprietor Company Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <form name="userForm" class="form-horizontal" novalidate ng-submit="submitForm()">
+            <div id="profileContainer" class="col-md-12">
+                <div class="tab-content responsive">
+                        <div class="panel panel-default" style="border-top: none;">
+                            <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; font-size: 18px; ">Proprietor Company </div>
+
+                            <div class="panel-body">
+                                <div class="portlet-body form">
+                                    <div class="form-group">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-6">
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Company Name<span class="red">*</span> </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.companyName.$dirty) && userForm.companyName.$invalid } ">
+                                                                    <input type="text" name="companyName" class="form-control" ng-model="companyName" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Company Name" required>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.companyName.$error.required && (userForm.companyName.$dirty || submitted)" class="help-block red">Please enter company name</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Contact Person <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.contactPerson.$dirty) && userForm.contactPerson.$invalid } ">
+                                                                    <input type="text" name="contactPerson" class="form-control" ng-model="contactPerson" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Contact Person" required>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.contactPerson.$error.required && (userForm.contactPerson.$dirty || submitted)" class="help-block red">Please enter contact person</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" id="publisherGeo">
+                                                        <div class="col-md-12">
+                                                            @Html.Partial("~/Views/Shared/_geoGraphical.cshtml")
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> Address <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Address.$dirty) && userForm.Address.$invalid } ">
+                                                                    <textarea  name="Address" class="form-control" ng-model="Address" required ng-pattern="[a-zA-Z0-9]+" placeholder="Address"></textarea>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Address.$error.required && (userForm.Address.$dirty || submitted)" class="help-block red">Please enter author address </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Phone <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Phone.$dirty) && userForm.Phone.$invalid } ">
+                                                                    <input type="text" name="Phone" class="form-control" ng-model="Phone" required ng-pattern="/^[0-9\_\- ]*$/" @*ng-pattern="/^[(]{0,1}[0-9]{3}[)\.\- ]{0,1}[0-9]{3}[\.\- ]{0,1}[0-9]{4}$/"*@ placeholder="Phone" @*maxlength="10"*@>
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Phone.$error.required && (userForm.Phone.$dirty || submitted)" class="help-block red">Please enter phone number</p>
+                                                                        <p ng-show="userForm.Phone.$error.pattern" class="help-block red">Please enter valid phone number</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Email <span class="red">*</span></label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Email.$dirty) && userForm.Email.$invalid } ">
+                                                                    <input type="text" name="Email" class="form-control" ng-model="Email" required ng-pattern="/^[^\s]+[^\s]+\.[^\s]{2,}$/" placeholder="Email">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.Email.$error.required && (userForm.Email.$dirty || submitted)" class="help-block red">Please enter email id</p>
+                                                                        <p ng-show="userForm.Email.$error.pattern" class="help-block red">Please enter valid email id</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5">Mobile</label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.Mobile.$dirty) && userForm.Mobile.$invalid } ">
+                                                                    <input type="text" name="Mobile" @*maxlength="12"*@ class="form-control" ng-model="Mobile" ng-pattern="/^[0-9\_\- ]*$/" @*ng-pattern="/^[1-9][0-9]{9,12}$/"*@ placeholder="Mobile">
+                                                                    <div class="help-block">
+                                                                        @*<p ng-show="userForm.Mobile.$error.required && (userForm.Mobile.$dirty || submitted)" class="help-block red">Please enter Mobile No.</p>*@
+                                                                        <p ng-show="userForm.Mobile.$error.pattern" class="help-block red">Please enter valid mobile number</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                  <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label col-md-5"> WebSite </label>
+                                                            <div class="col-md-7">
+                                                                <div class="form-group" ng-class="{ 'has-error': ( submitted || userForm.webSite.$dirty) && userForm.webSite.$invalid } ">
+                                                                    <input type="text" name="webSite" class="form-control" ng-model="webSite" ng-pattern="/^[a-zA-Z'.\s]/" placeholder=" WebSite">
+                                                                    <div class="help-block">
+                                                                        <p ng-show="userForm.webSite.$error.required && (userForm.webSite.$dirty || submitted)" class="help-block red">Please enter webSite </p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <input type="hidden" id="hid_publishingid" name="hid_publishingid" ng-model="hid_publishingid" />
+                                        <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"> &nbsp;</div>
+
+                    </div>
+                    
+                </div>                
+
+            </div>
+        </form>
+
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Proprietor Company List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Company Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Contact Person &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Address &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Country</th>
+                                <th>State</th>
+                                <th>Phone</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="pcomp in PublishingCompanyList">
+
+                                <td>{{pcomp.CompanyName}}</td>
+                                <td>{{pcomp.ContactPerson}}</td>
+                                <td>{{pcomp.Address}}</td>
+                                <td>{{pcomp.CountryName}}</td>
+                                <td>{{pcomp.StateName}}</td>
+                                <td>{{pcomp.Phone}}</td>
+                                
+                                <td><a ng-click="EditPublishingCompany(pcomp.Id)" ng-if="pcomp.IsEditable =='0'"><i class="fa fa-edit" title="Edit"></i></a>
+                                    <a ng-if="pcomp.IsEditable =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Edit Disabled"></i></a>
+                                </td>
+                                <td>
+                                    <a ng-click="DeletePublishingCompany(pcomp.Id)" ng-if="pcomp.Flag =='0'"><i class="fa fa-trash-o" title="Delete"></i></a>
+                                    <a ng-if="pcomp.Flag =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Linked With Other Master"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.confirm').click(function () {
+        window.location.href = location.href;
+    })
+</script>

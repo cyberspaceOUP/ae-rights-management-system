@@ -1,0 +1,834 @@
+﻿@{
+    ViewBag.Title = "PermissionsOutbound";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/PermissionsInbound/PermissionsInbound.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<link href="~/Content/InboundCustom.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().GeogList();
+    angular.element(document.getElementById('angularid')).scope().getContractPartyType();
+    angular.element(document.getElementById('angularid')).scope().getAssetSubType();
+    angular.element(document.getElementById('angularid')).scope().getStatus();
+    angular.element(document.getElementById('angularid')).scope().getCopyRightHolder();
+    angular.element(document.getElementById('angularid')).scope().getCurrencyList();
+    angular.element(document.getElementById('angularid')).scope().getOtherRightsMaster();
+    angular.element(document.getElementById('angularid')).scope().getTerritoryRightsList();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Permissions Inbound <span ng-bind="Title"></span>
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+
+        <form name="userForm" class=" form-horizontal" ng-submit="PermissionsInboundForm(PermissionsInboundModel)" novalidate>
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div>   
+
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="col-md-12">
+                <div class="portlet-body form">
+
+                    <div class="form-body" ng-if="Req_ContractDeatil">
+                        @Html.Partial("~/Areas/Contract/Views/Shared/_ContractDeatil.cshtml")
+                    </div>
+
+                    <div class="form-body" ng-if="Req_ProductLicense">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicense.cshtml")
+                    </div>
+
+                </div>
+            </div>*@
+
+            <div class="col-md-12" ng-if="InbounDetailsEntered">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("_InboundPermission")
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="InbounDetailsEntered">
+
+                @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_ImageVideoBankView.cshtml")
+                
+                @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_InboundOthersView.cshtml")
+
+            </div>
+
+
+            <div >
+
+                <div class="col-md-12">
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class="portlet box green">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Type
+                                    </div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="collapse"> </a>
+
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class=" row">
+                                        <div class="col-md-6">
+                                            <label class="control-label col-md-5">Assets type &nbsp;<span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" class="AssetTypeChk" name="AssetstypeImage" ng-change="ValideationProperty();" ng-model="AssetstypeImage[0]" value="I" ng-required="!AssetstypeImage[1]"> Image Bank/ Video Bank
+                                                    </label>
+                                                    <label class="checkbox" style="padding-top: 0px !important; float: right; margin-top: -20px; ">
+                                                        <input type="checkbox" class="AssetTypeChk" ng-change="ValideationProperty();" name="AssetstypeOthers" ng-model="AssetstypeImage[1]" value="O" ng-required="!AssetstypeImage[0]"> Others
+                                                    </label>
+
+                                                    <div ng-class="{ 'has-error' : (userForm.AssetstypeImage .$invalid && userForm.AssetstypeOthers .$invalid ) && ((userForm.AssetstypeImage.$dirty || userForm.AssetstypeOthers.$dirty )  || submitted)}">
+                                                        <div class="help-block">
+                                                            <p ng-show="(userForm.AssetstypeImage.$error.required && userForm.AssetstypeOthers.$error.required) && ((userForm.AssetstypeImage.$dirty || userForm.AssetstypeOthers.$dirty ) || submitted)" class="help-block">Please select Assets type </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-show="false" @*ng-show="AssetstypeImage[0]"*@>
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Image Bank
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class=" row">
+                                    <div class="col-md-6">
+
+
+
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Vendor Name&nbsp;<span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.PartyName.$dirty) && userForm.PartyName.$invalid } ">
+                                                        <select class="form-control" name="PartyName" id="PartyName" ng-model="PermissionsInboundModel.PartyName" ng-change="onchnagPartyDetail()" @*ng-required="AssetstypeImage[0]"*@>
+                                                            <option value="">Please Select</option>
+                                                            <option ng-repeat="div in ContractPartyTypeList" ng-selected="{{div.Id == PermissionsInboundModel.Id}}" ng-model="Licensee" value="{{div.Id}}">{{div.partyname}} ({{div.OtherContractCode}})</option>
+                                                        </select>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.PartyName.$error.required && (userForm.PartyName.$dirty || submitted)">Please select Vendor Name</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Restriction</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <input type="text" ng-disabled="true" name="Restriction" class="form-control" ng-model="Restriction" placeholder="Restriction">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">E-bookrights</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <input type="text" ng-disabled="true" name="Ebookrights" class="form-control" ng-model="Ebookrights" placeholder="E-bookrights">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Print Rights</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <input type="text" ng-disabled="true" name="PrintRights" class="form-control" ng-model="PrintRights" placeholder="Print Rights">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Electronic Rights</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <input type="text" ng-disabled="true" name="Electronicrights" class="form-control" ng-model="Electronicrights" placeholder="Electronic Rights">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-6" ng-if="imageBankList.length>0">
+                                        <fieldset style="border:1px solid #ee5941 !important;">
+                                            <legend>Image Bank</legend>
+                                            <div class="row">
+                                                <div class="col-md-6" ng-repeat="div in imageBankList">
+                                                    <label class="control-label col-md-9">{{div.fullname}}</label>
+                                                    <div class="col-md-3" style="padding:0px;">
+                                                        <label class="control-label"><i class="{{div.CurrencySysbol=='INR'?'fa fa-inr':'fa fa-usd'}} " aria-hidden="true"></i>&nbsp;&nbsp;{{div.Cost}}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </fieldset>
+
+
+                                    </div>
+                                    <div class="col-md-6" ng-if="videoBankList.length>0">
+                                        <fieldset style="border:1px solid #ee5941 !important;">
+                                            <legend> Video Bank </legend>
+                                            <div class="row">
+                                                <div class="col-md-4" ng-repeat="div in videoBankList">
+                                                    <label class="control-label col-md-9" style="padding-left: 0px; padding-right: 0px;">{{div.fullname}}</label>
+                                                    <div class="col-md-3" style="padding:0px;">
+                                                        <label class="control-label"><i class="{{div.CurrencySysbol=='INR'?'fa fa-inr':'fa fa-usd'}} " aria-hidden="true"></i>&nbsp;&nbsp;{{div.Cost}}</label>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-show="AssetstypeImage[0]">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Upload File
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-2 "> Upload File@*&nbsp;<span class="red">*</span>*@</label>
+                                        <div class="col-md-10 form-group" style=" margin-left:10px;" id="fileuploadcontrol">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <strong><a href="~/uploads/Sample/SampleExcelPermissionInBound.xlsx" style="color: #ee5941;" class="control-label link" target="_blank">Download Sample Excel file</a></strong>
+
+
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-show="AssetstypeImage[1]">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Copyright holder Details
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label col-md-5">Copyright Holder&nbsp;  <span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.CopyRightHolder.$dirty) && userForm.CopyRightHolder.$invalid } ">
+                                                <select class="form-control" name="CopyRightHolder" id="CopyRightHolder" ng-model="PermissionsInboundModel.CopyRightHolder" ng-change="onCopyRightHolder()" ng-required="AssetstypeImage[1]">
+                                                    <option value="">Please Select</option>
+                                                    <option ng-repeat="div in CopyRightHolderList" ng-model="CopyRightHolder" value="{{div.Id}}">{{div.CopyRightHolderName}}</option>
+                                                </select>
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.CopyRightHolder.$error.required && (userForm.CopyRightHolder.$dirty || submitted)">Please select Copyright holder</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 fadeInout" style="display:none">
+                                        <label class="control-label col-md-5">Contact Person </label>
+                                        <div class="col-md-7">
+
+                                            <div class="form-group">
+                                                <input type="text" ng-disabled="true" name="ContactPerson" class="form-control" ng-model="ContactPerson" placeholder="Contact Person">
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 fadeInout" style="display:none">
+                                        <label class="control-label col-md-5">Address</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="control-label">{{CopyRightHolderAddress}}{{pincode!=undefined?" - ":""}} {{pincode}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 fadeInout" style="display:none">
+                                        <label class="control-label col-md-5">Mobile</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="control-label">{{Mobile}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-show="AssetstypeImage[1]">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Assets Details
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class=" row">
+                                    <div class="col-md-6">
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">	Status&nbsp;<span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Status.$dirty) && userForm.Status.$invalid } ">
+                                                        <select class="form-control" name="Status" id="Status" ng-change="MinimumValidationRequired($event)" ng-model="PermissionsInboundModel.Status" ng-required="AssetstypeImage[1]">
+                                                            <option value="">Please Select</option>
+                                                            <option ng-repeat="div in StatusList" value="{{div.Id}}">{{div.Status}}</option>
+                                                        </select>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Status.$error.required && (userForm.Status.$dirty || submitted)">Please select Status</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Asset Sub-Type&nbsp;<span ng-show="OtherContractStatus" class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.AssetSubType.$dirty) && userForm.AssetSubType.$invalid } ">
+                                                        <select class="form-control" name="AssetSubType" id="AssetSubType" ng-model="PermissionsInboundModel.AssetSubType" ng-required="OtherContractStatus==true && AssetstypeImage[1]">
+                                                            <option value="">Please Select</option>
+                                                            <option ng-repeat="div in AssetSubTypeList" ng-model="AssetSubType" value="{{div.Id}}">{{div.AssetName}}</option>
+                                                        </select>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.AssetSubType.$error.required && (userForm.AssetSubType.$dirty || submitted)">Please select Asset Sub-Type</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Asset Description &nbsp;<span ng-show="OtherContractStatus" class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.AssetDescription.$dirty) && userForm.AssetDescription.$invalid } ">
+                                                        <textarea class="form-control" ng-model="PermissionsInboundModel.AssetDescription" name="AssetDescription" placeholder="Asset Description" ng-required="OtherContractStatus==true && AssetstypeImage[1]"></textarea>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.AssetDescription.$error.required && (userForm.AssetDescription.$dirty || submitted)">Please enter Asset Description</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Extent </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Extent.$dirty) && userForm.Extent.$invalid } ">
+                                                        <input type="text" class="form-control" ng-model="PermissionsInboundModel.Extent" name="Extent" placeholder="Extent" />
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Extent.$error.required && (userForm.Extent.$dirty || submitted)">Please enter Extent</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Gratis copies to be sent&nbsp;<span ng-show="OtherContractStatus" class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label class="radio-inline" style="padding-top: 0px !important;">
+                                                            <input type="radio" name="Gratiscopytobesent " ng-model="PermissionsInboundModel.Gratiscopytobesent" value="Yes" ng-required="OtherContractStatus==true && AssetstypeImage[1]"> Yes
+                                                        </label>
+                                                        <label class="radio-inline" style="padding-top: 0px !important;">
+                                                            <input type="radio" name="Gratiscopytobesent " ng-model="PermissionsInboundModel.Gratiscopytobesent" value="No" ng-required="OtherContractStatus==true && AssetstypeImage[1]"> No
+                                                        </label>
+                                                        <div ng-class="{ 'has-error' : userForm.Gratiscopytobesent .$invalid && (userForm.Gratiscopytobesent .$dirty || submitted)}">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.Gratiscopytobesent .$error.required && (userForm.Gratiscopytobesent.$dirty || submitted)" class="help-block">Please select Gratis copies to be sent</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Number of copies&nbsp;<span class="red" ng-show="(PermissionsInboundModel.Gratiscopytobesent == 'Yes')">*</span> </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Noofcopy.$dirty) && userForm.Noofcopy.$invalid } ">
+
+                                                        <input type="number" min="0" maxlength="6" name="Noofcopy" class="form-control" ng-required="(PermissionsInboundModel.Gratiscopytobesent == 'Yes')" ng-model="PermissionsInboundModel.Noofcopy" placeholder="Number of copies">
+
+
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Noofcopy .$error.required && (userForm.Noofcopy .$dirty || submitted)" class="help-block red">Please enter Number of copies</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Original Source </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.OriginalSource.$dirty) && userForm.OriginalSource.$invalid } ">
+                                                        <input type="text" class="form-control" ng-model="PermissionsInboundModel.OriginalSource" name="OriginalSource" placeholder="Original Source" />
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.OriginalSource.$error.required && (userForm.OriginalSource.$dirty || submitted)">Please enter Original Source</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Restriction </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{'has:error':(submittted || userForm.Restriction.$dirty) && userForm.Restriction.$invalid}">
+                                                        <input type="text" class="form-control" name="Restriction" ng-model="PermissionsInboundModel.Restriction" id="Restriction" placeholder="Restriction" />
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Restriction.$error.required &&(userForm.Restriction.$dirty || submitted )">Please enter Restriction</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row rightsObject" ng-if="OtherRightsMasterList.length>0" ng-repeat="div in OtherRightsMasterList" rightsid="{{div.Id}}">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">{{div.RightsName}}&nbsp;  <span class="red" ng-show="OtherContractStatus" ng-if="div.Id!=4">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PrintRights_{{$index}}.$dirty) && userForm.PrintRights_{{$index}}.$invalid } ">
+                                                        <label class="radio-inline" style="padding-top: 0px !important;">
+                                                            <input type="radio" name="PrintRights_{{$index}}" ng-model="PermissionsInboundRightsModel[$index]" value="Yes" ng-required="OtherContractStatus==true && AssetstypeImage[1]"> Yes
+                                                        </label>
+                                                        <label class="radio-inline" style="padding-top: 0px !important;">
+                                                            <input type="radio" name="PrintRights_{{$index}}" ng-model="PermissionsInboundRightsModel[$index]" value="No" ng-required="OtherContractStatus==true && AssetstypeImage[1]"> No
+                                                        </label>
+                                                        <div ng-class="{ 'has-error' : userForm.PrintRights_{{$index}} .$invalid && (userForm.PrintRights_{{$index}} .$dirty || submitted)}">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.PrintRights_{{$index}} .$error.required && (userForm.PrintRights_{{$index}}.$dirty || submitted)" class="help-block">Please select {{div.RightsName}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" ng-if="div.Id!=4" ng-show="(PermissionsInboundRightsModel[$index] == 'Yes') && div.Id!=4">
+                                                <label class="control-label col-md-5">{{div.RightsName}} Granted For&nbsp;<span ng-show="(PermissionsInboundModel.PrintRights == 'Yes')" class="red">*</span>   </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label class="radio-inline" style="padding-top: 0px !important;">
+                                                            <input type="radio" name="PrintRunGrantedForPrint_{{$index}}" ng-model="PrintRunGrantedForPrint[$index]" value="Unrestricted"> Unrestricted
+                                                        </label>
+                                                        <label class="radio-inline" style="padding-top: 0px !important;">
+                                                            <input type="radio" name="PrintRunGrantedForPrint_{{$index}}" ng-model="PrintRunGrantedForPrint[$index]" value="Number"> Number
+                                                        </label>
+                                                        <div ng-class="{ 'has-error' : userForm.PrintRunGrantedForPrint_{{$index}} .$invalid && (userForm.PrintRunGrantedForPrint_{{$index}} .$dirty || submitted)}">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.PrintRunGrantedForPrint_{{$index}} .$error.required && (userForm.PrintRunGrantedForPrint_{{$index}}.$dirty || submitted)" class="help-block">Please select Print Run Granted</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" ng-if="div.Id!=4" ng-show="(PermissionsInboundRightsModel[$index] == 'Yes')">
+                                                <label class="control-label col-md-5">Number &nbsp; <span ng-show="PrintRunGrantedForPrint[$index] == 'Number' && OtherContractStatus " class="red">*</span> </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.NumberPrint_{{index}}.$dirty) && userForm.NumberPrint_{{index}}.$invalid } ">
+                                                        <input type="number" class="form-control" min="0" maxlength="6" ng-model="NumberPrint[$index]" name="NumberPrint_{{index}}" placeholder="Number" ng-required="PrintRunGrantedForPrint[$index] == 'Number' && OtherContractStatus==true && AssetstypeImage[1] " />
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.NumberPrint_{{index}}.$error.required && (userForm.NumberPrint_{{index}}.$dirty || submitted)">Please enter Number</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Sub-Licensing</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label class="radio-inline" style="padding-top: 0px !important;">
+                                                            <input type="radio" name="SubLicensing" ng-model="PermissionsInboundModel.SubLicensing" value="Yes"> Yes
+                                                        </label>
+                                                        <label class="radio-inline" style="padding-top: 0px !important;">
+                                                            <input type="radio" name="SubLicensing" ng-model="PermissionsInboundModel.SubLicensing" value="No"> No
+                                                        </label>
+                                                        <div ng-class="{ 'has-error' : userForm.SubLicensing .$invalid && (userForm.SubLicensing.$dirty || submitted)}">
+                                                            <div class="help-block">
+                                                                <p ng-show="userForm.SubLicensing .$error.required && (userForm.SubLicensing.$dirty || submitted)" class="help-block">Please select Sub-Licensing</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Fee  </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Fee.$dirty) && userForm.Fee.$invalid } ">
+                                                        <input type="number" maxlength="6" class="form-control" ng-model="PermissionsInboundModel.Fee" name="Fee" placeholder="Fee" />
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Fee.$error.required && (userForm.Fee.$dirty || submitted)">Please enter Fee</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Currency</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Currency.$dirty) && userForm.Currency.$invalid } ">
+                                                        <select class="form-control" name="Currency" ng-model="PermissionsInboundModel.CurrencyValue">
+                                                            <option value="">--Please Select--</option>
+                                                            <option ng-repeat="Currency in CurrencyList" ng-selected="Currency.Id == CurrencyId" value="{{Currency.Id}}">{{Currency.CurrencyName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Territory @*<span class="red">*</span>*@</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.TerritoryRights.$dirty) && userForm.TerritoryRights.$invalid } ">
+                                                        <select class="form-control" id="TerritoryRights" name="TerritoryRights" ng-model="PermissionsInboundModel.TerritoryRights">
+                                                            <option value="">Please Select</option>
+                                                            <option ng-repeat="div in TerritoryList" ng-model="PermissionsInboundModel.TerritoryRights" ng-selected="{{div.Id == TerritoryRights}}" value="{{div.Id}}">{{div.Territoryrights}}</option>
+                                                        </select>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.TerritoryRightsId.$error.required && (userForm.TerritoryRightsId.$dirty || submitted)" class="help-block red">Please select Territory Rights</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="col-md-6">
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Invoice Number   </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.InvoiceNumber.$dirty) && userForm.InvoiceNumber.$invalid } ">
+                                                        <input type="text" class="form-control" ng-model="PermissionsInboundModel.InvoiceNumber" name="InvoiceNumber" placeholder="Invoice Number" />
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.InvoiceNumber.$error.required && (userForm.InvoiceNumber.$dirty || submitted)">Please enter Invoice Number</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Invoice Value   </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.InvoiceValue.$dirty) && userForm.InvoiceValue.$invalid } ">
+                                                        <input type="text" class="form-control" ng-model="PermissionsInboundModel.InvoiceValue" name="InvoiceValue" placeholder="Invoice Value" />
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.InvoiceValue.$error.required && (userForm.InvoiceValue.$dirty || submitted)">Please enter Invoice Value</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Permission Expiry date</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.PermissionExpirydate.$dirty) && userForm.PermissionExpirydate.$invalid } ">
+                                                        <div class="input-group input-append date PermissionsInboundDate">
+                                                            <input type="text" id="PermissionExpirydate" onchange="FillExpiry(this)" name="PermissionExpirydate" class="form-control" ng-model="PermissionsOutboundModel.PermissionExpirydate" placeholder="Permission Expiry date">
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.PermissionExpirydate .$error.required && (userForm.PermissionExpirydate .$dirty || submitted)" class="help-block red">Please enter Permission Expiryd ate</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-12" ng-repeat="div in dateRequestList">
+                                                <label class="control-label col-md-5">Date of {{div}} Request</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.Date1stRequest.$dirty) && userForm.Date1stRequest.$invalid } ">
+                                                        <div class="input-group input-append date PermissionsInboundDate">
+                                                            <input type="text" id="Date1stRequest" index="{{$index}}" name="Date1stRequest" class="form-control" onchange="Filldate(this)" ng-model="DateRequest[$index]" placeholder="Date of {{div}} Request">
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.Date1stRequest .$error.required && (userForm.Date1stRequest .$dirty || submitted)" class="help-block red">Please enter Date of {{div}} Request</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">
+                                                    Acknowledgement line @*<span class="red" ng-show="OtherContractStatus==false && NoResponse==false">*</span>*@
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" @*ng-class="{ 'has-error': (submitted ||userForm.Acknowledgementline.$dirty) && userForm.Acknowledgementline.$invalid } "*@>
+                                                        <textarea class="form-control" ng-model="PermissionsInboundModel.Acknowledgementline" name="Acknowledgementline" 
+                                                                  placeholder="Acknowledgement line" @*ng-required="remarks"*@></textarea>
+                                                        @*<div class="help-block">
+                                                            <p ng-show="userForm.Acknowledgementline.$error.required && (userForm.Acknowledgementline.$dirty || submitted)">Please enter Acknowledgement line</p>
+                                                        </div>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Remarks </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" ng-model="PermissionsInboundModel.InboundRemarks" name="InboundRemarks"
+                                                                  placeholder="Remarks"></textarea>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         
+
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            @*<input type="hidden" value="@TempData["id"]" ng-model="hid_AuthorContract" id="hid_AuthorContract" name="hid_AuthorContract">*@
+                            <input type="hidden" value="@TempData["type"]" ng-model="hid_Type" id="hid_Type" name="hid_Type">
+                            <input type="hidden" value="@TempData["ProductId"]" ng-model="hid_ProductId" id="hid_ProductId" name="hid_ProductId">
+                            <input type="hidden" value="@TempData["InboundId"]" ng-model="hid_InboundId" id="hid_InboundId" name="hid_InboundId">
+                            <input type="hidden" value="@TempData["User"]" ng-model="hid_User" id="hid_User" name="hid_User">
+
+
+
+                            <input type="hidden" ng-model="hid_PermissionsOutbound" id="hid_PermissionsOutbound" name="hid_PermissionsOutbound" />
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </form>
+
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('.PermissionsInboundDate')
+        .datepicker({
+            format: "dd/mm/yyyy",
+            showButtonPanel: true,
+            autoclose: true,
+            //  startDate: date,
+            //  endDate: TodayDate
+        })
+    });
+
+    $(function () {
+        renderFileUploadOther();
+        renderFileUpload();
+    });
+
+
+    function renderFileUploadOther() {
+
+        $.ajax({
+            cache: false,
+            type: "GET",
+            contentType: 'application/html; charset=utf-8',
+
+            url: GlobalredirectPath + "/Master/Master/MultipleFileUploadPendingRequest",
+            data: {},
+            datatype: 'html',
+            success: function (result) {
+
+                $("#fileuploadcontrol").html(result);
+                $("#fileuploadcontrol").find("input[type=hidden][id=hid_foldername]").val("InboundDocument");
+
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+
+    }
+    function Filldate(obj) {
+        var obj = $(obj);
+        angular.element(document.getElementById('angularid')).scope().SetDateValue(obj);
+    }
+    function FillExpiry(obj) {
+        var obj = $(obj);
+        angular.element(document.getElementById('angularid')).scope().FillExpiry(obj);
+    }
+    setTimeout(function () { $("select[name*=Currency]").val(6) }, 2000);
+
+
+    function renderFileUpload() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            contentType: 'application/html; charset=utf-8',
+            url: GlobalredirectPath + "/Master/Master/MultipleFileUpload",
+            data: {},
+            datatype: 'html',
+            success: function (result) {
+                $(".uploadFileMutple").html(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+
+    }
+
+
+</script>
+
+
+

@@ -1,0 +1,41 @@
+﻿
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+         SAP Agreement Number Not Entered
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th> Contract Code </th>
+                    <th> Product Code </th>
+                    <th> ISBN </th>
+                    <th> Working Product</th>
+                </tr>
+
+                <tr ng-repeat="Product in NotEnteredSAPAgrNoList">
+                    <td class="table-color">{{Product.ContractCode}}</td>
+                    <td class="table-color">{{Product.ProductCode}}</td>
+                    <td>{{Product.OUPISBN}}</td>
+                    <td>{{Product.WorkingProduct}}<span style="font-size:11px;">  <br />{{Product.WorkingSubProduct}}</span></td>
+                </tr>
+
+
+            </table>
+
+        </div>
+    </div>
+</div>
+

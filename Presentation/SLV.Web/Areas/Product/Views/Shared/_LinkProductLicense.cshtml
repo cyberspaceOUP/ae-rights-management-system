@@ -1,0 +1,30 @@
+﻿
+@*<div ng-hide="!ProductLicenseLinks_List.length">
+
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Product License Links
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="table-responsive">*@
+
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Product License Code </th>
+                    </tr>
+
+                    <tr ng-repeat="P in ProductLicenseLinks_List">
+                        <td class="table-color"><a href="~/Product/ProductLicense/view?Id={{P.ProductLicenseId}}" target="_blank"><span ng-bind="P.ProductLicenseCode"></span></a></td>
+                    </tr>
+                </table>
+            @*</div>
+        </div>
+    </div>
+
+</div>*@
+@*<div ng-hide="ProductLicenseLinks_List.length">No result found</div>*@

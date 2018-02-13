@@ -1,0 +1,126 @@
+﻿
+
+<script src="~/js/PermissionsInbound/ViewAssetsDetails.js"></script>
+<script src="~/js/PermissionsInbound/PermissionInboundOthersView.js"></script>
+
+<div ng-show="PermissionInboundOthersView">
+    
+
+
+    <div class="col-md-12" ng-if="OtherContractList.length>0">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    Copyright holder Details
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body clearfix">
+                <div class="col-md-12">
+                    <div class="row">
+
+
+                        <table class="table table-striped table-bordered table-hover dataTable no-footer SeriesDetail" id="TblOwnerList">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>S.No.</th>
+
+                                    <th>Status </th>
+
+                                    <th>Asset Sub-Type</th>
+                                    <th>Asset Description</th>
+                                    <th>Copyright Holder</th>
+
+                                    <th>Print Rights</th>
+                                    <th>Electronic Rights</th>
+                                    <th>E-Book Rights</th>  
+                                    <th>All Future Rights Granted</th>
+
+                                    <th>Permission Expiry date</th>
+                                    @*<th>Quantity</th>*@
+
+                                    <th ng-if="'@TempData["User"]' == 'sa' && '@TempData["For"]' == 'delete'">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="M in OtherContractList">
+                                    <td> <span ng-bind="($index +1)"></span></td>
+
+                                    <td> <span ng-bind="(M.StatusName)"></span></td>
+
+                                    <td > <span ng-bind="(M.AssetSubType)"></span></td>
+                                    <td ng-if="(M.AssestDescription != null && M.AssestDescription != '')"> 
+                                     
+                                        <a href="javascript:viod(0)" ng-click="ViewAssetMode(M.Id)" data-toggle="modal" data-target="#myModal1" style="color:#ee5941;"> <span ng-bind="M.AssestDescription"></span>  </a>
+
+                                    </td>
+
+
+                                    <td ng-if="(M.AssestDescription == null || M.AssestDescription == '')">
+
+                                        <span ng-bind="(M.AssestDescription)"> </span>
+                                      
+
+                                    </td>
+
+
+
+                                    <td ng-if="(M.AssestDescription == null || M.AssestDescription == '')">
+                                        
+                                        <a href="javascript:viod(0)" ng-click="ViewAssetMode(M.Id)" data-toggle="modal" data-target="#myModal1" style="color:#ee5941;"> <span ng-bind="(M.CopyRightHolder)"></span> </a>
+                                        
+                                    </td>
+
+
+                                    <td ng-if="(M.AssestDescription != null && M.AssestDescription != '')">
+                                      
+                                        <span ng-bind="M.CopyRightHolder"></span>
+
+                                    </td>
+
+
+
+
+                                    <td ng-repeat="obj  in M.Rights"> <span ng-bind="(obj.Rightsvalue)"></span> <br />   <span style="font-size:10px;" ng-bind="(obj.Number)"></span>  </td>
+
+                                    @*<td ng-if="M.TotalQty !=0"> <span ng-bind="(M.TotalQty)"></span> </td>
+
+                                    <td ng-if="M.TotalQty ==0"> </td>*@
+                                    @*<td>{{M.printrights}} </td>
+                                        <td>{{M.ebookrights}} </td>
+                                        <td>{{M.ElectronicRights}}</td>
+                                        <td>{{M.ElectronicRights}}</td>*@
+                                    <td>
+                                        <span ng-bind="M.PermissionExpirydate | date : 'dd/MM/yyyy'"></span>
+                                    </td>
+
+                                    <td ng-if="'@TempData["User"]' == 'sa' && '@TempData["For"]' == 'delete'">
+                                        <a style="color: red;" href="javascript:void(0);" ng-click="DeleteEntityOtherData(M.InboundId,M.InboundOthersId,'sa')"><i class="fa fa-trash-o" title="Delete Entry"></i></a>
+                                    </td>
+                                </tr>
+
+
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  
+
+</div>
+<div class="modal fade bs-example-modal-lg" id="myModal1" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document" style="width:90%;">
+
+        @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_ViewAssetsDetails.cshtml")
+    </div>
+</div>

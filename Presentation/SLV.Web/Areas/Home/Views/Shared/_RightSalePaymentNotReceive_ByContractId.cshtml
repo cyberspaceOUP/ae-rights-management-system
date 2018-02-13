@@ -1,0 +1,80 @@
+﻿
+
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @T("Dashboard.RightsPaymentNotReceived") 
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!RightSalePaymentNotReceive_ByContractId_List.length && !RightSalePaymentNotReceive_ByLicenseId_List.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Contract/License Code </th>
+                        <th> Product Code </th>
+                        <th> Rights Selling Code </th>
+                        <th> ISBN </th>
+                        <th> Publishing Company Name </th>
+                        <th> Requested By </th>
+                        <th> Requested Date </th>
+                        <th> Working Product </th>
+                        <th> Type </th>
+                    </tr>
+
+                    <!--Contract Wise-->
+                    <tr ng-repeat="RightSalePNR in RightSalePaymentNotReceive_ByContractId_List">
+                        <td class="table-color"><a href="~/RightsSelling/RightsSelling/RightsSellingPaymentTagging?AuthorContractId={{RightSalePNR.Id}}">  <span ng-bind="(RightSalePNR.Contract_Code)"></span>  </a></td>
+                        <td class="table-color"><a href="~/Product/ProductMaster/ProductDetailsView?Id={{RightSalePNR.ProductId}}"> <span ng-bind="(RightSalePNR.ProductCode)"></span></a> </td>
+                        <td class="table-color"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{RightSalePNR.Id}}&type=A{{RightSalePNR.ProductId}}&RightsSellingId={{RightSalePNR.RightsSellingID}}&For=Dashboard"> <span ng-bind="(RightSalePNR.RightsSellingCode)"></span></a></td>
+                        <td> <span ng-bind="(RightSalePNR.ISBN)"></span></td>
+                        <td>--</td>
+                        <td> <span ng-bind="(RightSalePNR.ExecutiveName)"></span></td>
+                        <td> <span ng-bind="(RightSalePNR.EntryDate)"></span></td>
+                        <td> <span ng-bind="(RightSalePNR.WorkingProduct)"></span><span style="font-size:11px;">  <br /> <span ng-bind="(RightSalePNR.WorkingSubProduct)"></span></span></td>
+                        <td>Contract</td>
+                    </tr>
+
+                    <!--License Wise-->
+                    <tr ng-repeat="RightSalePNR in RightSalePaymentNotReceive_ByLicenseId_List">
+                        <td class="table-color"><a href="~/RightsSelling/RightsSelling/RightsSellingPaymentTagging?ProductLicenseId={{RightSalePNR.Id}}"> <span ng-bind="(RightSalePNR.ProductLicensecode)"></span></a></td>
+                        <td class="table-color"><a href="~/Product/ProductMaster/ProductDetailsView?Id={{RightSalePNR.ProductId}}"> <span ng-bind="(RightSalePNR.ProductCode)"></span></a> </td>
+                        <td class="table-color"><a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{RightSalePNR.Id}}&type=P{{RightSalePNR.ProductId}}&RightsSellingId={{RightSalePNR.RightsSellingID}}&For=Dashboard">  <span ng-bind="(RightSalePNR.RightsSellingCode)"></span></a></td>
+                        <td><span ng-bind="(RightSalePNR.ISBN)"></span></td>
+                        <td><span ng-bind="(RightSalePNR.PublishingCompany)"></span></td>
+                        <td> <span ng-bind="(RightSalePNR.ExecutiveName)"></span></td>
+                        <td> <span ng-bind="(RightSalePNR.EntryDate)"></span></td>
+                        <td><span ng-bind="(RightSalePNR.WorkingProduct)"></span><span style="font-size:11px;">  <br /><span ng-bind="(RightSalePNR.WorkingSubProduct)"></span></span></td>
+                        <td>License</td>
+                    </tr>
+                </table>
+
+                <a href="~/PaymentTagging/PaymentTagging/PaymentTaggingSearch?For=Rights&From=Dashboard" class="moreDash"> View More</a>
+
+                @*<div style="float:right">
+                  <a ng-show="RightSalePaymentNotReceive_ByContractId_List.length" href="~/PaymentTagging/PaymentTagging/PaymentTaggingSearch?For=Rights" title="Contract" class="moreDash"> Contract :   View More</a>
+
+                <br />
+
+                <a ng-show="RightSalePaymentNotReceive_ByLicenseId_List.length" href="~/PaymentTagging/PaymentTagging/PaymentTaggingSearch?For=Rights" title="License" class="moreDash">License :    View More</a>
+            </div>*@
+
+
+
+            </div>
+            <div ng-show="!RightSalePaymentNotReceive_ByContractId_List.length && !RightSalePaymentNotReceive_ByLicenseId_List.length">No result found</div>
+        </div>
+    </div>
+</div>
+
+
+
+

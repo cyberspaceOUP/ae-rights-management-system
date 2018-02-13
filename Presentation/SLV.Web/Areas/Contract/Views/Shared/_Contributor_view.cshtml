@@ -1,0 +1,27 @@
+﻿
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Contributors Details
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body clearfix" >
+        <div class="col-md-6 col-xs-6 col-sm-6">
+            <div class="row">
+                <div class="col-md-12" ng-repeat="s in ContributorList" ng-if="$even">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Contributor @*{{$index+1}}*@<span ng-bind="$index+1"></span></label>
+                    <label class="control-label col-md-7 col-xs-6 col-sm-6">@*{{s.Name}}*@<span ng-bind="s.Name"></span></label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12" ng-repeat="p in ContributorList" ng-if="$odd">
+                <label class="control-label col-md-5 col-xs-6 col-sm-6">Contributor @*{{$index+1}}*@<span ng-bind="$index+1"></span></label>
+                <label class="control-label col-md-7 col-xs-6 col-sm-6">@*{{p.Name}}*@<span ng-bind="p.Name"></span></label>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+﻿ <div class=" row">
+   <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@Country&nbsp;</label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.AffCountry.$dirty) && userForm.AffCountry.$invalid } ">
+                <select ng-model="AffCountry"
+                        ng-change="getCountryStates()"
+                        class="form-control"
+                        @*ng-required="true"*@
+                        name="AffCountry"
+                        id="AffCountry">
+                    <option value="">--Please Select--</option>
+                    <option ng-repeat="div in CountryList" ng-model="AffCountry" value="{{div.Id}}" ng-selected="{{div.Id == AffCountry}}">{{div.geogName}}</option>
+
+                </select>
+                <div class="help-block">
+                    <p ng-show="userForm.AffCountry.$error.required && (userForm.AffCountry.$dirty || submitted)">Please select country</p>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="OtherCountry">
+    <div class="col-md-12">
+        <label class="control-label col-md-5"> Specify Country&nbsp;<span class="red" ng-show="OthersNot"></span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.AffCountryName.$dirty) && userForm.AffCountryName.$invalid } ">
+                <input type="text" id="CountryName" name="AffCountryName" class="form-control" maxlength="6" ng-model="AffCountryName" placeholder="city Name" max-length="100" />
+                <div class="help-block" ng-show="OthersNot">
+                    <p ng-show="userForm.AffCountryName.$error.required && (userForm.AffCountryName.$dirty || submitted)">Specify Country</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class=" row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@State&nbsp;<span class="red" ng-show="OthersNot"></span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-show="OthersNot" ng-class="{ 'has-error': (submitted ||userForm.AffState.$dirty) && userForm.AffState.$invalid } ">
+                <select ng-model="AffState"
+                        ng-change="getStateCities()"
+                        class="form-control"
+                        @*ng-required="true"*@
+                        name="AffState"
+                        id="AffState">
+                    <option value="">--Please Select--</option>
+                    <option ng-repeat="div in StateValue" ng-model="AffState" value="{{div.Id}}" ng-selected="{{div.Id == AffStateValue}}">{{div.geogName}}</option>
+                </select>
+                <div class="help-block">
+                    <p ng-show="userForm.AffState.$error.required && (userForm.AffState.$dirty || submitted)">Please select state</p>
+                </div>
+            </div>
+            <div class="form-group" ng-show="OthersYes" ng-class="{ 'has-error': (submitted ||userForm.AffState.$dirty) && userForm.AffState.$invalid } ">
+                <input type="text" name="stateName" ng-model="AffstateName" id="stateName" class="form-control" placeholder="State Name" @*required*@ />
+                <div class="help-block">
+                    <p ng-show="userForm.AffstateName.$error.required && (userForm.AffstateName.$dirty || submitted)">Please enter state</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class=" row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@ City&nbsp;<span class="red" ng-show="OthersNot"></span></label>
+        <div class="col-md-7">
+            <div class="form-group othersCityHide" ng-show="OthersNot" ng-class="{ 'has-error': (submitted ||userForm.Affcity.$dirty) && userForm.Affcity.$invalid } ">
+                <select ng-model="AffCity"
+                        class="form-control"
+                        ng-change="ChangeCitiesCities()"
+                        @*ng-required="true"*@
+                        name="Affcity"
+                        id="city">
+                    <option value="">--Please Select--</option>
+                    <option ng-repeat="div in CityValue" ng-model="AffCity" value="{{div.Id}}" ng-selected="{{div.Id == AffCityValue}}">{{div.geogName}}</option>
+                </select>
+                <div class="help-block">
+                    <p ng-show="userForm.Affcity.$error.required && (userForm.Affcity.$dirty || submitted)">Please select city</p>
+                </div>
+            </div>
+            <div class="form-group othersCityHide" ng-show="OthersYes" ng-class="{ 'has-error': (submitted ||userForm.AffcityName.$dirty) && userForm.AffcityName.$invalid } ">
+                <input type="text" name="cityName" ng-model="AffcityName" id="cityName" class="form-control" placeholder="City Name" @*required*@ />
+                <div class="help-block">
+                    <p ng-show="userForm.AffcityName.$error.required && (userForm.AffcityName.$dirty || submitted)">Please enter city</p>
+                </div>
+            </div>
+            <div class="form-group" ng-show="OthersStateYes" ng-class="{ 'has-error': (submitted ||userForm.AffcityName.$dirty) && userForm.AffcityName.$invalid } ">
+                <input type="text" name="AffcityName" ng-model="AffcityName" id="cityName" class="form-control" placeholder="City Name" @*required*@ />
+                <div class="help-block">
+                    <p ng-show="userForm.AffcityName.$error.required && (userForm.AffcityName.$dirty || submitted)">Please enter city</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" ng-show="otherCities">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@ Specify City&nbsp;<span class="red" ng-show="OthersNot"></span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.AffcityName.$dirty) && userForm.AffcityName.$invalid } ">
+                <input type="text" name="AffcityName" class="form-control" maxlength="6" ng-model="AffcityName" placeholder="city Name" max-length="100" />
+                <div class="help-block" ng-show="OthersNot">
+                    <p ng-show="userForm.AffcityName.$error.required && (userForm.AffcityName.$dirty || submitted)">Specify City</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class=" row">
+    <div class="col-md-12">
+        <label class="control-label col-md-5">@*@T("Common.City.Label")*@ PIN Code&nbsp;<span class="red" ng-show="OthersNot"></span></label>
+        <div class="col-md-7">
+            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.Affpincode.$dirty) && userForm.Affpincode.$invalid } ">
+                <input type="text" name="Affpincode" class="form-control" id="Affpincode" maxlength="15" ng-model="Affpincode" placeholder="Pincode" @*ng-pattern="/^(\d{3,10})$/"*@ ng-pattern="/^([a-zA-Z0-9 ]){3,15}$/" />
+                <div class="help-block" ng-show="OthersNot">
+                    <p ng-show="userForm.Affpincode.$error.required && (userForm.Affpincode.$dirty || submitted)">Please enter PIN Code</p>
+                    <p ng-show="userForm.Affpincode.$error.pattern" class="help-block red">Please enter valid PIN Code</p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

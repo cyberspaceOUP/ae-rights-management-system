@@ -1,0 +1,237 @@
+﻿@{
+    ViewBag.Title = "PermissionsOutboundUpdate";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/PermissionsInbound/UpdatePermissionsInbound.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/common/TopSearch.js"></script>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Permission Inbound {{PageTitle}}
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">&nbsp;</div>
+        <div class="col-md-12 text-right backtolist">
+            <div class="tools">
+                <a href="~/PermissionsInbound/PermissionsInbound/search?Type=Update&For=BackToSearch" style="color:black;">Back To List</a>
+            </div>
+        </div>
+
+        <form name="userForm" class=" form-horizontal" ng-submit="PermissionsInboundForm(PermissionsInboundModel)" novalidate ng-cloak>
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div>   
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body" ng-if="Req_ContractDeatil">
+                        @Html.Partial("~/Areas/Contract/Views/Shared/_ContractDeatil.cshtml")
+                    </div>
+                    <div class="form-body" ng-if="Req_ProductLicense">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicense.cshtml")
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("_InboundPermission")
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="('@TempData["User"]' =='ad' || '@TempData["User"]' =='rt' || '@TempData["User"]' =='sa')">
+                <div class="col-md-12">
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class="portlet box green">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Type
+                                    </div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="collapse"> </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class=" row">
+                                        <div class="col-md-6">
+                                            <label class="control-label col-md-5">Assets type &nbsp;<span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" class="AssetTypeChk CheckImageVedio" name="AssetstypeImage" ng-click="func_DisplayImageVedioData();" @*ng-change="ValideationProperty();"*@ ng-checked="selection.indexOf(fruitName) > -1" ng-model="AssetstypeImage[0]" value="I" ng-required="ReqAssetstypeImage"> Image Bank/ Video Bank
+                                                    </label>
+                                                    <label class="checkbox" style="padding-top: 0px !important; float: right; margin-top: -20px; ">
+                                                        <input type="checkbox" class="AssetTypeChk CheckOther" @*ng-change="ValideationProperty();"*@ ng-click="func_DisplayOtherData();" name="AssetstypeOthers" ng-model="AssetstypeImage[1]" value="O" ng-required="ReqAssetstypeImage"> Others
+                                                    </label>
+
+                                                    <div ng-class="{ 'has-error' : (userForm.AssetstypeImage .$invalid && userForm.AssetstypeOthers .$invalid ) && ((userForm.AssetstypeImage.$dirty || userForm.AssetstypeOthers.$dirty )  || submitted)}">
+                                                        <div class="help-block">
+                                                            <p ng-show="(userForm.AssetstypeImage.$error.required && userForm.AssetstypeOthers.$error.required) && ((userForm.AssetstypeImage.$dirty || userForm.AssetstypeOthers.$dirty ) || submitted)" class="help-block">Please select Assets type </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_ImageVideoBankUpdate.cshtml")
+
+                @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_InboundOthersUpdate.cshtml")
+
+                @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_PendingRequestInsert.cshtml")
+
+            </div>
+
+
+            <div ng-if="'@TempData["User"]' !='rt' && '@TempData["User"]' !='ad' && '@TempData["User"]' !='sa'">
+
+                <div class="col-md-12" style="display:none">
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class="portlet box green">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Type
+                                    </div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="collapse"> </a>
+
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class=" row">
+                                        <div class="col-md-6">
+                                            <label class="control-label col-md-5">Assets type</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{AssetstypeView}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_ImageVideoBankView.cshtml")
+
+                @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_InboundOthersView.cshtml")
+
+
+                @Html.Partial("~/Areas/PermissionsInbound/Views/Shared/_PendingRequestInsert.cshtml")
+
+
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <input type="hidden" value="@TempData["id"]" ng-model="hid_AuthorContract" id="hid_AuthorContract" name="hid_AuthorContract">
+                            <input type="hidden" value="@TempData["type"]" ng-model="hid_Type" id="hid_Type" name="hid_Type">
+                            <input type="hidden" value="@TempData["ProductId"]" ng-model="hid_ProductId" id="hid_ProductId" name="hid_ProductId">
+                            <input type="hidden" value="@TempData["InboundId"]" ng-model="hid_InboundId" id="hid_InboundId" name="hid_InboundId">
+                            <input type="hidden" value="@TempData["User"]" ng-model="hid_User" id="hid_User" name="hid_User">
+
+                            <input type="hidden" ng-model="hid_ImageVedio" id="hid_ImageVedio" name="hid_ImageVedio">
+                            <input type="hidden" ng-model="hid_UploadFileReq" id="hid_UploadFileReq" name="hid_UploadFileReq">
+
+
+
+
+                            <input type="hidden" ng-model="hid_PermissionsOutbound" id="hid_PermissionsOutbound" name="hid_PermissionsOutbound" />
+                            <button type="submit" class="btn green" data-index="validationrequiredpendingrequest" id="btnSubmit">Submit</button>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </form>
+
+
+    </div>
+</div>
+
+@*<script type="text/javascript">
+
+
+
+    $(function () {
+        renderFileUpload();
+        setTimeout(function () { $('#fileid').attr("style", "color:#a94442;") }, 1200)
+
+        //   renderFileUploadOther();
+    });
+
+    function renderFileUpload() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            contentType: 'application/html; charset=utf-8',
+            url: GlobalredirectPath + "/Master/Master/MultipleFileUpload",
+            data: {},
+            datatype: 'html',
+            success: function (result) {
+                $(".uploadPendingRequestFileMutple").html(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+
+    }
+
+
+</script>*@
+
+
+
+
+
+
+
+
+
+
+
+
+

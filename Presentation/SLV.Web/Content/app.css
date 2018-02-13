@@ -1,0 +1,39 @@
+﻿.fa {
+    color: black !important;
+}
+
+th {
+    text-align: left !important;
+}
+
+td {
+    text-align: left !important;
+}
+hr
+{
+    border-top: 1px solid #ee5941 !important;
+    margin:15px 0px 15px 0px  !important;
+}
+span .red
+{
+    color:#ee5941 !important;
+}
+.checkbox, .radio {
+    position: relative;
+    display: block;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+
+.pt_radio .radio-inline {
+    margin-top: 0;
+    margin-left: 10px !important;
+}
+.pt_radio {
+    margin-left: -25px !important;
+}
+.pt_radio .help-block {
+    margin-left: 5px !important;
+}
+    

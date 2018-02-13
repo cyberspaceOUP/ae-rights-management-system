@@ -1,0 +1,199 @@
+﻿<script src="~/js/PermissionsOutbound/PermissionsOutboundInvoiceView.js"></script>
+
+<div class="modal fade" id="InvoiceView" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Permissions Outbound Invoice</h4>
+            </div>
+            <div class="modal-body">
+                <style>
+                    table {
+                        border-collapse: collapse;
+                        border-spacing: 0;
+                        width: 100%;
+                        border: 1px solid #ddd;
+                    }
+
+                    th, td {
+                        border: 1px solid #ddd;
+                        text-align: left;
+                        padding: 8px;
+                    }
+                </style>
+
+
+                <div class="container-fluid" style="margin-left:2%;margin-top:2%">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class=" row">
+                                            <label class="control-label"><span ng-bind="LicenseeView"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class=" row">
+                                            <label class="control-label"><span ng-bind="AddressView"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class=" row">
+                                            <label class="control-label"> <span ng-bind="CityView"></span> - <span ng-bind="PincodeView"></span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class=" row">
+                                            <label class="control-label"><span ng-bind="StateView"></span> (<span ng-bind="CountryView"></span>)</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class=" row">
+                                            <label class="control-label"><u>Kind Attention : </u> <span ng-bind="ContactPersonView"></span></label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Invoice Number :</label>
+                                        <div class="col-md-7">
+                                            <label class="control-label"><span ng-bind="InvoiceNoView"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Date :</label>
+                                        <div class="col-md-7">
+                                            <label class="control-label"><span ng-bind="DateInvoiceView"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Invoice Value :</label>
+                                        <div class="col-md-7">
+                                            @*<label class="control-label"> <i class="{{CurrencyView=='---'?'fa fa-inr':CurrencyView=='Indian Rupee'?'fa fa-inr':'fa fa-usd'}}" aria-hidden="true"></i> <span ng-bind="InvoiceValueView"></span></label>*@
+                                            <label class="control-label"> <i class="fa fa-{{InvoiceCurrencySymbolView}}" aria-hidden="true"></i> <span ng-bind="InvoiceValueView"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" style="text-align:center">
+                            <h4><b>Inovice</b></h4>
+                        </div>
+
+                        <div class="col-md-12" style="margin-top:2%">
+                            <table>
+                                <tr>
+                                    <th style=" text-align: right;width:10%;">S No.</th>
+                                    <th style="width: 70%;">Description</th>
+                                    @*<th style=" text-align: right; width: 20%;">Amount (<i class="{{CurrencyView=='---'?'fa fa-inr':CurrencyView=='Indian Rupee'?'fa fa-inr':'fa fa-usd'}}" aria-hidden="true"></i>)</th>*@
+                                    <th style=" text-align: right; width: 20%;">
+                                        Amount&nbsp;<span ng-show="InvoiceCurrencySymbolView">( <i class="fa fa-{{InvoiceCurrencySymbolView}}" aria-hidden="true"></i> )</span>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td style=" text-align: right;">1</td>
+
+                                    <td> 
+                                        <span ng-bind="WorkingProductView"></span> 
+                                        <br /> 
+                                        <span ng-bind="AuthorNameView"></span> 
+                                        <br />
+                                        <br /> 
+                                        @*<p ng-repeat="item in InvoiceDescriptionView.split(',')">
+                                            <span ng-bind="item.split("#")[0]"></span>
+                                        </p>*@ 
+                                        <span ng-bind="InvoiceDescriptionView"></span>  
+                                    </td>
+                                    <td style=" text-align: right;"><i class="fa fa-{{InvoiceCurrencySymbolView}}" aria-hidden="true"></i>&nbsp;<span ng-bind="InvoiceValueView"></span></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td style=" text-align: right;">Total</td>
+                                    <td style=" text-align: right;"><i class="fa fa-{{InvoiceCurrencySymbolView}}" aria-hidden="true">&nbsp;</i><span ng-bind="InvoiceValueView"></span></td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <div class="col-md-12" style="margin-top:2%">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class=" row">
+                                            <label class="control-label">(Authorized Signatory)</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class=" row">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    <button type="button" class="btn green" id="btn_printInovice">Print</button>
+                    @*<button type="button" class="btn green" ng-click="Exporttopdf(PermissionsoutboundId)">Export to pdf</button>*@
+                    <a class="btn green" href="~/PermissionsOutbound/PermissionsOutbound/PDF?OutboundView={{PermissionsoutboundId}}" target="_blank">PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div @*class="modal-content"*@ id="PrintModel" style="display: none; width:100%;">
+
+
+    @*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    @*<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>*@
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+
+    <div class="modal-body">
+        @Html.Partial("~/Areas/PermissionsOutbound/Views/Shared/_PermissionsOutboundInvoiceViewPdf_Print.cshtml")
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $('#btn_printInovice').on('click', function () {
+        if ($('#InvoiceView').is(':visible')) {
+            $('.tooltip-content').css('visibility', 'hidden');
+            var modalId = $('#InvoiceView').attr('id')
+            $('body').css('visibility', 'hidden');
+            $("#" + modalId).css('visibility', 'hidden');
+            $('#' + modalId).removeClass('modal');
+            $('#PrintModel').css('display', 'block');
+            $("#PrintModel").css('position', 'absolute');
+            $("#PrintModel").css('top', '-1%');
+            $('#PrintModel').css('visibility', 'visible');
+            $('#PrintModel').removeClass('modal');
+            window.print();
+            $('body').css('visibility', 'visible');
+            $("#" + modalId).css('visibility', 'visible');
+            $('#' + modalId).addClass('modal');
+            $("#" + modalId).css('position', '');
+            $("#" + modalId).css('top', '');
+            $('.tooltip-content').css('visibility', 'visible');
+            $('#PrintModel').css('display', 'none');
+        } else {
+            window.print();
+        }
+    });
+
+</script>

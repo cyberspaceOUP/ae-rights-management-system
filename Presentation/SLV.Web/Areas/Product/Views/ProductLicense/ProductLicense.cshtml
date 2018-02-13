@@ -1,0 +1,763 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "ProductLicense";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/Product/PrductLicense.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    @*angular.element(document.getElementById('angularid')).scope().ProductSerach(@ViewBag.ProductId);*@
+    angular.element(document.getElementById('angularid')).scope().ProductSerachLicense(@ViewBag.ProductId);
+    angular.element(document.getElementById('angularid')).scope().GeogList();
+    angular.element(document.getElementById('angularid')).scope().getPublishingCompanyList();
+    angular.element(document.getElementById('angularid')).scope().getTerritoryRightsList();
+    angular.element(document.getElementById('angularid')).scope().getCurrencyList();
+    angular.element(document.getElementById('angularid')).scope().getSubsidiaryList();
+
+    @*//fetch Kit Details List*@
+    angular.element(document.getElementById('angularid')).scope().KitISBNDetailsList(@ViewBag.ProductId);
+}
+
+<input type="hidden" id="hid_productid_PL" value="@ViewBag.ProductId" />
+
+<h3 class="text-muted">@*@T("Form.CityMaster.Heading")*@</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Product License <span ng-bind="Title"></span>
+                    @Html.Partial("pagedate")</h1>
+            </div>
+        </div>
+        <div class="col-md-12 text-right" ng-if="'@TempData["BackToserach"]' != 'BackToserach'">
+            <div class="tools">
+                <a href="@T("AuthorContract.BackSearchUrl")" style="color:black;" class="backtosearch">Back To List</a>
+            </div>
+        </div>
+        <div class="col-md-12 text-right" ng-if="'@TempData["BackToserach"]' == 'BackToserach'">
+            <div class="tools">
+                <a href="~/Product/ProductLicense/ProductLicenseSearch?For=BackToserach" class="backtosearch" style="color:black;">Back To List</a>
+            </div>
+        </div>
+
+        <form name="userForm" class=" form-horizontal" ng-submit="productLicenseEntryForm(ProductModel)" novalidate ng-cloak>
+            <div class="col-md-12">
+                @*<div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Product Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>*@
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetailsForLicense.cshtml")
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div> 
+
+                    </div>
+                </div>
+                @*</div>*@
+            </div>
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            @*Publisher Details*@
+                            Proprietor Details
+                            <input type="hidden" id="hid_productId" name="productId" ng-model="ProductModel.ProductId" ng-init="ProductModel.ProductId=@ViewBag.ProductId" />
+
+                          
+                            <input type="hidden" value="@ViewBag.LicenseId" id="hid_ForProductContractPerson" name="hid_ForProductContractPerson" ng-model="ProductModel.ForProductContractPerson" ng-init="ProductModel.ForProductContractPerson = @ViewBag.LicenseId" />
+                            <input type="hidden" value="@ViewBag.LicenseId" id="hid_ProductLicenseId" name="hid_ProductLicenseId" ng-model="ProductModel.LicenseId" ng-init="ProductModel.LicenseId = @ViewBag.LicenseId" />
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">@*Company*@Proprietor Company <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.PublisherCompany.$dirty) && userForm.PublisherCompany.$invalid } ">
+                                                    @*<select class="form-control" name="PublisherCompany" ng-model="ProductModel.PublisherCompany" ng-change="onchnagPublisherCompany()" required>
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in PublishingCompanyList" ng-selected="{{div.Id == ProductModel.PublisherCompany}}" ng-model="PublisherCompany" value="{{div.Id}}">{{div.CompanyName}}</option>
+                                                    </select>*@
+                                                    <input type="text" class="form-control" name="PublisherCompany" ng-model="PublisherCompany" required placeholder="Proprietor Company">
+                                                    <input type="hidden" name="PublisherCompanyId" class="form-control" ng-model="ProductModel.PublisherCompany">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PublisherCompany.$error.required && (userForm.PublisherCompany.$dirty || submitted)">Please select Publisher Company</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Contact Person <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContactPerson.$dirty) && userForm.ContactPerson.$invalid } ">
+                                                    <input type="text" name="ContactPerson" class="form-control"
+                                                           ng-init="ProductModel.ContactPerson=''"
+                                                           ng-model="ProductModel.ContactPerson" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Contact Person" required>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ContactPerson.$error.required && (userForm.ContactPerson.$dirty || submitted)" class="help-block red">Please enter Contact Person</p>
+                                                        <p ng-show="userForm.ContactPerson.$error.pattern" class="help-block red">Please enter valid Contact Person</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Phone</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" ng-disabled="true" name="PublisherPhone" class="form-control" ng-model="ProductModel.PublisherPhone" placeholder="Phone">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Mobile</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" ng-disabled="true" name="PublisherMobile" class="form-control" ng-model="ProductModel.PublisherMobile"  placeholder="Mobile"> @*ng-pattern="/^[789]\d{9}$/"*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Email</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text"  name="PublisherEmail" class="form-control" ng-model="ProductModel.PublisherEmail" placeholder="Email">
+                                                    @*ng-disabled="true"*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Address</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" ng-disabled="true" name="PublisherAddress" id="PublisherAddress" class="form-control" ng-model="ProductModel.PublisherAddress" placeholder="Address">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" id="geogdiv">
+                                            @Html.Partial("~/Views/Shared/_geoGraphical.cshtml")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            License Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Request Date <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.RequestDate.$dirty) && userForm.RequestDate.$invalid } ">
+                                                    <div class="input-group input-append date">
+                                                        <input type="text" name="RequestDate" class="form-control" ng-disabled="true" ng-model="ProductModel.RequestDate" ng-init="SetRequestDate()" placeholder="Request Date" required>
+                                                        <span class="input-group-addon add-on" ng-disabled="true"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.RequestDate.$error.required && (userForm.RequestDate.$dirty || submitted)" class="help-block red">Please enter Request Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*Commented by Rajneesh Singh on 23/08/2016*@
+                                    @*<div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract Date <span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ContractDate.$dirty) && userForm.ContractDate.$invalid } ">
+                                                        <div class="input-group input-append date ContractDate">
+                                                            <input type="text" name="ContractDate" class="form-control" onchange="angular.element(document.getElementById('angularid')).scope().SetContractDate(this);" ng-model="ProductModel.ContractDate" placeholder="Contract Date" required>
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ContractDate.$error.required && (userForm.ContractDate.$dirty || submitted)" class="help-block red">Please enter Contract Date</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Effective Date</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.EffectiveDate.$dirty) && userForm.EffectiveDate.$invalid } ">
+                                                        <div class="input-group input-append date datePicker">
+                                                            <input type="text" name="EffectiveDate" onchange="angular.element(document.getElementById('angularid')).scope().SetEffectiveDate(this);" class="form-control" ng-model="ProductModel.EffectiveDate" placeholder="Effective Date">
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.EffectiveDate.$error.required && (userForm.EffectiveDate.$dirty || submitted)" class="help-block red">Please enter Effective Date</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Contract Period<span class="red">*</span> </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PaymentAmount.$dirty) && userForm.ContractPeriod.$invalid } ">
+                                                        <input type="number" name="ContractPeriod" class="form-control" ng-model="ProductModel.ContractPeriod" ng-change="CalculateExpiry()" placeholder="Contract Period (Months)" required>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ContractPeriod.$error.required && (userForm.ContractPeriod.$dirty || submitted)" class="help-block red">Please enter Contract Period</p>
+                                                            <p ng-show="userForm.ContractPeriod.$error.pattern" class="help-block red">Please enter valid Contract Period</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Expiry Date <span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ExpiryDate.$dirty) && userForm.ExpiryDate.$invalid } ">
+                                                        <div class="input-group input-append date datePicker">
+                                                            <input type="text" name="ExpiryDate" ng-disabled="true" class="form-control" ng-model="ProductModel.ExpiryDate" placeholder="Expiry Date" required>
+                                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ExpiryDate.$error.required && (userForm.ExpiryDate.$dirty || submitted)" class="help-block red">Please enter Expiry Date</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    @*Ended by rajneesh Singh*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Territory <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.TerritoryRights.$dirty) && userForm.TerritoryRights.$invalid } ">
+                                                    <select class="form-control" id="TerritoryRights" name="TerritoryRights" ng-model="ProductModel.TerritoryRights" required>
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in TerritoryList" ng-model="TerritoryRights" ng-selected="{{div.Id == ProductModel.TerritoryRights}}" value="{{div.Id}}">{{div.Territoryrights}}</option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.TerritoryRights.$error.required && (userForm.TerritoryRights.$dirty || submitted)">Please select Territory Rights</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">First Impression Within Date<span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.FirstImpressionWithinDate.$dirty) && userForm.FirstImpressionWithinDate.$invalid } ">
+                                                    <div class="input-group input-append date datePicker">
+                                                        <input type="text" max="userForm.ExpiryDate.$modelValue" name="FirstImpressionWithinDate" class="form-control" onchange="angular.element(document.getElementById('angularid')).scope().SetFirstImpressionWithinDate(this);" ng-model="ProductModel.FirstImpressionWithinDate" placeholder="First Impression Within Date" required>
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.FirstImpressionWithinDate.$error.required && (userForm.FirstImpressionWithinDate.$dirty || submitted)" class="help-block red">Please enter First Impression Within Date</p>
+                                                        <p ng-show="userForm.FirstImpressionWithinDate.$error.max" class="help-block red">Please enter First Impression Within Date Less Than Expiry Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">No of Impressions</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NoOfImpressions.$dirty) && userForm.NoOfImpressions.$invalid } ">
+                                                    <input type="number" min="1" name="NoOfImpressions" class="form-control" ng-model="ProductModel.NoOfImpressions" placeholder="No of Impressions" maxlength="3">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.NoOfImpressions.$dirty && userForm.NoOfImpressions.$invalid" class="help-block red">Please enter valid No of Impressions</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Print Quantity Type <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="PrintQuantityType" ng-checked="{{ProductModel.PrintQuantityType == 'Number'}}" ng-model="ProductModel.PrintQuantityType" value="Number" required> Number
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="PrintQuantityType" ng-checked="{{ProductModel.PrintQuantityType == 'Unrestricted'}}" ng-model="ProductModel.PrintQuantityType" value="Unrestricted"
+                                                               required ng-click="fn_blank()"> Unrestricted
+                                                    </label>
+                                                </div>
+                                                <div ng-class="{ 'has-error' : userForm.PrintQuantityType.$invalid && (userForm.PrintQuantityType.$dirty || submitted)}">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PrintQuantityType.$error.required && (userForm.PrintQuantityType.$dirty || submitted)" class="help-block">Please select Print Quantity Type</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Print Quantity<span class="red" ng-show="ProductModel.PrintQuantityType == 'Number'">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.NoOfImpressions.$dirty) && userForm.PrintQuantity.$invalid } ">
+                                                    <input type="number" min="1" maxlength="6" name="PrintQuantity" class="form-control" ng-model="ProductModel.PrintQuantity" placeholder="Print Quantity"
+                                                           ng-required="ProductModel.PrintQuantityType == 'Number'" ng-readonly="ProductModel.PrintQuantityType == 'Unrestricted'">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PrintQuantity.$dirty && userForm.PrintQuantity.$invalid" class="help-block red">Please enter valid Print Quantity</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Royalty Terms <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="RoyaltyTerms" ng-checked="{{ProductModel.RoyaltyTerms == 'Royalty'}}" ng-click="changeTerm('Royalty')"
+                                                               ng-model="ProductModel.RoyaltyTerms" value="Royalty" required> Royalty
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="RoyaltyTerms" ng-checked="{{ProductModel.RoyaltyTerms == 'OneTime'}}" ng-click="changeTerm('OneTime')"
+                                                               ng-model="ProductModel.RoyaltyTerms" value="OneTime" required> One-Time Payment
+                                                    </label>
+                                                </div>
+                                                <div ng-class="{ 'has-error' : userForm.RoyaltyTerms.$invalid && (userForm.RoyaltyTerms.$dirty || submitted)}">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.RoyaltyTerms.$error.required && (userForm.RoyaltyTerms.$dirty || submitted)" class="help-block">Please select Royalty Terms</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    @*<div class="row">
+            <div class="col-md-12">
+                <label class="control-label col-md-5">One-Time Payment Amount <span class="red" ng-show="ProductModel.RoyaltyTerms == 'OneTime'">*</span> </label>
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PaymentAmount.$dirty) && userForm.PaymentAmount.$invalid } ">
+                        <input type="text" name="PaymentAmount" class="form-control" ng-model="ProductModel.PaymentAmount" placeholder="One-Time Payment Amount"
+                               ng-required="ProductModel.RoyaltyTerms == 'OneTime'" ng-disabled="ProductModel.RoyaltyTerms == 'Royalty'">
+                        <div class="help-block">
+                            <p ng-show="userForm.PaymentAmount.$dirty && userForm.PaymentAmount.$invalid" class="help-block red">Please enter valid One-Time Payment Amount</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">One-Time Payment Amount <span class="red" ng-show="ProductModel.RoyaltyTerms == 'OneTime'">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PaymentAmount.$dirty) && userForm.PaymentAmount.$invalid } ">
+                                                    <input type="text" name="PaymentAmount" class="form-control" ng-model="ProductModel.PaymentAmount" placeholder="One-Time Payment Amount"
+                                                           ng-required="ProductModel.RoyaltyTerms == 'OneTime'" ng-disabled="ProductModel.RoyaltyTerms == 'Royalty'"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" maxlength="10">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PaymentAmount.$error.required && (userForm.PaymentAmount.$dirty || submitted)">Please enter One-Time Payment Currency</p>
+                                                        <p ng-show="userForm.PaymentAmount.$error.pattern" class="help-block red">Please enter valid One-Time Payment Amount</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">One-Time Payment Currency <span class="red" ng-show="ProductModel.RoyaltyTerms == 'OneTime'">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PaymentAmountCurrency.$dirty) && userForm.PaymentAmountCurrency.$invalid } ">
+                                                    <select class="form-control" id="PaymentAmountCurrency" name="PaymentAmountCurrency" ng-model="ProductModel.PaymentAmountCurrency"
+                                                            ng-required="ProductModel.RoyaltyTerms == 'OneTime'" ng-disabled="ProductModel.RoyaltyTerms == 'Royalty'">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in CurrencyList" ng-model="PaymentAmountCurrency" value="{{div.Symbol}}">{{div.CurrencyName}}</option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PaymentAmountCurrency.$error.required && (userForm.PaymentAmountCurrency.$dirty || submitted)">Please select One-Time Payment Currency</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6">
+                                    
+
+
+                                    @*<div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Advance Amount</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AdvanceAmount.$dirty) && userForm.AdvanceAmount.$invalid } ">
+                                                    <input type="text" name="AdvanceAmount" class="form-control" ng-model="ProductModel.AdvanceAmount" placeholder="Advance Amount">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AdvanceAmount.$dirty && userForm.AdvanceAmount.$invalid" class="help-block red">Please enter valid Advance Amount</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Advance Amount</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AdvanceAmount.$dirty) && userForm.AdvanceAmount.$invalid } ">
+                                                    <input type="text" name="AdvanceAmount" class="form-control" ng-model="ProductModel.AdvanceAmount" placeholder="Advance Amount" 
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" maxlength="10">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.AdvanceAmount.$error.pattern" class="help-block red">Please enter valid Advance Amount</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Advance Currency</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="AdvanceAmountCurrency" name="AdvanceAmountCurrency" ng-model="ProductModel.AdvanceAmountCurrency">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in CurrencyList" ng-model="AdvanceAmountCurrency" value="{{div.Symbol}}">{{div.CurrencyName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Proprietor copies @*Copies for Licensor*@</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.CopiesforLicensor.$dirty) && userForm.CopiesforLicensor.$invalid } ">
+                                                    <input type="number" min="1" maxlength="6" name="CopiesforLicensor" class="form-control" ng-model="ProductModel.CopiesforLicensor" placeholder="Proprietor copies">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.CopiesforLicensor.$dirty && userForm.CopiesforLicensor.$invalid" class="help-block red">Please enter valid Proprietor copies</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Royalty Type</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="PriceType" ng-checked="{{ProductModel.PriceType == 'L'}}" ng-model="ProductModel.PriceType" value="L"> List Price
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="PriceType" ng-checked="{{ProductModel.PriceType == 'N'}}" ng-model="ProductModel.PriceType" value="N"> Net Price
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Price</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PriceType.$dirty) && userForm.PriceType.$invalid } ">
+                                                    <input type="number" min="1" name="Price" class="form-control" ng-model="ProductModel.Price" placeholder="Price">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Price.$dirty && userForm.Price.$invalid" class="help-block red">Please enter valid Price</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Currency</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="Currency" name="Currency" ng-model="ProductModel.Currency">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in CurrencyList" ng-model="Currency"
+                                                                @*ng-init="setCurrencyId(Currency,div)"*@
+                                                                ng-selected="{{  div.Id == ProductModel.Currency }}"
+                                                                value="{{div.Id}}">
+                                                            {{div.CurrencyName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Third Party Permission</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="PartyPermission" ng-checked="{{ProductModel.ThirdPartyPermission == 'Y'}}" ng-model="ProductModel.ThirdPartyPermission" value="Y"> Yes
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="PartyPermission" ng-checked="{{ProductModel.ThirdPartyPermission == 'N'}}" ng-model="ProductModel.ThirdPartyPermission" value="N"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Remarks</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Remarks.$dirty) && userForm.Remarks.$invalid } ">
+                                                    <input type="text" name="Remarks" class="form-control" ng-model="ProductModel.Remarks" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Remarks">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Remarks.$error.pattern" class="help-block red">Please enter valid Remarks</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Subsidiary Rights <span class="red">*</span> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="SubsidiaryRights" ng-checked="{{ProductModel.SubsidiaryRights == 'Yes'}}" ng-model="ProductModel.SubsidiaryRights" value="Yes" required> Yes
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="SubsidiaryRights" ng-checked="{{ProductModel.SubsidiaryRights == 'No'}}" ng-model="ProductModel.SubsidiaryRights" value="No" required> No
+                                                    </label>
+                                                </div>
+                                                <div ng-class="{ 'has-error' : userForm.SubsidiaryRights.$invalid && (userForm.SubsidiaryRights.$dirty || submitted)}">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.SubsidiaryRights.$error.required && (userForm.SubsidiaryRights.$dirty || submitted)" class="help-block">Please select Subsidiary Rights</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" ng-if="ProductModel.RoyaltyTerms=='Royalty'">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Royalty Slab
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            @Html.Partial("~/Areas/Product/Views/Shared/RoyaltySlab.cshtml")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" ng-show="ProductModel.SubsidiaryRights == 'Yes'">
+                @Html.Partial("~/Areas/Product/Views/Shared/_SubsidiaryRights.cshtml")
+            </div>
+            <div class="col-md-12" ng-if="ProductLicenseId > 0">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Other License Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Agreement Date <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ContractDate.$dirty) && userForm.ContractDate.$invalid } ">
+                                                    <div class="input-group input-append date ContractDate">
+                                                        <input type="text" name="ContractDate" class="form-control" onchange="angular.element(document.getElementById('angularid')).scope().SetContractDate(this);" 
+                                                               ng-model="ProductModel.ContractDate" placeholder="Agreement Date" required>
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ContractDate.$error.required && (userForm.ContractDate.$dirty || submitted)" class="help-block red">Please enter Agreement Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Effective Date</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.EffectiveDate.$dirty) && userForm.EffectiveDate.$invalid } ">
+                                                    <div class="input-group input-append date ContractDate">
+                                                        <input type="text" id="EffectiveDate" name="EffectiveDate" onchange="angular.element(document.getElementById('angularid')).scope().SetEffectiveDate(this);" class="form-control" ng-model="ProductModel.EffectiveDate" placeholder="Effective Date">
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.EffectiveDate.$error.required && (userForm.EffectiveDate.$dirty || submitted)" class="help-block red">Please enter Effective Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    @*<div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Contract Period (in month)</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PaymentAmount.$dirty) && userForm.ContractPeriod.$invalid } ">
+                                                    <input type="number" name="ContractPeriod" class="form-control" ng-model="ProductModel.ContractPeriod" ng-change="CalculateExpiry()" placeholder="Contract Period (Months)" required>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ContractPeriod.$error.required && (userForm.ContractPeriod.$dirty || submitted)" class="help-block red">Please enter Contract Period</p>
+                                                        <p ng-show="userForm.ContractPeriod.$error.pattern" class="help-block red">Please enter valid Contract Period</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Expiry Date <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ExpiryDate.$dirty) && userForm.ExpiryDate.$invalid } ">
+                                                    <div class="input-group input-append date datePicker">
+                                                        <input type="text" id="ExpiryDate" name="ExpiryDate" class="form-control" onchange="FillEffectiveDate($(this))"
+                                                               ng-model="ProductModel.ExpiryDate" placeholder="Expiry Date" required> @*ng-disabled="true"*@
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ExpiryDate.$error.required && (userForm.ExpiryDate.$dirty || submitted)" class="help-block red">Please enter Expiry Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Partial("~/Areas/Product/Views/Shared/LicenseDetails.cshtml")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.datePicker')
+            .datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+            })
+
+        //if ($("#Currency option:selected").val() != "" || $("#Currency option:selected").val() != undefined) {
+        //    $("#Currency ").attr("disabled", true);
+        //}
+
+        //var Price = $('input[name="Price"]');
+        //if (Price.val() != "" || Price.val() != undefined) {
+        //    Price.attr("disabled", true);
+        //}
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var date = new Date();
+        var TodayDate = new Date();
+        date.setDate(date.getYear - 100);
+
+        $('.ContractDate')
+            .datepicker({
+                format: "dd/mm/yyyy",
+
+                showButtonPanel: true,
+                autoclose: true,
+                startDate: date,
+                endDate: TodayDate
+            })
+    });
+
+    function FillEffectiveDate(obj) {
+
+        $("input[id*=ExpiryDate]").val($(obj).val());
+        if ($(obj).val() != "") {
+            $(obj).closest(".form-group").removeClass("has-error");
+            $(obj).closest(".form-group").find(".help-block").find("p").addClass("ng-hide").removeClass("ng-show");
+        }
+        else {
+            $(obj).closest(".form-group").addClass("has-error");
+            $(obj).closest(".form-group").find(".help-block").find("p").removeClass("ng-hide").addClass("ng-show");
+        }
+
+        angular.element(document.getElementById('angularid')).scope().CalculateExpiryDate_Set($("input[id*=ExpiryDate]").val());
+    }
+</script>
+

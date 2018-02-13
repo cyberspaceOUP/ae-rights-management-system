@@ -1,0 +1,143 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "DivisionMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/master/Master.Division.js"></script>
+@*<script src="~/js/master/Master.DepartmentMaster.js"></script>*@
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/app.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+@section onInit
+{
+   
+    angular.element(document.getElementById('angularid')).scope().getDivisionListMst();
+    angular.element(document.getElementById('angularid')).scope().getSubDivisionListMst();
+  
+}
+
+
+<h3 class="text-muted">@*@T("Form.CityMaster.Heading")*@</h3>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Sub-Division Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Sub-Division
+                    </div>
+                </div>
+
+
+                <div class="portlet-body form">
+                    <form name="subDivisionForm" class=" form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Division <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||subDivisionForm.division.$dirty) && subDivisionForm.division.$invalid } ">
+                                            <select class="form-control" name="division" ng-model="Division" required>
+                                                <option value="">Please Select</option>
+                                                <option ng-repeat="div in DivisionList" ng-model="Division" value="{{div.Id}}">{{div.divisionName}}</option>
+                                            </select>
+                                            <div class="help-block">
+                                                <p ng-show="subDivisionForm.division.$error.required && (subDivisionForm.division.$dirty || submitted)">Please select division</p>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Sub-Division <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||subDivisionForm.subdivision.$dirty) && subDivisionForm.subdivision.$invalid } ">
+                                            <input type="text" name="subdivision" class="form-control" ng-model="subdivision" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Sub-Division Name">
+                                            <div class="help-block">
+                                                <p ng-show="subDivisionForm.subdivision.$error.required && (subDivisionForm.subdivision.$dirty || submitted)" class="help-block red">Please enter sub-division</p>
+                                                @*<p ng-show="subDivisionForm.name.$error.pattern  && (subDivisionForm.name.$dirty || submitted)"></p>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_recordid" name="hid_recordid" ng-model="hid_recordid" />
+                                    <input type="hidden" id="hid_level" name="hid_level" ng-model="hid_level" value="1" />
+                                    <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Sub-Division List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Division &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Sub-Division&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="SubDivision in SubDivisionList">
+                                <td>{{SubDivision.DivisionName}}</td>
+                                <td>{{SubDivision.SubDivisionName}}</td>
+                                <td><a ng-click="EditSubDivision(SubDivision.DivisionId)"><i class="fa fa-edit" title="edit"></i></a></td>
+                                <td>
+                                    @*<a ng-click="DeleteSubDivision(SubDivision.DivisionId)"><i class="fa fa-trash-o" title="delete Sub-Division"></i></a>*@
+
+                                    <a ng-click="DeleteSubDivision(SubDivision.DivisionId)" ng-if=" SubDivision.Flag =='0' "><i class=" fa fa-trash-o" title="Delete Sub-Division"></i></a>
+
+                                    <a ng-if="SubDivision.Flag =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Linked With Other Process"></i></a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.confirm').click(function () {
+        window.location.href = location.href;
+})
+</script>
+

@@ -1,0 +1,36 @@
+﻿
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @T("Dashboard.SAPNotEntered")
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!Product_SAP_Agr_No_Not_EnteredList.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        @*<th> Contract Code </th>*@
+                        <th> Product Code </th>
+                        <th> ISBN</th>
+                        <th> Working Product </th>
+                    </tr>
+
+                    <tr ng-repeat="Product_SAP in Product_SAP_Agr_No_Not_EnteredList">
+                        @*<td class="table-color"><a href="../../Product/ProductMaster/SAPAggrementAssign?Id={{Product_SAP.Id}}">{{Product_SAP.Contract_Code}}</a></td>*@
+                        <td class="table-color"><a href="../../Product/ProductMaster/SAPAggrementAssign?Id={{Product_SAP.Id}}"> <span ng-bind="(Product_SAP.ProductCode)"></span>    </a></td>
+                        <td> <span ng-bind="(Product_SAP.ISBN)"></span> </td>
+                        <td><span ng-bind="(Product_SAP.WorkingProduct)"></span>  <span style="font-size:11px;">  <br /><span ng-bind="(Product_SAP.WorkingSubProduct)"></span> </span></td>
+                    </tr>
+                </table>
+                <a href="javascript:void(0);" ng-click="SAPAgreementNumberNotEntered_submitForm();" class="moreDash">View More</a>
+            </div>
+            <div ng-hide="Product_SAP_Agr_No_Not_EnteredList.length">No result found</div>
+        </div>
+    </div>
+</div>
+
+

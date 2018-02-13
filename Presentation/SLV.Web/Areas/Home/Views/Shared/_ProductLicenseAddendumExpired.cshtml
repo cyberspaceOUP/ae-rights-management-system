@@ -1,0 +1,48 @@
+﻿
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @T("Dashboard.LicenseAddendumExpired")
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!ProductLicenseAddendumExpiredList.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Product License code </th>
+                        <th> Product Code </th>
+                        <th> ISBN </th>
+                        <th> Working Product</th>
+                        <th>Publishing Company Name</th>
+                        <th> Author </th>
+                        <th> Expiry Date </th>
+                    </tr>
+
+                    <tr ng-repeat="obj in ProductLicenseAddendumExpiredList">
+                        <td class="table-color"><a href="#"><span ng-bind="(obj.ProductLicensecode)"></span>   </a></td>
+                        <td class="table-color">   <a href="~/Product/ProductMaster/ProductDetailsView?Id={{obj.ProductId}}"><span ng-bind="(obj.ProductCode)"></span>  </a>  </td>
+                        <td> <span ng-bind="(obj.ISBN)"></span> </td>
+                        <td><span ng-bind="(obj.WorkingProduct)"></span>  <span style="font-size:11px;">  <br /><span ng-bind="(obj.WorkingSubProduct)"></span> </span></td>
+                        <td><span ng-bind="(obj.PublishingCompany)"></span>  </td>
+                        <td><span ng-bind="(obj.AuthorName)"></span> </td>
+                        <td> <span ng-bind="(obj.Expirydate)"></span></td>
+                    </tr>
+                </table>
+                <a href="javascript:void(0);" ng-click="ProductLicenseAddendumExpired_submitForm();" class="moreDash">View More</a>
+            </div>
+            <div ng-hide="ProductLicenseAddendumExpiredList.length">No result found</div>
+        </div>
+    </div>
+</div>
+
+
+

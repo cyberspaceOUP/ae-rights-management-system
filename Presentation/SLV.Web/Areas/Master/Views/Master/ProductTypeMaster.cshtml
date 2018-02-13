@@ -1,0 +1,120 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "ProductTypeMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+
+<script src="~/js/master/Master.ProductType.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/app.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+@section onInit
+{
+    @*angular.element(document.getElementById('angularid')).scope().getProductTypeList();*@
+    angular.element(document.getElementById('angularid')).scope().getProductTypeMasterList();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Product Type  Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Product Type
+                    </div>
+                </div>
+
+
+                <div class="portlet-body form">
+                    <form name="productTypeForm" class=" form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Product Type</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||productTypeForm.producttype.$dirty) && productTypeForm.producttype.$invalid } ">
+                                            <input type="text" name="producttype" class="form-control" ng-model="producttype" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Product Type Name">
+                                            <div class="help-block">
+                                                <p ng-show="productTypeForm.producttype.$error.required && (productTypeForm.producttype.$dirty || submitted)" class="help-block red">Please enter product type</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_productType" name="hid_productType" ng-model="hid_productType" />
+                                    @*<input type="hidden" id="hid_level" name="hid_level" ng-model="hid_level" value="0" />*@
+                                    <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                                    <button id="btnReset" class="btn green" type="reset" ng-click="resetForm()" style="display:none">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Product Type List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Product Type &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="Producttype in ProductTypeListNew">
+
+                                <td>{{Producttype.typeName}}</td>
+                                <td>
+                                    <a ng-click="EditProductType(Producttype.id)"><i class="fa fa-edit" title="Edit Product Type"></i></a>
+                                </td>
+                                <td>
+                                    <a ng-click="DeleteProductType(Producttype.id)" ng-if="Producttype.Flag =='0'"><i class="fa fa-trash-o" title="Delete Product Type"></i></a>
+                                    <a ng-if="Producttype.Flag =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Linked With Other Master"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.confirm').click(function () {
+        window.location.href = location.href;
+    })
+</script>

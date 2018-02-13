@@ -1,0 +1,57 @@
+﻿
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @T("Dashboard.InboundQuantityLess25")
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!InboundPermissionQuantityLess25_List.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        @*<th> Contract Code </th>*@
+                        <th> Inbound Code </th>
+                        <th> ISBN</th>
+                        <th> Working Product </th>
+                        <th> Assets Type </th>
+                        @*<th> Balance Parcentage </th>*@
+                        <th> Balance Quantity </th>
+                        <th>Expiry Date</th>
+                    </tr>
+
+                    <tr ng-repeat="qty in InboundPermissionQuantityLess25_List">
+                        @*<td class="table-color"><a href="../../PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?Id={{Authot_IMNE.Id}}&type=P{{Authot_IMNE.ProductId}}">{{Authot_IMNE.ProductLicensecode}}</a></td>
+                    <td class="table-color"><a href="../../PermissionsInbound/PermissionsInbound/PermissionsInboundMaster?Id={{Authot_IMNE.Id}}&type=P{{Authot_IMNE.ProductId}}">{{Authot_IMNE.ProductCode}}</a></td>*@
+                        <td class="table-color">
+                            <a href="~/PermissionsInbound/PermissionsInbound/ViewInbound?type=P{{qty.ProductId}}&InboundId={{qty.Code}}" target="_blank"><span ng-bind="(qty.Code)"></span></a>
+                        </td>
+                        @*<td> <span ng-bind="(qty.ProductLicensecode)"></span>   </td>*@
+                        @*<td>{{qty.Code}}</td>*@
+                        <td><span ng-bind="(qty.ISBN)"></span>   </td>
+                        <td><span ng-bind="(qty.WorkingProduct)"></span> <span style="font-size:11px;">  <br /><span ng-bind="(qty.WorkingSubProduct)"></span>  </span></td>
+                        @*<td>{{qty.BalancePercentage}}</td>*@
+                        <td><span ng-bind="(qty.AssetsType)"></span>   </td>
+                        <td><span ng-bind="(qty.BalanceCounts)"></span>   </td>
+                        <td><span ng-bind="(qty.Expiredate)"></span> </td>
+
+                    </tr>
+                </table>
+                <a href="javascript:void(0);" ng-click="InboundPermission_LessQuantity_submitForm();" class="moreDash">View More</a>
+            </div>
+            <div ng-hide="InboundPermissionQuantityLess25_List.length">No result found</div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,890 @@
+﻿@{
+    ViewBag.Title = "PermissionsOutboundView";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/PermissionsOutbound/PermissionsOutboundView.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/common/TopSearch.js"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Permissions Outbound View
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        @if (Session["PrintPermissions"] != null)
+        {
+            <div class="col-md-12 text-right btnPrint">
+                <div class="tools">
+                    <input type="button" class="btn green" id="btn_printPage" value="Print">
+                </div>
+            </div>
+        }
+        <div class="col-md-12">&nbsp;</div>
+        <div class="col-md-12 text-right backToList" style="display:none;">
+            <div class="tools">
+                <a href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundSearchMaster?For=BackToSearch" style="color:black;">Back To List</a>
+            </div>
+        </div>
+
+        <form name="userForm" class=" form-horizontal" ng-submit="PermissionsOutboundEntryForm(PermissionsOutboundModel)" novalidate>
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body" ng-show="Req_ContractDeatil">
+                        @Html.Partial("~/Areas/Contract/Views/Shared/_ContractDeatil.cshtml")
+                    </div>
+                    <div class="form-body" ng-show="Req_ProductLicense">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicense.cshtml")
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body" ng-show="Req_ContractDeatil">
+                        @Html.Partial("~/Areas/PermissionsOutbound/Views/Shared/_SubsidiaryRightsAuthorContract.cshtml")
+                    </div>
+                    <div class="form-body" ng-show="Req_ProductLicense">
+                        @Html.Partial("~/Areas/PermissionsOutbound/Views/Shared/_SubsidiaryRightsProductLicense.cshtml")
+                    </div>
+                </div>
+            </div>
+
+            <!-- Licensee Details view -->
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Licensee Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6 col-xs-6 col-sm-6">
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Licensee  </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="LicenseeView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Contact Person </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="ContactPersonView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Licensee Code </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="LicenseeCodeView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Contact No.</label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="MobileView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Email</label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="EmailView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">URL</label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="URLView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-6 col-sm-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Address</label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="AddressView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="CountryView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">State </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="StateView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">City </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="CityView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">PIN Code </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="PincodeView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permissions Outbound Details  view-->
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Permissions Outbound Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6 col-xs-6 col-sm-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Permissions Outbound Code </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="PermissionsOutboundCodeView"></span></label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Request Date </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="RequestDateView"></span></label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Licensee Publication Title </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="LicenseePublicationTitleView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="false">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Permission Date </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="PermissionDateView"></span></label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="false">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Permission period (In months) </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="PermissionperiodView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="false">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Expiry Date</label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="ExpiryDateView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Requested Material </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="RequestMaterialView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Will the material be translated </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="WillmaterialtranslatedView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Will the material be adapted </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="WillmaterialadeptedView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Language</label>
+
+                                                <div class="col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="LanguageView"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>*@
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Extent</label>
+
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="ExtentView"></span></label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Territory </label>
+
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="TerritoryView"></span></label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-6 col-sm-6">
+                                    
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Invoice Applicable </label>
+
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="InvoiceApplicableView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-show="InvoiceApplicableView == 'Yes'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Date of Invoice</label>
+
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="DateInvoiceView"></span></label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-show="InvoiceApplicableView == 'Yes'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Invoice Number </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="InvoiceNoView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-show="InvoiceApplicableView == 'Yes'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Invoice Currency</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    @*<label class="control-label"><span ng-bind="InvoiceCurrencyView"></span></label>*@
+                                                    <label class="control-label"><span ng-bind="InvoiceCurrencySymbol"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-show="InvoiceApplicableView == 'Yes'">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Invoice Value </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="InvoiceValueView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="InvoiceApplicableView == 'Yes'"> @*ReqInvoiceDescription &&*@ 
+                                        <div class="col-md-12">
+                                            <label for="textArea" class="control-label  col-md-5 col-xs-6 col-sm-6">Invoice Description </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="InvoiceDescriptionView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Copies to be received  </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="CopiesreceivedView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Number of copies </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="NumbercopiesView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Remarks </label>
+                                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"><span ng-bind="RemarksView"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Language Details  view-->
+            <div class="col-md-12" ng-if="PermissionsOutboundLanguageList.length">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Language Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body clearfix">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <table class="table table-striped table-bordered table-hover dataTable no-footer SeriesDetail" id="TblOwnerList">
+                                    <thead class="flip-content">
+                                        <tr>
+                                            <th>S.No.</th>
+                                            <th>Language</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="M in PermissionsOutboundLanguageList">
+                                            <td><span ng-bind="$index +1"></span></td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="M.LanguageName"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Type of Rights Details  view-->
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Type of Rights Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body clearfix">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <table class="table table-striped table-bordered table-hover dataTable no-footer SeriesDetail" id="TblOwnerList">
+                                    <thead class="flip-content">
+                                        <tr>
+                                            <th>S.No.</th>
+                                            <th>Type of Rights</th>
+                                            @*<th>Sub-Type Rights </th>*@
+                                            <th>Quantity </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="M in PermissionsOutboundList">
+                                            <td><span ng-bind="$index +1"></span></td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="M.TypeofRights"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            @*<td>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="M.SubTypeRights"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>*@
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label" ng-if="M.Quantity == '' ||  M.Quantity == 'null'">--</label>
+
+                                                                <label class="control-label" ng-if="M.Quantity != '' &&  M.Quantity != 'null'"><span ng-bind="M.Quantity"></span></label>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="PendingRequest" class="col-md-12" ng-show="ReqPendingRequest">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Pending Request for Permission Outbound
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body clearfix">
+                        <div class="col-md-12">
+                            <div class="row">
+
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6 col-xs-6 col-sm-6">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Contract Status </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">
+                                                                @*<span ng-bind="ContractStatusView"></span>*@
+                                                                <span ng-bind="ContractStatusView == 'Pending'? 'Issued' : (ContractStatusView == 'Issued'?'Received':ContractStatusView)"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Payment Received  </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label" ng-show="InvoiceApplicableView == 'Yes'"><span ng-bind="PaymentReceivedView"></span></label>
+                                                            <label class="control-label" ng-show="InvoiceApplicableView == 'No'">Not Applicable</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="PaymentReceivedView == 'Yes' && InvoiceApplicableView == 'Yes'">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Payment Amount  </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="PaymentAmountView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="PaymentReceivedView == 'Yes' && InvoiceApplicableView == 'Yes'">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Currency  </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="CurrencyView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Agreement Date </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="DateOfAgreementView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Signed Contract Sent Date </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="SignedContractSentDateView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Signed Contract Received Date </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="SignedContractReceivedDateView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xs-6 col-sm-6">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Effective Date</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="EffectivedateView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*<div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract period (In months) </label>
+                            <div class="col-md-7 col-xs-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label"><span ng-bind="ContractperiodinmonthView"></span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6">Expiry Date</label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="ExpirydateView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row" ng-show="ContractStatusView =='Draft' ||  ContractStatusView =='Cancelled'">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"><span ng-bind="ContractStatusView =='Draft' ? 'Draft Date' : 'Cancellation Date'"></span></label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="CancellationDateView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="PermissionsOutboundModel.Contractstatus =='Draft' ||  PermissionsOutboundModel.Contractstatus =='Cancelled'">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"><span ng-bind="ContractStatusView =='Draft' ? 'Draft Remarks' : 'Cancellation Reason'"></span></label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="CancellationReasonView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Remarks </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="PenddingRemarksView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="false">
+                                                <div class="col-md-12">
+                                                    <label class="control-label col-md-5 col-xs-6 col-sm-6"> Contributor Agreement  </label>
+                                                    <div class="col-md-7 col-xs-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><span ng-bind="ContributorAgreementView"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="" id="multipleUploadfiles">
+
+
+                                            <div class="clearfix"></div>
+                                            <div class="help-block">
+                                                <p ng-show="UploadContractReq" id="UploadContractReq" class="help-block">Please Upload Document</p>
+                                                <p ng-show="UploadExcelfileNameReq" class="help-block">Please enter file name</p>
+
+                                            </div>
+                                            <div id="doclistid" ng-show="Pendingdocumentshow" style=" padding-left: 29px;">
+                                                @*<div class="panel panel-warning">
+                                                    <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                                        <h3 class="panel-title">Attached Document</h3>
+                                                    </div>
+
+                                                    <div class="tools">
+
+                                                        <a href="javascript:;" class="collapse"> </a>
+                                                    </div>*@
+
+                                                    <div class="panel-body">
+
+                                                        <table class="table table-striped table-hover ">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Document Name</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="url in Docurl1">
+                                                                    <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId1" value="{{url.DocId1}}" /></td>
+                                                                    <td>
+                                                                        <a href="~/uploads/{{url.text1}}" target="_blank" style="color: black;" class="hide_for_print"><span ng-bind="url.name1"></span></a>
+                                                                        <a style="color: black; display:none;" class="show_for_print">{{url.name1}}</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                @*</div>*@
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+       
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row btnSubmit">
+                        <div class="col-md-12 text-center">
+                            <input type="hidden" value="@TempData["id"]" ng-model="hid_AuthorContract" id="hid_AuthorContract" name="hid_AuthorContract">
+                            <input type="hidden" value="@TempData["type"]" ng-model="hid_Type" id="hid_Type" name="hid_Type">
+                            <input type="hidden" value="@TempData["ProductId"]" ng-model="hid_ProductId" id="hid_ProductId" name="hid_ProductId">
+
+
+                            <input type="hidden" value="@TempData["OutboundId"]" ng-model="hid_OutboundId" id="hid_OutboundId" name="hid_OutboundId">
+
+                            <input type="hidden" value="@TempData["User"]" ng-model="hid_UserRight" id="hid_UserRight" name="hid_UserRight">
+
+                            <input type="hidden" ng-model="hid_PermissionsOutbound" id="hid_PermissionsOutbound" name="hid_PermissionsOutbound" />
+                            <input type="hidden" ng-model="hid_ReqValue" id="hid_ReqValue" name="hid_ReqValue" />
+                            @*<button type="submit" class="btn green " id="btnSubmit">Submit</button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $('#btn_printPage').on('click', function () {
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.backToList').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+
+        $('.btnPrint').hide();
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+
+        window.print();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('.backToList').show();
+        $('footer').show();
+        $('.menu').show();
+        $('.top-header').show();
+
+        $('.btnPrint').show();
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+    });
+
+</script>
+
+
+

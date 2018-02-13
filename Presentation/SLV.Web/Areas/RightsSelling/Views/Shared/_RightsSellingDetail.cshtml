@@ -1,0 +1,48 @@
+﻿
+<script src="~/js/RightsSelling/_RightsSellingDetail.js"></script>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Rights Selling Details
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Code</th>
+                    <th> First Publication Date</th>
+
+                    <th> Product Category</th>
+                    <th> Entry Date  </th>
+               
+                   
+                </tr>
+
+                <tr ng-repeat="obj in RightsSellingDetailList">
+                    <td>
+                        
+                        <span ng-if="obj.ContractId">
+                            <a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ContractId}}&type=A{{obj.ProuductId}}&RightsSellingId={{obj.RightsSellingId}}" target="_blank" style="color: #ee5941;" class="hide_for_print"><span ng-bind="obj.Code"></span></a>
+                        </span>
+
+                        <span ng-if="obj.ProductLicenseId">
+                            <a href="~/RightsSelling/RightsSelling/RightsSellingView?Id={{obj.ProductLicenseId}}&type=P{{obj.ProuductId}}&RightsSellingId={{obj.RightsSellingId}}" target="_blank" style="color: #ee5941;" class="hide_for_print"><span ng-bind="obj.Code"></span></a>
+                        </span>
+                        
+                    
+                    </td>
+                    <td><span ng-bind="obj.FirstPublicationDate"></span></td>
+                    <td><span ng-bind="obj.ProductCategory"></span> </td>
+                    <td><span ng-bind="obj.EntryDate"></span></td>
+
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>

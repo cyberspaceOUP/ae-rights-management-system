@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "ExecutiveRoleMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Executive Role Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Executive
+                    </div>
+                </div>
+
+
+                <div class="portlet-body form">
+                    <form name="ExecutiveRoleForm" class="form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Executive Name <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{'has-error': ( submitted ||ExecutiveRoleForm.Name.$dirty) && ExecutiveRoleForm.Name.$invalid } ">
+                                            <input type="text" name="Name" class="form-control" ng-model="Name" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Executive Name">
+                                            <div class="help-block">
+                                                <p ng-show="ExecutiveRoleForm.Name.$error.required && (ExecutiveRoleForm.Name.$dirty || submitted)" class="help-block red">Please enter executive name</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+
+
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_Execid" name="hid_Execid" ng-model="hid_Execid" />
+                                    <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Executive List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Executive Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Executive Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Email &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="Executive in ExecutiveList">
+                                <td>{{Executive.executiveName}}</td>
+                                <td>{{Executive.executivecode}}</td>
+                                <td>{{Executive.Emailid}}</td>
+                                <td><a ng-click="EditExecutiveData(Executive.Id)"><i class="fa fa-edit" title="edit"></i></a></td>
+                                <td>
+                                    <a ng-click="DeleteExecutive(Executive.Id)"><i class="fa fa-trash-o" title="delete Department"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

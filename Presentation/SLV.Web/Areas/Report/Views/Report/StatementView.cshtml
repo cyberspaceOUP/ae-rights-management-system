@@ -1,0 +1,444 @@
+﻿@{
+    ViewBag.Title = "StatementView";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/Report/StatementSearchView.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+
+@*@if (TempData["ContractId"] != null)
+    {
+        @section onInit
+        {
+            angular.element(document.getElementById('angularid')).scope().AuthorStatement(@TempData["ContractId"]);
+        }
+    }*@
+@*@if (TempData["LicenseId"] != null)
+    {
+        @section onInit
+        {
+            angular.element(document.getElementById('angularid')).scope().PublisherStatement(@TempData["LicenseId"]);
+        }
+    }*@
+
+<input type="hidden" value="@TempData["LicenseId"]" ng-model="hid_LicenseId" id="hid_LicenseId" name="hid_LicenseId">
+<input type="hidden" value="@TempData["ContractId"]" ng-model="hid_contractid" id="hid_contractid" name="hid_contractid">
+<input type="hidden" value="@TempData["For"]" ng-model="hid_For" id="hid_For" name="hid_For">
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    <p id="spn_topheadingStatement"><span ng-bind="topheadingStatement"></span></p>
+                    <p id="spn_topheadingStatement1" style="display:none;">OUP Statement</p>
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        
+        <div class=" col-md-12 text-right" id="backToSearch" @*style="display:none;"*@>
+            <div class="tools">
+                <a href="javascript:void(0);" ng-click="func_GoBack();" style="color:none; ">Back To Search</a>
+            </div>
+        </div>
+
+        <div class="col-md-12" id="AuthorPublisherStatement_DetailView">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <p id="spn_headingStatement"><span ng-bind="topheadingStatement"></span> <span ng-bind="headingStatement"></span></p>
+                        <p id="spn_headingStatement1" style="display:none;">OUP Statement <span ng-bind="headingStatement"></span></p>
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="collapse"> </a>
+                    </div>
+                </div>
+
+                <div class="portlet-title" id="header_data" style="display:none;">
+                    <table>
+
+                        <tr ng-if="AuthorPublisherStatement_Detail[0].PublishingCompanyName">
+                            <th>Publishing Company Name: &nbsp;</th>
+                            <td ng-repeat="items in AuthorPublisherStatement_Detail"><span ng-bind="items.PublishingCompanyName"></span><span ng-if="!$last">&nbsp;,&nbsp;&nbsp;</span></td>
+                        </tr>
+                        @*<tr ng-if="AuthorPublisherStatement_Detail[0].PublishingCompanyCode">
+                            <th>Publishing Company Code: &nbsp;</th>
+                            <td><span ng-bind="AuthorPublisherStatement_Detail[0].PublishingCompanyCode"></span></td>
+                        </tr>*@
+
+                        <tr ng-if="AuthorPublisherStatement_Detail[0].AuthorName">
+                            <th>Author Name: &nbsp;</th>
+                            <td ng-repeat="items in AuthorPublisherStatement_Detail"><span ng-bind="items.AuthorName"></span><span ng-if="!$last">&nbsp;,&nbsp;&nbsp;</span></td>
+                        </tr>
+                        <tr>
+                            <th>Author SAP Code: &nbsp;</th>
+                            <td ng-repeat="items in AuthorPublisherStatement_Detail"><span ng-bind="items.AuthorSAPCode"></span><span ng-if="!$last">&nbsp;,&nbsp;&nbsp;</span></td>
+                        </tr>
+
+                        <tr>
+                            <th>Licensee: &nbsp;</th>
+                            <td><span ng-bind="AuthorPublisherStatement_Detail[0].LicenseeName"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Country: &nbsp;</th>
+                            <td><span ng-bind="AuthorPublisherStatement_Detail[0].CountryName"></span></td>
+                        </tr>
+                     </table>
+                </div>
+
+                <div class="portlet-body form">
+                    <div class="form-body">
+
+                        <table class="table table-bordered table-striped table-condensed flip-content" id="Hide_table_ForSinglePrint">
+                            <thead class="head_print">
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th ng-if="RightsStatement_Detail" class="Hide_ForPrint">Rights Sales Code</th>
+                                    <th ng-if="PermissionsOutboundStatement_Detail" class="Hide_ForPrint">Outbound Code</th>
+                                    <th ng-if="AuthorContractValueData">Division Name</th>
+                                    <th class="Show_ForPrint" style="display:none;">Title</th>
+                                    <th class="Hide_ForPrint" ng-if="AuthorContractValueData">ISBN</th>
+                                    <th class="Show_ForPrint" style="display:none;" ng-if="AuthorContractValueData">ISBN</th>
+                                    <th>Subsidiary Rights</th>
+                                    <th class="Show_ForPrint" style="display:none;">Rights Granted to - Licensee</th>
+                                    <th class="Show_ForPrint" style="display:none;" ng-if="IsInvoice">Type of Rights</th>
+                                    <th class="Show_ForPrint" style="display:none;">Language</th>
+
+                                    <th ng-if="IsInvoice">Invoice Number</th>
+                                    <th ng-if="IsInvoice" class="Hide_ForPrint">Invoice Value</th>
+
+                                    <th class="Hide_ForPrint">Payment Mode</th>
+                                    <th class="Hide_ForPrint">Instrument Number</th>
+                                    <th class="Hide_ForPrint">Bank Name</th>
+
+                                    <th>Author Name</th>
+                                    <th>Author SAP Code</th>
+
+                                    <th class="Hide_ForPrint">Percentage</th>
+
+                                    <th class="Hide_ForPrint">Receipt Amount</th>
+                                    <th>Author Amount</th>
+                                    @*<th class="OUPDataValue">OUP Amount</th>*@
+
+                                    <th>Payment Date</th>
+
+                                    <th class="Hide_btn_ForPrint">Print</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="items in AuthorPublisherStatement_Detail">
+                                    <td><span ng-bind="$index + 1"></span></td>
+                                    <td ng-if="RightsStatement_Detail" class="Hide_ForPrint"><span ng-bind="items.RightsSellingCode"></span></td>
+                                    <td ng-if="PermissionsOutboundStatement_Detail" class="Hide_ForPrint"><span ng-bind="items.PermissionsOutboundCode"></span></td>
+                                    <td ng-if="AuthorContractValueData"><span ng-bind="items.DivisionName"></span></td>
+                                    <td class="Show_ForPrint" style="display:none;">
+                                        <span ng-bind="items.WorkingProduct"></span>
+                                        <br />
+                                        <span class="WorkingSubProduct_forPrint" style="font-size:11px;" ng-bind="items.WorkingSubProduct"></span>
+                                    </td>
+                                    <td class="Hide_ForPrint" ng-if="AuthorContractValueData"><span ng-bind="items.ISBN"></span></td>
+                                    <td class="Show_ForPrint" style="display:none;" ng-if="AuthorContractValueData"><span ng-bind="items.ISBN"></span></td>
+                                    <td><span ng-bind="items.SubsidiaryRights"></span></td>
+                                    <td class="Show_ForPrint" style="display:none;"><span ng-bind="items.OrganizationName"></span></td>
+                                    <td class="Show_ForPrint" style="display:none;" ng-if="IsInvoice"><span ng-bind="items.TypeOfRights"></span></td>
+                                    <td class="Show_ForPrint" style="display:none;">
+                                        <span ng-if="items.LanguageName != null" ng-bind="items.LanguageName"></span>
+                                        <span ng-if="items.LanguageName == null" ng-bind="items.LanguageNameOriginal"></span>
+                                    </td>
+
+                                    <td ng-if="IsInvoice"><span ng-bind="items.InvoiceNo"></span></td>
+                                    <td ng-if="IsInvoice" class="Hide_ForPrint"> <i ng-if="!(items.InvoiceValue=='--')" class="fa fa-{{items.InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="items.InvoiceValue"></span></td>
+
+                                    <td class="Hide_ForPrint"><span ng-bind="items.PaymentMode"></span></td>
+                                    <td class="Hide_ForPrint"><span ng-bind="items.ChequeNumber"></span></td>
+                                    <td class="Hide_ForPrint"><span ng-bind="items.BankName"></span></td>
+
+                                    <td><span ng-bind="items.AuthorName"></span></td>
+                                    <td><span ng-bind="items.AuthorSAPCode"></span></td>
+
+                                    <td class="Hide_ForPrint"><span ng-bind="items.Percentage"></span></td>
+
+                                    <td class="Hide_ForPrint">
+                                        <i class="fa fa-{{items.InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="items.Amount"></span>
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-{{items.InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="items.AuthorAmount"></span>
+                                    </td>
+                                    @*<td class="OUPDataValue">
+                                        <i class="fa fa-{{items.InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="items.OupAmount"></span>
+                                    </td>*@
+                                    <td><span ng-bind="items.PaymentDate"></span></td>
+
+                                    <td class="Hide_btn_ForPrint">
+                                        <input type="button" class="btn green body_print"  value="Print">                                     
+                                    </td>                                 
+
+                                </tr>
+
+                                <tr ng-if="!(AuthorContractValueData) && !(IsInvoice)" class="OUPDataValue">
+                                    <td colspan="9" align="right" style="font-weight:bold;">Total Amount</td>
+                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
+                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span></td>
+                                    <td>
+                                    @*<i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
+                                    </td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+
+                                <tr ng-if="(AuthorContractValueData == true && IsInvoice == false)" class="OUPDataValue">
+                                    <td colspan="11" align="right" style="font-weight:bold;">Total Amount</td>
+                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
+                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span></td>
+                                    <td>
+                                    @*<i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
+                                    </td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+
+                                <tr ng-if="(AuthorContractValueData == false && IsInvoice == true)" class="OUPDataValue">
+                                    <td colspan="11" align="right" style="font-weight:bold;">Total Amount</td>
+                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
+                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span></td>
+                                    <td>
+                                        @*<i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
+                                    </td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+
+                                <tr ng-if="(IsInvoice == true && AuthorContractValueData == true )" class="OUPDataValue">
+                                    <td colspan="13" align="right" style="font-weight:bold;">Total Amount</td>
+                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
+                                    <td>
+                                        <i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span>
+                                    </td>
+                                    <td>
+                                    @*<i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
+                                    </td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+                                
+
+
+                                <tr ng-if="!(AuthorContractValueData) && !(IsInvoice)" class="Hide_ForPrint">
+                                    <td colspan="9" align="right" style="font-weight:bold;">Total OUP Amount</td>
+                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+
+                                <tr ng-if="(AuthorContractValueData == true && IsInvoice == false)" class="Hide_ForPrint">
+                                    <td colspan="11" align="right" style="font-weight:bold;">Total OUP Amount</td>
+                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+
+                                <tr ng-if="(AuthorContractValueData == false && IsInvoice == true)" class="Hide_ForPrint">
+                                    <td colspan="11" align="right" style="font-weight:bold;">Total OUP Amount</td>
+                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+
+                                <tr ng-if="(IsInvoice == true && AuthorContractValueData == true )" class="Hide_ForPrint">
+                                    <td colspan="13" align="right" style="font-weight:bold;">Total OUP Amount</td>
+                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+
+                                <!--only for print-->
+                                <tr ng-if="RightsStatement_Detail" style="display:none;" class="Show_ForSinglePrint">
+                                    <td colspan="9" align="right" style="font-weight:bold;">Total OUP Amount</td>
+                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+                                <tr ng-if="PermissionsOutboundStatement_Detail" style="display:none;" class="Show_ForSinglePrint">
+                                    <td colspan="11" align="right" style="font-weight:bold;">Total OUP Amount</td>
+                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
+                                </tr>
+
+                            </tbody>
+                        </table>                        
+
+                        <div id="Show_table_ForSinglePrint">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (Session["PrintPermissions"] != null)
+        {
+            <div class="col-md-12 text-center btnPrint">
+                <div class="tools">
+                    <input type="button" class="btn green" id="btn_printPage" value="OUP Statement Print" style=" margin: .5%; ">
+
+                    <input type="button" class="btn green" id="btn_AuthorprintPage" value="Author Statement Print" style=" margin: .5%; ">
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $('#btn_printPage').on('click', function () {
+
+        $('#spn_topheadingStatement').hide();
+        $('#spn_topheadingStatement1').show(); 
+        $('#spn_headingStatement').hide();
+        $('#spn_headingStatement1').show();
+
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+        $('.btnPrint').hide();
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+        $('#backToSearch').hide();
+        $('.Hide_btn_ForPrint').hide();
+        $('#header_data').show();
+        
+        window.print();
+
+        $('#spn_topheadingStatement').show();
+        $('#spn_topheadingStatement1').hide();
+        $('#spn_headingStatement').show();
+        $('#spn_headingStatement1').hide();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('footer').show();
+        $('.menu').show();
+        $('.top-header').show();
+        $('.btnPrint').show();
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+        $('#backToSearch').show();
+
+        $('.Show_ForPrint').hide(); 
+        $('.Show_ForSinglePrint').hide();
+        $('.Hide_btn_ForPrint').show();
+        $('#header_data').hide();
+
+    });
+
+    $('#btn_AuthorprintPage').on('click', function () {
+
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.OUPDataValue').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+        $('.btnPrint').hide();
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+
+        $('.Hide_ForPrint').hide();
+        $('.Show_ForPrint').show();
+        $('.Show_ForSinglePrint').show();
+        $('.Hide_btn_ForPrint').hide();
+        $('.WorkingSubProduct_forPrint').css('font-size', '9px');
+        $('#backToSearch').hide();
+       
+
+        window.print();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('footer').show();
+        $('.OUPDataValue').show();
+        $('.menu').show();
+        $('.top-header').show();
+        $('.btnPrint').show();
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+
+        $('.Hide_ForPrint').show();
+        $('.Show_ForPrint').hide();
+        $('.Show_ForSinglePrint').hide();
+        $('.Hide_btn_ForPrint').show();
+        $('#backToSearch').show();
+       
+    });
+
+    $(document).on('click', ".body_print", function () {
+
+        var head_data = $('.head_print').html();
+        var body_data = $(this).closest('tr').html()
+        var OUP_share = $('.Show_ForSinglePrint').html()
+
+        var table_data = '<table class="table table-bordered table-striped table-condensed flip-content"><thead>' + head_data + '</thead>'
+                        + '<tbody><tr>' + body_data + '</tr><tr>' + OUP_share + '</tr></tbody></table>';
+
+        $('#Show_table_ForSinglePrint').html(table_data);
+        $('#Show_table_ForSinglePrint').show();
+        $('#Hide_table_ForSinglePrint').hide();
+
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.OUPDataValue').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+        $('.btnPrint').hide();
+        $('#backToSearch').hide();
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+
+        $('.Hide_ForPrint').hide();
+        $('.Show_ForPrint').show();
+        $('.Hide_btn_ForPrint').hide();
+        $('.WorkingSubProduct_forPrint').css('font-size', '9px');
+
+        window.print();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('footer').show();
+        $('.OUPDataValue').show();
+        $('.menu').show();
+        $('.top-header').show();
+        $('.btnPrint').show();
+        $('#backToSearch').show();
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+
+        $('.Hide_ForPrint').show();
+        $('.Show_ForPrint').hide();
+        $('.Hide_btn_ForPrint').show();
+
+        $('#Hide_table_ForSinglePrint').show();
+        $('#Show_table_ForSinglePrint').hide();
+
+    });
+
+</script>

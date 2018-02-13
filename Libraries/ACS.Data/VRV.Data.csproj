@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DA4A16D3-4523-42C2-9348-976850E85233}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ACS.Data</RootNamespace>
+    <AssemblyName>ACS.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACSDbContext.cs" />
+    <Compile Include="ACSObjectContext.cs" />
+    <Compile Include="EfDataProviderManager.cs" />
+    <Compile Include="EfRepository.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IDBContext.cs" />
+    <Compile Include="Initializers\CreateTablesIfNotExist.cs" />
+    <Compile Include="Mapping\Alert\AlertSchedulerMasterMap.cs" />
+    <Compile Include="Mapping\Alert\ApplicationEmailSetupMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorAmendmentDocumentMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorContractAddendumRoyalityMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorContractAddendumDetailsMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AddendumFileUploadMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorAgreementMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorContractContributorMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorContractauthordetailsMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorContractHistoryMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorContractmaterialdetailsMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorContractOriginalMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorContractRoyaltyMap.cs" />
+    <Compile Include="Mapping\AuthorContract\AuthorContractSubsidiaryRightsMap.cs" />
+    <Compile Include="Mapping\AuthorContract\ProductLicenceAuthorContractLinkMap.cs" />
+    <Compile Include="Mapping\Configuration\ApplicationActivitiesMap.cs" />
+    <Compile Include="Mapping\Configuration\SettingMap.cs" />
+    <Compile Include="Mapping\Configuration\UserProfileMap.cs" />
+    <Compile Include="Mapping\Localization\LanguageMap.cs" />
+    <Compile Include="Mapping\Localization\LocaleStringResourceMap.cs" />
+    <Compile Include="Mapping\Localization\LocalizedPropertyMap.cs" />
+    <Compile Include="Mapping\Logging\LogMap.cs" />
+    <Compile Include="Mapping\Master\ApplicationSetUpMap.cs" />
+    <Compile Include="Mapping\Master\AssetSubTypeMap.cs" />
+    <Compile Include="Mapping\Master\AuthorDepartmentMap.cs" />
+    <Compile Include="Mapping\Master\AuthorDocumentMap.cs" />
+    <Compile Include="Mapping\Master\AuthorMasterMap.cs" />
+    <Compile Include="Mapping\Master\AuthorSearchHistoryMap.cs" />
+    <Compile Include="Mapping\Master\AuthorTypeMap.cs" />
+    <Compile Include="Mapping\Master\ContractMasterMap.cs" />
+    <Compile Include="Mapping\Master\FrequencyAlertMasterMap.cs" />
+    <Compile Include="Mapping\Master\ContractTypeMap.cs" />
+    <Compile Include="Mapping\Master\CopyRightHolderMasterMap.cs" />
+    <Compile Include="Mapping\Master\CurrencyMasterMap.cs" />
+    <Compile Include="Mapping\Master\DepartmentMasterMap.cs" />
+    <Compile Include="Mapping\Master\DivisionMasterMap.cs" />
+    <Compile Include="Mapping\Master\ExecutiveDivisionLinkMap.cs" />
+    <Compile Include="Mapping\Master\ExecutiveLoginHistoryMap.cs" />
+    <Compile Include="Mapping\Master\ExecutiveMasterMap.cs" />
+    <Compile Include="Mapping\Master\ExecutiveReportingMap.cs" />
+    <Compile Include="Mapping\Master\ExecutiveRoleMasterMap.cs" />
+    <Compile Include="Mapping\Master\GeographicalMasterMap.cs" />
+    <Compile Include="Mapping\Master\ImprintMasterMap.cs" />
+    <Compile Include="Mapping\Master\ISBNBagMap.cs" />
+    <Compile Include="Mapping\Master\FrequencyMasterMap.cs" />
+    <Compile Include="Mapping\Master\LanguageMasterMap.cs" />
+    <Compile Include="Mapping\Master\LicenseeMasterMap.cs" />
+    <Compile Include="Mapping\Master\LoginHistoryMap.cs" />
+    <Compile Include="Mapping\Master\ManuscriptDeliveryFormatMasterMap.cs" />
+    <Compile Include="Mapping\Master\NomineeAuthorDocumentMasterMap.cs" />
+    <Compile Include="Mapping\Master\PageAccessMasterMap.cs" />
+    <Compile Include="Mapping\Master\PaymentPeriodMap.cs" />
+    <Compile Include="Mapping\Master\ProductCategoryMasterMap.cs" />
+    <Compile Include="Mapping\Master\ProductTypeMasterMap.cs" />
+    <Compile Include="Mapping\Master\ProfileMasterMap.cs" />
+    <Compile Include="Mapping\Master\PubCenterMasterMap.cs" />
+    <Compile Include="Mapping\Master\PublishingCompanyMasterMap.cs" />
+    <Compile Include="Mapping\Master\SAPAgreementMap.cs" />
+    <Compile Include="Mapping\Master\SeriesMasterMap.cs" />
+    <Compile Include="Mapping\Master\ServiceMasterMap.cs" />
+    <Compile Include="Mapping\Master\StatusMasterMap.cs" />
+    <Compile Include="Mapping\Master\SubServiceMasterMap.cs" />
+    <Compile Include="Mapping\Master\SubsidiaryRightsMasterMap.cs" />
+    <Compile Include="Mapping\Master\SupplyMaterialMasterMap.cs" />
+    <Compile Include="Mapping\Master\TerritoryRightsMasterMap.cs" />
+    <Compile Include="Mapping\Master\TickerMap.cs" />
+    <Compile Include="Mapping\Master\TypeOfRightsMasterMap.cs" />
+    <Compile Include="Mapping\Master\UploadDocumentMap.cs" />
+    <Compile Include="Mapping\Master\Upload_ISBN_BackMap.cs" />
+    <Compile Include="Mapping\Messages\EmailAccountMap.cs" />
+    <Compile Include="Mapping\Messages\MessageBoardMap.cs" />
+    <Compile Include="Mapping\Messages\MessageTemplateMap.cs" />
+    <Compile Include="Mapping\Messages\QueuedEmailMap.cs" />
+    <Compile Include="Mapping\Messages\QueuedSmsMap.cs" />
+    <Compile Include="Mapping\Messages\SmsAccountMap.cs" />
+    <Compile Include="Mapping\Messages\SmsTemplateMap.cs" />
+    <Compile Include="Mapping\Messages\SmsUrlTemplateMap.cs" />
+    <Compile Include="Mapping\OtherContract\OtherContractDivisionLinkMap.cs" />
+    <Compile Include="Mapping\OtherContract\OtherContractDocumentsMap.cs" />
+    <Compile Include="Mapping\OtherContract\OtherContractImageBankMap.cs" />
+    <Compile Include="Mapping\OtherContract\OtherContractLinkDocumentMap.cs" />
+    <Compile Include="Mapping\OtherContract\OtherContractLinkMap.cs" />
+    <Compile Include="Mapping\OtherContract\OtherContractMap.cs" />
+    <Compile Include="Mapping\OtherContract\OtherContractSearchMap.cs" />
+    <Compile Include="Mapping\PermissionInbound\PermissionInboundMap.cs" />
+    <Compile Include="Mapping\PermissionsOutbound\PermissionsOutboundDocumentMap.cs" />
+    <Compile Include="Mapping\PermissionsOutbound\PermissionsOutboundLanguageMasterMap.cs" />
+    <Compile Include="Mapping\PermissionsOutbound\PermissionsOutboundMap.cs" />
+    <Compile Include="Mapping\PermissionsOutbound\PermissionsOutboundPaymentTaggingMap.cs" />
+    <Compile Include="Mapping\PermissionsOutbound\PermissionsOutboundSearchHistoryMap.cs" />
+    <Compile Include="Mapping\PermissionsOutbound\PermissionsOutboundTypeOfRightsMap.cs" />
+    <Compile Include="Mapping\PermissionsOutbound\PermissionsOutboundUpdateMap.cs" />
+    <Compile Include="Mapping\Product\AddendumDetailsMap.cs" />
+    <Compile Include="Mapping\Product\AddendumFileDetailsMap.cs" />
+    <Compile Include="Mapping\Product\AddendumRoyaltySlabMap.cs" />
+    <Compile Include="Mapping\Product\ImpressionDetailsMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mapping\Product\KITISBNMap.cs" />
+    <Compile Include="Mapping\Product\ProductLicenseAddendumLinkMap.cs" />
+    <Compile Include="Mapping\Product\ProductLicenseFileDetailsMap.cs" />
+    <Compile Include="Mapping\Product\ProductLicenseHistoryMap.cs" />
+    <Compile Include="Mapping\Product\ProductLicenseMap.cs" />
+    <Compile Include="Mapping\Product\ProductLicenseRoyalityMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mapping\Product\ProductLicenseSubsidiaryRightsMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mapping\Product\ProductLicenseUpdateDetailsMap.cs" />
+    <Compile Include="Mapping\Product\ProprietorAuthorLinkMap.cs" />
+    <Compile Include="Mapping\Product\ProductAuthorLinkMap.cs" />
+    <Compile Include="Mapping\Product\ProductMasterMap.cs" />
+    <Compile Include="Mapping\Product\ProductPreviousProductLinkMap.cs" />
+    <Compile Include="Mapping\Product\ProprietorMasterMap.cs" />
+    <Compile Include="Mapping\Product\SearchHistoryMapcs.cs" />
+    <Compile Include="Mapping\RightsSelling\ProductCategoryRightMasterMap.cs" />
+    <Compile Include="Mapping\RightsSelling\RightsSellingDocumentMap.cs" />
+    <Compile Include="Mapping\RightsSelling\RightsSellingHistoryMap.cs" />
+    <Compile Include="Mapping\RightsSelling\RightsSellingLanguageMasterMap.cs" />
+    <Compile Include="Mapping\RightsSelling\RightsSellingPaymentTaggingMap.cs" />
+    <Compile Include="Mapping\RightsSelling\RightsSellingMap.cs" />
+    <Compile Include="Mapping\RightsSelling\RightsSellingRoyaltyMap.cs" />
+    <Compile Include="Mapping\RightsSelling\RightsSellingUpdateMap.cs" />
+    <Compile Include="Mapping\Security\PremissionRecordMap.cs" />
+    <Compile Include="Mapping\Tasks\ScheduleTaskMap.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServerDataProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ACS.Core\VRV.Core.csproj">
+      <Project>{f1369bf6-dbcc-426a-8ea1-99dbdd1c1dfb}</Project>
+      <Name>VRV.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

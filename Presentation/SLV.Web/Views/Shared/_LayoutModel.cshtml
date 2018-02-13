@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>Metronic | Form Stuff - Form Layouts</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/Content/plugin/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/plugin/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/plugin/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/plugin/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="~/Content/plugin/select2.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/plugin/dataTables.scroller.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/plugin/dataTables.colReorder.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/plugin/dataTables.bootstrap.css" />
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="~/Content/plugin/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="~/Content/plugin/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/plugin/layout.css" rel="stylesheet" type="text/css" />
+    <link id="style_color" href="~/Content/plugin/darkblue.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/plugin/custom.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+
+    @*<script src="~/Scripts/DynamicControls.js"></script>*@
+
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/angular/angular-message.js"></script>
+
+    <script src="~/Scripts/angular-validator.js"></script>
+    <script src="~/Scripts/angular-validator.min.js"></script>
+
+    <script src="~/Scripts/select2.js"></script>
+
+    <!-- BEGIN DATE LEVEL STYLES -->
+    <link href="~/Content/plugin/daterangepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/plugin/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/plugin/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/plugin/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/plugin/clockface.css" rel="stylesheet" type="text/css">
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN DATE LEVEL PLUGINS -->
+    <script src="~/Content/script/daterangepicker.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/bootstrap-timepicker.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/clockface.js" type="text/javascript"></script>
+    <script src="~/Content/script/app.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/components-date-time-pickers.min.js" type="text/javascript"></script>
+    <!-- END DATE LEVEL PLUGINS -->
+    @* <link href="~/Content/select2.css" rel="stylesheet" />*@
+
+    <script type="text/javascript" language="javascript">
+        var app = angular
+          .module('app', ['ngMessages']);
+        app.controller('MainCtrl', MainCtrl);
+
+        function MainCtrl() {
+
+        }
+
+
+
+
+
+        app.directive('focus',
+function ($timeout) {
+    return {
+        scope: {
+            trigger: '@@focus'
+        },
+        link: function (scope, element) {
+            scope.$watch('trigger', function (value) {
+                if (value === "true") {
+                    $timeout(function () {
+                        element[0].focus();
+                    });
+                }
+            });
+        }
+    };
+}
+);
+    </script>
+
+    <script src="~/Scripts/service.js"></script>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
+<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
+<!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle -->
+<!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar -->
+<!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
+<!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
+<!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
+<body class="box page-content-white" id="angularid" ng-controller="MainCtrl as main" ng-app="app">
+    <div class="clearfix">
+    </div>
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN CONTENT -->
+
+            @RenderBody()
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <!--[if lt IE 9]>
+            <script src="~/Content/plugin/respond.min.js"></script>
+    <script src="~/Content/plugin/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="~/Content/script/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/jquery-migrate.min.js" type="text/javascript"></script>
+    <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <script src="~/Content/script/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="~/Content/script/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script type="text/javascript" src="~/Content/script/select2.min.js"></script>
+    <script type="text/javascript" src="~/Content/script/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Content/script/dataTables.tableTools.min.js"></script>
+    <script type="text/javascript" src="~/Content/script/dataTables.colReorder.min.js"></script>
+    <script type="text/javascript" src="~/Content/script/dataTables.scroller.min.js"></script>
+    <script type="text/javascript" src="~/Content/script/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="~/Content/script/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="~/Content/script/bootstrap-timepicker.min.js"></script>
+    <script type="text/javascript" src="~/Content/script/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/Content/script/metronic.js" type="text/javascript"></script>
+    <script src="~/Content/script/layout.js" type="text/javascript"></script>
+    @*<script src="~/Content/script/quick-sidebar.js" type="text/javascript"></script>*@
+    <script src="~/Content/script/table-advanced.js"></script>
+    <script src="~/Content/script/table-managed.js"></script>
+    <script src="~/Content/script/components-pickers.js"></script>
+
+    @RenderSection("pageScript", required: false)
+
+    @*<script src="~/Content/script/demo.js" type="text/javascript"></script>
+        <script src="~/Content/script/form-samples.js"></script>*@
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+        jQuery(document).ready(function () {
+            // initiate layout and plugins
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            //QuickSidebar.init(); // init quick sidebar
+            //         Demo.init(); // init demo features
+            //       FormSamples.init();
+            TableAdvanced.init();
+            TableManaged.init();
+            ComponentsPickers.init();
+
+            @RenderSection("onInit", required: false)
+
+        });
+    </script>
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

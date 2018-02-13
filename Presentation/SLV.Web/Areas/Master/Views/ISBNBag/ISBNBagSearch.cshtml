@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "ISBNBag";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/Scripts/angular/angular.js"></script>
+<script src="~/Scripts/angular/angular-message.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+
+<script src="~/js/master/Master.ISBNSearch.js"></script>
+<link href="~/Content/app.css" rel="stylesheet" />
+<script type="text/javascript">
+   
+</script>
+<script src="~/Scripts/service.js" type="text/javascript">
+   
+
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().SerachISBN();
+
+}
+    </script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                   ISBN List
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        @*<form name="Serch" class="form-horizontal" id="search">*@
+            <div class="container-fluid">
+                <div class="row">
+
+
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    ISBN List
+
+                                </div>
+
+                                <div class="tools">
+
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body flip-scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th>Product Type &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Status &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th>Product Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="ISBN in ISbnList">
+                                                <td>{{ISBN.ISBN}}</td>
+
+                                                <td>{{ISBN.typename}}</td>
+
+
+
+
+                                                <td>{{ISBN.Status}}</td>
+
+                                                <td>{{ISBN.ProductCode}}</td>
+
+                                                <td>{{ISBN.FinalProductName}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        @*</form>*@
+
+
+        <div class="clearfix"></div>
+        <div class="col-md-12" id="div_btnExcel">
+            <div class="form-group text-center">
+                <form name="userForm" class=" form-horizontal" ng-show="ISbnList.length != 0" ng-submit="ISbnListExcel()">
+                    <button type="submit" class="btn green" id="btnSubmit">Generate Excel</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+

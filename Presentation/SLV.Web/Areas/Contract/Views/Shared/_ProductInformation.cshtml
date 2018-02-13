@@ -1,0 +1,184 @@
+﻿<script src="~/js/Contract/datetimepicker_css.js"></script>
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @*Product Information*@
+            Detailed Specifications and Delivery
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body clearfix">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Subject Matter & Treatment<span class="red">*</span> </label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SubjectMatters.$dirty) && userForm.SubjectMatters.$invalid } ">
+                            <textarea name="SubjectMatters" maxlength="5000" class="form-control" ng-model="SubjectMatters" placeholder="Enter Subject Matter & Treatment (Enter max 5000 characters only)" required></textarea>
+                            <div class="help-block">
+                                <p ng-show="userForm.SubjectMatters.$error.required && (userForm.SubjectMatters.$dirty || submitted)">Please enter Subject Matter & Treatment </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Min. number of words</label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <input type="text" maxlength="7" max="9999999" min="0" class="form-control" ng-change="RemoveValidationOfMinMax()" ng-model="MinWords" placeholder="Enter min. number of words" name="MinWord" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Max. number of words</label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.MaxWord.$dirty) && userForm.MaxWord.$invalid } ">
+                            <input type="text" maxlength="7" max="9999999" min="{{MinWords + 1}}" class="form-control" ng-change="RemoveValidationOfMinMax()" ng-model="MaxWords"
+                                   placeholder="Enter max. number of words" name="MaxWord" />
+                            <div class="help-block">
+                                <p ng-show="userForm.MaxWord.$error.min && (userForm.MaxWord.$dirty || submitted)" class="help-block red"> Max. number of word must be greater than Min. Number of Words</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Material to be Supplied by Author</label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <select class="form-control" name="SupplyMaterial"
+                                    ng-options="obj as obj.SupplyMaterial for obj in SupplyMaterialList track by obj.Id"
+                                    ng-change="GetValue(SelectedSupplyMaterialByAuthor)" id="SupplyMaterial" multiple ng-model="SelectedSupplyMaterialByAuthor"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-repeat="div in SupplyMaterialByAuthor">
+                    <label class="control-label col-md-5">Date of Submission of {{div.SupplyMaterial}}<span class="red">*</span></label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SupplyMaterialByAuthordate.$dirty) && userForm.SupplyMaterialByAuthordate.$invalid } ">
+                            @*<div class="input-group input-append date abc datePicker">*@
+                            <div class="input-group input-append">
+                                @*<input type="date" pattern="\d{1,2}/\d{1,2}/\d{4}" class="form-control datetext" ng-model="MaterialDate[$index]" onchange="RemoveValidation(this)" name="SupplyMaterialByAuthordate" id="SupplyMaterialByAuthordate_{{div.Id}}" required />*@
+                                @*<input tye="text" class="form-control" ng-model="MaterialDate[$index]" onchange="javascript: NewCssCal('demo2', 'ddMMyyyy');RemoveValidation(this)" name="SupplyMaterialByAuthordate" id="SupplyMaterialByAuthordate_{{div.Id}}" required />*@
+                                <input type="text" class="form-control" ng-model="MaterialDate[$index]" onclick="javascript: NewCssCal(this, 'ddMMyyyy');" onchange="    RemoveValidation(this)" name="SupplyMaterialByAuthordate" id="SupplyMaterialByAuthordate_{{div.Id}}" required />
+                                <span class="input-group-addon add-on" id="SupplyMaterialByAuthordate_Calender_{{div.Id}}" onclick="javascript: NewCssCal(this, 'ddMMyyyy')"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                            <div class="help-block">
+                                <p ng-show="userForm.SupplyMaterialByAuthordate.$error.required && (userForm.SupplyMaterialByAuthordate.$dirty || submitted)">Please enter {{div.SupplyMaterial}} date</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Min. number of pages</label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <input type="text" min="0" max="9999999" maxlength="7" class="form-control" ng-change="RemoveValidationOfMinMax()" ng-model="MinNoOfPages" placeholder="Enter min. number of pages" name="MinNoOfPages" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Max. number of pages</label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.MaxNoOfPages.$dirty) && userForm.MaxNoOfPages.$invalid } ">
+                            <input type="text" max="9999999" min="{{MinPages+1}}" maxlength="7" class="form-control" ng-change="RemoveValidationOfMinMax()" ng-model="MaxPages" placeholder="Enter max. number of pages" name="MaxNoOfPages" />
+                            <div class="help-block">
+                                <p ng-show="userForm.MaxNoOfPages.$error.min && (userForm.MaxNoOfPages.$dirty || submitted)" class="help-block red">Max no of Pages must be greater than Min no of Pages</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
+                @if ((ViewBag.SeriesIds=="" || ViewBag.SeriesIds==null) && (ViewBag.SeriesCode=="" || ViewBag.SeriesCode==null))
+                { 
+
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Currency</label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Currency.$dirty) && userForm.Currency.$invalid } ">
+                            <select class="form-control" name="Currency" ng-model="CurrencyValue">
+                                <option value="">--Please Select--</option>
+                                <option ng-repeat="Currency in CurrencyList" ng-model="CurrencyValue" ng-selected="CurrencyValue == Currency.Id" value="{{Currency.Id}}">{{Currency.CurrencyName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Price</label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <input type="number" min="0" class="form-control" ng-model="ProductPrice" name="ProductPrice" placeholder="Enter price" />
+                        </div>
+                        <div class="help-block">
+                            <p ng-show="userForm.ProductPrice.$error.required && (userForm.ProductPrice.$dirty || submitted)" class="help-block red">Please enter valid price</p>
+                        </div>
+                    </div>
+                </div>
+
+                }
+
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Medium of Delivery</label>
+                    <div class="col-md-7">
+                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.MediumofDelivery.$dirty) && userForm.MediumofDelivery.$invalid } ">
+                            <label class="radio-inline">
+                                <input type="radio" name="MediumofDelivery" ng-model="MediumofDelivery" value="Hard Copy"> Hard Copy
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="MediumofDelivery" ng-model="MediumofDelivery" value="Soft Copy"> Soft Copy
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="MediumofDelivery" ng-model="MediumofDelivery" value="Both"> Both
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Manuscript Delivery Format</label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            @*<select multiple class="form-control"  ng-model="MenuScriptDeliveryFormat" >
+                                    <option value="">--Please Select--</option>
+                                    <option ng-repeat="Fr in _DeliveryFormat" ng-selected="MenuScriptDeliveryFormat" value="{{Fr.Id}}">{{Fr.DeliveryFormat}}</option>
+
+                                </select>*@
+
+                            <div class="form-group">
+                                <select class="form-control" id="MenuScriptDeliveryFormat" name="MenuScriptDeliveryFormat"
+                                        ng-options="obj as obj.DeliveryFormat for obj in _DeliveryFormat track by obj.Id"
+                                        ng-change="getMenuScript(MenuScriptDeliveryFormat)" multiple ng-model="MenuScriptDeliveryFormat"></select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Delivery Schedule</label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="deliverySchedule"  ng-model="deliverySchedule" placeholder="Enter Delivery Schedule" 
+                                   name="deliverySchedule" maxlength="50">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label col-md-5">Remarks</label>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <textarea name="ProductRemarks" class="form-control" ng-model="ProductRemarks" placeholder="Enter product information remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

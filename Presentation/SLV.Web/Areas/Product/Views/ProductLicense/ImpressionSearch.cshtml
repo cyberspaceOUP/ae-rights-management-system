@@ -1,0 +1,300 @@
+﻿
+@{
+    ViewBag.Title = "ImpressionSearch";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/Product/ImpressionSearch.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" id="headedDiv">
+            <div class="main-title">
+                <h1>
+                    Impression Search
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <form name="userForm" class=" form-horizontal" ng-show="ShowSearchForm" novalidate ng-submit="submitForm(ImpressionSearch)" id="Product_search" ng-cloak>
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Details Search
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class=" form-body ">
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        @*<div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Product License Code</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductLicesneCode.$dirty) && userForm.ProductLicesneCode.$invalid } ">
+                                                        <input type="text" name="ProductLicesneCode" class="form-control" ng-model="ImpressionSearch.ProductLicesneCode" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Product Licesne Code">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ProductLicesneCode.$error.pattern" class="help-block red">Please enter valid Product Licesne Code</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">License Addendum Code</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.LicenseAddendumCode.$dirty) && userForm.LicenseAddendumCode.$invalid } ">
+                                                        <input type="text" name="LicenseAddendumCode" class="form-control" ng-model="ImpressionSearch.LicenseAddendumCode" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Licesne Addendum Code">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.LicenseAddendumCode.$error.pattern" class="help-block red">Please enter valid Licesne Addendum Code</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Product Code</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductCode.$dirty) && userForm.ProductCode.$invalid } ">
+                                                        <input type="text" name="ProductCode" class="form-control" ng-model="ImpressionSearch.ProductCode" maxlength="10"
+                                                               ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Product Code">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ProductCode.$error.pattern" class="help-block red">Please enter valid Product Code</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Final Title</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.FinalTitle.$dirty) && userForm.FinalTitle.$invalid } ">
+                                                        <input type="text" name="FinalTitle" class="form-control" ng-model="ImpressionSearch.FinalTitle" maxlength="100" 
+                                                               ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Final Title">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.FinalTitle.$error.pattern" class="help-block red">Please enter valid Final Title</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">ISBN</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.OUPISBN.$dirty) && userForm.OUPISBN.$invalid } ">
+                                                        <input type="text" name="OUPISBN" class="form-control" ng-model="ImpressionSearch.OUPISBN" maxlength="13" 
+                                                               ng-pattern="/^[0-9]{13}$/" placeholder="ISBN">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.OUPISBN.$error.pattern" class="help-block red">Please enter valid ISBN</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">Product Category <span class="red">*</span></label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.ProductCategory.$dirty) && userForm.ProductCategory.$invalid } ">
+                                                        <select class="form-control" name="ProductCategory" ng-model="ImpressionSearch.ProductCategory" required>
+                                                            <option value="">Please Select</option>
+                                                            <option value="OR">Original</option>
+                                                            <option value="NO">Non-Original</option>
+                                                        </select>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.ProductCategory.$error.required && (userForm.ProductCategory.$dirty || submitted)">Please select Product Category</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div>
+</div>
+<form name="Serch" class="form-horizontal" id="search" ng-hide="ShowSearchForm">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tools">
+                    <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                </div>
+            </div>
+            <div class="col-md-12" ng-show="ImpressionNOList.length != 0">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            List of Other Categories of Product Having valid License Or Addendum
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <div class="row">
+                            <div class="col-md-12">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Product License Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Addendum Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Final Product &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Product Category&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Expiry Date&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="obj in ImpressionNOList" class="tooltipclass">
+
+                                    <td><span ng-bind="$index + 1"></span></td>
+                                    <td>
+                                        <a href="~/Product/ProductMaster/ProductDetailsView?Id={{obj.ProductId}}&For=View" target="_blank" style="color: #ee5941;" class="hide_for_print">
+                                            <span ng-bind="obj.ProductCode"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="~/Product/ProductLicense/view?Id={{obj.LicenseId}}" target="_blank" style="color: #ee5941;" class="hide_for_print">
+                                            <span ng-bind="obj.ProductLicenseCode"></span>
+                                        </a>
+                                    </td>
+                                    <td><span ng-bind="obj.AddendumCode"></span></td>
+                                    <td><span ng-bind="obj.OUPISBN"></span></td>
+                                    <td><span ng-bind="obj.FinalProductName"></span></td>
+                                    <td><span ng-bind="obj.ProductCategoryName"></span></td>
+                                    <td><span class="sortDateHide" ng-bind="obj.ExpiryDateForSort"></span>{{obj.ExpiryDate}}</td>
+                                    <td>
+                                        <div class="tooltip-container">
+                                            <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                            <label for="tooltip-toggle" @*ng-click="DisplayDiv($index+1)"*@ onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                Action
+                                            </label>
+                                            <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                            <div class="tooltip-content">
+                                                <div class="linking">
+                                                    <ul>
+                                                        <li><a href="~/Product/ProductLicense/ImpressionEntry?ProductId={{obj.ProductId}}&LicenseId={{obj.LicenseId}}">Impression Entry</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" ng-show="ImpressionORList.length != 0">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            List of Original Product having Valid Assignment Contracts
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <div class="row">
+                            <div class="col-md-12">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Author Contract Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Final Product&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="obj in ImpressionORList" class="tooltipclass">
+
+                                    <td><span ng-bind="$index + 1"></span></td>
+                                    <td>
+                                        <a href="~/Product/ProductMaster/ProductDetailsView?Id={{obj.ProductId}}&For=View" target="_blank" style="color: #ee5941;" class="hide_for_print">
+                                            <span ng-bind="obj.ProductCode"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="~/Contract/AuthorContract/view?Id={{obj.AuthorContractId}}&For=View" target="_blank" style="color: #ee5941;" class="hide_for_print">
+                                            <span ng-bind="obj.AuthorContractCode"></span>
+                                        </a>
+                                    </td>
+                                    <td><span ng-bind="obj.OUPISBN"></span></td>
+                                    <td><span ng-bind="obj.FinalProductName"></span></td>
+                                    <td>
+                                        <div class="tooltip-container">
+                                            <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                            <label for="tooltip-toggle" @*ng-click="DisplayDiv($index+1)"*@ onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                Action
+                                            </label>
+                                            <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                            <div class="tooltip-content">
+                                                <div class="linking">
+                                                    <ul>
+                                                        <li><a href="~/Product/ProductLicense/ImpressionEntry?ProductId={{obj.ProductId}}&ContractId={{obj.AuthorContractId}}">Impression Entry</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    function fireMe(obj) {
+        var length = $(".customizeLink").length;
+        for (i = 0; i < $(".customizeLink").length; i++) {
+            $($(".customizeLink")[i]).attr("sequence", i);
+        }
+        angular.element(document.getElementById('angularid')).scope().DisplayDiv(parseInt($(obj).attr("sequence")) + 1);
+    };
+
+</script>
+

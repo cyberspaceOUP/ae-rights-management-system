@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "EscalationMatrix";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/master/Master.EscalationMatrix.js"></script>
+<script src="~/js/common/TopSearch.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Escalation Matrix
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <form name="Serch" class="form-horizontal seriesSelect" ng-cloak>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Escalation Matrix
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+
+
+                            <div class="portlet-body flip-scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="">
+
+                                    <table id="tbl_ISBNtable" datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th> SNo. </th>
+                                                <th> Executive &nbsp;<span class="glyphicon glyphicon-sort"></span> </th>
+                                                <th> Code &nbsp;<span class="glyphicon glyphicon-sort"></span> </th>
+                                                <th> Email &nbsp;<span class="glyphicon glyphicon-sort"></span> </th>
+                                                <th> Phone &nbsp;<span class="glyphicon glyphicon-sort"></span> </th>
+                                                <th> Department  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th> Role  &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th> Reporting To  &nbsp;<span class="glyphicon glyphicon-sort"></span> </th>
+                                                <th> Reporting From &nbsp;<span class="glyphicon glyphicon-sort"></span> </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="items in EscalationMatrixListDetailsList">
+                                                <td><span ng-bind="$index+1"></span></td>
+
+                                                <td>
+                                                    <span ng-bind="items.executiveName"></span>
+                                                </td>
+
+                                                <td>
+                                                    <span ng-bind="items.executivecode"></span>
+                                                </td>
+
+                                                <td class="table-color">
+                                                    <a href="mailto:{{items.Emailid}}"><span ng-bind="items.Emailid"></span></a>
+                                                </td>
+
+                                                <td>
+                                                    <span ng-bind="items.Phoneno"></span>
+                                                </td>
+
+                                                <td>
+                                                    <span ng-bind="items.DepartmentName"></span>
+                                                </td>
+
+                                                <td>
+                                                    <span ng-bind="items.RoleName"></span>
+                                                </td>
+
+                                                <td class="table-color" title="{{items.ReportingToEmailId}}">
+                                                    <a href="mailto:{{items.ReportingToEmailId}}">
+                                                        <span ng-bind="items.ReportingTo"></span>
+                                                    </a>
+                                                    @*<span ng-if="items.ReportingToExecutivecode">
+                                                        (&nbsp;<span style="font-size:11px;" ng-bind="items.ReportingToExecutivecode"></span>&nbsp;)
+                                                    </span>*@
+                                                    <br />
+                                                    <span ng-if="items.ReportingToEmailId">
+                                                        (&nbsp;<span style="font-size:11px;" ng-bind="(items.ReportingToPhoneno)"></span>&nbsp;)
+                                                    </span>
+                                                </td>
+                                                
+
+                                                <td>
+                                                    @*<span ng-bind="items.ReportingFrom"></span>*@
+                                                    <p ng-repeat="obj in items.ReportingFrom.split(',')" title="{{obj.split('#')[1]}}">
+                                                        <a style="color: #F45C44;" href="mailto:{{obj.split('#')[1]}}">
+                                                            <span ng-bind="obj.split('#')[0]"></span>
+                                                        </a>
+                                                        @*<span ng-if="obj.split('#')[3]">
+                                                            (&nbsp;<span style="font-size:11px;" ng-bind="obj.split('#')[3]"></span>&nbsp;)
+                                                        </span>*@
+                                                        <br />
+                                                        <span ng-if="obj.split('#')[2]">
+                                                            (&nbsp;<span style="font-size:11px;" ng-bind="obj.split('#')[2]"></span>&nbsp;)
+                                                        </span>
+                                                        <br />
+                                                        <br />
+                                                    </p>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+

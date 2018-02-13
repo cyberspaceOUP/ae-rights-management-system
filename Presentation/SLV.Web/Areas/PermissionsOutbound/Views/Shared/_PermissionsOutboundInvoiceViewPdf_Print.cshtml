@@ -1,0 +1,144 @@
+﻿
+        <style>
+            table#InvoiceDetails {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+                border: 1px solid #ddd;
+            }
+
+            table#Invoice {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+                border: 1px solid #fff;
+            }
+
+                table#Invoice th, table#Invoice td {
+                    border: 1px solid #fff;
+                    text-align: left;
+                    padding: 8px;
+                }
+
+                table#InvoiceDetails th, table#InvoiceDetails td {
+                    border: 1px solid #ddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+        </style>
+
+<div class="modal-header">
+    <h4 class="modal-title">Permissions Outbound Invoice</h4>
+</div>
+
+        <div class="container-fluid" style="margin-left:2%;margin-top:2%; width:100%;">
+            <div class="row">
+
+                <div class="col-md-10" style="margin-top:2%">
+                    <table id="Invoice">
+                        <tr>
+                            <td valign="top">
+                                <table style="line-height:11px;">
+                                    <tr>
+                                        <td>
+                                            <label class="control-label"><span ng-bind="LicenseeView"></span></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="control-label"><span ng-bind="AddressView"></span></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="control-label"> <span ng-bind="CityView"></span> - <span ng-bind="PincodeView"></span></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="control-label"><span ng-bind="StateView"></span> (<span ng-bind="CountryView"></span>)</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="control-label"><u>Kind Attention:</u> <span ng-bind="ContactPersonView"></span></label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td valign="top">
+                                <table style="line-height:11px;">
+                                    <tr>
+                                        <td style=" text-align: right;"><label class="control-label col-md-5">Invoice Number :</label></td>
+                                        <td style=" text-align: right;"><label class="control-label"><span ng-bind="InvoiceNoView"></span></label></td>
+                                    </tr>
+                                    <tr>
+                                        <td style=" text-align: right;"><label class="control-label col-md-5">Date :</label></td>
+                                        <td style=" text-align: right;"><label class="control-label"><span ng-bind="DateInvoiceView"></span></label></td>
+                                    </tr>
+                                    <tr>
+                                        <td style=" text-align: right;"><label class="control-label col-md-5">Invoice Value :</label></td>
+                                        <td style=" text-align: right;"><label class="control-label"><i class="fa fa-{{InvoiceCurrencySymbolView}}" aria-hidden="true"></i>&nbsp;<span ng-bind="InvoiceValueView"></span></label></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="col-md-10" style="text-align:center">
+                    <h4><b>Inovice</b></h4>
+                </div>
+
+                <div class="col-md-10" style="margin-top:2%">
+                    <table id="InvoiceDetails">
+                        <tr>
+                            <th style=" text-align: right;width:10%;">S No.</th>
+                            <th style="width: 70%;">Description</th>
+                            <th style=" text-align: right; width: 20%;">
+                                Amount&nbsp;<span ng-show="InvoiceCurrencySymbolView">( <i class="fa fa-{{InvoiceCurrencySymbolView}}" aria-hidden="true"></i> )</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style=" text-align: right;">1</td>
+                            <td>
+                                <span ng-bind="WorkingProductView"></span>
+                                <br />
+                                <span ng-bind="AuthorNameView"></span>
+                                <br />
+                                <br /> 
+                                <span ng-bind="InvoiceDescriptionView"></span>
+                            </td>
+                            <td style=" text-align: right;"><i class="fa fa-{{InvoiceCurrencySymbolView}}" aria-hidden="true"></i>&nbsp;<span ng-bind="InvoiceValueView"></span></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style=" text-align: right;">Total</td>
+                            <td style=" text-align: right;"><i class="fa fa-{{InvoiceCurrencySymbolView}}" aria-hidden="true"></i>&nbsp;<span ng-bind="InvoiceValueView"></span></td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div class="col-md-10" style="margin-top:10%">
+                    <div class=" row">
+                        <div class="col-md-6">
+                            <div class="col-md-12">
+                                <div class=" row">
+                                    <label class="control-label">(Authorized Signatory)</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class=" row">
+                                    <label class="control-label"></label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

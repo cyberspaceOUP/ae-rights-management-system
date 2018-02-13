@@ -1,0 +1,105 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<footer>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12"><p class="copyright">Copyright © Oxford University Press @DateTime.Now.Year All Rights Reserved.</p></div>
+            <div class="col-md-6 col-sm-6 col-xs-12 ">
+                <p class="designedby"><img src="~/Content/images/footer-logo.jpg" alt="" /></p>
+                <p class="designedby">
+                    Designed & Developed by <a href="http://www.vrvirtual.com/" target="_blank"> VRVirtual.com Pvt. Ltd</a>.
+                </p>
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+</footer>
+<script type="text/javascript">
+    setTimeout(function () { $(document).ready(function () { $(".dropZone").css("min-height", "175px") }) }, 2000)
+   
+    //history.pushState(null, null, document.URL);
+    //window.addEventListener('popstate', function () {
+    //    history.pushState(null, null, document.URL);
+    //    alert("Browser back is disabled for this application");
+    //});
+
+</script>
+
+
+<script type="text/javascript">
+
+    $('#btn_printDataTable').on('click', function () {
+
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+
+        $('table').hide();
+        $("#DataTables_Table_0_info").hide();
+        $("#DataTables_Table_0_paginate").hide();
+        $("#DataTables_Table_0_length").hide();
+        $("#DataTables_Table_0_filter").hide();
+        $(".glyphicon-sort").hide();
+
+        $(".PrintTableData").css("display", "block");
+        $('#TblForPrint').show();
+
+        $('.btnPrint').hide();
+        $('.backtoSearch').hide();
+
+
+
+        window.print();
+
+
+
+
+        $('.top-header').show();
+        $('.menu').show();
+        $('footer').show();
+        $('.main-title').find('small').show();
+        $('body').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('table').removeAttr("style");
+
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+
+        $('table').show();
+        $("#DataTables_Table_0_info").show();
+        $("#DataTables_Table_0_paginate").show();
+        $("#DataTables_Table_0_length").show();
+        $("#DataTables_Table_0_filter").show();
+        $(".glyphicon-sort").show();
+
+        $(".PrintTableData").css("display", "none");
+        $('#TblForPrint').hide();
+
+        $('.btnPrint').show();
+        $('.backtoSearch').show();
+    });
+
+    </script>
+

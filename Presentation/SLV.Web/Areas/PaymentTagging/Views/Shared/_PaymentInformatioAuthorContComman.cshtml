@@ -1,0 +1,105 @@
+﻿
+<style>
+    .table > tbody > tr > td {
+        padding: 4px !important;
+    }
+    .block-radio {
+        float: left;
+        width: auto;
+        margin-left: 3em;
+    }
+</style>
+
+<table class="table table-striped table-bordered table-hover dataTable no-footer SeriesDetail" id="TblOwnerList">
+    <thead class="flip-content">
+        <tr>
+            <th width="2%"></th>
+            <th width="30%">Author Name</th>
+            <th width="20%">Author SAP Code </th>
+            <th width="20%">Author Percentage</th>
+            <th width="25%">Author Amount </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="obj in MainArray[$index]" id="fulltr_{{index}}">
+            <input type="hidden" name="hid_AuthorId_{{obj.sln}}" id="hid_AuthorId_{{obj.sln}}" ng-model="hid_AuthorId[obj.sln]" value="{{obj.AuthorId}}">
+            <td>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12" style="padding-right:0px !important;">
+                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorContract_{{obj.sln}}.$dirty) && userForm.AuthorContract_{{obj.sln}}.$invalid }">
+                               
+                                <input type="checkbox" id="chk_Contractld_{{obj.sln}}" onchange="angular.element(document.getElementById('angularid')).scope().FillPaymentinfoByAuthor(this);" name="AuthorContract_{{obj.sln}}" ng-model="authorcontract[obj.sln]" value="{{obj.authorcontractid}}" />
+
+                                <div class="help-block">
+                                    <p ng-show="userForm.AuthorContract_{{obj.sln}}.$error.required && (userForm.AuthorContract_{{obj.sln}}.$dirty || submitted)" class="help-block red">Please enter Author Contract</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="control-label  form-group">
+                                <span ng-bind="obj.AuthorName"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="control-label  form-group">
+                                <span ng-bind="obj.AuthorSAPCode"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            
+            
+            <td>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="control-label  form-group">
+                                <span id="AuthorPercentage_{{obj.sln}}"></span>
+                                <input type="hidden" name="hid_Author_Percentage{{obj.sln}}" id="hid_Author_Percentage_{{obj.sln}}" ng-model="hid_Author_Percentage[obj.sln]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.AuthorAmount_{{obj.sln}}.$dirty) && userForm.AuthorAmount_.$invalid } ">
+                                <input type="number" name="AuthorAmount_{{obj.sln}}" id="AuthorAmount_{{obj.sln}}" ng-disabled="true" class="form-control Percentage" ng-model="AuthorAmount[obj.sln]" placeholder="Percentage">
+                                <div class="help-block">
+                                    <p ng-show="userForm.AuthorAmount_{{obj.sln}}.$error.required && (userForm.AuthorAmount_{{obj.sln}}.$dirty || submitted)" class="help-block red">Please enter Percentage</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+   
+            
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+

@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "PaymentTaggingList";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/PaymentTagging/PaymentTaggingSearch.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/common/TopSearch.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getPaymentTaggingList();
+}
+
+<input type="hidden" value="@TempData["For"]" ng-model="hid_For" id="hid_For" name="hid_For">
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Payment Information List
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+
+        <form name="Serch" class="form-horizontal seriesSelect" ng-cloak>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    Payment Information
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+
+
+                            <div class="portlet-body flip-scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="">
+
+                                    <table id="tbl_ISBNtable" datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th>SNo.</th>
+
+                                                <th ng-if="'@TempData["For"]'=='rights'">Rights Selling Code&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th ng-if="'@TempData["For"]'=='permissionoutbound'">Permissions Outbound Code&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th>Contract Code&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>License Code&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Author Name&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Publishing Company Name&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Entry Date&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th ng-if="'@ViewBag.Department'=='sa'">Action</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="items in PaymentTaggingListData">
+                                                <td>
+                                                    <span ng-bind="$index+1"></span>
+                                                </td>
+
+                                                <td ng-if="'@TempData["For"]'=='rights'">
+                                                    <span ng-bind="items.RightsSellingCode"></span>
+                                                </td>
+                                                <td ng-if="'@TempData["For"]'=='permissionoutbound'">
+                                                    <span ng-bind="items.PermissionsOutboundCode"></span>
+                                                </td>
+
+                                                <td>
+                                                    <span ng-bind="items.AuthorContractCode"></span>
+                                                </td>
+                                                <td>
+                                                    <span ng-bind="items.ProductLicensecode"></span>
+                                                </td>
+                                                <td>
+                                                    <span ng-bind="items.AuthorName"></span>
+                                                </td>
+                                                <td>
+                                                    <span ng-bind="items.CompanyName"></span>
+                                                </td>
+                                                <td>
+                                                    <span style="display:none;" ng-bind="items.EntryDateForSort"></span>{{items.EntryDate}}
+                                                </td>
+
+                                                <td ng-if="'@ViewBag.Department'=='sa'">
+                                                    <a ng-click="DeletePaymentTaggingDetails(items.PaymentTaggingId)" style="color:black!important;cursor:pointer;"><i class="fa fa-trash-o" title="Delete"></i></a>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,35 @@
+﻿
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            @T("Dashboard.ISBNNotEntered")
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <div ng-hide="!Product_ISBN_Not_enteredList.length">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th> Product Code </th>
+                        <th> Working Product </th>
+                        <th> Author </th>
+                        <th> Publishing Date </th>
+                    </tr>
+
+                    <tr ng-repeat="Product in Product_ISBN_Not_enteredList">
+                        <td class="table-color"><a href="javascript:void(0);" ng-click="ISBNNotEnterdByProductCode_submitForm(Product.ProductCode);" data="{{Product.ProductCode}}">   <span ng-bind="(Product.ProductCode)"></span>   </a></td>
+                        <td> <span ng-bind="(Product.WorkingProduct)"></span> <span style="font-size:11px;">  <br /><span ng-bind="(Product.WorkingSubProduct)"></span> </span></td>
+                        <td><span ng-bind="(Product.AuthorName)"></span> </td>
+                        <td><span ng-bind="(Product.ProjectedPublishingDate)"></span>  </td>
+                    </tr>
+                </table>
+                <a href="javascript:void(0);" ng-click="ISBNNotEnterd_submitForm();" class="moreDash">View More</a>
+            </div>
+            <div ng-hide="Product_ISBN_Not_enteredList.length">No result found</div>
+        </div>
+    </div>
+</div>
+

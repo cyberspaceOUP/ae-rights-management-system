@@ -1,0 +1,451 @@
+﻿@{
+    ViewBag.Title = "RightsSellingView";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/RightsSelling/RightsSellingView.js"></script>
+@*<script src="~/js/RightsSelling/RightsSellingUpdate.js"></script>*@
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+<script src="~/js/common/TopSearch.js"></script>
+@section onInit
+{
+    @*angular.element(document.getElementById('angularid')).scope().getLicenseeList();
+        angular.element(document.getElementById('angularid')).scope().getAllProductCategoryList();*@
+
+    angular.element(document.getElementById('angularid')).scope().GetAuthorContractDetails();
+
+}
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Right Sales View
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+
+
+        <form name="userForm" class=" form-horizontal" ng-submit="RightSalesUpdateForm()" novalidate ng-cloak>
+
+            @if (Session["PrintPermissions"] != null)
+            {
+                <div class="col-md-12 text-right btnPrint">
+                    <div class="tools">
+                        <input type="button" class="btn green" id="btn_printPage" value="Print">
+                    </div>
+                </div>
+            }
+            <div class="col-md-12">&nbsp;</div>
+            <div class="col-md-12 backToList">
+                <div class="tools">
+                    <span class="back-to-search" ng-click="BackToList()"> Back To List </span>
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div>  
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body" ng-show="Req_ContractDeatil">
+                        @Html.Partial("~/Areas/Contract/Views/Shared/_ContractDeatil.cshtml")
+                    </div>
+                    <div class="form-body" ng-show="Req_ProductLicense">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicense.cshtml")
+                    </div>
+                </div>
+            </div>
+
+            @Html.Partial("~/Areas/RightsSelling/Views/Shared/_RightsSellingDetails.cshtml")
+
+           
+
+            <div class="col-md-12" ng-if="RightLanguageList.length">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Language Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body clearfix">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <table class="table table-striped table-bordered table-hover dataTable no-footer SeriesDetail" id="TblOwnerList">
+                                    <thead class="flip-content">
+                                        <tr>
+                                            <th>S.No.</th>
+                                            <th>Language</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="M in RightLanguageList">
+                                            <td><span ng-bind="$index +1"></span></td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><span ng-bind="M.LanguageName"></span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 AuthorBoxAddendum" ng-show="RoyaltyslabList.length">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Royalty Slab
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form RoyaltyTab">
+                        <div class="form-body">
+                            @Html.Partial("~/Areas/RightsSelling/Views/Shared/_RoyaltySlabView.cshtml")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" ng-hide="ContractStatus_View =='--' || ContractStatus_View ==null">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Right Sales Update Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Status</label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <span ng-bind="ContractStatus_View == 'Pending'? 'Issued' : (ContractStatus_View == 'Issued'?'Received':ContractStatus_View)"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Signed Contract sent date</label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <span ng-bind="SignedContractSentDate_View"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Agreement Date</label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <span ng-bind="DateofAgreement_View"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Effective date</label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <span ng-bind="Effectivedate_View"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        @*<div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Period (in month)</label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group" ng-if="Contractperiodinmonth_View !=null && Contractperiodinmonth_View !=''">
+                                                        <span ng-bind="Contractperiodinmonth_View"></span>
+                                                    </div>
+
+                                                    <div class="form-group" ng-if="Contractperiodinmonth_View ==null || Contractperiodinmonth_View ==''">
+                                                        --
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>*@
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Expiry Date</label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <span ng-bind="ExpiryDate_View"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Signed Contract received date</label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <span ng-bind="SignedContractReceivedDate_View"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"><span ng-bind="ContractStatus_View =='Draft' ? 'Draft Date' : 'Cancellation Date'"></span></label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <span ng-bind="CancellationDate_View"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6"><span ng-bind="ContractStatus_View =='Draft' ? 'Draft Remarks' : 'Cancellation Reason'"></span></label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <span ng-bind="CancellationReason_View"></span>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Remarks</label>
+                                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                                    <div class="form-group" ng-show="Remarks_View !=null && Remarks_View !=''">
+                                                        <span ng-bind="Remarks_View"></span>
+                                                    </div>
+
+                                                    <div class="form-group" ng-show="Remarks_View ==null || Remarks_View ==''">
+                                                        --
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12" id="Uploadfiles">
+                                            <div class="clearfix"></div>
+                                            <div id="doclistid" ng-show="documentshow" style=" padding-left: 29px;">
+                                                <div>
+
+                                                    @*<div ng-if="DocumentList.length" style="margin-top:20px">
+                                                        <h3 class="panel-title">Uploaded Attachments</h3>
+                                                    </div>*@
+                                                    <div class="panel-body" ng-if="DocumentList.length>0">
+
+                                                        <table class="table table-striped table-hover ">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Document Name</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="url in DocumentList">
+                                                                    <td><span ng-bind="$index + 1"></span> <input type="hidden" name="DocId" value="{{url.Id}}" /></td>
+                                                                    <td>
+                                                                        <a href="~/uploads/{{url.DocumentFile}}" target="_blank" style="color: black;" class="hide_for_print"><span ng-bind="url.Documentname"></span></a>
+                                                                        <a style="color: black; display:none;" class="show_for_print">{{url.Documentname}}</a>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <input type="hidden" value="@TempData["id"]" ng-model="hid_AuthorContract" id="hid_AuthorContract" name="hid_AuthorContract">
+                            <input type="hidden" ng-model="hid_LicenceCode" id="hid_LicenceCode" name="hid_LicenceCode">
+                            <input type="hidden" value="@TempData["type"]" ng-model="hid_Type" id="hid_Type" name="hid_Type">
+                            <input type="hidden" value="@TempData["ProductId"]" ng-model="hid_ProductId" id="hid_ProductId" name="hid_ProductId">
+                            <input type="hidden" value="@TempData["RightsSellingId"]" ng-model="hid_RightsSellingId" id="hid_RightsSellingId" name="hid_RightsSellingId">
+                            <input type="hidden" value="@Session["UserDepartment"]" ng-model="hid_User" id="hid_User" name="hid_User">
+                            <input type="hidden" value="@TempData["For"]" ng-model="hid_for" id="hid_for" name="hid_for">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var date = new Date();
+        var TodayDate = new Date();
+        date.setDate(date.getYear - 100);
+
+        $('.datetimepicker')
+            .datepicker({
+                format: "dd/mm/yyyy",
+
+                showButtonPanel: true,
+                autoclose: true,
+                startDate: date,
+                endDate: TodayDate
+
+
+
+            })
+
+
+
+    });
+    $(function () {
+        renderFileUpload();
+
+    });
+
+    function renderFileUpload() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            contentType: 'application/html; charset=utf-8',
+            url: GlobalredirectPath + "/Master/Master/MultipleFileUpload",
+            data: {},
+            datatype: 'html',
+            success: function (result) {
+                $("#fileuploadcontrol").html(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    $('#btn_printPage').on('click', function () {
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.backToList').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+
+        $('.btnPrint').hide();
+        $('.caption').css('font-size', '13px');
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('th,strong').css('font-weight', 'normal').css('font-size', '11px');
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+
+        window.print();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('.backToList').show();
+        $('footer').show();
+        $('.menu').show();
+        $('.top-header').show();
+
+        $('.btnPrint').show();
+        $('.caption').removeAttr("style");
+        $('.portlet').addClass('green').removeAttr("style");
+        $('th,strong').removeAttr("style");
+
+        $('.hide_for_print').hide();
+        $('.show_for_print').show();
+    });
+
+</script>

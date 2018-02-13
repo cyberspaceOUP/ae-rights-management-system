@@ -1,0 +1,169 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "CityMaster";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<style type="text/css">
+    .fa {
+        color: black !important;
+    }
+
+    th {
+        text-align: left !important;
+    }
+
+    td {
+        text-align: left !important;
+    }
+</style>
+
+<script src="~/js/master/Master.City.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+
+
+@section onInit
+{
+
+    angular.element(document.getElementById('angularid')).scope().GetCountryList();
+    angular.element(document.getElementById('angularid')).scope().GetCountryStateCityList();
+
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    City Master
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        City Master
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+
+                    <form name="cityForm" class=" form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section"></h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">Country Name <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||cityForm.country.$dirty) && cityForm.country.$invalid } ">
+                                            <select class="form-control" name="country" ng-model="country" ng-change="GetSelectedState()" required>
+                                                <option value=""> Please Select</option>
+                                                <option ng-repeat="Country in CountryList" ng-model="country" value="{{Country.Id}}">{{Country.geogName}}</option>
+                                            </select>
+                                            <div class="help-block">
+                                                <p ng-show="cityForm.country.$error.required && (cityForm.country.$dirty || submitted)">Please Select Country</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">State Name <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': (submitted ||cityForm.state.$dirty) && cityForm.state.$invalid } ">
+                                            <select class="form-control" name="state" ng-model="state"  required>   @*ng-disabled="!country"*@
+                                                <option value="">Please Select</option>
+                                                <option ng-repeat="State in StateList" ng-model="state" value="{{State.Id}}" ng-selected="{{state}}">{{State.geogName}}</option>
+                                            </select>
+                                            <div class="help-block">
+                                                <p ng-show="cityForm.state.$error.required && (cityForm.state.$dirty || submitted)">Please Select State</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5"> City Name <span class="red">*</span></label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error' : cityForm.name.$invalid && (cityForm.name.$dirty || submitted)}">
+                                            <input type="text" name="name" class="form-control" ng-model="name" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="City Name">
+                                            <div class="help-block">
+                                                <p ng-show="cityForm.name.$error.required && (cityForm.name.$dirty || submitted)" class="help-block">Please Enter City Name</p>
+                                                <p ng-show="cityForm.name.$error.pattern  && (cityForm.name.$dirty || submitted)"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_recordid" name="hid_recordid" ng-model="hid_recordid" />
+                                    <button type="submit" class="btn green" id="btnSubmit" name="btnSubmit" ng-model="btnSubmit">Submit</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        City List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Country&nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                <th>State&nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                <th>City&nbsp;<span class="glyphicon glyphicon-sort"></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="City in CountryStateCityList">
+                                <td>{{City.CountryName}}</td>
+                                <td>{{City.StateName}}</td>
+                                <td>{{City.CityName}}</td>
+                                <td><a ng-click="EditCityData(City.Id)"><i class="fa fa-edit" title="Edit City"></i></a></td>
+                                <td>
+                                    @*<a ng-click="DeleteCityData(City.Id)"><i class="fa fa-trash-o" title="Delete City"></i></a>*@
+
+                                    <a ng-click="DeleteCityData(City.Id)" ng-if="City.Flag =='0'"><i class="fa fa-trash-o" title="Delete City"></i></a>
+
+                                    <a ng-if="City.Flag =='1'"><i class="glyphicon glyphicon-ban-circle" style="color:black!important;" title="Linked With Other Process"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

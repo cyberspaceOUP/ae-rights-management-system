@@ -1,0 +1,480 @@
+﻿<!--  Licensee Details View-->
+<div class="col-md-12">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Licensee Details
+            </div>
+            <div class="tools">
+                <a href="javascript:void(0);" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class=" row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Licensee</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Licensee"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Contact Person</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ContactPerson"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Telephone number</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Mobile"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Email</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Email"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">URL</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="URL"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Address</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Address"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Country</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Country"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="OtherCountry">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Specify Country</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="CountryName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">State</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="State"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="OtherState">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Specify Country</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="StateName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">City</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="City"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="OtherCity">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Specify City</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="CityName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">PIN Code</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="pincode"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Right Sales Details View-->
+<div class="col-md-12">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                Right Sales Details
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class=" row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Rights Selling Code</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="RightsSellingCodeView"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Request Date</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="RequestDate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">First Publication Date</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="FirstPublicationDate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="false">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Date</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ContractDate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="false">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract period (In months)</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Contractperiod"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="false">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">First Impression within Date</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="FirstImpressionwithindate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="false">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Expiry Date</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ExpiryDate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="false">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Contract Effective Date</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ContractEffectiveDate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Product Category</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="ProductCategory"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Will the material be translated</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Willbematerialbetranslated"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row" ng-show="false">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Language</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Language"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Print Quantity Type</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="PrintQuantityType"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Print Run Quantity</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="PrintRunQuantity"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Number of Impression</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="NumberofImpression"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Proprietor Copies </label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="AdvancePayment"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Currency</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        @*<span ng-bind="Currency"></span>*@
+                                        <span ng-bind="CurrencySymbol"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Payment Term</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="PaymentTerm"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Payment Amount</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="PaymentAmount"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Territory</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="TerritoryRight"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Advance Royalty Amount</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="AdvanceRoyaltyAmount"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Royalty Type</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="RoyaltyType"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Royalty Recurring </label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="RoyaltyRecurring"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Recurring From Period</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="RecurringFromPeriod"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Recurring To Period</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="RecurringToPeriod"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Frequency</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Frequency"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-md-5 col-xs-6 col-sm-6">Remarks</label>
+                                <div class="control-label col-md-7 col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span ng-bind="Remarks_Details"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

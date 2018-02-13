@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+@*<script src="~/js/master/Master.DepartmentMaster.js"></script>*@
+<script src="~/js/master/common.master.js"></script>
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().GetDepartmentList();
+}
+<h3 class="text-muted"@*>@T("Form.CityMaster.Heading")*@</h3>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Home
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                       
+                        Home
+                    </div>
+                </div>
+
+                <div class="portlet-body form">
+
+                    <form name="userForm" class=" form-horizontal" novalidate ng-submit="submitForm()">
+                        <div class=" form-body ">
+                            <h3 class="form-section">@*@T("Form.CityMaster.Subsubheading")*@</h3>
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-5">@*@T("Common.City.Label")*@ Department Name</label>
+                                    <div class="col-md-7">
+                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.name.$dirty) && userForm.name.$invalid } ">
+                                            <input type="text" name="name" class="form-control" ng-model="name" required ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Department Name">
+                                            <div class="help-block">
+                                                <p ng-show="userForm.name.$error.required && (userForm.name.$dirty || submitted)">@*@T("Common.CityName.Required")*@</p>
+                                                <p ng-show="userForm.name.$error.pattern  && (userForm.name.$dirty || submitted)">@*@T("Common.CityName.Invalid.Required")*@</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    </div>

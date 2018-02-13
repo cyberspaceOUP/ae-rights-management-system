@@ -1,0 +1,91 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "ProductListing";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/app.css" rel="stylesheet" />
+<form name="Serch" class="form-horizontal" id="search" ng-cloak>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-title">
+                    <h1>
+                        Product Listing
+                        @Html.Partial("pagedate")
+                    </h1>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="tools">
+                    <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                 </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Product Listing
+                       </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <div class="row">
+                            <div class="col-md-12">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                    <th>SAP Agreement No &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Project Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                    <th>WorkingTitle &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                    <th>Author(s)</th>
+                                    <th>Product Category</th>
+                                    <th>Product Type</th>
+                                    <th>Sub-Product Type</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="obj in ProductList">
+                                    <td>{{$index + 1}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</form>
+

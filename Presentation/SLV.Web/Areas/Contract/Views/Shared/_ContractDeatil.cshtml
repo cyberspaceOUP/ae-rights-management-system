@@ -1,0 +1,42 @@
+﻿<script src="~/js/Contract/AuthorContractDetails.js"></script>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Contract Details
+        </div>
+        <div class="tools">
+            <a href="javascript:void(0);" class="collapse"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Contract Code </th>
+                    <th> Contract Date </th>
+                    <th> Contract Entry Date</th>
+                    <th> Contract Expiry Date </th>
+                    <th> Territory </th>
+                    <th>Contract Requested by</th>
+                    @*<th> Remarks </th>*@
+                </tr>
+
+                <tr ng-repeat="Author in AuthorDetails">
+                    <td >
+                        <a href="~/Contract/AuthorContract/view?Id={{Author.AuthorContractId}}" target="_blank" style="color: #ee5941;" class="hide_for_print"><span ng-bind="Author.authorcontractcode"></span></a>
+                      
+                    
+                    </td>
+                    <td><span ng-bind="Author.ContractDate"></span></td>
+                    <td><span ng-bind="Author.ContractEntryDate"></span></td>
+                    <td><span ng-bind="Author.ContractExpiryDate"></span></td>
+                    <td><span ng-bind="Author.territoryrights"></span></td>
+                    <td><span ng-bind="Author.executiveName"></span></td>
+                    <input type="hidden" id="hid_typeFor" value="C" />
+                    <input type="hidden" id="hid_TypeId" value="{{Author.AuthorContractId}}">
+                    @*<td>{{Author.productremarks}}</td>*@ 
+                </tr>
+        </table>
+    </div>
+</div>
+</div>

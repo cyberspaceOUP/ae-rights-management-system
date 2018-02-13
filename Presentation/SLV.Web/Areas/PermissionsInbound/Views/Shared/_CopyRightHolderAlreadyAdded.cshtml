@@ -1,0 +1,36 @@
+﻿
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Third Party Assets already added
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                   
+                    <th> Copyright Holder Code </th>
+                    <th> Copyright Holder Name </th>
+                    <th> Contact Person</th>
+                    <th> Mobile</th>
+                    <th> Email</th>
+                </tr>
+                <tr ng-repeat="div in _cpyhlderlst">
+                    <td>
+                        <a href="javascript:void(0);" style="color: #ee5941;" class="ng-binding"> {{div.CopyRightHolderCode}} </a>
+                    </td>
+                    <td> {{div.CopyRightHolderName}} </td>
+                    <td> {{div.ContactPerson}}</td>
+                    <td>  {{div.Mobile}} </td>
+                    <td> {{div.Email}}</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>

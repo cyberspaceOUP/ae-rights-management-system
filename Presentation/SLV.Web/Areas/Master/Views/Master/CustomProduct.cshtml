@@ -1,0 +1,124 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "CustomProduct";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<style type="text/css">
+    .fa {
+        color: black !important;
+    }
+
+    th {
+        text-align: left !important;
+    }
+
+    td {
+        text-align: left !important;
+    }
+</style>
+
+
+@section onInit
+{
+
+    angular.element(document.getElementById('angularid')).scope().GetCustomProductList();
+        angular.element(document.getElementById('angularid')).scope().ProductSerach();
+    @*angular.element(document.getElementById('angularid')).scope().GetExecutiveList();*@
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Custom Product
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+        
+        <div class="col-md-12">
+            @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+        </div>
+
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Custom Product
+                    </div>
+                </div>
+
+
+                <div class="portlet-body form">
+                    <form name="userForm" class="form-horizontal" novalidate ng-submit="submitForm()" ng-cloak>
+                      @Html.Partial("~/Areas/Product/Views/Shared/_ProprietorDetails.cshtml")
+                        <div class="form-actions">
+
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="hidden" id="hid_Custd" name="hid_Custd" ng-model="hid_Custd" />
+                                    <input type="hidden" id="hid_ProductId" name="hid_ProductId" ng-model="hid_ProductId" />
+                                    <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Custom Product List
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body flip-scroll">
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-bordered table-striped">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Product &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Edition &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>CopyrightYear &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="Custom in CustomProductList">
+                                    <td>{{Custom.ProprietorISBN}}</td>
+                                    <td>{{Custom.ProprietorProduct}}</td>
+                                    <td>{{Custom.ProprietorEdition}}</td>
+                                    <td>{{Custom.ProprietorCopyrightYear}}</td>
+                                    <td><a ng-click="EditCustomData(Custom.Id)"><i class="fa fa-edit" title="edit"></i></a></td>
+                                    <td>
+                                        <a ng-click="DeleteCustom(Custom.Id)"><i class="fa fa-trash-o" title="delete Department"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/Product/ProductEntry.js"></script>
+<script src="~/js/master/Master.CustomProduct.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>

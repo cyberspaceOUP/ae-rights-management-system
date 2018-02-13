@@ -1,0 +1,248 @@
+﻿@{
+    ViewBag.Title = "PermissionsOutbound";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/PermissionsOutbound/PermissionsOutboundPaymentTagging.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+@section onInit
+{
+    @*angular.element(document.getElementById('angularid')).scope().GetAuthorName();*@
+     angular.element(document.getElementById('angularid')).scope().GetPaymentTaggingSubSidiaryRights();
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Permissions Outbound Payment Information <span ng-bind="Title"></span>
+                     @Html.Partial("pagedate")</h1>
+            </div>
+        </div>
+  
+        <form name="userForm" class=" form-horizontal" ng-submit="PaymentTaggingEntryForm()" novalidate>
+
+            <div class="col-md-12">
+                <div class="tools">
+                    <span class="back-to-search" ng-click="BackToList()"> Back To List </span>
+                </div>
+            </div>
+
+            <div class="col-md-12" ng-if="PermissionsOutboundList.length">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductDetails.cshtml")
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div>   
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body" ng-show="Req_ContractDeatil">
+
+                        @Html.Partial("~/Areas/Contract/Views/Shared/_ContractDeatil.cshtml")
+                    </div>
+                    <div class="form-body" ng-show="Req_ProductLicense">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicense.cshtml")
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/PermissionsOutbound/Views/Shared/_PermissionsOutboundDetail.cshtml")
+                 
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+
+                        @Html.Partial("~/Areas/PaymentTagging/Views/Shared/_PaymentTaggingCommanDetails.cshtml")
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Payment Information
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    @*<div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5"><strong>Author Name  &nbsp; : </strong> </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{AuthorNameList}}</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @Html.Partial("~/Areas/PaymentTagging/Views/Shared/_PaymentTaggingEntryLayout.cshtml")*@
+
+                    @if (TempData["AuthorId"] == null && TempData["AuthorContractId"] == null)
+                    {
+                        <div class="portlet-body form MainDivAuthorList" ng-repeat="div in MainArray">
+                            @*<div class="form-body">
+                                <div class=" row">
+                                    <div class="col-md-6">
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5"><strong>Publishing Company &nbsp; : </strong> </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="MainArray[$index][0].PublishingCompanyName"></span></label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5"><strong>Author SAP Code  &nbsp; : </strong> </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="MainArray[$index][0].AuthorSAPCode"></span></label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>*@
+                            @*@Html.Partial("~/Areas/PaymentTagging/Views/Shared/_PaymentTaggingEntryLayoutForProductLicense.cshtml")*@
+                            @Html.Partial("~/Areas/PaymentTagging/Views/Shared/_PaymentInformatioProductLicComman.cshtml")
+
+
+                        </div>
+                    }
+
+
+                    @if (TempData["PublishingCompanyId"] == null && TempData["ProductLicenseId"] == null)
+                    {
+                        <div class="portlet-body form MainDivAuthorList" ng-repeat="div in MainArray">
+                            @*<div class="form-body">
+                                <div class=" row">
+                                    <div class="col-md-6">
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5"><strong>Author Name  &nbsp; : </strong> </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="MainArray[$index][0].AuthorName"></span></label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class=" row">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5"><strong>Author SAP Code  &nbsp; : </strong> </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><span ng-bind="MainArray[$index][0].AuthorSAPCode"></span></label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>*@
+                            @*@Html.Partial("~/Areas/PaymentTagging/Views/Shared/_PaymentTaggingEntryLayout.cshtml")*@
+                            @Html.Partial("~/Areas/PaymentTagging/Views/Shared/_PaymentInformatioAuthorContComman.cshtml")
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <input type="hidden" value="@TempData["ProuductId"]" id="hid_ProductId" name="hid_ProductId" />
+                            <input type="hidden" value="@TempData["AuthorId"]" ng-model="hid_AuthorId" id="hid_AuthorId" name="hid_AuthorId">
+                            <input type="hidden" value="@TempData["AuthorContractId"]" ng-model="hid_AuthorContractId" id="hid_AuthorContractId" name="hid_AuthorContractId">
+                            <input type="hidden" value="@TempData["PublishingCompanyId"]" ng-model="hid_PublishingCompanyId" id="hid_PublishingCompanyId" name="hid_PublishingCompanyId">
+                            <input type="hidden" value="@TempData["ProductLicenseId"]" ng ng-model="hid_ProductLicenseId" id="hid_ProductLicenseId" name="hid_ProductLicenseId">
+
+                            <input type="hidden" value="@TempData["OutboundId"]" ng-model="hid_OutboundId" id="hid_OutboundId" name="hid_OutboundId">
+
+                            <input type="hidden" value="" ng-model="Invoice_Amount_INR" id="Invoice_Amount_INR" name="Invoice_Amount_INR">
+
+                            <input type="hidden" value="@Session["UserDepartment"]" ng-model="hid_User" id="hid_User" name="hid_User">
+                            <button type="submit" class="btn green" id="btnSubmit" ng-show="MainArray.length">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        $('.ChequeDate')
+            .datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+            })
+    });
+</script>*@

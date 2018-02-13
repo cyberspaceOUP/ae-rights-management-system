@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>SLV.Resident</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/DynamicControls.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/angular/angular-message.js"></script>
+
+    <script src="~/Scripts/angular-validator.js"></script>
+    <script src="~/Scripts/angular-validator.min.js"></script>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/ui-bootstrap-csp.css" rel="stylesheet" />
+
+    @* Required for select2 Implementation*@
+    @*Start*@
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/select2.js"></script>
+    <link href="~/Content/select2.css" rel="stylesheet" />
+    @*End*@
+
+    <script type="text/javascript" language="javascript">
+        var app = angular
+          .module('app', ['ngMessages']);
+        app.controller('MainCtrl', MainCtrl);
+
+        function MainCtrl() {
+
+        }
+
+
+        app.directive('focus',
+function ($timeout) {
+    return {
+        scope: {
+            trigger: '@@focus'
+        },
+        link: function (scope, element) {
+            scope.$watch('trigger', function (value) {
+                if (value === "true") {
+                    $timeout(function () {
+                        element[0].focus();
+                    });
+                }
+            });
+        }
+    };
+}
+);
+
+    </script>
+
+    <script src="~/Scripts/service.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row masthead">
+            <h2>SLV Application</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><p>Menu will come here</p></div>
+            <div class="col-md-8">
+                <div class="row" ng-app="app" ng-controller="MainCtrl as main">
+                    @RenderBody()
+                </div>
+            </div>
+            <div class="col-md-2"><p>Advertisement Area</p></div>
+        </div>
+        <!-- Site footer -->
+        <footer class="footer">
+            <p>Footer will come here</p>
+            <p>© @DateTime.Now.Year SLV, Inc.</p>
+        </footer>
+    </div>
+</body>
+</html>

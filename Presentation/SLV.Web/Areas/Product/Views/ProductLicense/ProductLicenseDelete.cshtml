@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "ProductLicenseDelete";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+@{
+    ViewBag.Title = "ProductLicenseView";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/Product/ProductLicenseDelete.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+<script src="~/js/common/TopSearch.js"></script>
+
+
+<h3 class="text-muted">@*@T("Form.CityMaster.Heading")*@</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Product License Delete
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class="col-md-12 text-right" ng-if="'@TempData["BackToserach"]' == 'BackToserach'">
+            <div class="tools">
+                <a href="~/Product/ProductLicense/ProductLicenseSearch?For=BackToserach" style="color:black;">Back To List</a>
+            </div>
+        </div>
+
+        <form name="userForm" class=" form-horizontal" ng-submit="productLicenseEntryForm(ProductModel)" novalidate>
+            @Html.Partial("~/Areas/Product/Views/Shared/_ProductLicenseView.cshtml")
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Other License Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Deactivation Date <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.DeactivateDate.$dirty) && userForm.DeactivateDate.$invalid } ">
+                                                    <div class="input-group input-append date ContractDate">
+                                                        <input type="text" name="DeactivateDate" onchange="angular.element(document.getElementById('angularid')).scope().SetDeactivateDate(this);" class="form-control" ng-model="ProductModel.DeactivateDate" placeholder="Deactivation Date" required>
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.DeactivateDate.$error.required && (userForm.DeactivateDate.$dirty || submitted)" class="help-block red">Please enter Deactivation Date</p>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Deactivation Remarks <span class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.DeactivateRemarks.$dirty) && userForm.DeactivateRemarks.$invalid } ">
+                                                    <input type="text" name="DeactivateRemarks" class="form-control" ng-model="ProductModel.DeactivateRemarks" ng-pattern="/^[a-zA-Z'.\s]/" placeholder="Deactivate Remarks" required>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.DeactivateRemarks.$error.required && (userForm.DeactivateRemarks.$dirty || submitted)" class="help-block red">Please enter Deactivate Remarks</p>
+                                                        <p ng-show="userForm.DeactivateRemarks.$error.pattern" class="help-block red">Please enter valid Deactivate Remarks</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+

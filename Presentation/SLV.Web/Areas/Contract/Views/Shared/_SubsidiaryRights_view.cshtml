@@ -1,0 +1,49 @@
+﻿
+<div class="portlet-body clearfix">
+    <div class="portlet-body flip-scroll">
+
+        <div class="col-md-6 col-xs-6 col-sm-6" ng-if="_subsidiaryListDataDisplay.length==0">
+            <div class="col-md-12">
+                <label class="control-label col-md-5 col-xs-6 col-sm-6">Subsdiary Rights</label>
+                <div class="col-md-7 col-xs-6 col-sm-6">
+                    <label class="control-label">
+                        No
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-striped table-bordered table-hover dataTable no-footer" ng-if="_subsidiaryListDataDisplay.length>0">
+            <thead class="flip-content">
+                <tr>
+                    <th>Sno</th>
+                    <th>Subsidiary Rights</th>
+                    <th ng-repeat="i in TblList">Author <span ng-bind="$index+1"></span> % (<span ng-bind="i.AuthorName"></span>)</th>
+                    <th>OUP Share (%)</th>
+                    <th>Total (%)</th>
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='p in _subsidiaryListDataDisplay | limitTo :_subsidiaryListDataDisplay.length/TblList.length'>
+                    <td><span ng-bind="$index+1"></span></td>
+                    <td><span ng-bind="p.Subsidiary"></span></td>
+                    <td ng-repeat="i in TblList">
+                        <span> <span ng-bind="calcTotal(i.Id,p.subsidiaryid)"></span> </span>
+                    </td>
+                    <td>
+                        <span><span ng-bind="p.OupPercentage"></span></span>
+                    </td>
+
+                    <td><span> <span ng-bind="calcTotalPer(p.subsidiaryid)"></span> </span></td>
+
+
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

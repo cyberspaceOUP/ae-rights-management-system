@@ -1,0 +1,159 @@
+﻿@using ACS.Services.Master
+@{
+    ViewBag.Title = "ProductDetailsView";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<style type="text/css">
+    .table-color a {
+        color: #ee5941;
+    }
+</style>
+
+<script src="~/js/Product/ProductDetailsView.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/app.css" rel="stylesheet" />
+<script src="~/js/common/TopSearch.js"></script>
+<input type="hidden" id="ProductId" value="@ViewBag.ProductId" />
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().ProductDetailsViewMode(@ViewBag.ProductId);
+
+    angular.element(document.getElementById('angularid')).scope().Product_AuthorContractLinks(@ViewBag.ProductId);
+    angular.element(document.getElementById('angularid')).scope().Product_ProductLicenseLinks(@ViewBag.ProductId);
+    angular.element(document.getElementById('angularid')).scope().Product_RightsSellingMasterLinks(@ViewBag.ProductId);
+    angular.element(document.getElementById('angularid')).scope().Product_PermissionsOutboundMasterLinks(@ViewBag.ProductId);
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Product View
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        @if (Session["PrintPermissions"] != null)
+        {
+            <div class="col-md-12 text-right btnPrint">
+                <div class="tools">
+                    <input type="button" class="btn green" id="btn_printPage" value="Print">
+                </div>
+            </div>
+        }
+        <div class="col-md-12">&nbsp;</div>
+        <div class=" col-md-12 text-right backtolist" ng-if="'@TempData["ExpiryReport"]' != 'ExpiryReport'">
+            <div class="tools">
+                <a href="@T("AuthorContract.BackSearchUrl")" style="color:black;" ng-if="'@TempData["view"]' == 'dashboard'">Back To Dashboard</a>
+                <a href="javascript:void(0);" style="color:black;" ng-if="'@TempData["view"]' == 'view'" ng-click="btn_BackToList()">Back To List</a>
+            </div>
+        </div>
+
+        <form name="userForm" class=" form-horizontal" novalidate>
+            <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("~/Areas/Product/Views/Shared/_ProductView.cshtml")
+
+                        <!--Links with Product Master-->
+                        <div id="links_panel" ng-hide="!AuthorContractLinks_List.length && !ProductLicenseLinks_List.length && !RightsSellingMasterLinks_List.length && !PermissionsOutboundMasterLinks_List.length">
+                            <div class="portlet box green">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Linked Contract / License
+                                    </div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="collapse"> </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            @*<thead>
+                                                    <tr>
+                                                        <td>Author Contract Links</td>
+                                                        <td>Product License Links</td>
+                                                        <td> Rights Selling Links</td>
+                                                        <td>Permission Outbound Links</td>
+                                                    </tr>
+                                                </thead>*@
+                                            <tbody>
+                                                <tr>
+                                                    <td ng-hide="!AuthorContractLinks_List.length">
+                                                        @Html.Partial("~/Areas/Product/Views/Shared/_LinkAuthorContract.cshtml")
+                                                    </td>
+                                                    <td ng-hide="!ProductLicenseLinks_List.length">
+                                                        @Html.Partial("~/Areas/Product/Views/Shared/_LinkProductLicense.cshtml")
+                                                    </td>
+                                                    <td ng-hide="!RightsSellingMasterLinks_List.length">
+                                                        @Html.Partial("~/Areas/Product/Views/Shared/_LinkRightsSelling.cshtml")
+                                                    </td>
+                                                    <td ng-hide="!PermissionsOutboundMasterLinks_List.length">
+                                                        @Html.Partial("~/Areas/Product/Views/Shared/_LinkPermissionsOutbound.cshtml")
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Links with Product Master-->
+
+                        <!--Kit Details List-->
+                        <div ng-if="KitISBNDetailsList.length">
+                            @Html.Partial("~/Areas/Product/Views/Shared/_KitISBNList.cshtml")
+                        </div>                  
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $('#btn_printPage').on('click', function () {
+        $('.top-header').hide();
+        $('.menu').hide();
+        $('footer').hide();
+        $('.backtolist').hide();
+        $('.main-title').find('small').hide();
+        $('body').css('background-color', '#fff');
+        $('.col-md-7').each(function () { $('label').css('font-size', '10px') });
+        $('.col-md-5').each(function () { $(this).css('font-size', '10px') });
+        $('table').css('font-size', '10px');
+
+        $('.caption').css('font-size', '13px');
+        $('#links_panel').hide();
+        $('.btnPrint').hide();
+        $('.portlet').removeClass('green').css('border', '1px solid gray');
+        $('.form-body').css('margin-bottom', '10px');
+        $('#head_Product_Id').css('margin-bottom', '30px');
+
+        window.print();
+
+        $('table').removeAttr("style");
+        $('.col-md-7').each(function () { $('label').removeAttr("style") });
+        $('.col-md-5').removeAttr("style");
+        $('body').removeAttr("style");
+        $('.main-title').find('small').show();
+        $('.backtolist').show();
+        $('footer').show();
+        $('.menu').show();
+        $('.top-header').show();
+
+        $('.caption').removeAttr("style");
+        $('#links_panel').show();
+        $('.btnPrint').show();
+        $('.portlet').addClass('green').removeAttr("style");
+        $('.form-body').removeAttr("style");
+        $('#head_Product_Id').removeAttr("style");
+    });
+
+</script>

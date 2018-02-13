@@ -1,0 +1,71 @@
+﻿
+<div class="portlet-body clearfix">
+    <div class="portlet-body flip-scroll">
+        <div class="col-md-7">
+            <label class="control-label col-md-5">Subsidiary Rights Allowed/Granted?<span class="red">*</span></label>
+            <div class="col-md-7">
+                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.SubsidiaryRequired.$dirty) && userForm.SubsidiaryRequired.$invalid }">
+                    <label class="radio-inline">
+                        <input type="radio" name="SubsidiaryRequired"  ng-model="SubsidiaryRequired" value="1" required> Yes
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="SubsidiaryRequired" ng-model="SubsidiaryRequired" value="0" required> No
+                    </label>
+                    <div class="help-block">
+                        <p ng-show="userForm.SubsidiaryRequired.$error.required && (userForm.SubsidiaryRequired.$dirty || submitted)" class="help-block red">Please select Subsidiary Rights Allowed/Granted? </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover dataTable no-footer" ng-show="SubsidiaryRequired==1" id="tblsubsidiary">
+            <thead class="flip-content">
+                <tr>
+                    <th>Subsidiary Rights</th>
+                    <th ng-repeat="index in TblList" class="totalAuthor">Author {{$index +1}} (%) <span id="total_Author_{{$index +1}}"></span></th>
+                    <th>OUP Share (%)</th>
+                    <th>Total (%)</th>
+                    
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="div in _subsidiaryList" Srno="{{$index}}">
+                    <td>
+                        {{div.SubsidiaryRights }}{{div.Subsidiary}}
+                        <input type="hidden" name="hid_subsidiaryId" value="{{div.Id}}">
+                    </td>
+                    <td ng-repeat="index in TblList">
+                        <span style="display:none">{{calcTotal(index.Id,div.Id,$index,$parent.$index)}}</span>
+                        <input type="number" min="0" max="99" ng-change="RemoveErrorClass($event)" onchange="ValidatePercentage(this)" ng-minlength="0" ng-maxlength="100"
+                               id="AuthorPercentage_{{div.Id}}"
+                               ng-model="AuthorPercentage" class="form-control author_{{$index}} author_{{$index}}_{{$parent.$index}}" />
+
+                        <div class="help-block">
+                            <p class="ng-hide" style="color:#a94442;"></p>
+                        </div>
+                    </td>
+                    <td>
+                        <span style="display:none;">{{calcTotalPer(div.Id,$index)}}</span>
+                        <input type="number" min="0" max="100" indexno="{{$index}}" id="totalpercentage_{{$index}}" name="totalPercentage" @*ng-change="ValidatePercentage($event)"*@ onchange="angular.element(document.getElementById('angularid')).scope().ValidatePercentage(this);" ng-model="Percentage"
+                               class="form-control" />
+                        <div class="help-block">
+                            <p class="ng-hide" style="color:#a94442;"></p>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="text" disabled class="form-control" id="AuthorPrePercentageTextbox_{{$index}}" ng-model="PublisherPercentageArray[$index]" name="AuthorPercentageTextbox" />
+                        <p id="OupPercentage_{{$index}}"></p>
+                        <input type="hidden" id="hid_oupPercentage_{{$index}}" value="0">
+                    </td>
+                   </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    function ValidatePercentage(obj) {
+        angular.element(document.getElementById('angularid')).scope().ValidatePercentageAuthor($(obj));
+    }
+</script>

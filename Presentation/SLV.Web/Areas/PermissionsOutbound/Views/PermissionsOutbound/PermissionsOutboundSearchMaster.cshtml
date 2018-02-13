@@ -1,0 +1,1015 @@
+﻿@{
+    ViewBag.Title = "PermissionsOutboundSearch";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/PermissionsOutbound/PermissionsOutboundSearch.js"></script>
+<script src="~/js/PermissionsOutbound/PermissionsOutboundInvoiceView.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="~/js/common/TopSearch.js"></script>
+@section onInit
+{
+
+    angular.element(document.getElementById('angularid')).scope().getTerritoryRightsList();
+    angular.element(document.getElementById('angularid')).scope().GetTypeOfRightsList();
+    angular.element(document.getElementById('angularid')).scope().getLanguageList();
+    angular.element(document.getElementById('angularid')).scope().getCurrencyList();
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1 ng-show="PermissionsOutboundSearch">
+                    Permissions Outbound Search
+                    @Html.Partial("pagedate")
+                </h1>
+
+                <h1 ng-show="PermissionsOutboundListForm">
+                    @if (ViewBag.Report == "report")
+                    {
+                        <span>Permissions Outbound Report </span>
+                    }
+                    else
+                    {
+                        <span>Permissions Outbound List</span>
+                    }
+                    
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+
+        <form name="userForm" class=" form-horizontal" ng-show="PermissionsOutboundSearch" ng-submit="PermissionsOutboundSearchForm()" novalidate>
+
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Permissions Outbound Details
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class=" row">
+                                <div class="col-md-6">
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Product Code </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ProductCode.$dirty) && userForm.ProductCode.$invalid } ">
+                                                    <input type="text" name="ProductCode" class="form-control" ng-model="ProductCode" placeholder="Product Code">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ProductCode.$error.required && (userForm.LicenseeName.$dirty || submitted)" class="help-block red">Please enter Product Code</p>
+                                                        <p ng-show="userForm.ProductCode.$error.pattern" class="help-block red">Please enter valid Product Code</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Contract Code </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContractCode.$dirty) && userForm.ContractCode.$invalid } ">
+                                                    <input type="text" name="ContractCode" class="form-control" ng-model="ContractCode" placeholder="Contract Code">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ContractCode.$error.required && (userForm.LicenseeName.$dirty || submitted)" class="help-block red">Please enter Contract Code</p>
+                                                        <p ng-show="userForm.ContractCode.$error.pattern" class="help-block red">Please enter valid Contract Code</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Permissions Outbound Code </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PermissionsOutboundCode.$dirty) && userForm.PermissionsOutboundCode.$invalid } ">
+                                                    <input type="text" name="PermissionsOutboundCode" class="form-control" ng-model="PermissionsOutboundCode" placeholder="Permissions Outbound Code">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PermissionsOutboundCode.$error.required && (userForm.LicenseeName.$dirty || submitted)" class="help-block red">Please enter Contract Code</p>
+                                                        <p ng-show="userForm.PermissionsOutboundCode.$error.pattern" class="help-block red">Please enter valid Permissions Outbound Code</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Licensee Name </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.LicenseeName.$dirty) && userForm.LicenseeName.$invalid } ">
+                                                    <input type="text" name="LicenseeName" class="form-control" ng-model="LicenseeName" placeholder="Licensee Name">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.LicenseeName.$error.required && (userForm.LicenseeName.$dirty || submitted)" class="help-block red">Please enter Licensee Name</p>
+                                                        <p ng-show="userForm.LicenseeName.$error.pattern" class="help-block red">Please enter valid Licensee Name</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Request From Date </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.RequestFromDate.$dirty) && userForm.RequestFromDate.$invalid } ">
+                                                    <div class="input-group input-append date RequestFromDate">
+                                                        <input type="text" name="RequestFromDate" id="RequestFromDate" class="form-control" ng-model="RequestFromDate"  placeholder="Request From Date">
+                                                        <span class=" input-group-btn">
+                                                            <button class="btn default date-set" type="button" ng-disabled="true"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+
+
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.RequestDate.$error.required && (userForm.RequestDate.$dirty || submitted)" class="help-block red">Please enter Addendum Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Request To Date </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.RequestToDate.$dirty) && userForm.RequestToDate.$invalid } ">
+                                                    <div class="input-group input-append date ContractDate">
+                                                        <input type="text" name="RequestToDate" id="RequestToDate" class="form-control" ng-model="RequestToDate" placeholder="Request To Date">
+                                                        <span class=" input-group-btn">
+                                                            <button class="btn default date-set" type="button" ng-disabled="true"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+
+
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.RequestToDate.$error.required && (userForm.RequestToDate.$dirty || submitted)" class="help-block red">Please enter Request To Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+
+                                            $("#RequestFromDate").datepicker({
+                                                format: "dd/mm/yyyy",
+                                                todayHighlight: true,
+                                                autoclose: true
+                                                
+                                            });                       
+                                            $("#RequestFromDate").datepicker().on('change', function (e) {
+                                                mstrstartdate = $("#RequestFromDate").val();
+                                                $("#RequestToDate").val('');
+                                                $('#RequestToDate').datepicker('remove');
+                                                $("#RequestToDate").attr("disabled", false);
+                                                $("#RequestToDate").datepicker({
+                                                    format: "dd/mm/yyyy",
+                                                    // todayHighlight: true,
+                                                    autoclose: true,
+                                                    startDate: mstrstartdate
+                                                });
+                                            });
+
+                                        });
+
+
+
+
+
+
+                                    </script>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Licensee Publication Title  </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.LicenseePublicationTitle.$dirty) && userForm.LicenseePublicationTitle.$invalid } ">
+                                                    <input type="text" name="LicenseePublicationTitle" class="form-control" ng-model="LicenseePublicationTitle" placeholder="Licensee Publication Title">
+
+
+                                                    <div class="help-block">
+
+                                                        <p ng-show="userForm.LicenseePublicationTitle.$error.required && (userForm.LicenseePublicationTitle.$dirty || submitted)" class="help-block red">Please enter Licensee Publication Title </p>
+
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" >
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Permission From Date </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.PermissionFromDate.$dirty) && userForm.PermissionFromDate.$invalid } ">
+                                                    <div class="input-group input-append date PermissionFromDate date-set">
+                                                        <input type="text" name="PermissionFromDate" class="form-control" id="PermissionFromDate" ng-model="PermissionFromDate" onchange="angular.element(document.getElementById('angularid')).scope().SetContractDate(this);" placeholder="Permission From Date">
+                                                        <span class=" input-group-btn">
+                                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PermissionFromDate.$error.required && (userForm.PermissionFromDate.$dirty || submitted)" class="help-block red">Please enter Permission From Date</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row" >
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Permission To Date </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.PermissionToDate.$dirty) && userForm.PermissionToDate.$invalid } ">
+                                                    <div class="input-group input-append date PermissionToDate date-set">
+                                                        <input type="text" name="PermissionToDate" class="form-control" id="PermissionToDate" @*ng-disabled="!(PermissionFromDate.length)"*@ ng-model="PermissionToDate" placeholder="Permission To Date">
+                                                        <span class=" input-group-btn">
+                                                            <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.PermissionToDate.$error.required && (userForm.PermissionToDate.$dirty || submitted)" class="help-block red">Please enter Permission To Date</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+
+                                            $("#PermissionFromDate").datepicker({
+                                                format: "dd/mm/yyyy",
+                                                todayHighlight: true,
+                                                autoclose: true
+                                            });
+                                            $("#PermissionFromDate").datepicker().on('change', function (e) {
+                                                mstrstartdate = $("#PermissionFromDate").val();
+                                                $("#PermissionToDate").val('');
+                                                $('#PermissionToDate').datepicker('remove');
+                                                $("#PermissionToDate").attr("disabled", false);
+                                                $("#PermissionToDate").datepicker({
+                                                    format: "dd/mm/yyyy",
+                                                    // todayHighlight: true,
+                                                    autoclose: true,
+                                                    startDate: mstrstartdate
+                                                });
+                                            });
+
+                                        });
+
+
+
+
+
+
+                                    </script>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Expiry Date </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.ExpiryDate.$dirty) && userForm.ExpiryDate.$invalid } ">
+                                                    <div class="input-group input-append date datePicker ExpiryDate">
+                                                        <input type="text" id="ExpiryDate" name="ExpiryDate" class="form-control" ng-model="ExpiryDate" placeholder="Expiry Date">
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ExpiryDate.$error.required && (userForm.ExpiryDate.$dirty || submitted)" class="help-block red">Please enter Expiry Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Requested Material </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.RequestMaterial.$dirty) && userForm.RequestMaterial.$invalid } ">
+                                                    <input type="text" name="RequestMaterial" class="form-control" ng-model="RequestMaterial" placeholder="Requested Material">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.RequestMaterial.$error.required && (userForm.RequestMaterial.$dirty || submitted)" class="help-block red">Please enter Requested Material</p>
+                                                        <p ng-show="userForm.RequestMaterial.$error.pattern" class="help-block red">Please enter valid Requested Material</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Type of Rights</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.TypeofRights.$dirty) && userForm.TypeofRights.$invalid } ">
+                                                    <select class="form-control" name="TypeofRights" id="TypeofRights" multiple
+                                                            ng-options="obj as obj.TypeOfRights for obj in TypeOfRightsList track by obj.Id"
+                                                            ng-change="GetValue(TypeofRights)"
+                                                            ng-model="TypeofRights"></select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.TypeofRights.$error.required && (userForm.TypeofRights.$dirty || submitted)" class="help-block red">Please select Type of Rights</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Language</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Language.$dirty) && userForm.Language.$invalid } ">
+                                                    <select class="form-control" name="Language" id="LanguageId" ng-model="Language">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in LanguageList" ng-model="Language" ng-selected="{{div.Id == Language}}" value="{{div.Id}}">{{div.LanguageName}}</option>
+                                                    </select>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Language.$error.required && (userForm.Language.$dirty || submitted)" class="help-block red">Please select Language</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Extent</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Extent.$dirty) && userForm.Extent.$invalid } ">
+                                                    <input type="text" name="Extent" class="form-control" ng-model="Extent" placeholder="Extent">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Extent.$error.required && (userForm.Extent.$dirty || submitted)" class="help-block red">Please enter Extent</p>
+                                                        <p ng-show="userForm.Extent.$error.pattern" class="help-block red">Please enter valid Extent</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Territory </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.TerritoryRight.$dirty) && userForm.TerritoryRight.$invalid } ">
+                                                    <select id="ddlTerritory" class="form-control" name="TerritoryRight" ng-model="TerritoryRight" @*multiple="multiple"*@>
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="Territory in TerritoryList" value="{{Territory.Id}}" ng-selected="{{Territory.Id == TerritoryRight}}">{{Territory.Territoryrights}}</option>
+                                                    </select>
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.TerritoryRight.$error.required && (userForm.TerritoryRight.$dirty || submitted)">Please select territory right</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Invoice From date </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.InvoiceFromdate.$dirty) && userForm.InvoiceFromdate.$invalid } ">
+                                                    <div class="input-group input-append date ContractDate">
+                                                        <input type="text" id="InvoiceFromdate" name="InvoiceFromdate" class="form-control" ng-model="InvoiceFromdate" placeholder="Invoice From date">
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.InvoiceFromdate .$error.required && (userForm.InvoiceFromdate .$dirty || submitted)" class="help-block red">Please enter Invoice From Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Invoice To date</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.InvoiceTodate.$dirty) && userForm.InvoiceTodate.$invalid } ">
+                                                    <div class="input-group input-append date ContractDate">
+                                                        <input type="text" id="InvoiceTodate" name="InvoiceTodate" class="form-control" ng-model="InvoiceTodate" placeholder="Invoice To Date">
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.InvoiceTodate .$error.required && (userForm.InvoiceTodate .$dirty || submitted)" class="help-block red">Please enter Invoice To Date</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+
+                                            $("#InvoiceFromdate").datepicker({
+                                                format: "dd/mm/yyyy",
+                                                todayHighlight: true,
+                                                autoclose: true
+                                            });
+                                            $("#InvoiceFromdate").datepicker().on('change', function (e) {
+                                                mstrstartdate = $("#InvoiceFromdate").val();
+                                                $("#InvoiceTodate").val('');
+                                                $('#InvoiceTodate').datepicker('remove');
+                                                $("#InvoiceTodate").attr("disabled", false);
+                                                $("#InvoiceTodate").datepicker({
+                                                    format: "dd/mm/yyyy",
+                                                    // todayHighlight: true,
+                                                    autoclose: true,
+                                                    startDate: mstrstartdate
+                                                });
+                                            });
+
+                                        });
+
+
+
+
+
+
+                                    </script>
+
+
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Invoice Applicable </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+
+                                                    <label class="radio-inline" style="padding-top: 0px !important;">
+                                                        <input type="radio" name="InvoiceApplicable " ng-model="InvoiceApplicable" value="Yes"> Yes
+                                                    </label>
+                                                    <label class="radio-inline" style="padding-top: 0px !important;">
+                                                        <input type="radio" name="InvoiceApplicable " ng-model="InvoiceApplicable" value="No"> No
+                                                    </label>
+
+                                                    <div ng-class="{ 'has-error' : userForm.InvoiceApplicable .$invalid && (userForm.InvoiceApplicable .$dirty || submitted)}">
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.InvoiceApplicable .$error.required && (userForm.InvoiceApplicable.$dirty || submitted)" class="help-block">Please select Invoice Applicable </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Invoice Number </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.InvoiceNo.$dirty) && userForm.InvoiceNo.$invalid } ">
+
+                                                    <input type="number" name="InvoiceNo" class="form-control" ng-model="InvoiceNo" placeholder="Invoice Number">
+
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.InvoiceNo .$error.required && (userForm.InvoiceNo .$dirty || submitted)" class="help-block red">Please enter Invoice</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Invoice Currency</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="ProjectedCurrency" name="InvoiceCurrency" ng-model="InvoiceCurrency">
+                                                        <option value="">Please Select</option>
+                                                        <option ng-repeat="div in CurrencyList" ng-model="ProjectedCurrency" value="{{div.Id}}">{{div.CurrencyName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Invoice Value </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.InvoiceValue.$dirty) && userForm.InvoiceValue.$invalid } ">
+
+                                                    <input type="text" name="InvoiceValue" class="form-control" ng-model="InvoiceValue" placeholder="Invoice Value">
+
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.InvoiceValue .$error.required && (userForm.Invoice .$dirty || submitted)" class="help-block red">Please enter Invoice Value</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="textArea" class="control-label  col-md-5">Invoice Description </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.InvoiceDescription.$dirty) && userForm.InvoiceDescription.$invalid } ">
+
+                                                    <textarea name="InvoiceDescription" rows="5" id="InvoiceDescriptionId" class="form-control" ng-model="InvoiceDescription " placeholder="Invoice Description"></textarea>
+
+
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.InvoiceDescription .$error.required && (userForm.InvoiceDescription .$dirty || submitted)" class="help-block red">Please enter Invoice Description</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Copies to be received  </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+
+                                                    <label class="radio-inline" style="padding-top: 0px !important;">
+                                                        <input type="radio" name="Copiestobereceived" ng-model="Copiestobereceived" value="Yes" ng-click="func_CopiestobereceivedYes()"> Yes
+                                                    </label>
+                                                    <label class="radio-inline" style="padding-top: 0px !important;">
+                                                        <input type="radio" name="Copiestobereceived" ng-model="Copiestobereceived" value="No" ng-click="func_CopiestobereceivedNo()"> No
+                                                    </label>
+                                                </div>
+
+                                                <div ng-class="{ 'has-error' : userForm.Copiestobereceived.$invalid && (userForm.Copiestobereceived .$dirty || submitted)}">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Copiestobereceived.$error.required && (userForm.Copiestobereceived.$dirty || submitted)" class="help-block">Please select Copies To Be Received </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Number of copies <span ng-show="reqNumberofcopies" class="red">*</span></label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Numberofcopies.$dirty) && userForm.Numberofcopies.$invalid } ">
+                                                    <input type="number" min="1" name="Numberofcopies" ng-required="reqNumberofcopies" class="form-control" ng-model="Numberofcopies" placeholder="Number of copies">
+                                                    <div class="help-block">
+
+                                                        <p ng-show="userForm.Numberofcopies.$error.required && (userForm.Numberofcopies.$dirty || submitted)" class="help-block red">Please enter Number of copies</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Remarks </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Remarks.$dirty) && userForm.Remarks.$invalid } ">
+                                                    <textarea name="Remarks" class="form-control" ng-model="Remarks" placeholder="Remarks"></textarea>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.Remarks.$error.required && (userForm.Remarks.$dirty || submitted)" class="help-block red">Please enter Remarks </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" row">
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Contract Status</label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContractStatus.$dirty) && userForm.ContractStatus.$invalid } ">
+                                                    <div>
+                                                        <label class="radio-inline" style="display: inline-flex">
+                                                            <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Draft" value="Draft"> Draft
+                                                        </label>
+                                                        <label class="radio-inline" style="display: inline-flex; margin-left: 33px !important;">
+                                                            <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Pending" value="Pending"> Issued
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="radio-inline" style="display: inline-flex">
+                                                            <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Issued" value="Issued"> Received
+                                                        </label>
+                                                        <label class="radio-inline" style="display: inline-flex">
+                                                            <input type="checkbox" style="margin-right: 10px;" name="ContractStatus" ng-model="ContractStatus.Cancelled" value="Cancelled"> Cancelled
+                                                        </label>
+                                                    </div>
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ContractStatus.$error.required && (userForm.ContractStatus.$dirty || submitted)">Please select Contract Status</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+
+                            <input type="hidden" ng-model="hid_PermissionsOutbound" id="hid_PermissionsOutbound" name="hid_PermissionsOutbound" />
+                            <input type="hidden" ng-model="hid_TypeOfRights" id="hid_TypeOfRights" name="hid_TypeOfRights" />
+                            <input type="hidden" ng-model="hid_BackToSearch" id="hid_BackToSearch" name="hid_BackToSearch" value="@TempData["BackToSearch"]"/>
+
+                            <input type="hidden" ng-model="hid_InvoiceView" id="hid_InvoiceView" name="hid_InvoiceView" value="@TempData["InvoiceView"]" />
+
+                            <input type="hidden" id="hid_updateRight" name="hid_updateRight" ng-model="hid_updateRight" value="@TempData["UpdateRights"]" />
+
+                            <input type="hidden" ng-model="hid_ReqValue" id="hid_ReqValue" name="hid_ReqValue" />
+                            <button type="submit" class="btn green" id="btnSubmit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+
+
+        <form name="userForm" class=" form-horizontal" id="ListForm" ng-show="PermissionsOutboundListForm" novalidate>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 backtoSearch">
+                        <div class="tools">
+                            <span class="back-to-search" ng-click="BackToserch()"> Back To Search </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    @if (ViewBag.Report == "report")
+                                    {
+                                        <span>Permissions Outbound Report </span>
+                                    }
+                                    else
+                                    {
+                                        <span>Permissions Outbound List</span>
+                                    }
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body flip-scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                @*<div class="table-responsive">*@
+                                <div class="">
+                                    <table datatable="ng" class="table table-bordered table-striped table-condensed flip-content">
+                                        <thead class="flip-content">
+                                            <tr>
+                                                <th>SNo</th>
+                                                <th>Permissions Outbound Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Product Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>ISBN &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Working Product &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Author Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Contract Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>License Code &nbsp;<span class="glyphicon glyphicon-sort"></span></th>                                              
+                                                @*<th>Request Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>*@
+                                                <th>Agreement Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Expiry Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                                <th>Licensee Name &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+
+                                                <th ng-if="'@ViewBag.Report' != 'report'  && ('@TempData["Action"]' != '' || '@TempData["BackToSearch"]' == 'backtosearch' || '@TempData["InvoiceView"]'!='0')">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="PermissionsOutbound in OutboundList" class="tooltipclass">
+                                                <td><span ng-bind="$index + 1"></span></td>
+
+                                                <td>
+                                                    <a ng-show="!(PermissionsOutbound.LicenseId==null)" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.LicenseId}}&type={{PermissionsOutbound.ProductId}}&OutboundView={{PermissionsOutbound.Id}}" style="color: #ee5941;" target="_blank"><span ng-bind="PermissionsOutbound.PermissionsOutboundCode"></span></a>
+                                                    <a ng-show="PermissionsOutbound.LicenseId==null" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.ContractId}}&type={{PermissionsOutbound.ProductId}}&OutboundView={{PermissionsOutbound.Id}}" style="color: #ee5941;" target="_blank"><span ng-bind="PermissionsOutbound.PermissionsOutboundCode"></span></a>
+                                                </td>
+
+                                                <td><a href="~/Product/ProductMaster/ProductDetailsView?Id={{PermissionsOutbound.ProductMasterId}}" style="color: #ee5941;" target="_blank"><span ng-bind="PermissionsOutbound.ProductCode"></span></a></td>
+
+                                                <td><span ng-bind="PermissionsOutbound.ISBN"></span></td>
+
+                                                <td><span ng-bind="PermissionsOutbound.WorkingProduct"></span> <br /><span style="font-size:11px;"><span ng-bind="PermissionsOutbound.WorkingSubProduct"></span></span> </td>
+                                                <td><span ng-bind="PermissionsOutbound.AuthorName"></span></td>
+
+                                                <td>
+                                                    <a ng-if="!(PermissionsOutbound.ContractId==null)" href="~/Contract/AuthorContract/view?Id={{PermissionsOutbound.ContractId}}" style="color: #ee5941;" target="_blank"><span ng-bind="PermissionsOutbound.ContractCode"></span></a>
+                                                    <span ng-if="(PermissionsOutbound.ContractId==null)" ng-bind="PermissionsOutbound.ContractCode"></span>
+                                                </td>
+
+                                                <td>
+                                                    <a ng-if="!(PermissionsOutbound.LicenseId==null)" href="~/Product/ProductLicense/view?Id={{PermissionsOutbound.LicenseId}}" style="color: #ee5941;" target="_blank"><span ng-bind="PermissionsOutbound.LicenseCode"></span></a>
+                                                    <span ng-if="(PermissionsOutbound.LicenseId==null)" ng-bind="PermissionsOutbound.LicenseCode"></span>
+                                                </td>
+                                                
+                                                <td><span class="sortDateHide" ng-bind="PermissionsOutbound.Date_of_agreementForSort"></span>{{PermissionsOutbound.Date_of_agreement}}</td>
+                                                <td><span class="sortDateHide" ng-bind="PermissionsOutbound.ExpiryDateViewForSort"></span>{{PermissionsOutbound.ExpiryDateView}}</td>
+
+                                                <td><span ng-bind="PermissionsOutbound.LicenseeName"></span></td>
+
+                                                <td ng-hide="TitleLinking" ng-if="'@ViewBag.Report' != 'report'  && ('@TempData["Action"]' != '' || '@TempData["BackToSearch"]' == 'backtosearch' || '@TempData["InvoiceView"]'!='0')">
+                                                    <div class="tooltip-container Action">
+                                                        <input type="checkbox" class="tooltip-toggle" id="tooltip-toggle">
+                                                        @*<label for="tooltip-toggle" ng-click="DisplayDiv($index+1)" class="tooltip-btn">*@
+                                                        <label for="tooltip-toggle" onclick="fireMe($(this))" class="tooltip-btn customizeLink">
+                                                            Action
+                                                        </label>
+                                                        <label for="tooltip-toggle" class="tooltip-backdrop"></label>
+                                                        <div class="tooltip-content">
+                                                            <div class="linking">
+                                                                <ul>
+                                                                    <li ng-if="'@TempData["InvoiceView"]'!='0'"><a href="javascript:viod(0)" ng-click="InvoiceViewPermissionsOutBound(PermissionsOutbound.PermissionsoutboundId)" data-toggle="modal" data-target="#InvoiceView" style="color:#ee5941;">Invoice View</a></li>
+
+                                                                    <li ng-if="PermissionsOutbound.LicenseId==null">
+                                                                        <a ng-if="PermissionsOutbound.flag =='0' && '@TempData["UpdateRights"]' =='rt' && '@TempData["Action"]' == 'update'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.ContractId}}&type={{PermissionsOutbound.ProductId}}&OutboundId={{PermissionsOutbound.PermissionsoutboundId}}">Update Permissions Out-bound</a>
+                                                                        <a ng-if="PermissionsOutbound.flag =='1' && '@TempData["UpdateRights"]' =='rt' && '@TempData["Action"]' == 'update'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.ContractId}}&type={{PermissionsOutbound.ProductId}}&OutboundView={{PermissionsOutbound.PermissionsoutboundId}}">View Permissions Out-bound</a>
+                                                                    </li>
+
+                                                                    <li ng-if="PermissionsOutbound.ContractId==null">
+                                                                        <a ng-if="PermissionsOutbound.flag =='0' && '@TempData["UpdateRights"]' =='rt' && '@TempData["Action"]' == 'update'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.LicenseId}}&type={{PermissionsOutbound.ProductId}}&OutboundId={{PermissionsOutbound.PermissionsoutboundId}}">Update Permissions Out-bound</a>
+                                                                        <a ng-if="PermissionsOutbound.flag =='1' && '@TempData["UpdateRights"]' =='rt' && '@TempData["Action"]' == 'update'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.LicenseId}}&type={{PermissionsOutbound.ProductId}}&OutboundView={{PermissionsOutbound.PermissionsoutboundId}}">View Permissions Out-bound</a>
+                                                                    </li>
+                                                                    
+                                                                    <li ng-show="PermissionsOutbound.LicenseId==null">
+                                                                        <a ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]' =='sa') && '@TempData["Action"]' == 'update'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.ContractId}}&type={{PermissionsOutbound.ProductId}}&OutboundId={{PermissionsOutbound.PermissionsoutboundId}}">Update Permissions Out-bound</a>
+                                                                        <a ng-if="'@TempData["Action"]' =='view'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.ContractId}}&type={{PermissionsOutbound.ProductId}}&OutboundView={{PermissionsOutbound.PermissionsoutboundId}}">View Permissions Out-bound</a>
+                                                                    </li>
+
+                                                                    <li ng-show="PermissionsOutbound.ContractId==null">
+                                                                        <a ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]' =='sa') && '@TempData["Action"]' == 'update'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.LicenseId}}&type={{PermissionsOutbound.ProductId}}&OutboundId={{PermissionsOutbound.PermissionsoutboundId}}">Update Permissions Out-bound</a>
+                                                                        <a ng-if="'@TempData["Action"]' =='view'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.LicenseId}}&type={{PermissionsOutbound.ProductId}}&OutboundView={{PermissionsOutbound.PermissionsoutboundId}}">View Permissions Out-bound</a>
+                                                                    </li>
+                                                                    
+                                                                    <li ng-show="PermissionsOutbound.LicenseId==null">
+                                                                        <a ng-if="PermissionsOutbound.flag =='0' && '@TempData["UpdateRights"]' =='rt' && '@TempData["BackToSearch"]' == 'backtosearch'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.ContractId}}&type={{PermissionsOutbound.ProductId}}&OutboundId={{PermissionsOutbound.PermissionsoutboundId}}">Update Permissions Out-bound</a>
+                                                                        <a ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]' =='sa') && '@TempData["BackToSearch"]' == 'backtosearch'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.ContractId}}&type={{PermissionsOutbound.ProductId}}&OutboundId={{PermissionsOutbound.PermissionsoutboundId}}">Update Permissions Out-bound</a>
+                                                                        <a ng-if="'@TempData["BackToSearch"]' == 'backtosearch'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.ContractId}}&type={{PermissionsOutbound.ProductId}}&OutboundView={{PermissionsOutbound.PermissionsoutboundId}}">View Permissions Out-bound</a>
+                                                                    </li>
+
+                                                                    <li ng-show="PermissionsOutbound.ContractId==null">
+                                                                        <a ng-if="PermissionsOutbound.flag =='0' && '@TempData["UpdateRights"]' =='rt' && '@TempData["BackToSearch"]' == 'backtosearch'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.LicenseId}}&type={{PermissionsOutbound.ProductId}}&OutboundId={{PermissionsOutbound.PermissionsoutboundId}}">Update Permissions Out-bound</a>
+                                                                        <a ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]' =='sa') && '@TempData["BackToSearch"]' == 'backtosearch'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.LicenseId}}&type={{PermissionsOutbound.ProductId}}&OutboundId={{PermissionsOutbound.PermissionsoutboundId}}">Update Permissions Out-bound</a>
+                                                                        <a ng-if="'@TempData["BackToSearch"]' == 'backtosearch'" href="~/PermissionsOutbound/PermissionsOutbound/PermissionsOutboundMaster?Id={{PermissionsOutbound.LicenseId}}&type={{PermissionsOutbound.ProductId}}&OutboundView={{PermissionsOutbound.PermissionsoutboundId}}">View Permissions Out-bound</a>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <a href="javascript:void(0);" ng-if="'@TempData["UpdateRights"]' =='sa' && '@TempData["Action"]' == 'delete'" ng-click="DeletePermissionsOutbound(PermissionsOutbound.PermissionsoutboundId,'sa')">Delete Permissions Out-bound</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    @if (ViewBag.Report == "report")
+                                    {
+                                        <div class="PrintTableData" style="display:none">
+
+                                        <table class="table table-bordered table-striped table-condensed flip-content" id="TblForPrint" >
+                                            <thead class="flip-content">
+                                                <tr>
+                                                    <th>SNo</th>
+
+                                                    <th>Permissions Outbound Code</th>
+
+                                                    <th>Product Code</th>
+
+
+                                                   
+
+
+                                                    <th>Contract Code</th>
+                                                    <th>Licensee Name</th>
+
+                                                    <th>Request Date</th>
+                                                    <th>Expiry Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr ng-repeat="PermissionsOutbound in OutboundList" class="tooltipclass">
+                                                    <td><span ng-bind="$index + 1"></span></td>
+                                                    <td><span ng-bind="PermissionsOutbound.PermissionsOutboundCode"></span></td>
+                                                    <td><span ng-bind="PermissionsOutbound.ProductCode"></span></td>
+
+
+
+                                                    <td><span ng-bind="PermissionsOutbound.ContractCode"></span></td>
+                                                    <td><span ng-bind="PermissionsOutbound.LicenseeName"></span></td>
+
+
+
+
+                                                    <td><span ng-bind="PermissionsOutbound.RequestDateView"></span></td>
+                                                    <td><span ng-bind="PermissionsOutbound.ExpiryDateView"></span></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                            </Div>
+                                    }
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    @*@if (Session["PrintPermissions"] != null && ViewBag.Report == "report")
+                    {
+                        <div class="col-md-12 text-center btnPrint">
+                            <div class="tools">
+                                @* Click Event Is Define in ~/Views/Shared/Footer.cshtml File *@
+                                @*<input type="button" class="btn green" id="btn_printDataTable" value="Print" style=" margin: .5%; ">
+                            </div>
+                        </div>
+                    }*@
+                    
+
+                    @if (Session["GenerateExcelPermissions"] != null && ViewBag.Report == "report")
+                    {
+                        <div class="col-md-12 text-center btnPrint">
+                            <div class="tools">
+                                <input type="hidden" name="hid_Report" id="hid_Report" ng-model="hid_Report" />
+                                <button type="submit" class="btn green" ng-click="PermissionsOutboundReportExcel()" id="btnSubmit">Generate Excel</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+
+    @Html.Partial("~/Areas/PermissionsOutbound/Views/Shared/_PermissionsOutboundInvoiceViewModal.cshtml")
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.datePicker')
+            .datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+            })
+    });
+
+    //$('#btn_printInovice').on('click', function () {
+    //    if ($('#InvoiceView').is(':visible')) {
+    //        $('.tooltip-content').css('visibility', 'hidden');
+    //        //var modalId = $(event.target).closest('#InvoiceView').attr('id');
+    //        var modalId = $('#InvoiceView').attr('id')
+    //        $('body').css('visibility', 'hidden');
+    //        $("#" + modalId).css('visibility', 'visible');
+    //        $("#" + modalId).css('position', 'absolute');
+    //        $("#" + modalId).css('top', '-20%');
+    //        $('#' + modalId).removeClass('modal');
+    //        window.print();
+    //        $('body').css('visibility', 'visible');
+    //        $('#' + modalId).addClass('modal');
+    //        $("#" + modalId).css('position', '');
+    //        $("#" + modalId).css('top', '');
+    //        $('.tooltip-content').css('visibility', 'visible');
+    //    } else {
+    //        window.print();
+    //    }
+    //});
+</script>
+<script type="text/javascript">
+
+    //$("#InvoiceDescriptionId").keyup(function (e) {
+    //    while ($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
+    //        $(this).height($(this).height() + 1);
+    //    };
+    //});
+
+
+    $(document).ready(function () {
+      
+        $('#ExpiryDate')
+        .datepicker({
+            format: "dd/mm/yyyy",
+            showButtonPanel: true,
+            autoclose: true,
+            //  startDate: date,
+            //  endDate: TodayDate
+        })
+
+
+    });
+
+   
+
+    function fireMe(obj) {
+        var length = $(".customizeLink").length;
+        for (i = 0; i < $(".customizeLink").length; i++) {
+            $($(".customizeLink")[i]).attr("sequence", i);
+        }
+        angular.element(document.getElementById('angularid')).scope().DisplayDiv(parseInt($(obj).attr("sequence")) + 1);
+    };
+
+</script>
+
+
+
+
+
+

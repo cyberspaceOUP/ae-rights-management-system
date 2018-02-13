@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "BalanceQuantityAddendum";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/Alert/Alert.js"></script>
+<script src="~/js/master/common.master.js"></script>
+<link href="~/Content/datepicker3.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getBalanceQuantityAddendum();
+}

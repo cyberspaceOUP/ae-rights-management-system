@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Add More Copyright Holder";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+<script src="~/js/common/TopSearch.js"></script>
+<script src="~/js/PermissionsInbound/PermissionsInbound.js"></script>
+<script src="~/js/master/common.master.js"></script>
+
+<script src="~/js/Product/ProductLicense.js"></script>
+<script src="~/js/Contract/AuthorContractDetails.js"></script>
+<script src="~/js/Product/ProductDetails.js"></script>
+
+<input type="hidden" id="hid_piid" value="@ViewBag.code" />
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().getInboundProcessDetails('@ViewBag.code');
+     angular.element(document.getElementById('angularid')).scope().GeogList();
+    angular.element(document.getElementById('angularid')).scope().getContractPartyType();
+    angular.element(document.getElementById('angularid')).scope().getAssetSubType();
+    angular.element(document.getElementById('angularid')).scope().getStatus();
+    angular.element(document.getElementById('angularid')).scope().getCopyRightHolder();
+    angular.element(document.getElementById('angularid')).scope().getCurrencyList();
+    angular.element(document.getElementById('angularid')).scope().getOtherRightsMaster();
+}
+<div class="clearfix">
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Add Permission   @*Add Copyright Holder(s)*@ {{Title}}
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+         <form name="userForm" class=" form-horizontal" ng-submit="AddMoreCopyrightHolder(PermissionsInboundModel)" novalidate>
+             <div class="col-md-12">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        @Html.Partial("_InboundPermission")
+                       </div>
+                 </div>
+            </div>
+             <div class="col-md-12" ng-show="_cpyhlderlst.length>0">
+                 <div class="portlet-body form">
+                     <div class="form-body">
+                         @Html.Partial("_CopyRightHolderAlreadyAdded")
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-12" ng-show="newCpyHlderList.length==0">
+                 <label style="color: #ee5941"><i class="fa fa-hand-o-right" aria-hidden="true"></i>&nbsp;&nbsp;No Copyright Holder available</label>
+             </div>
+             <div class="col-md-12" ng-show="newCpyHlderList.length>0">
+                 <div class="portlet-body form">
+                     <div class="form-body">
+                         @Html.Partial("_AddMoreCopyrightHolder")
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-12" ng-show="newCpyHlderList.length>0">
+                 <div class="form-actions">
+                     <div class="row">
+                         <div class="col-md-12 text-center">
+                             <input type="hidden" ng-model="hid_PermissionsOutbound" id="hid_PermissionsOutbound" name="hid_PermissionsOutbound" />
+                             <button type="submit" class="btn green" id="btnSubmit">Submit</button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+        </form>
+
+
+    </div>
+</div>

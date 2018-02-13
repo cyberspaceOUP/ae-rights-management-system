@@ -1,0 +1,67 @@
+﻿
+<script src="~/js/Product/ProductLicense.js"></script>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            Product License Details
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th> License code </th>
+                    <th> Contract Date </th>
+
+                    <th> Request Date </th>
+                    <th> Expiry Date </th>
+                    <th> Territory</th>
+                    <th>Contract Requested by</th>
+                    @*<th> Remarks </th>*@
+
+                </tr>
+
+                <tr ng-repeat="ProductLicense in ProductLicenseDetails">
+                    <td>
+                        @*<a href="javascript:void(0);" style="color: #ee5941"><span ng-bind="ProductLicense.productlicensecode"></span></a>*@
+
+                        <a href="~/Product/ProductLicense/view?Id={{ProductLicense.ProductLicenseId}}" target="_blank" style="color: #ee5941;" class="hide_for_print"><span ng-bind="ProductLicense.productlicensecode"></span></a>
+
+                        <input type="hidden" name="hid_Productlicensecode" id="hid_Productlicensecode" value="{{ProductLicense.ProductLicenseId}}" />
+                        <input type="hidden" name="hid_productidValue" id="hid_productidValue" value="{{ProductLicense.productid}}" />
+                    </td>
+                    <td>
+                        <span ng-if="ProductLicense.ContractDate == null">--</span>
+                        <span ng-bind="ProductLicense.ContractDate"></span>
+                    </td>
+                    <td><span ng-bind="ProductLicense.Requestdate"></span></td>
+                    <td>
+                        <span ng-if="ProductLicense.Expirydate == null">--</span>
+                        <span ng-bind="ProductLicense.Expirydate"></span>
+                    </td>
+                    <td><span ng-bind="ProductLicense.territoryrights"></span> </td>
+                    <td>
+                        <span ng-bind="ProductLicense.executiveName"></span>
+
+                        <input type="hidden" id="hid_currencyid" value="{{ProductLicense.ProjectedCurrencyId}}" />
+                        <input type="hidden" id="hid_price" value="{{ProductLicense.ProjectedPrice}}" />
+                    </td>
+
+                    @*<td>{{ProductLicense.remarks}}
+                        </td>*@
+
+
+                </tr>
+
+
+            </table>
+
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal -->
+<!-- Modal -->

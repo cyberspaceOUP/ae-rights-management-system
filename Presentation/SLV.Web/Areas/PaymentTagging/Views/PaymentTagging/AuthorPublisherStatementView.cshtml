@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "AuthorPublisherStatementView";
+    Layout = "~/Views/Shared/_LayoutDesignMaster.cshtml";
+}
+
+<script src="~/js/PaymentTagging/AuthorPublisherStatementSearch.js"></script>
+
+<input type="hidden" id="ProductId" value="@ViewBag.ContractId" />
+@section onInit
+{
+    angular.element(document.getElementById('angularid')).scope().AuthorPublisherStatement(@ViewBag.ContractId);
+}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="main-title">
+                <h1>
+                    Author / Publisher Statement View
+                    @Html.Partial("pagedate")
+                </h1>
+            </div>
+        </div>
+
+        <div class=" col-md-12 text-right" id="backToSearch" style="display:none;">
+            <div class="tools">
+                <a href="javascript:void(0);" ng-click="func_GoBack();" style="color:black; ">Back To Search</a>
+            </div>
+        </div>
+
+        <form id="AuthorPublisherStatement_DetailView" name="userForm" class=" form-horizontal">
+            <div class="col-md-12">
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Author / Publisher Statement
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="collapse"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+
+                            <table class="table table-bordered table-striped table-condensed flip-content">
+                                <thead>
+                                    <tr>
+                                        <th>S. No.</th>
+                                        <th>Percentage</th>
+                                        <th>Payment Mode</th>
+                                        <th>Cheque Number</th>
+                                        <th>Bank Name</th>
+                                        <th>Amount</th>
+                                        <th>Author Amount</th>
+                                        <th>Oup Amount</th>
+                                        <th>Payment Date</th>
+                                    </tr>                                    
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="items in AuthorPublisherStatement_Detail">
+                                        <td>{{index + 1}}</td>
+                                        <td>{{items.Percentage}}</td>
+                                        <td>{{items.PaymentMode}}</td>
+                                        <td>{{items.ChequeNumber}}</td>
+                                        <td>{{items.BankName}}</td>
+                                        <td>{{items.Amount}}</td>
+                                        <td>{{items.AuthorAmount}}</td>
+                                        <td>{{items.OupAmount}}</td>
+                                        <td>{{items.PaymentDate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" align="right">Total Amount</td>
+                                        <td>{{totalAmount}}</td>
+                                        <td colspan="3">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+

@@ -1,0 +1,443 @@
+﻿
+<script src="~/js/PermissionsInbound/ImageVideoUpdate.js"></script>
+<div class="modal-body">
+    <button type="button" class="close CloseValue" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+  
+
+    @*<form name="userForm" class=" form-horizontal"  >*@
+    <div class="row panel" >
+
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Image Video Bank Data
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body clearfix">
+                    <div class="col-md-12">
+                        <div class=" row">
+                            <div class="col-md-6">
+
+
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Contract Type @*&nbsp; <span class="red">*</span>*@ </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContractTypes.$dirty) && userForm.ContractTypes.$invalid } ">
+                                                <input type="text" name="ContractTypes" class="form-control" @*ng-required="ReqImageVedio"*@ ng-model="user.ContractTypes" placeholder="Contract Type">
+
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.ContractTypes.$error.required && (userForm.ContractTypes.$dirty || submitted)" class="help-block red">Please enter Contract Type </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Image Video Bank Id  &nbsp; <span class="red">*</span> </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.imagevideobankid.$dirty) && userForm.imagevideobankid.$invalid } ">
+                                                <input type="text" name="imagevideobankid" class="form-control" ng-required="ReqImageVedio" ng-model="user.imagevideobankid" placeholder="Image Video Bank Id">
+
+
+
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.imagevideobankid.$error.required && (userForm.imagevideobankid.$dirty || submitted)" class="help-block red">Please enter Image Video Bank Id </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Description  &nbsp; <span class="red">*</span> </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Description.$dirty) && userForm.Description.$invalid } ">
+                                                <textarea name="Description" class="form-control" ng-required="ReqImageVedio" ng-model="user.Description" placeholder="Description"></textarea>
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.Description.$error.required && (userForm.Description.$dirty || submitted)" class="help-block red">Please enter Description </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Invoice Number &nbsp; <span class="red">*</span> </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.invoiceno.$dirty) && userForm.invoiceno.$invalid } ">
+                                                <input type="text" name="invoiceno" class="form-control" ng-required="ReqImageVedio" ng-model="user.invoiceno" placeholder="Invoice Number">
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.invoiceno.$error.required && (userForm.invoiceno.$dirty || submitted)" class="help-block red">Please enter Invoice Number </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Invoice Value &nbsp; <span class="red">*</span> </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.invoicevalue.$dirty) && userForm.invoicevalue.$invalid } ">
+                                                <input type="number" min="0" name="invoicevalue" class="form-control" ng-required="ReqImageVedio" ng-model="user.invoicevalue" placeholder="Invoice Value">
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.invoicevalue.$error.required && (userForm.invoicevalue.$dirty || submitted)" class="help-block red">Please enter Invoice Value </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Invoice Date @*&nbsp;<span class="red">*</span>*@</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.invoicedate.$dirty) && userForm.invoicedate.$invalid } ">
+                                                <div class="input-group input-append date invoicedate date-set">
+                                                    <input type="text" name="invoicedate" class="form-control" id="invoicedate" @*ng-required="ReqImageVedio"*@ ng-model="user.invoicedate" onchange="angular.element(document.getElementById('angularid')).scope().invoicedateValue(this);" placeholder="Invoice Date">
+                                                    <span class=" input-group-btn">
+                                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                </div>
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.invoicedate.$error.required && (userForm.invoicedate.$dirty || submitted)" class="help-block red">Please enter Invoice Date</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        var date = new Date();
+                                        var TodayDate = new Date();
+                                        date.setDate(date.getYear - 100);
+
+                                        $('.invoicedate')
+                                          .datepicker({
+                                              format: "dd/mm/yyyy",
+
+                                              showButtonPanel: true,
+                                              autoclose: true,
+
+
+                                          })
+
+
+                                    });
+
+
+                                </script>
+
+
+
+
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Vendor Name&nbsp;<span class="red">*</span>  </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.PartyName.$dirty) && userForm.PartyName.$invalid } ">
+                                                <input type="text" name="PartyName" ng-required="ReqImageVedio" class="form-control" ng-model="user.PartyName" placeholder="Vendor Name">
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.PartyName.$error.required && (userForm.PartyName.$dirty || submitted)" class="help-block red">Please enter Vendor Name </p>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                   
+                                
+
+
+
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Currency&nbsp;<span class="red">*</span></label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.CurrencyValue.$dirty) && userForm.CurrencyValue.$invalid } ">
+                                                <select ng-model="user.Currency"
+                                                        class="form-control"
+                                                        ng-required="ReqImageVedio"
+                                                        name="CurrencyValue"
+                                                        id="CurrencyValueData">
+                                                    <option value="">--Please Select--</option>
+                                                    <option ng-repeat="div in CurrencyList" ng-model="user.Currency" value="{{div.Id}}" ng-selected="{{div.Id == user.Currency }}">{{div.CurrencyName}}</option>
+
+                                                </select>
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.CurrencyValue.$error.required && (userForm.CurrencyValue.$dirty || submitted)">Please select Currency</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Print Quantity @*&nbsp; <span class="red">*</span>*@ </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.printquantity.$dirty) && userForm.printquantity.$invalid } ">
+                                                <input type="number" min="0" name="printquantity" class="form-control" @*ng-required="ReqImageVedio"*@ ng-model="user.printquantity" placeholder="Print Quantity">
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.printquantity.$error.required && (userForm.printquantity.$dirty || submitted)" class="help-block red">Please enter Print Quantity </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Permission Expiry Date @*&nbsp;<span class="red">*</span>*@</label>
+                                        <div class="col-md-7">
+                                            <div class="form-group date" ng-class="{ 'has-error': ( submitted ||userForm.permissionexpirydate.$dirty) && userForm.permissionexpirydate.$invalid } ">
+                                                <div class="input-group input-append date permissionexpirydate date-set">
+                                                    <input type="text" name="permissionexpirydate" @*ng-required="ReqImageVedio"*@ class="form-control" id="permissionexpirydate" ng-model="user.permissionexpirydate" onchange="angular.element(document.getElementById('angularid')).scope().permissionexpirydateValue(this);" placeholder="Permission Expiry Date">
+                                                    <span class=" input-group-btn">
+                                                        <button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                </div>
+                                                <div class="help-block">
+                                                    <p ng-show="userForm.permissionexpirydate.$error.required && (userForm.permissionexpirydate.$dirty || submitted)" class="help-block red">Please enter Permission Expiry Date</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+
+
+                                        $('.permissionexpirydate')
+                                            .datepicker({
+                                                format: "dd/mm/yyyy",
+
+                                                showButtonPanel: true,
+                                                autoclose: true,
+
+
+                                            })
+
+
+
+                                    });
+
+
+                                </script>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Web-link &nbsp; <span class="red">*</span> </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.weblink.$dirty) && userForm.weblink.$invalid } ">
+                                                <input type="text" name="weblink" class="form-control" ng-required="ReqImageVedio" ng-model="user.weblink" placeholder="Web-link">
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.weblink.$error.required && (userForm.weblink.$dirty || submitted)" class="help-block red">Please enter Web-link </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Credit Line &nbsp; <span class="red">*</span> </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.creditlines.$dirty) && userForm.creditlines.$invalid } ">
+                                                <input type="text" name="creditlines" class="form-control" ng-required="ReqImageVedio" ng-model="user.creditlines" placeholder="Credit Line">
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.creditlines.$error.required && (userForm.creditlines.$dirty || submitted)" class="help-block red">Please enter Credit Line </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Editorial only &nbsp; <span class="red">*</span> </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.EditorialonlyType.$dirty) && userForm.EditorialonlyType.$invalid } ">
+                                                <input type="text" name="EditorialonlyType" class="form-control" ng-required="ReqImageVedio" ng-model="user.EditorialonlyType" placeholder="Editorial only">
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.EditorialonlyType.$error.required && (userForm.EditorialonlyType.$dirty || submitted)" class="help-block red">Please enter Editorial only</p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Remarks @*&nbsp; <span class="red">*</span>*@ </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Remarks.$dirty) && userForm.Remarks.$invalid } ">
+                                                <textarea name="Remarks" class="form-control" @*ng-required="ReqImageVedio"*@ ng-model="user.Remarks" placeholder="Remarks"></textarea>
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.Remarks.$error.required && (userForm.Remarks.$dirty || submitted)" class="help-block red">Please enter Remarks </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-5">Usage  </label>
+                                        <div class="col-md-7">
+                                            <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.Usage.$dirty) && userForm.Usage.$invalid } ">
+                                                <input type="text" name="Usage" class="form-control" ng-model="user.Usage" placeholder="Usage">
+
+                                                <div class="help-block">
+
+                                                    <p ng-show="userForm.Usage.$error.required && (userForm.Usage.$dirty || submitted)" class="help-block red">Please enter Usage </p>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <input type="hidden" value="user.hid_ImageVideoBankId" ng-model="user.hid_ImageVideoBankId" id="hid_ImageVideoBankId" name="hid_ImageVideoBankId">
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+
+                    <button type="submit" class="btn green"  id="btnSubmit1">Submit</button>
+                   
+                    <div class="clearfix">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   
+    @*</form>*@
+
+</div>
+
