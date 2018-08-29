@@ -705,7 +705,7 @@ namespace SLV.Web.Areas.Product.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.productcode + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingTitle + "<br />" + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingSubProduct + "<br />" + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.OUPISBN + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.OUPISBN == null || data.OUPISBN == "" ? "" : Convert.ToString("&nbsp;" + data.OUPISBN)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ContractDate + "</td>");
 

@@ -1425,7 +1425,7 @@ namespace SLV.Web.Areas.Master.Controllers
                 //    mstr_searchparameter.Append("<td><b>Address </b></td>");
 
                 //    mstr_searchparameter.Append("<td><b>PAN </b></td>");
-                //    mstr_searchparameter.Append("<td><b> Aadhar Card No. </b></td>");
+                //    mstr_searchparameter.Append("<td><b> Aadhaar Card No. </b></td>");
 
 
 
@@ -1510,7 +1510,7 @@ namespace SLV.Web.Areas.Master.Controllers
                     mstr_searchparameter.Append("<td><b> Mobile</b></td>");
                     mstr_searchparameter.Append("<td><b> Fax</b></td>");
                     mstr_searchparameter.Append("<td><b>PAN </b></td>");
-                    mstr_searchparameter.Append("<td><b> Aadhar Card No. </b></td>");
+                    mstr_searchparameter.Append("<td><b> Aadhaar Card No. </b></td>");
                     mstr_searchparameter.Append("<td><b> Date of Birth</b></td>");
                     mstr_searchparameter.Append("<td><b>  Demise  Date</b></td>");
                     mstr_searchparameter.Append("<td><b> Account No. </b></td>");

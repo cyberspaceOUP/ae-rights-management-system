@@ -677,6 +677,7 @@
                             <thead class="flip-content">
                                 <tr>
                                     <th>SNo</th>
+                                    <th>ISBN</th>
                                     <th>Impression Date</th>
                                     <th>Quantity Printed</th>
                                     <th @*ng-if="ProductModel.printquantitytype!='Unrestricted'"*@>Balance Quantity</th>
@@ -686,6 +687,11 @@
                             <tbody>
                                 <tr ng-repeat="obj in ImpressionList">
                                     <td><span ng-bind="$index + 1"></span></td>
+                                    <td>
+                                        <span ng-bind="(obj.ISBN)"></span>
+
+                                    </td>
+
                                     <td>
                                         <span ng-bind="(obj.ImpressionDate)"></span>
                                     </td>
@@ -904,7 +910,8 @@
                 ContractId: ContractId
             }
             
-            var ImpressionDetails = AJService.PostDataToAPI("Addendum/ImpressionDetails", _ImpressionDetails);
+            //var ImpressionDetails = AJService.PostDataToAPI("Addendum/ImpressionDetails", _ImpressionDetails);
+            var ImpressionDetails = AJService.PostDataToAPI("Addendum/ImpressionDetailsListForLicense", _ImpressionDetails);
             ImpressionDetails.then(function (ImpressionData) {
                 //$scope.ImpressionList = ImpressionData.data;
 
@@ -960,6 +967,7 @@
                             'ImpressionDate': ImpressionData.data[j].ImpressionDate,
                             'QunatityPrinted': ImpressionData.data[j].QunatityPrinted,
                             'BalanceQty': $scope.ImpressionBalance,
+                            'ISBN': ImpressionData.data[j].ISBN,
                         });
                     }
                 }
@@ -969,6 +977,7 @@
                             'ImpressionDate': ImpressionData.data[j].ImpressionDate,
                             'QunatityPrinted': ImpressionData.data[j].QunatityPrinted,
                             'BalanceQty': ImpressionData.data[j].BalanceQty,
+                            'ISBN': ImpressionData.data[j].ISBN,
                         });
                     }
 
@@ -976,6 +985,7 @@
                         'ImpressionDate': ImpressionData.data[j].ImpressionDate,
                         'QunatityPrinted': ImpressionData.data[j].QunatityPrinted,
                         'BalanceQty': $scope.ImpressionBalance,
+                        'ISBN': ImpressionData.data[j].ISBN,
                     });
                 }
 

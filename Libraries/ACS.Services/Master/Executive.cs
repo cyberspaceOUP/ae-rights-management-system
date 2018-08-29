@@ -202,7 +202,7 @@ namespace ACS.Services.Master
         public void InsertExecutiveLoginHistory(ExecutiveLoginHistory exloginHistory)
         {
             exloginHistory.Deactivate = "N";
-            exloginHistory.EnteredBy = 10;
+            //exloginHistory.EnteredBy = 10;
             exloginHistory.EntryDate = DateTime.Now;
             exloginHistory.ModifiedBy = null;
             exloginHistory.ModifiedDate = null;
@@ -258,7 +258,7 @@ namespace ACS.Services.Master
 
         public ExecutiveLoginHistory GetExecutiveHistoryByUserName(string executiveName)
         {
-            return _executiveloginRepository.Table.Where(i => i.ExecutiveUserName == executiveName).FirstOrDefault();
+            return _executiveloginRepository.Table.Where(i => i.ExecutiveUserName == executiveName).OrderByDescending(i => i.Id).FirstOrDefault();
         }
 
 
@@ -358,7 +358,10 @@ namespace ACS.Services.Master
 
         #endregion
 
-
+       public IList<ExecutiveLoginHistory> GetExecutiveHistoryList(string executiveName)
+       {
+           return _executiveloginRepository.Table.Where(i => i.ExecutiveUserName == executiveName).ToList();
+       }
 
     }
 }

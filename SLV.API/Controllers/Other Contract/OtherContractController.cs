@@ -291,7 +291,7 @@ namespace SLV.API.Controllers.Other_Contract
                 else
                 {
 
-                    if (OtherContract.UpdateRight=="rt" )
+                    if (OtherContract.UpdateRight == "rt" || OtherContract.UpdateRight == "fc")
                     {
                         OtherContractLink mobj_OtherContractLink = _OtherContractLink.Table.Where(i => i.othercontractid == OtherContract.Id && i.Deactivate == "N").FirstOrDefault();
 
@@ -861,17 +861,22 @@ namespace SLV.API.Controllers.Other_Contract
             
             Contract_Signed_By_Executive OtherContractDocuments2 = new Contract_Signed_By_Executive();
 
-
-            var documents2 = _OtherContractLinkDocument.Table.Where(a => a.othercontractLinkid == _OtherContractLintList.Id && a.Deactivate == "N").ToList();
-
-
-            OtherContractDocuments2.DocumentlinkIds = documents2.Select(i => i.Id).ToArray();
+            if (_OtherContractLintList != null)
+            {
+                var documents2 = _OtherContractLinkDocument.Table.Where(a => a.othercontractLinkid == _OtherContractLintList.Id && a.Deactivate == "N").ToList();
 
 
-            OtherContractDocuments2.DocumentnameLink = documents2.Select(i => i.DocumentnameLink).ToArray();
-            foreach (var docs in documents2)
-                OtherContractDocuments2.documentfileLink = OtherContractDocuments2.documentfileLink + docs.documentfileLink + ",";
+                OtherContractDocuments2.DocumentlinkIds = documents2.Select(i => i.Id).ToArray();
 
+
+                OtherContractDocuments2.DocumentnameLink = documents2.Select(i => i.DocumentnameLink).ToArray();
+                foreach (var docs in documents2)
+                    OtherContractDocuments2.documentfileLink = OtherContractDocuments2.documentfileLink + docs.documentfileLink + ",";
+            }
+            else
+            {
+                OtherContractDocuments2 = new Contract_Signed_By_Executive();
+            }
 
             if (_ContractImageBank != null)
             {

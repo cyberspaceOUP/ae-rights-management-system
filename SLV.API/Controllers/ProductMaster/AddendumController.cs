@@ -15,9 +15,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ACS.Services.User;
-
 using ACS.Core.Data;
 using Logger;
+using SLV.Model;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace SLV.API.Controllers.ProductMaster
 {
@@ -665,6 +667,105 @@ namespace SLV.API.Controllers.ProductMaster
             var _expiryDate = _ProductLicenseUpdateDetails.Table.Where(a => a.Deactivate == "N" && a.LicenseId == LicenseId).OrderByDescending(a => a.EntryDate).Select(a => a.Expirydate).FirstOrDefault();
             return Json(_expiryDate);
         }
+
+        //--added by prakash on 03 April, 2018
+        [HttpPost]
+        public IHttpActionResult ImpressionDetailsList(ImpressionDetailsListModel _ImpressionDetails)
+        {
+            SqlParameter[] parameters = new SqlParameter[3];
+            parameters[0] = new SqlParameter("ProductId", SqlDbType.VarChar, 50);
+            if (_ImpressionDetails.ProductId == 0)
+            {
+                parameters[0].Value = System.Data.SqlTypes.SqlInt32.Null;
+            }
+            else
+            {
+                parameters[0].Value = _ImpressionDetails.ProductId;
+            }
+
+            parameters[1] = new SqlParameter("LicenseId", SqlDbType.VarChar, 50);
+            if (_ImpressionDetails.LicenseId == 0)
+            {
+                parameters[1].Value = System.Data.SqlTypes.SqlInt32.Null;
+            }
+            else
+            {
+                parameters[1].Value = 0;
+            }
+
+            parameters[2] = new SqlParameter("ContractId", SqlDbType.VarChar, 50);
+            if (_ImpressionDetails.ContractId == 0)
+            {
+                parameters[2].Value = System.Data.SqlTypes.SqlInt32.Null;
+            }
+            else
+            {
+                parameters[2].Value = _ImpressionDetails.ContractId;
+            }
+            
+            var _ImpressionDetailsList = _dbContext.ExecuteStoredProcedureListNewData<ImpressionDetailsListModel>("Proc_ImpressionDetailsList_get", parameters).ToList();
+            return Json(_ImpressionDetailsList);
+        }
+
+
+        [HttpPost]
+        public IHttpActionResult ImpressionDetailsListForLicense(ImpressionDetails ImpressionDetails)
+        {
+            //IList<ImpressionDetails> _ImpressionDetails = _AddendumServices.GetImpressionDetails(ImpressionDetails).ToList();
+
+            SqlParameter[] parameters = new SqlParameter[3];
+            parameters[0] = new SqlParameter("ProductId", SqlDbType.VarChar, 50);
+            if (ImpressionDetails.ProductId == 0)
+            {
+                parameters[0].Value = System.Data.SqlTypes.SqlInt32.Null;
+            }
+            else
+            {
+                parameters[0].Value = ImpressionDetails.ProductId;
+            }
+
+            parameters[1] = new SqlParameter("LicenseId", SqlDbType.VarChar, 50);
+            if (ImpressionDetails.LicenseId == 0)
+            {
+                parameters[1].Value = System.Data.SqlTypes.SqlInt32.Null;
+            }
+            else
+            {
+                parameters[1].Value = ImpressionDetails.LicenseId;
+            }
+
+            parameters[2] = new SqlParameter("ContractId", SqlDbType.VarChar, 50);
+            if (ImpressionDetails.ContractId == 0)
+            {
+                parameters[2].Value = System.Data.SqlTypes.SqlInt32.Null;
+            }
+            else
+            {
+                parameters[2].Value = 0;
+            }
+            var _ImpressionDetailsList = _dbContext.ExecuteStoredProcedureListNewData<ImpressionDetailsListModel>("Proc_ImpressionDetailsList_get", parameters).ToList();
+
+            var data = (from Impression in _ImpressionDetailsList
+                        select new
+                        {
+                            ISBN = Impression.ISBN,
+                            ImpressionDate = Impression.ImpressionDate,
+                            QunatityPrinted = Impression.QunatityPrinted,
+                            BalanceQty = Impression.BalanceQty,
+                            AddendumId = Impression.AddendumId,
+                            //------------------------------------------------
+                            Licenseprintquantity = _ProductLicense.Table.Where(a => a.Deactivate == "N" && a.Id == ImpressionDetails.LicenseId).Select(a => a.printquantity).FirstOrDefault(),
+                            LicenseAddendumQuantity = _AddendumDetails.Table.Where(a => a.Deactivate == "N" && a.LicenseId == ImpressionDetails.LicenseId).Select(a => a.AddendumQuantity).ToList(),
+
+                            BalanceQuantityCarryForward = _AddendumDetails.Table.Where(a => a.Deactivate == "N" && a.LicenseId == ImpressionDetails.LicenseId).OrderByDescending(a => a.EntryDate).Select(a => a.BalanceQuantityCarryForward).FirstOrDefault(),
+                            LicenseAddendumQuantity1 = _AddendumDetails.Table.Where(a => a.Deactivate == "N" && a.LicenseId == ImpressionDetails.LicenseId && a.BalanceQuantityCarryForward == "N").OrderByDescending(a => a.EntryDate).Select(a => a.AddendumQuantity).FirstOrDefault(),
+                            CarryForwardAddendunId = _AddendumDetails.Table.Where(a => a.Deactivate == "N" && a.LicenseId == ImpressionDetails.LicenseId && a.BalanceQuantityCarryForward == "N").OrderByDescending(a => a.EntryDate).Select(a => a.Id).FirstOrDefault()
+                            //------------------------------------------------
+                        }).ToList();
+
+            return Json(SerializeObj.SerializeObject(data));
+        }
+
 
     }
 }

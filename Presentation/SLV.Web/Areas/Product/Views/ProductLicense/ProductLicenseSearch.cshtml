@@ -844,7 +844,7 @@
                         </div>
                     }*@
                     
-                    @if (Session["GenerateExcelPermissions"] != null && ViewBag.Report == "report")
+                    @if (Session["GenerateExcelPermissions"] != null && ViewBag.Report == "report" || ViewBag.ViewMore == "LicenseExpired")
                     {
                         <div class="col-md-12 text-center btnPrint">
                             <div class="tools">

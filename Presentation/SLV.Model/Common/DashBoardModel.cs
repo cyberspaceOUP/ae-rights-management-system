@@ -76,6 +76,7 @@ namespace SLV.Model.Common
         public string RightsSellingCode { get; set; }
         public string divisionName { get; set; }
         public string AgreementDate { get; set; }
+        public int ExecutiveId { get; set; }
        
       
     }

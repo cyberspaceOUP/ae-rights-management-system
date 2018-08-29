@@ -46,6 +46,7 @@
     <Compile Include="AuthorContract\AuthorContractSearchmodel.cs" />
     <Compile Include="AuthorContract\AuthorContractModel.cs" />
     <Compile Include="Common\DashBoardModel.cs" />
+    <Compile Include="Common\ImpressionDetailsListModel.cs" />
     <Compile Include="Common\ISBNBagModel.cs" />
     <Compile Include="Common\AuthorModel.cs" />
     <Compile Include="Common\Common.cs" />

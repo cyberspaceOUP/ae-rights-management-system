@@ -84,24 +84,40 @@
    *I*******************************************************************************************************************************/
 
 
-    $scope.getImpressionDetails = function (ProductId, LicenseId, ContractId) {
+    //$scope.getImpressionDetails = function (ProductId, LicenseId, ContractId) {
+    //    var _ImpressionDetails = {
+    //        ProductId: ProductId,
+    //        LicenseId: LicenseId,
+    //        ContractId: ContractId
+    //    }
+
+    //    var ImpressionDetails = AJService.PostDataToAPI("Addendum/ImpressionDetails", _ImpressionDetails);
+    //    ImpressionDetails.then(function (ImpressionData) {
+            
+    //        $scope.ImpressionList = ImpressionData.data;
+    //    }, function () {
+    //        //alert('Error in Getting Impression Details');
+    //    });
+
+    //}
+
+
+     //--get Impression details list also with linked product //--added by prakash on 03 April 2018
+    $scope.getImpressionDetailsList = function (ProductId, LicenseId, ContractId) {
         var _ImpressionDetails = {
             ProductId: ProductId,
-            LicenseId: LicenseId,
             ContractId: ContractId
         }
 
-        var ImpressionDetails = AJService.PostDataToAPI("Addendum/ImpressionDetails", _ImpressionDetails);
+        var ImpressionDetails = AJService.PostDataToAPI("Addendum/ImpressionDetailsList", _ImpressionDetails);
         ImpressionDetails.then(function (ImpressionData) {
-            
+
             $scope.ImpressionList = ImpressionData.data;
         }, function () {
             //alert('Error in Getting Impression Details');
         });
 
     }
-
-
 
 
     $scope.SubProductTypeList = function () {
@@ -284,7 +300,8 @@
 
 
 
-            $scope.getImpressionDetails(_ContractDetails.data._AuhtorContract.ProductId, null, $scope.ContractId);
+            //$scope.getImpressionDetails(_ContractDetails.data._AuhtorContract.ProductId, null, $scope.ContractId);
+            $scope.getImpressionDetailsList(_ContractDetails.data._AuhtorContract.ProductId, null, $scope.ContractId);
 
 
             /*this section is used to populate the section of contract agreement insert after the contrct already created*/
@@ -758,6 +775,72 @@
             return ""
     }
 
+
+    $scope.RemoveAmendmentDocumentLinkById = function (docid, file) {
+
+        SweetAlert.swal({
+            title: "Are you sure?",
+            text: "",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#8CD4F5",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+    function (Confirm) {
+        if (Confirm) {
+
+            var ID = { Id: docid, EnteredBy: $("#enterdBy").val() };
+            var DeleteDocument = AJService.PostDataToAPI("AuthorContact/RemoveAmendmentDocument", ID);
+
+            DeleteDocument.then(function (msg) {
+                if (msg.data != "OK") {
+                    SweetAlert.swal("Oops...", "Please retry!", "error");
+
+                }
+                else {
+
+                    var obj = {};
+                    obj.filename = file;
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        url: $("#hid_documentDeleteUrl").val(),
+                        data: JSON.stringify(obj),
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "Deleted") {
+                                //$scope.getDocumentListAfterDelete();
+                                SweetAlert.swal({
+                                    title: "Success",
+                                    text: "Deleted successfully",
+                                    type: "success"
+                                },
+                                function () {
+                                    window.location.reload();
+                                });
+
+                            }
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                        }
+                    });
+
+
+                }
+            }, function () {
+
+                SweetAlert.swal("Oops...", "Please retry!", "error");
+
+            });
+
+        }
+    });
+
+    }
 
 
     $scope.RemoveDocumentLinkById = function (docid, file) {

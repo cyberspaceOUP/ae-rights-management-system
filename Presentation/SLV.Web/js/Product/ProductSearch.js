@@ -137,7 +137,7 @@ app.controller("MainCtrl", function ($scope, AJService, $window, $compile, Sweet
             ProductCategoryId: $scope.userForm.ProductCategory.$modelValue,
             ProductTypeId: $('input[type=radio][name*=ProductType]:checked').val(),
             SubDivisionId: $('select[name*=SubDivision]').val(),
-            SubProductType: $('select[name*=SubProductType]').val(),
+            SubProductTypeId: $('select[name*=SubProductType]').val(),
             //ProjectCode: $scope.userForm.ProjectCode.$modelValue,
             ProductCode: $scope.userForm.ProjectCode.$modelValue,
             OupIsbn: $scope.userForm.OUPISBN.$modelValue,

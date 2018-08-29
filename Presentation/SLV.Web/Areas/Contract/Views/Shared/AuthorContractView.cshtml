@@ -106,6 +106,7 @@
                             <thead class="flip-content">
                                 <tr>
                                     <th>SNo</th>
+                                    <th>ISBN</th>
                                     <th>Impression Date</th>
                                     <th>Quantity Printed</th>
                                     <th>Balance Quantity</th>
@@ -115,6 +116,11 @@
                             <tbody>
                                 <tr ng-repeat="obj in ImpressionList">
                                     <td><span ng-bind="$index + 1"></span></td>
+                                    <td>
+                                        <span ng-bind="(obj.ISBN)"></span>
+
+                                    </td>
+
                                     <td>
                                         <span ng-bind="(obj.ImpressionDate)"></span>
 

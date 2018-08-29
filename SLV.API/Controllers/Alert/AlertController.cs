@@ -71,9 +71,11 @@ namespace SLV.API.Controllers.Alert
 
         public IList<DashBoardModel> PendingAuthorContractRequestData(DashBoardModel Flag)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = new SqlParameter("Flag", SqlDbType.VarChar, 200);
             parameters[0].Value = "'" + Flag.Flag + "'";
+            parameters[1] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[1].Value = "'" + Flag.ExecutiveId + "'";
 
             var _GetPendingAuthorContractRequest = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_PendingAuthorContractRequest_get", parameters).ToList();
 
@@ -415,9 +417,11 @@ namespace SLV.API.Controllers.Alert
          */
         public IList<DashBoardModel> ISBN_Not_Entered(DashBoardModel Flag)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = new SqlParameter("Flag", SqlDbType.VarChar, 200);
             parameters[0].Value = "'" + Flag.Flag + "'";
+            parameters[1] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[1].Value = "'" + Flag.ExecutiveId + "'";
 
             var _GetList = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Product_ISBN_Entered_Is_NOT_Null_Dash_get", parameters).ToList();
 
@@ -612,9 +616,11 @@ namespace SLV.API.Controllers.Alert
          */
         public IList<DashBoardModel> SAPAgreementNumberNotEntered(DashBoardModel Flag)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = new SqlParameter("Flag", SqlDbType.VarChar, 200);
             parameters[0].Value = "'" + Flag.Flag + "'";
+            parameters[1] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[1].Value = "'" + Flag.ExecutiveId + "'";
 
             var _GetList = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Product_SAP_Agr_No_Not_Entered_Desh_get", parameters).ToList();
 
@@ -806,9 +812,11 @@ namespace SLV.API.Controllers.Alert
          */
         public IList<DashBoardModel> RightsSellingContractExpiryDate(DashBoardModel Flag)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = new SqlParameter("Flag", SqlDbType.VarChar, 200);
             parameters[0].Value = "'" + Flag.Flag + "'";
+            parameters[1] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[1].Value = "'" + Flag.ExecutiveId + "'";
 
             var _GetList = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_RightSaleContractExpiring_get", parameters).ToList();
 
@@ -2877,9 +2885,11 @@ namespace SLV.API.Controllers.Alert
          */
         public IList<DashBoardModel> ListInboundPermissionNotEntered(DashBoardModel Flag)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = new SqlParameter("Flag", SqlDbType.VarChar, 200);
             parameters[0].Value = "'" + Flag.Flag + "'";
+            parameters[1] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[1].Value = "'" + Flag.ExecutiveId + "'";
 
             var _GetList = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_InboundPermissionNotEntered_get", parameters).ToList();
 
@@ -3050,9 +3060,11 @@ namespace SLV.API.Controllers.Alert
          */
         public IList<DashBoardModel> ListBalanceQuantityProductLicense(DashBoardModel Flag)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = new SqlParameter("Flag", SqlDbType.VarChar, 200);
             parameters[0].Value = "'" + Flag.Flag + "'";
+            parameters[1] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[1].Value = "'" + Flag.ExecutiveId + "'";
 
             var _GetList = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_ProductLicenseExpired_get", parameters).ToList();
 

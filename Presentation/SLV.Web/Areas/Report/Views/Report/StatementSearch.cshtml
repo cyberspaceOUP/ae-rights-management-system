@@ -42,7 +42,118 @@
 
                             <div class="row">
                                 <div class="col-md-12">
+                                    <h4>Entry Date</h4>
+                                    <hr style="border: 0.5px solid #F45B43;" />
+                                    &nbsp;
+                                </div>
 
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">From Month&nbsp;</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" >
+                                                        <select name="EntryFromMonth" ng-model="EntryFromMonth" class="form-control">
+                                                            <option value>Select From Month</option>
+                                                            <option value='01'>Janaury</option>
+                                                            <option value='02'>February</option>
+                                                            <option value='03'>March</option>
+                                                            <option value='04'>April</option>
+                                                            <option value='05'>May</option>
+                                                            <option value='06'>June</option>
+                                                            <option value='07'>July</option>
+                                                            <option value='08'>August</option>
+                                                            <option value='09'>September</option>
+                                                            <option value='10'>October</option>
+                                                            <option value='11'>November</option>
+                                                            <option value='12'>December</option>
+                                                        </select>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">From Year&nbsp;</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.EntryFromYear.$dirty) && userForm.EntryFromYear.$invalid } ">
+                                                        <input type="number" name="EntryFromYear" ng-model="EntryFromYear" class="form-control" placeholder="From Year" ng-pattern="/^[0-9]{4}$/"
+                                                               maxlength="4" ng-required="!(EntryFromMonth==null)">
+
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.EntryFromYear.$error.required && (userForm.EntryFromYear.$dirty || submitted)" class="help-block red">Please enter from year </p>
+                                                            <p ng-show="userForm.EntryFromYear.$error.pattern" class="help-block red">Please enter valid from year</p>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">To Month&nbsp; </label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" >
+                                                        <select name="EntryToMonth" ng-model="EntryToMonth" class="form-control">
+                                                            <option value>Select To Month</option>
+                                                            <option value='01'>Janaury</option>
+                                                            <option value='02'>February</option>
+                                                            <option value='03'>March</option>
+                                                            <option value='04'>April</option>
+                                                            <option value='05'>May</option>
+                                                            <option value='06'>June</option>
+                                                            <option value='07'>July</option>
+                                                            <option value='08'>August</option>
+                                                            <option value='09'>September</option>
+                                                            <option value='10'>October</option>
+                                                            <option value='11'>November</option>
+                                                            <option value='12'>December</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label col-md-5">To Year&nbsp;</label>
+                                                <div class="col-md-7">
+                                                    <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.EntryToYear.$dirty) && userForm.EntryToYear.$invalid } ">
+                                                        <input type="number" name="EntryToYear" ng-model="EntryToYear" class="form-control" placeholder="To Year" ng-pattern="/^[0-9]{4}$/"
+                                                               maxlength="4" ng-required="!(EntryToMonth==null) && !(ToMonth==null)">
+
+                                                        <div class="help-block">
+                                                            <p ng-show="userForm.EntryToYear.$error.required && (userForm.EntryToYear.$dirty || submitted)" class="help-block red">Please enter to year </p>
+                                                            <p ng-show="userForm.EntryToYear.$error.pattern" class="help-block red">Please enter valid to year</p>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <h4>Instrument Date</h4>
+                                    <hr style="border: 0.5px solid #F45B43;"/>
+                                    &nbsp;
+                                </div>
+                                
+                                <div class="col-md-12">
                                     <div class="col-md-6">
 
                                         <div class="form-group">

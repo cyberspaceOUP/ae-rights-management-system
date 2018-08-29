@@ -41,12 +41,15 @@ namespace SLV.API.Controllers.Alert
         #endregion
 
         private readonly IDbContext _dbContext;
+        private readonly IServiceApplicationEmailSetup _IServiceApplicationEmailSetup;
 
         public SchedulerController(
                  IDbContext dbContext
+            , IServiceApplicationEmailSetup IServiceApplicationEmailSetup
             )
         {
             this._dbContext = dbContext;
+            this._IServiceApplicationEmailSetup = IServiceApplicationEmailSetup;
         }
 
 
@@ -58,6 +61,12 @@ namespace SLV.API.Controllers.Alert
         {
             try
             {
+                AlertSchedulerMaster _AlertSchedulerMaster = new AlertSchedulerMaster();
+                _AlertSchedulerMaster.SchedulerName = "UnblockISBN";
+                _AlertSchedulerMaster.SchedulerDate = DateTime.Now;
+
+                _IServiceApplicationEmailSetup.InsertAlertScheduler(_AlertSchedulerMaster);
+
                 var _GetStatus = _dbContext.ExecuteStoredProcedureListNewData<SLV.Model.Common.Common>("Proc_unblockISBN_set").ToList();
                 return Json("OK");
             }

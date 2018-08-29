@@ -151,7 +151,8 @@
             confirmButtonColor: "#8CD4F5",
             confirmButtonText: "Yes",
             closeOnConfirm: false,
-            closeOnCancel: true
+            closeOnCancel: true,
+            showLoaderOnConfirm: true
         },
             function (Confirm) {
                 if (Confirm) {
@@ -189,7 +190,8 @@
 
                     },
                     function () {
-                        alert('There is some error in the system');
+                        SweetAlert.swal("", "Please validate details.", "warning");
+                        //alert('There is some error in the system');
                     });
 
                 }

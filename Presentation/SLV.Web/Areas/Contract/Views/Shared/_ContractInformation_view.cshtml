@@ -150,6 +150,14 @@
                         <label class="control-label"><span ng-bind="AmendmentRemarks"></span>  </label>
                     </div>
                 </div>
+                <div class="col-md-12" ng-if="Amendment!=false && Docurl1.length">
+                    <label class="control-label col-md-5 col-xs-6 col-sm-6">&nbsp;</label>
+                    <div class="col-md-7 col-xs-6 col-sm-6">
+                        <label class="radio-inline">
+                            <span data-toggle="modal" style="color: #ee5941;" data-target="#myAuthorContractView">View Document </span>
+                        </label>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <label class="control-label col-md-5 col-xs-6 col-sm-6">Restrictions</label>
                     <div class="col-md-7 col-xs-6 col-sm-6">
@@ -198,5 +206,66 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+
+<!--popup for Amendment document-->
+<div class="modal fade bs-example-modal-lg" id="myAuthorContractView" tabindex=" -1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document" style="width:90%;">
+        <div class="modal-body ">
+            <button type="button" class="close CloseValue" data-dismiss="modal" style="padding:20px; padding-top :20px;">&times;</button>
+
+            <div class="row panel">
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Amendment Attached Document
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:void(0);" class="collapse"> </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class=" row">
+
+                                    <div class="col-md-12" ng-show="Docurl1.length">
+                                        <div id="doclistid" style=" padding-left: 29px;">
+                                            <div class="panel-body">
+
+                                                <table class="table table-striped table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Document Name</th>
+                                                            <th>Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="url in Docurl1">
+                                                            <td>{{ $index + 1 }} <input type="hidden" name="DocId1" value="{{url.DocId1}}" /></td>
+                                                            <td><a href="~/uploads/{{url.text1}}" target="_blank" style="color: black;">{{url.name1}}</a></td>
+                                                            <td><a style=" color: black; cursor:pointer;" ng-click="RemoveAmendmentDocumentLinkById(url.DocId1,url.text1)">Delete</a></td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>

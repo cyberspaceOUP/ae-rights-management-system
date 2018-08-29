@@ -53,7 +53,10 @@
                                 <tr ng-repeat="M in OtherContractList">
                                     <td>{{$index +1}}</td>
                                     <td>
-                                        <input type="radio" name="Check_OtherUpdate" ng-model="Check_OtherUpdate" ng-click="ViewCopyRightHolderById(M.CopyRightHolderId,M.InboundOthersId, M.CopyRightHolder, M.CopyRightHolderMasterId[0].CopyRightHolderMasterId)" data-toggle="modal" data-target="#UpdateOther" value="Check_OtherUpdate">
+                                        <input type="radio" name="Check_OtherUpdate" ng-model="Check_OtherUpdate" 
+                                               ng-click="ViewCopyRightHolderById(M.CopyRightHolderId,M.InboundOthersId, M.CopyRightHolder, M.CopyRightHolderMasterId[0].CopyRightHolderMasterId)" 
+                                               data-toggle="modal" data-target="#UpdateOther" value="Check_OtherUpdate">
+
                                         <input type="hidden" ng-model="hid_CopyRightHolderById" name="hid_CopyRightHolderById" id="hid_CopyRightHolderById" />
                                     </td>
 

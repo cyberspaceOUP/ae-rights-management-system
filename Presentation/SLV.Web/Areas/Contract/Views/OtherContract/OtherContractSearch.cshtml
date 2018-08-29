@@ -951,13 +951,13 @@
                                                 <div class="tooltip-content">
                                                     <div class="linking">
                                                         <ul>
-                                                            <li><a ng-if="OtherContract.Flag == '0' && '@TempData["UpdateRights"]'=='rt' && '@TempData["Action"]' == 'update'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
-                                                            <li><a ng-if="OtherContract.Flag == '1' && '@TempData["UpdateRights"]'=='rt' && '@TempData["Action"]' == 'update'" ng-click="ViewOtherContractData(OtherContract.Id)  " style="cursor: pointer">View Other Contract</a></li>
+                                                            <li><a ng-if="OtherContract.Flag == '0' && ('@TempData["UpdateRights"]'=='rt' || '@TempData["UpdateRights"]'=='fc') && '@TempData["Action"]' == 'update'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
+                                                            <li><a ng-if="OtherContract.Flag == '1' && ('@TempData["UpdateRights"]'=='rt' || '@TempData["UpdateRights"]'=='fc') && '@TempData["Action"]' == 'update'" ng-click="ViewOtherContractData(OtherContract.Id)  " style="cursor: pointer">View Other Contract</a></li>
 
                                                             <li><a ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]'=='sa')  && '@TempData["Action"]' == 'update'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
                                                             <li><a ng-click="ViewOtherContractData(OtherContract.Id)  " ng-if="'@TempData["Action"]' =='view'" style=" cursor :pointer">View Other Contract</a></li>
                                                             
-                                                            <li><a ng-if="OtherContract.Flag == '0' && '@TempData["UpdateRights"]'=='rt'  && '@TempData["BackToSearch"]' == 'backtosearch'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
+                                                            <li><a ng-if="OtherContract.Flag == '0' && ('@TempData["UpdateRights"]'=='rt'  || '@TempData["UpdateRights"]'=='fc')  && '@TempData["BackToSearch"]' == 'backtosearch'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
                                                             <li><a ng-if="('@TempData["UpdateRights"]'=='ad' || '@TempData["UpdateRights"]'=='sa')  && '@TempData["BackToSearch"]' == 'backtosearch'" ng-click="EditOtherContractData(OtherContract.Id)" style="cursor: pointer">Update Other Contract</a></li>
                                                             <li><a ng-click="ViewOtherContractData(OtherContract.Id)  " ng-if="'@TempData["BackToSearch"]' == 'backtosearch'" style=" cursor :pointer">View Other Contract</a></li>
 

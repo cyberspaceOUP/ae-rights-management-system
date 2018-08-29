@@ -54,19 +54,29 @@ namespace SLV.API.Controllers
 
         //-----Modified by Prakash on 1/09/2016
         [HttpGet]
-        public IHttpActionResult AuthorContractProduct()
+        public IHttpActionResult AuthorContractProduct(int ExecutiveId)
         {
             //return Json(_ProductMasterService.AuthorProductNotSigned());
-            var _GetAuthorContractNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_AuthorContractNotEntered_get").ToList();
+
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetAuthorContractNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_AuthorContractNotEntered_get", parameters).ToList();
             return Json(_GetAuthorContractNotEntered);
         }
 
         //-----Modified by Prakash on 30/08/2016
         [HttpGet]
-        public IHttpActionResult ProductLicenseNotEntered()
+        public IHttpActionResult ProductLicenseNotEntered(int ExecutiveId)
         {
             //return Json(_ProductMasterService.LicenceProductNotSigned());
-            var _GetLicenceProductNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_ProductLicenseNotEntered_get").ToList();
+
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetLicenceProductNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_ProductLicenseNotEntered_get", parameters).ToList();
             return Json(_GetLicenceProductNotEntered);
         }
 
@@ -100,22 +110,34 @@ namespace SLV.API.Controllers
 
         }
 
-        public IHttpActionResult Product_ISBN_entered()
+        public IHttpActionResult Product_ISBN_entered(int ExecutiveId)
         {
-            var _GetProductLicensesAddendumsSearch = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Product_ISBN_entered_Dash_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetProductLicensesAddendumsSearch = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Product_ISBN_entered_Dash_get", parameters).ToList();
             return Json(_GetProductLicensesAddendumsSearch);
         }
 
-        public IHttpActionResult Product_SAP_Agr_No_Not_Entered()
+        public IHttpActionResult Product_SAP_Agr_No_Not_Entered(int ExecutiveId)
         {
-            var _GetProductLicensesAddendumsSearch = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Product_SAP_Agr_No_Not_Entered_Desh_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetProductLicensesAddendumsSearch = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Product_SAP_Agr_No_Not_Entered_Desh_get", parameters).ToList();
             return Json(_GetProductLicensesAddendumsSearch);
         }
 
         //Added by Suranjana on 21/07/2016
-        public IHttpActionResult Product_ISBN_Is_Not_Null()
+        public IHttpActionResult Product_ISBN_Is_Not_Null(int ExecutiveId)
         {
-            var _GetProductForIsbnEnteredSearch = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Product_ISBN_Entered_Is_NOT_Null_Dash_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetProductForIsbnEnteredSearch = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Product_ISBN_Entered_Is_NOT_Null_Dash_get", parameters).ToList();
             return Json(_GetProductForIsbnEnteredSearch);
         }
 
@@ -129,23 +151,35 @@ namespace SLV.API.Controllers
 
         //-----Added by Prakash 
         //-------------Get Detail list of Pending Author Contract Request on 30/08/2016
-        public IHttpActionResult PendingAuthorContractRequest()
+        public IHttpActionResult PendingAuthorContractRequest(int ExecutiveId)
         {
-            var _GetPendingAuthorContractRequest = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_PendingAuthorContractRequest_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetPendingAuthorContractRequest = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_PendingAuthorContractRequest_get", parameters).ToList();
             return Json(_GetPendingAuthorContractRequest);
         }
 
         //-------------Get Detail list of Draft and Issued Author Contract Request Status on 10 July, 2017
-        public IHttpActionResult IssuedDraftAuthorContractDetails()
+        public IHttpActionResult IssuedDraftAuthorContractDetails(int ExecutiveId)
         {
-            var _GetPendingAuthorContractRequest = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Issued_Draft_AuthorContract_Dashboard_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetPendingAuthorContractRequest = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_Issued_Draft_AuthorContract_Dashboard_get", parameters).ToList();
             return Json(_GetPendingAuthorContractRequest);
         }
 
         //-------------Get Detail list of Inbound Permission Not Entered By Author Contract on 02/09/2016
-        public IHttpActionResult InboundPermissionNotEntered()
+        public IHttpActionResult InboundPermissionNotEntered(int ExecutiveId)
         {
-            var _GetInboundPermissionNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_InboundPermissionNotEntered_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetInboundPermissionNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_InboundPermissionNotEntered_get", parameters).ToList();
             return Json(_GetInboundPermissionNotEntered);
         }
 
@@ -157,30 +191,46 @@ namespace SLV.API.Controllers
         }
 
         //-------------Get Detail list of Final Publishing Date Not Entered on 02/09/2016
-        public IHttpActionResult FinalPublishingDateNotEntered()
+        public IHttpActionResult FinalPublishingDateNotEntered(int ExecutiveId)
         {
-            var _GetFinalPublishingDateNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_FinalPublishingDateNotEntered_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetFinalPublishingDateNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_FinalPublishingDateNotEntered_get", parameters).ToList();
             return Json(_GetFinalPublishingDateNotEntered);
         }
 
         //-------------Get Detail list of Final Publishing Date is Entered but Impression not entered on 02/09/2016
-        public IHttpActionResult ImpressionNotEntered()
+        public IHttpActionResult ImpressionNotEntered(int ExecutiveId)
         {
-            var _GetImpressionNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_FinalPublishingDateEntered_ImpressionNotEntered_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetImpressionNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_FinalPublishingDateEntered_ImpressionNotEntered_get", parameters).ToList();
             return Json(_GetImpressionNotEntered);
         }
 
         //-------------Get Detail list of Final Publishing Date is Entered but Impression not entered based on AuthorContract on 02/09/2016 By Ankush
-        public IHttpActionResult ImpressionNotEntered_AuthorContract()
+        public IHttpActionResult ImpressionNotEntered_AuthorContract(int ExecutiveId)
         {
-            var _GetImpressionNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_FinalPublishingDateEntered_ImpressionNotEntered_AuthorContract_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetImpressionNotEntered = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_FinalPublishingDateEntered_ImpressionNotEntered_AuthorContract_get", parameters).ToList();
             return Json(_GetImpressionNotEntered);
         }
 
         //-------------Get Detail list of Right Sale Contract Expire within 3 month on 05/09/2016 
-        public IHttpActionResult RightSaleContractExpiring()
+        public IHttpActionResult RightSaleContractExpiring(int ExecutiveId)
         {
-            var _GetRightSaleContractExpiring = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_RightSaleContractExpiring_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetRightSaleContractExpiring = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_RightSaleContractExpiring_get", parameters).ToList();
             return Json(_GetRightSaleContractExpiring);
         }
 
@@ -192,30 +242,46 @@ namespace SLV.API.Controllers
         }
 
         //-------------Get Detail list of Right Sale Payment Not Receive By ContractId on 06/09/2016
-        public IHttpActionResult RightSalePaymentNotReceiveByContractId()
+        public IHttpActionResult RightSalePaymentNotReceiveByContractId(int ExecutiveId)
         {
-            var _GetRightSalePaymentNotReceive = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_RightSalePaymentNotReceive_ByContractId_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetRightSalePaymentNotReceive = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_RightSalePaymentNotReceive_ByContractId_get", parameters).ToList();
             return Json(_GetRightSalePaymentNotReceive);
         }
 
         //-------------Get Detail list of Right Sale Payment Not Receive By LicenseId on 06/09/2016
-        public IHttpActionResult RightSalePaymentNotReceiveByLicenseId()
+        public IHttpActionResult RightSalePaymentNotReceiveByLicenseId(int ExecutiveId)
         {
-            var _GetRightSalePaymentNotReceive = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_RightSalePaymentNotReceive_ByLicenseId_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetRightSalePaymentNotReceive = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_RightSalePaymentNotReceive_ByLicenseId_get", parameters).ToList();
             return Json(_GetRightSalePaymentNotReceive);
         }
 
         //-------------Get Detail list of Permission Outbound Payment Not Receive By ContractId on 06/09/2016
-        public IHttpActionResult PermissionOutboundPaymentNotReceiveByContractId()
+        public IHttpActionResult PermissionOutboundPaymentNotReceiveByContractId(int ExecutiveId)
         {
-            var _GetPermissionOutboundPaymentNotReceive = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_PermissionOutboundPaymentNotReceive_ByContractId_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetPermissionOutboundPaymentNotReceive = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_PermissionOutboundPaymentNotReceive_ByContractId_get", parameters).ToList();
             return Json(_GetPermissionOutboundPaymentNotReceive);
         }
 
         //-------------Get Detail list of Permission Outbound Payment Not Receive By LicenseId on 06/09/2016
-        public IHttpActionResult PermissionOutboundPaymentNotReceiveByLicenseId()
+        public IHttpActionResult PermissionOutboundPaymentNotReceiveByLicenseId(int ExecutiveId)
         {
-            var _GetPermissionOutboundPaymentNotReceive = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_PermissionOutboundPaymentNotReceive_ByLicenseId_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetPermissionOutboundPaymentNotReceive = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_PermissionOutboundPaymentNotReceive_ByLicenseId_get", parameters).ToList();
             return Json(_GetPermissionOutboundPaymentNotReceive);
         }
 
@@ -224,9 +290,13 @@ namespace SLV.API.Controllers
         //Added by Ankush on 28/09/2016
 
         //-------------Get Detail list of Product licenses which will be expiring within 3 months or for which balance quantity is less than 25%  on 28/09/2016
-        public IHttpActionResult ProductLicenseExpired()
+        public IHttpActionResult ProductLicenseExpired(int ExecutiveId)
         {
-            var _GetProductLicenseExpired = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_ProductLicenseExpired_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetProductLicenseExpired = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_ProductLicenseExpired_get", parameters).ToList();
             return Json(_GetProductLicenseExpired);
         }
 
@@ -237,9 +307,13 @@ namespace SLV.API.Controllers
             return Json(_GetProductLicenseAddendumExpired);
         }
 
-        public IHttpActionResult InboundPermissionQuantityLess25()
+        public IHttpActionResult InboundPermissionQuantityLess25(int ExecutiveId)
         {
-            var _GetInboundPermissionQuantityLess25 = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_InboundPermissionQuantityLess25_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetInboundPermissionQuantityLess25 = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_InboundPermissionQuantityLess25_get", parameters).ToList();
             return Json(_GetInboundPermissionQuantityLess25);
         }
 
@@ -247,9 +321,13 @@ namespace SLV.API.Controllers
 
 
 
-        public IHttpActionResult PermissionOutboundExpiryDate_List()
+        public IHttpActionResult PermissionOutboundExpiryDate_List(int ExecutiveId)
         {
-            var _GetInboundPermissionQuantityLess25 = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_PermissionInboundExpiryDate_Dashboard_get").ToList();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+            parameters[0].Value = "'" + ExecutiveId + "'";
+
+            var _GetInboundPermissionQuantityLess25 = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_PermissionInboundExpiryDate_Dashboard_get", parameters).ToList();
             return Json(_GetInboundPermissionQuantityLess25);
         }
       

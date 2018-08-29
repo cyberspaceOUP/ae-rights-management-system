@@ -331,7 +331,7 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                     mstr_searchparameter.Append("<td ><b>ISBN</b></td>");
                     mstr_searchparameter.Append("<td ><b>Author Name</b></td>");
 
-                    mstr_searchparameter.Append("<td ><b>Inbound Type </b></td>");
+                    //mstr_searchparameter.Append("<td ><b>Inbound Type </b></td>");
                     mstr_searchparameter.Append("<td ><b> Contract Type</b></td>");
                     mstr_searchparameter.Append("<td ><b>Image Id </b></td>");
                     mstr_searchparameter.Append("<td ><b>Description </b></td>");
@@ -383,10 +383,10 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductCode + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Code + "</td>");
                         //mstr_searchparameter.Append("<td align='left'>" + data.TypeCode + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "<br />" + "<span style='font-size:11px;'>" + data.WorkingSubProduct + "</span>" + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.ISBN + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "<br />" + "<span style='font-size:11px;'>" + (data.WorkingSubProduct == null || data.WorkingSubProduct == "" ? "" : data.WorkingSubProduct.Replace("‟", "&#34;").Replace("”", "&#34;").Replace("“", "&#34;").Replace("‘", "&#39;").Replace("’", "&#39;").ToString()) + "</span>" + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.ISBN == null || data.ISBN == "" ? "" : Convert.ToString("&nbsp;" + data.ISBN)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.TypeFor + "</td>");
+                        //mstr_searchparameter.Append("<td align='left'>" + data.TypeFor + "</td>");
 
                         mstr_searchparameter.Append("<td align='left'>" + data.ContractTypes + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.imagevideobankid + "</td>");
@@ -397,7 +397,7 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.printquantity + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.permissionexpirydate + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.weblink + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.creditlines + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.creditlines == null ? null : data.creditlines.Replace("©", "&copy;").ToString()) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Remarks + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.usage + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.partyname + "</td>");
@@ -406,8 +406,8 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.CopyRightHolder + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Address + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ContactPerson + "</td>");
-                        
-                        mstr_searchparameter.Append("<td align='left'>" + data.Mobile + "</td>");
+
+                        mstr_searchparameter.Append("<td align='left'>" + (data.Mobile == null || data.Mobile == "" ? "" : Convert.ToString("&nbsp;" + data.Mobile)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.StatusName + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AssetSubType + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AssestDescription + "</td>");
@@ -421,11 +421,11 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.Extent + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Gratiscopytobesent + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Noofcopy + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.OriginalSource + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.OriginalSource == null ? null : data.OriginalSource.Replace("–", "&#45;").ToString()) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.InvoiceNumber + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.invoicevalue + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.permissionexpirydate + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.Acknowledgementline + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.Acknowledgementline == null ? null : data.Acknowledgementline.Replace("©", "&copy;").ToString()) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.InboundRemarks + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.DateRequstDetails + "</td>");
                       
@@ -449,6 +449,102 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
             catch (Exception ex)
             {
                 _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "exportToExcelPermissionsInboundList", ex);
+                throw ex;
+            }
+        }
+
+        public ActionResult exportToExcelPermissionsInboundLessQuantityList()
+        {
+            try
+            {
+                List<PermissionInboundSearchModel> _mobjReportList = new List<PermissionInboundSearchModel>();
+                //PermissionInboundSearchModel _mobjParametertList = new PermissionInboundSearchModel();
+
+                SqlParameter[] parameters = new SqlParameter[1];
+                parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+                parameters[0].Value = "'" + Session["UserId"].ToString() + "'";
+
+                _mobjReportList = _dbContext.ExecuteStoredProcedureListNewData<SLV.Model.PermissionInboundModel.PermissionInboundSearchModel>("Proc_InboundPermissionResultQuantityLess25_get", parameters).ToList();
+
+                string sFileName = "PermissionsInboundQuantityLessThan25_" + DateTime.Now.ToString("ddMMyyyyhhmmss") + ".xls";
+                {
+                    StringBuilder mstr_searchparameter = new StringBuilder();
+                    mstr_searchparameter.Append("<table width='100%'>");
+                    mstr_searchparameter.Append("<tr>");
+                    mstr_searchparameter.Append("<td  style='width: 100%;' align='left' valign='top'>");
+                    mstr_searchparameter.Append("<table width='100%' cellpadding='0' border='1%' cellspacing='0'>");
+                    mstr_searchparameter.Append("<tr>");
+                    mstr_searchparameter.Append("<td style='width: 100%;' valign='top' align=center colspan='2'>" + "<b>Permissions In-bound Report Quantity Less Than 25%</b>" + "</td>");
+                    mstr_searchparameter.Append("</tr>");
+
+                    mstr_searchparameter.Append("<tr>");
+                    mstr_searchparameter.Append("<td  style='width: 50%;' valign='top' align=left >" + "<b>Number of Records:</b> " + _mobjReportList.Count() + "</td>");
+                    mstr_searchparameter.Append("<td  style='width: 50%;' valign='top' align=right >" + "<b>Report Created Date:</b> " + String.Format("{0:dd MMM yy HH:mm:ss}", DateTime.Now) + "</td>");
+                    mstr_searchparameter.Append("</tr>");
+
+                    mstr_searchparameter.Append("<tr>");
+                    mstr_searchparameter.Append("<td style='width: 100%;' valign='top' align=center colspan='2'></td>");
+                    mstr_searchparameter.Append("</tr>");
+
+                    mstr_searchparameter.Append("</table>");
+                    mstr_searchparameter.Append("<table width='100%' cellpadding='0' border='1%' cellspacing='0'>");
+                    mstr_searchparameter.Append("<tr>");
+                    mstr_searchparameter.Append("<td colspan='2'>");
+                    mstr_searchparameter.Append("<table width='100%' cellpadding='0' border='1%' cellspacing='0'>");
+
+                    mstr_searchparameter.Append("<tr>");
+                    mstr_searchparameter.Append("<td><b>SNo.</b></td>");
+                    mstr_searchparameter.Append("<td ><b>Product Code</b></td>");
+                    mstr_searchparameter.Append("<td ><b>Permission Inbound Code</b></td>");
+                    mstr_searchparameter.Append("<td ><b>Working Product</b></td>");
+                    mstr_searchparameter.Append("<td ><b>ISBN</b></td>");
+                    mstr_searchparameter.Append("<td ><b>Author Name</b></td>");
+
+                    mstr_searchparameter.Append("<td ><b> Assets Type</b></td>");
+                    mstr_searchparameter.Append("<td ><b> Qunatity Printed </b></td>");
+                    mstr_searchparameter.Append("<td ><b> Minimum Quantity </b></td>");
+                    mstr_searchparameter.Append("<td ><b> Balance Qunatity </b></td>");
+                    mstr_searchparameter.Append("<td ><b> Permission Expiry Date </b></td>");
+
+                    mstr_searchparameter.Append("</tr>");
+                    mstr_searchparameter.Append("</td>");
+                    int mint_Counter = 1;
+                    foreach (PermissionInboundSearchModel data in _mobjReportList)
+                    {
+                        mstr_searchparameter.Append("<tr>");
+                        mstr_searchparameter.Append("<td align='right'>" + mint_Counter + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + data.ProductCode + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + data.Code + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "<br />" + "<span style='font-size:11px;'>" + data.WorkingSubProduct + "</span>" + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.ISBN == null || data.ISBN == "" ? "" : Convert.ToString("&nbsp;" + data.ISBN)) + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
+
+                        mstr_searchparameter.Append("<td align='left'>" + data.AssetsType + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + data.QunatityPrinted + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + data.quantity + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + data.BalanceCounts + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + data.permissionexpirydate + "</td>");
+
+                        mstr_searchparameter.Append("</tr>");
+                        mint_Counter++;
+                    }
+                    mstr_searchparameter.Append("</table></td></tr></table>");
+
+                    HttpContext.Response.AddHeader("content-disposition", "attachment; filename=" + sFileName);
+                    this.Response.ContentType = "application/excel";
+                    byte[] buffer = System.Text.Encoding.UTF8.GetBytes(mstr_searchparameter.ToString());
+                    return File(buffer, "application/vnd.ms-excel");
+
+                }
+            }
+            catch (ACSException ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "exportToExcelPermissionsInboundLessQuantityList", ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "exportToExcelPermissionsInboundLessQuantityList", ex);
                 throw ex;
             }
         }
@@ -571,8 +667,8 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                             mstr_searchparameter.Append("<td align='right'>" + mint_Counter + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.ProductCode + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.productcategory + "</td>");
-                            mstr_searchparameter.Append("<td align='left'>" + data.ISBN + "</td>");
-                            mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "<br />" + "<span style='font-size:11px;'>" + data.WorkingSubProduct + "</span>" + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + (data.ISBN == null || data.ISBN == "" ? "" : Convert.ToString("&nbsp;" + data.ISBN)) + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "<br />" + "<span style='font-size:11px;'>" + (data.WorkingSubProduct == null || data.WorkingSubProduct == "" ? "" : data.WorkingSubProduct.Replace("‟", "&#34;").Replace("”", "&#34;").Replace("“", "&#34;").Replace("‘", "&#39;").Replace("’", "&#39;").ToString()) + "</span>" + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.ProductTypeName + "<br />" + "<span style='font-size:11px;'>" + data.ProductSubTypeName + "</span>" + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
 
@@ -615,7 +711,7 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                             mstr_searchparameter.Append("<td align='left'>" + data.ProductCode + "</td>");
                             //mstr_searchparameter.Append("<td align='left'>" + data.InBoundType + "</td>");
                             //mstr_searchparameter.Append("<td align='left'>" + data.LicenseCode + "</td>");
-                            mstr_searchparameter.Append("<td align='left'>" + data.ISBN + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + (data.ISBN == null || data.ISBN == "" ? "" : Convert.ToString("&nbsp;" + data.ISBN)) + "</td>");
 
                             mstr_searchparameter.Append("</tr>");
                             mint_Counter++;
@@ -668,7 +764,7 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                             mstr_searchparameter.Append("<td align='left'>" + data.partyname + "</td>");
                             mstr_searchparameter.Append("<td align='left'><a href='" + data.weblink + "'>" + data.imagevideobankid + "</a></td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.Description + "</td>");
-                            mstr_searchparameter.Append("<td align='left'>" + data.creditlines + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + (data.creditlines == null || data.creditlines == "" ? "" : data.creditlines.Replace("©", "&copy;").ToString()) + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.EditorialonlyType + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.invoiceno + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.invoicevalue + "</td>");
@@ -714,6 +810,14 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                         mstr_searchparameter.Append("<td><b>SNo.</b></td>");
                         mstr_searchparameter.Append("<td ><b>Copy Right Holder</b></td>");
                         mstr_searchparameter.Append("<td ><b>Address</b></td>");
+
+                        mstr_searchparameter.Append("<td ><b>Country</b></td>");
+                        mstr_searchparameter.Append("<td ><b>State</b></td>");
+                        mstr_searchparameter.Append("<td ><b>City</b></td>");
+                        mstr_searchparameter.Append("<td ><b>PIN Code</b></td>");
+                        mstr_searchparameter.Append("<td ><b>Email</b></td>");
+                        mstr_searchparameter.Append("<td ><b>Website URL</b></td>");
+
                         mstr_searchparameter.Append("<td ><b>Contact Person</b></td>");
                         mstr_searchparameter.Append("<td ><b>Telephone No.</b></td>");
                         mstr_searchparameter.Append("<td ><b>Status</b></td>");
@@ -749,11 +853,19 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                             mstr_searchparameter.Append("<td align='right'>" + mint_Counter + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.CopyRightHolder + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.Address + "</td>");
+
+                            mstr_searchparameter.Append("<td align='left'>" + data.CountryName + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + data.StateName + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + data.CityName + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + data.Pincode + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + data.Email + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + data.URL + "</td>");
+
                             mstr_searchparameter.Append("<td align='left'>" + data.ContactPerson + "</td>");
-                            mstr_searchparameter.Append("<td align='left'>" + data.Mobile + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + (data.Mobile == null || data.Mobile == "" ? "" : Convert.ToString("&nbsp;" + data.Mobile)) + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.StatusName + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.AssetSubType + "</td>");
-                            mstr_searchparameter.Append("<td align='left'>" + data.AssestDescription + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + (data.AssestDescription == null || data.AssestDescription == "" ? "" : data.AssestDescription.Replace("‟", "&#34;").Replace("”", "&#34;").Replace("“", "&#34;").Replace("‘", "&#39;").Replace("’", "&#39;").ToString()) + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.Restriction + "</td>");
 
 
@@ -774,14 +886,14 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
 
                             mstr_searchparameter.Append("<td align='left'>" + data.Noofcopy + "</td>");
 
-                            mstr_searchparameter.Append("<td align='left'>" + data.OriginalSource + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + (data.OriginalSource == null || data.OriginalSource == "" ? "" : data.OriginalSource.Replace("–", "&#45;").ToString()) + "</td>");
 
                             mstr_searchparameter.Append("<td align='left'>" + data.InvoiceNumber + "</td>");
 
                             mstr_searchparameter.Append("<td align='left'>" + data.invoicevalue + "</td>");
 
                             mstr_searchparameter.Append("<td align='left'>" + data.permissionexpirydate + "</td>");
-                            mstr_searchparameter.Append("<td align='left'>" + data.Acknowledgementline + "</td>");
+                            mstr_searchparameter.Append("<td align='left'>" + (data.Acknowledgementline == null || data.Acknowledgementline == "" ? "" : data.Acknowledgementline.Replace("©", "&copy;").Replace("‟", "&#34;").Replace("”", "&#34;").Replace("“", "&#34;").Replace("‘", "&#39;").Replace("’", "&#39;").ToString()) + "</td>");
                             mstr_searchparameter.Append("<td align='left'>" + data.InboundRemarks + "</td>");
 
                             mstr_searchparameter.Append("<td align='left'>" + data.DateRequstDetails + "</td>");
@@ -796,13 +908,10 @@ namespace SLV.Web.Areas.PermissionsInbound.Controllers
                         mstr_searchparameter.Append("</tr>");
                     }
 
-
-
-
                     mstr_searchparameter.Append("</table></td></tr></table>");
 
 
-
+                    
                     HttpContext.Response.AddHeader("content-disposition", "attachment; filename=" + sFileName);
                     this.Response.ContentType = "application/excel";
                     byte[] buffer = System.Text.Encoding.UTF8.GetBytes(mstr_searchparameter.ToString());

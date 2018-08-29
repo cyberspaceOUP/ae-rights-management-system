@@ -695,7 +695,7 @@ app.controller("MainCtrl", function ($scope, AJService, $window, $compile, Sweet
             ProductTypeId: $scope.ProductModel.ProductType,
             SubProductTypeId: $scope.ProductModel.SubProductType,
             ProjectCode: $scope.ProductModel.ProjectCode,
-            OUPISBN: $scope.ProductModel.OUPISBN,
+            OUPISBN: $scope.ProductModel.OUPISBN == undefined ? null : ($scope.ProductModel.OUPISBN == "" ? null : $scope.ProductModel.OUPISBN),
             WorkingProduct: $scope.ProductModel.WorkingProduct,
             WorkingSubProduct: $scope.ProductModel.WorkingSubProduct,
             OUPEdition: $scope.ProductModel.OUPEdition,
@@ -727,7 +727,8 @@ app.controller("MainCtrl", function ($scope, AJService, $window, $compile, Sweet
             confirmButtonColor: "#8CD4F5",
             confirmButtonText: "Yes",
             closeOnConfirm: false,
-            closeOnCancel: true
+            closeOnCancel: true,
+            showLoaderOnConfirm: true
         },
              function (Confirm) {
                  if (Confirm) {
@@ -805,7 +806,8 @@ app.controller("MainCtrl", function ($scope, AJService, $window, $compile, Sweet
 
                      },
                      function () {
-                         alert('Please validate details');
+                         SweetAlert.swal("", "Please validate details.", "warning");
+                         //alert('Please validate details');
                      });
 
                  }

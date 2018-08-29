@@ -5,7 +5,8 @@
       
         var _Flag = {
             
-            Flag: "Alert"
+            Flag: "Alert",
+            ExecutiveId: parseInt($("#enterdBy").val())
            
         };
 
@@ -33,7 +34,8 @@
     $scope.getProduct_ISBN_enteredList = function () {
         var _Flag = {
 
-            Flag: "Alert"
+            Flag: "Alert",
+            ExecutiveId: parseInt($("#enterdBy").val())
         };
         var getProduct_ISBN_enteredList = AJService.PostDataToAPI("Alert/Product_ISBN_enteredList", _Flag);
         getProduct_ISBN_enteredList.then(function (mdt) {
@@ -48,7 +50,8 @@
     $scope.getProduct_SAP_Agr_No_Not_EnteredList = function () {
         var _Flag = {
 
-            Flag: "Alert"
+            Flag: "Alert",
+            ExecutiveId: parseInt($("#enterdBy").val())
         };
         var getProduct_SAP_Agr_No_Not_EnteredList = AJService.PostDataToAPI("Alert/Product_SAP_Agr_No_Not_Entered", _Flag);
         getProduct_SAP_Agr_No_Not_EnteredList.then(function (mdt) {
@@ -62,7 +65,8 @@
     $scope.ListRightSaleContractExpiring = function () {
         var _Flag = {
 
-            Flag: "Alert"
+            Flag: "Alert",
+            ExecutiveId: parseInt($("#enterdBy").val())
         };
         var ListRightSaleContractExpiring = AJService.PostDataToAPI("Alert/RightSaleContractExpiring", _Flag);
         ListRightSaleContractExpiring.then(function (status) {
@@ -196,7 +200,8 @@
     $scope.ListInboundPermissionNotEntered = function () {
         var _Flag = {
 
-            Flag: "Alert"
+            Flag: "Alert",
+            ExecutiveId: parseInt($("#enterdBy").val())
         };
 
         var ListInboundPermissionNotEntered = AJService.PostDataToAPI("Alert/InboundPermissionNotEntered", _Flag);
@@ -212,7 +217,8 @@
     $scope.ListBalanceQuantityProductLicense = function () {
         var _Flag = {
 
-            Flag: "Alert"
+            Flag: "Alert",
+            ExecutiveId: parseInt($("#enterdBy").val())
         };
 
         var ListBalanceQuantityProductLicense = AJService.PostDataToAPI("Alert/BalanceQuantityProductLicense", _Flag);

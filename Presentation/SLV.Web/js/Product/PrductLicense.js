@@ -325,7 +325,7 @@ app.controller("MainCtrl", function ($scope, AJService, $window, $compile, Sweet
 
             $(obj).autocomplete({
                 source: function (request, response) {
-                    var matcher = new RegExp("^" + request.term, "i"); //RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+                    var matcher = new RegExp(request.term, "i"); //RegExp("^" + request.term, "i"); //RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
                     response($.grep(PublishingCompanyList, function (item) {
                         return matcher.test(item.label);
                     }));
@@ -1201,7 +1201,8 @@ app.controller("MainCtrl", function ($scope, AJService, $window, $compile, Sweet
             confirmButtonColor: "#8CD4F5",
             confirmButtonText: "Yes",
             closeOnConfirm: false,
-            closeOnCancel: true
+            closeOnCancel: true,
+            showLoaderOnConfirm: true
         },
             function (Confirm) {
                 if (Confirm) {

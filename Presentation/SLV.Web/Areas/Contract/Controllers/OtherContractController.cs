@@ -372,7 +372,7 @@ namespace SLV.Web.Areas.Contract.Controllers
 
 
                         mstr_searchparameter.Append("<td align='left'>" + data.Cancellation_Reason + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.Status + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.Status == "Pending" ? "Issued" : (data.Status == "Issued" ? "Received" : data.Status)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Pending_Remarks + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AgreementDate + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Effectivedate + "</td>");

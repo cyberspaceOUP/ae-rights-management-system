@@ -349,6 +349,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\tooltipster.css" />
+    <Content Include="Content\typeahead\bootstrap3-typeahead.js" />
+    <Content Include="Content\typeahead\bootstrap3-typeahead.min.js" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\opensans-regular-webfont.svg" />
@@ -822,6 +824,7 @@
     <Content Include="Areas\PaymentTagging\Views\Shared\_PaymentInformatioProductLicComman.cshtml" />
     <Content Include="Areas\Master\Views\Master\AuthorType.cshtml" />
     <Content Include="Areas\Master\Views\Master\CurrencyMaster.cshtml" />
+    <Content Include="Areas\Product\Views\Shared\_LinkPermissionsInbound.cshtml" />
     <None Include="Properties\PublishProfiles\RMS.pubxml" />
     <Content Include="SampleExcelPermissionInBound.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

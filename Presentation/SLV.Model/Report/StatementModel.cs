@@ -21,6 +21,11 @@ namespace SLV.Model.Report
         public string Year { get; set; }
         public string Month { get; set; }
 
+        public string EntryFromYear { get; set; }
+        public string EntryFromMonth { get; set; }
+        public string EntryToYear { get; set; }
+        public string EntryToMonth { get; set; }
+
         public string FromYear { get; set; }
         public string FromMonth { get; set; }
         public string ToYear { get; set; }

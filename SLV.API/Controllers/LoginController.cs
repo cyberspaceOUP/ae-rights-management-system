@@ -65,7 +65,7 @@ namespace SLV.API.Controllers.Common
             try
             {
                 string pwd = _encryptionService.EncryptText(login.Password, _execcutiveService.KeyValue("encriptionkey"));
-                //string test_pwd = _encryptionService.DecryptText("mXHy+OS65HQt2WgqoQ9riuBN6hcp6iff", _execcutiveService.KeyValue("encriptionkey"));
+                //string test_pwd = _encryptionService.DecryptText("VFL2yVFWp+S2z/in3jjI/EaK2E5OhOgi", _execcutiveService.KeyValue("encriptionkey"));
 
                 loginResult = _UserService.ValidateUserLogin(login.Emailid, login.Password, "");
 

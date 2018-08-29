@@ -1,0 +1,15 @@
+﻿
+<table class="table table-bordered table-striped">
+    <tr>
+        <th> Permissions Inbound Code </th>
+    </tr>
+
+    <tr ng-repeat="P in PermissionsInboundMasterLinks_List">
+        <td class="table-color">
+            <a href="~/PermissionsInbound/PermissionsInbound/ViewInbound?type={{P.TypeFor}}{{P.ProductMasterId}}&InboundId={{P.PermissionsInboundCode}}" target="_blank">
+                <span ng-bind="P.PermissionsInboundCode"></span>
+            </a>
+        </td>
+    </tr>
+</table>
+

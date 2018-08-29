@@ -373,7 +373,22 @@
         }
     }
 
-
+    $scope.Product_PermissionsInboundMasterLinks = function (Id) {
+        // check that Id have value or not     
+        if (Id != null) {
+            // initialize variable for fetching data 
+            var ProductData = {
+                Id: Id
+            };
+            // call API to fetch temp Department list basis on the FlatId
+            var PermissionsInboundMasterLinks = AJService.PostDataToAPI('ProductMaster/GetPermissionsInboundMasterLinks', ProductData);
+            PermissionsInboundMasterLinks.then(function (status) {
+                $scope.PermissionsInboundMasterLinks_List = status.data;
+            }, function () {
+                //alert('Error in getting Rights Selling Master Links list');
+            });
+        }
+    }
 
 
 }

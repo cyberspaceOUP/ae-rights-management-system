@@ -511,7 +511,7 @@ namespace SLV.Web.Areas.PermissionsOutbound.Controllers
 
 
 
-                        mstr_searchparameter.Append("<td align='left'>" + data.ISBN + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.ISBN == null || data.ISBN == "" ? "" : Convert.ToString("&nbsp;" + data.ISBN)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "<br />" + "<span style='font-size:11px;'>" + data.WorkingSubProduct + "</span>" + "</td>");
 
                         mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
@@ -551,7 +551,7 @@ namespace SLV.Web.Areas.PermissionsOutbound.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.Copies_To_Be_Received + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.NoOfCopies + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Remarks + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.ContractStatus + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.ContractStatus == "Pending" ? "Issued" : (data.ContractStatus == "Issued" ? "Received" : data.ContractStatus)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.PaymentReceived + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.PaymentCurrency + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.PaymentAmount + "</td>");

@@ -856,6 +856,23 @@ Created For : Service for Update PermissionInboundImageVideoBank
           _PermissionInbound.Update(_InboundTable);
       }
 
+
+      public IList<PermissionInbound> getPermissionInboundList()
+      {
+          return _PermissionInbound.Table.Where(p => p.Deactivate == "N").ToList();
+      }
+
+
+      /****************************************************************************
+     Created By :  Dheeraj Kumar Sharma
+     Created For : Service to insert data into inbound process
+     *****************************************************************************************/
+      public CopyRightHolderMaster getCopyRightHolderByCode(string code)
+      {
+          return _CopyRightHolderMaster.Table.Where(i => i.CopyRightHolderCode == code && i.Deactivate == "N").FirstOrDefault();
+      }
+
+
       #region "Asset Sub-Type"
 
       public AssetSubType GetAssetSubTypeById(int Id)
@@ -942,5 +959,6 @@ Created For : Service for Update PermissionInboundImageVideoBank
 
       #endregion
 
+      
   }
 }

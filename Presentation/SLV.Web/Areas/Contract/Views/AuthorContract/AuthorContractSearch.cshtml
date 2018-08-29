@@ -922,7 +922,9 @@
                                                 <td ng-if="'@ViewBag.Report' == 'report'">
                                                     <p ng-if="obj.Royalty.length == '0'">--</p>
                                                     <p ng-repeat="rolyalty in obj.Royalty">
-                                                        <span ng-bind="rolyalty.SubProductType | uppercase"></span> - <span ng-bind="rolyalty.CopiesFrom"></span> to <span ng-show="rolyalty.CopiesTo == '' || rolyalty.CopiesTo == null"> above</span><span ng-show="rolyalty.CopiesTo != '' && rolyalty.CopiesTo != null"> <span ng-bind="rolyalty.CopiesTo"></span></span>
+                                                        @*<span ng-bind="rolyalty.SubProductType | uppercase"></span> - <span ng-bind="rolyalty.CopiesFrom"></span> to <span ng-show="rolyalty.CopiesTo == '' || rolyalty.CopiesTo == null"> above</span><span ng-show="rolyalty.CopiesTo != '' && rolyalty.CopiesTo != null"> <span ng-bind="rolyalty.CopiesTo"></span></span>*@
+                                                        <span ng-bind="rolyalty.SubProductType"></span> - <span ng-bind="rolyalty.Percentage"></span>%
+                                                        @*| uppercase*@
                                                     </p>
                                                 </td>
                                             </tr>
@@ -961,7 +963,8 @@
                                                         <td>
                                                             <p ng-if="obj.Royalty.length == '0'">--</p>
                                                             <p ng-repeat="rolyalty in obj.Royalty">
-                                                                <span ng-bind="rolyalty.SubProductType | uppercase "></span> - <span ng-bind="rolyalty.CopiesFrom"></span> to <span ng-show="rolyalty.CopiesTo == '' || rolyalty.CopiesTo == null"> above</span><span ng-show="rolyalty.CopiesTo != '' && rolyalty.CopiesTo != null"> <span ng-bind="rolyalty.CopiesTo"></span></span>
+                                                                <span ng-bind="rolyalty.SubProductType"></span> - <span ng-bind="rolyalty.CopiesFrom"></span> to <span ng-show="rolyalty.CopiesTo == '' || rolyalty.CopiesTo == null"> above</span><span ng-show="rolyalty.CopiesTo != '' && rolyalty.CopiesTo != null"> <span ng-bind="rolyalty.CopiesTo"></span></span>
+                                                                @*| uppercase*@ 
                                                             </p>
                                                         </td>
                                                     </tr>

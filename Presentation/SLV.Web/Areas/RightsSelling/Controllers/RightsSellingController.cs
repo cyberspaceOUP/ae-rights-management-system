@@ -428,7 +428,7 @@ namespace SLV.Web.Areas.RightsSelling.Controllers
                         mstr_searchparameter.Append("<td align='right'>" + mint_Counter + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.RightsSellingCode + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductCode + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.ISBN + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.ISBN == null || data.ISBN == "" ? "" : Convert.ToString("&nbsp;" + data.ISBN)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "<br />" + "<span style='font-size:11px;'>" + data.WorkingSubProduct + "</span>" + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AuthorContractCode + "</td>");
@@ -467,7 +467,7 @@ namespace SLV.Web.Areas.RightsSelling.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.Remarks + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.RoyaltyType + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Frequency + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.ContractStatus + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.ContractStatus == "Pending" ? "Issued" : (data.ContractStatus == "Issued" ? "Received" : data.ContractStatus)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Date_of_agreement + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Signed_Contract_sent_date + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Signed_Contract_receiveddate + "</td>");

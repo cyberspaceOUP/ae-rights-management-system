@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
+using ACS.Services.RightsSelling;
+using ACS.Services.PermissionsOutbound;
+
 namespace SLV.API.Controllers.Master
 {
     public class LicenseeMasterController : ApiController
@@ -23,6 +26,9 @@ namespace SLV.API.Controllers.Master
         private readonly IRepository<LicenseeMaster> _mobjLicenseeMasterRepository;
         private readonly ILogger _mobjLoggerService;
         private readonly IDbContext _dbContext;
+
+        private readonly IRightsSelling _mobjRightsSelling;
+        private readonly IPermissionsOutboundService _mobjPermissionsOutboundService;
         #endregion
 
         #region Constructor
@@ -38,7 +44,10 @@ namespace SLV.API.Controllers.Master
                                       IApplicationSetUpService mobjApplicationSetUpService,
                                       IRepository<LicenseeMaster> mobjLicenseeMasterRepository,
                                       IRepository<GeographicalMaster> mobjGeographicalMasterRepository,
-                                      IDbContext dbContext)
+                                      IDbContext dbContext,
+
+                                        IRightsSelling mobjRightsSelling,
+                                        IPermissionsOutboundService mobjPermissionsOutboundService)
         {
             _mobjLicenseeService = mobjLicenseeService;
             _mobjLocalizationService = mobjLocalizationService;
@@ -48,6 +57,9 @@ namespace SLV.API.Controllers.Master
             _mobjLicenseeMasterRepository = mobjLicenseeMasterRepository;
             _mobjGeographicalMasterRepository = mobjGeographicalMasterRepository;
             _mobjApplicationSetUpService = mobjApplicationSetUpService;
+
+            _mobjRightsSelling = mobjRightsSelling;
+            _mobjPermissionsOutboundService = mobjPermissionsOutboundService;
         }
         #endregion
 
@@ -60,6 +72,9 @@ namespace SLV.API.Controllers.Master
         [HttpGet]
         public IHttpActionResult GetLicenseeList()
         {
+            var rightsList = _mobjRightsSelling.GetAllRightsSellingMasterList().Select(r => r.LicenseeID).Distinct().ToList();
+            var poList = _mobjPermissionsOutboundService.getAllPermissionsOutboundMasterList().Select(r => r.LicenseeID).Distinct().ToList();
+
             var mvarLicenseeList = (from L in _mobjLicenseeMasterRepository.Table.Where(a => a.Deactivate == "N")
 
                                     join Country in _mobjGeographicalMasterRepository.Table.Where(a => a.Deactivate == "N")
@@ -73,7 +88,7 @@ namespace SLV.API.Controllers.Master
                                     join City in _mobjGeographicalMasterRepository.Table.Where(a => a.Deactivate == "N")
                                        on L.Cityid equals City.Id into cityGroup
                                     from t in cityGroup.DefaultIfEmpty()
-
+                                    
                                     select new
                                     {
                                         Id = L.Id,
@@ -88,6 +103,10 @@ namespace SLV.API.Controllers.Master
                                         Email = L.Email,
                                         URL = L.URL,
                                         Deactivate = L.Deactivate,
+                                        Licenseecode = L.Licenseecode,
+
+                                        flag = rightsList.Where(r => r == L.Id).Select(r => r).FirstOrDefault() != 0 ? 1 : (poList.Where(p => p == L.Id).Select(p => p).FirstOrDefault() != 0 ? 1 : 0)
+
                                     }).Distinct().Where(a => a.Deactivate == "N").OrderBy(o => o.OrganizationName);
 
             return Json(mvarLicenseeList);

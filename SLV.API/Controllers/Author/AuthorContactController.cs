@@ -1127,7 +1127,8 @@ namespace SLV.API.Controllers.Author
                                                             select new {
                                                                 SubProductType  = type.typeName,
                                                                 CopiesFrom = rol.CopiesFrom,
-                                                                CopiesTo = rol.CopiesTo
+                                                                CopiesTo = rol.CopiesTo,
+                                                                Percentage = rol.Percentage,
                                                             }
 
 
@@ -1350,10 +1351,7 @@ namespace SLV.API.Controllers.Author
 
 
 
-                    
-
-
-
+                    ////----save Amendment Document
                     string[] docurl1 = AuthorContractModel.UploadFile.Split(',');
                     int i = 0;
                     foreach (string doc in AuthorContractModel.DocumentName)
@@ -1366,8 +1364,6 @@ namespace SLV.API.Controllers.Author
                         _IAuthorContractService.InsertAuthorAmendmentDocumentLinking(Link);
                         i++;
                     }
-
-
 
 
 
@@ -1419,9 +1415,6 @@ namespace SLV.API.Controllers.Author
                     
                     //_Contract.ContractEntryDate = AuthorContractModel.ContractEntryDate;
                     // _Contract.ContractDate = AuthorContractModel.ContractDate;
-
-
-          
 
 
                     _Contract.TermsOfCopyright = AuthorContractModel.termsofcopyright;
@@ -1601,7 +1594,8 @@ namespace SLV.API.Controllers.Author
                     ======================================================================================================================*/
                     _IAuthorContractService.UpdateAuthorContract(_Contract);
 
-                    /*
+
+                    ////----save Amendment Document
                     if (AuthorContractModel.Id != null && AuthorContractModel.ContractStatus != "Draft" && AuthorContractModel.ContractStatus != "Cancelled")
                     {
                         string[] docurl1 = AuthorContractModel.UploadFile.Split(',');
@@ -1617,12 +1611,11 @@ namespace SLV.API.Controllers.Author
                             i++;
                         }
 
-                    }*/
-                   
+                    }
 
 
-                  //
-                    /*====================================================================================================================
+                  
+                  /*====================================================================================================================
                     * End section
                  ======================================================================================================================*/
                     scope.Complete();

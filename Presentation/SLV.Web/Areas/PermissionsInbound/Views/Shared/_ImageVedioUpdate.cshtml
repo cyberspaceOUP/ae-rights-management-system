@@ -118,7 +118,7 @@
                                         <label class="control-label col-md-5">Invoice Value &nbsp; <span class="red">*</span> </label>
                                         <div class="col-md-7">
                                             <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.invoicevalue.$dirty) && userForm.invoicevalue.$invalid } ">
-                                                <input type="number" min="0" name="invoicevalue" class="form-control" ng-required="ReqImageVedio" ng-model="user.invoicevalue" placeholder="Invoice Value">
+                                                <input type="number" min="0" name="invoicevalue" class="form-control" ng-required="ReqImageVedio" ng-model="user.invoicevalue" placeholder="Invoice Value" maxlength="8" />
 
                                                 <div class="help-block">
 

@@ -151,7 +151,7 @@
     if ($("#hid_Dashboard").val() == "dashboard") {
         var For = $('#hid_For').val();
         if (For == 'Rights') {
-            var PaymentInfoList = AJService.GetDataFromAPI("PaymentTaggingMaster/GetList_PaymentNotReceived_ByDashboard?For=rights", null);
+            var PaymentInfoList = AJService.GetDataFromAPI("PaymentTaggingMaster/GetList_PaymentNotReceived_ByDashboard?For=rights&ExecutiveId=" + parseInt($("#enterdBy").val()), null);
             PaymentInfoList.then(function (msg) {
                 if (msg.data.length != 0) {
                     $scope.Data = msg.data;
@@ -167,7 +167,7 @@
             });
         }
         else if (For == 'PermissionOutbound') {
-            var PaymentInfoList = AJService.GetDataFromAPI("PaymentTaggingMaster/GetList_PaymentNotReceived_ByDashboard?For=permissionoutbound", null);
+            var PaymentInfoList = AJService.GetDataFromAPI("PaymentTaggingMaster/GetList_PaymentNotReceived_ByDashboard?For=permissionoutbound&ExecutiveId=" + parseInt($("#enterdBy").val()), null);
             PaymentInfoList.then(function (msg) {
                 if (msg.data.length != 0) {
                     $scope.Data = msg.data;

@@ -13,12 +13,16 @@ namespace SLV.Model.Product
         public int? ProductLicenseId { get; set; }
         public int? RightsSellingId { get; set; }
         public int? PermissionsOutboundId { get; set; }
-
+        
         public string ProductCode { get; set; }
         public string AuthorContractCode { get; set; }
         public string ProductLicenseCode { get; set; }
         public string RightsSellingCode { get; set; }
         public string PermissionsOutboundCode { get; set; }
+
+        public int? PermissionsInboundId { get; set; }
+        public string PermissionsInboundCode { get; set; }
+        public string TypeFor { get; set; }
     }
 
 

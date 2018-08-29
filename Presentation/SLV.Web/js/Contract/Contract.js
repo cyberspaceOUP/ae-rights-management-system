@@ -683,30 +683,31 @@
         $('.contributor').not(":first").removeClass("has-error");
         $scope.validateAuthorBox();
 
-        var obj = 0;
-        $('input[name$=SupplyMaterialByAuthordate]').each(function () {
-            var date1 = new Date(convertDate($(this).val()));
-            var date2 = new Date($("#hid_ProjectedPublishingDate").val());
-            if (date1 > date2) {
-                SweetAlert.swal("Validation!", "Material date submission should be less than project publishing date( " + convertDateDDMMYYYY(new Date($("#hid_ProjectedPublishingDate").val())) + ").", "info");
-                $(this).closest("div").next().find("p").removeClass("ng-show").addClass("ng-hide");
-                $(this).closest('.form-group').removeClass("has-error");
-                obj = 1;
-                return false;
-            }
-            if ($(this).val() == "") {
-                $(this).closest("div").next().find("p").addClass("ng-show").removeClass("ng-hide");
-                $(this).closest('.form-group').addClass("has-error");
-            }
-            else {
-                $(this).closest("div").next().find("p").removeClass("ng-show").addClass("ng-hide");
-                $(this).closest('.form-group').removeClass("has-error");
-            }
+        //var obj = 0;
+        //$('input[name$=SupplyMaterialByAuthordate]').each(function () {
+        //    var date1 = new Date(convertDate($(this).val()));
+        //    var date2 = new Date($("#hid_ProjectedPublishingDate").val());
+        //    if (date1 > date2) {
+        //        SweetAlert.swal("Validation!", "Material date submission should be less than project publishing date( " + convertDateDDMMYYYY(new Date($("#hid_ProjectedPublishingDate").val())) + ").", "info");
+        //        $(this).closest("div").next().find("p").removeClass("ng-show").addClass("ng-hide");
+        //        $(this).closest('.form-group').removeClass("has-error");
+        //        obj = 1;
+        //        return false;
+        //    }
+        //    if ($(this).val() == "") {
+        //        $(this).closest("div").next().find("p").addClass("ng-show").removeClass("ng-hide");
+        //        $(this).closest('.form-group').addClass("has-error");
+        //    }
+        //    else {
+        //        $(this).closest("div").next().find("p").removeClass("ng-show").addClass("ng-hide");
+        //        $(this).closest('.form-group').removeClass("has-error");
+        //    }
 
-        });
-        if (obj == 1) {
-            return false;
-        }
+        //});
+        //if (obj == 1) {
+        //    return false;
+        //}
+
         if (ValidateRoyaltySlab() == 1) {
             $scope.userForm.$valid = false;
             return false;
@@ -826,19 +827,19 @@
         }
     };
 
-    function ComparisionOfDate(obj) {
-        _crrDate = $(obj).val();
-        var date1 = new Date(convertDate(_crrDate));
-        var date2 = new Date($("#hid_ProjectedPublishingDate").val());
-        if (date1 > date2) {
-            // obj.attr("required", "true");
-            obj.closest(".form-group").addClass("has-error");
-            // obj.closest('div').next().find('p').addClass('ng-show').removeClass("ng-hide");
-            alert("Material date submission should be less than project publishing date.");
-            return 1;
-        }
+    //function ComparisionOfDate(obj) {
+    //    _crrDate = $(obj).val();
+    //    var date1 = new Date(convertDate(_crrDate));
+    //    var date2 = new Date($("#hid_ProjectedPublishingDate").val());
+    //    if (date1 > date2) {
+    //        // obj.attr("required", "true");
+    //        obj.closest(".form-group").addClass("has-error");
+    //        // obj.closest('div').next().find('p').addClass('ng-show').removeClass("ng-hide");
+    //        alert("Material date submission should be less than project publishing date.");
+    //        return 1;
+    //    }
 
-    }
+    //}
 
     function convertDateDDMMYYYY(inputFormat) {
         function pad(s) { return (s < 10) ? '0' + s : s; }
@@ -1092,7 +1093,8 @@
             confirmButtonColor: "#8CD4F5",
             confirmButtonText: "Yes",
             closeOnConfirm: false,
-            closeOnCancel: true
+            closeOnCancel: true,
+            showLoaderOnConfirm: true
         },
      function (Confirm) {
          if (Confirm) {
@@ -2492,46 +2494,70 @@
 
 
 
-    $scope.RemoveDocumentLinkById = function (docid, file) {
+    $scope.RemoveAmendmentDocumentLinkById = function (docid, file) {
+
+        SweetAlert.swal({
+            title: "Are you sure?",
+            text: "",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#8CD4F5",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+    function (Confirm) {
+        if (Confirm) {
+
+            var ID = { Id: docid, EnteredBy: $("#enterdBy").val() };
+            var DeleteDocument = AJService.PostDataToAPI("AuthorContact/RemoveAmendmentDocument", ID);
+
+            DeleteDocument.then(function (msg) {
+                if (msg.data != "OK") {
+                    SweetAlert.swal("Oops...", "Please retry!", "error");
+
+                }
+                else {
+
+                    var obj = {};
+                    obj.filename = file;
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        url: $("#hid_documentDeleteUrl").val(),
+                        data: JSON.stringify(obj),
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "Deleted") {
+                                //$scope.getDocumentListAfterDelete();
+                                SweetAlert.swal({
+                                    title: "Success",
+                                    text: "Deleted successfully",
+                                    type: "success"
+                                },
+                                function () {
+                                    window.location.reload();
+                                });
+
+                            }
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                        }
+                    });
 
 
-        var ID = { Id: docid, EnteredBy: $("#enterdBy").val() };
-        var DeleteDocument = AJService.PostDataToAPI("AuthorContact/RemoveAmendmentDocument", ID);
+                }
+            }, function () {
 
-        DeleteDocument.then(function (msg) {
-            if (msg.data != "OK") {
                 SweetAlert.swal("Oops...", "Please retry!", "error");
 
-            }
-            else {
+            });
 
+        }
+    });
 
-                var obj = {};
-                obj.filename = file;
-                $.ajax({
-                    cache: false,
-                    type: "POST",
-                    contentType: 'application/json; charset=utf-8',
-                    url: $("#hid_documentDeleteUrl").val(),
-                    data: JSON.stringify(obj),
-                    dataType: "json",
-                    success: function (result) {
-                        if (result == "Deleted") {
-                            $scope.getDocumentListAfterDelete();
-                        }
-
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                    }
-                });
-
-
-            }
-        }, function () {
-
-            SweetAlert.swal("Oops...", "Please retry!", "error");
-
-        });
     }
    
     $scope.btn_BackToList = function () {

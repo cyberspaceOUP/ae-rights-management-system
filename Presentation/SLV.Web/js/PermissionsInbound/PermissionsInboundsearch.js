@@ -675,14 +675,15 @@
 
 
     $scope.ExcelReport = function () {
-
         document.location = GlobalredirectPath + "PermissionsInbound/PermissionsInbound/exportToExcelPermissionsInboundList?SessionId=" + $("#hid_sessionId").val() + "";
-
     }
-
 
     $scope.PermissionsInboundReportExcel = function () {
         $scope.ExcelReport();
+    }
+
+    $scope.PermissionsInboundLessQuantityReport = function () {
+        document.location = GlobalredirectPath + "PermissionsInbound/PermissionsInbound/exportToExcelPermissionsInboundLessQuantityList";
     }
 
 
@@ -739,7 +740,7 @@
         if ($('#hid_Action').val().trim().toLowerCase() == "dashboard") {
             var DashboardLessData = $('#hid_AddDasData').val();
             if (DashboardLessData != null && DashboardLessData != "" && DashboardLessData != undefined && DashboardLessData.toLowerCase() == "less") {
-                var ResultList = AJService.GetDataFromAPI("PermissionsInbound/getInboundPermissionSearchResultLess?Data=" + DashboardLessData, null);
+                var ResultList = AJService.GetDataFromAPI("PermissionsInbound/getInboundPermissionSearchResultLess?Data=" + DashboardLessData + "&ExecutiveId=" + parseInt($("#enterdBy").val()), null);
                 ResultList.then(function (msg) {
                     if (msg.data.length != 0) {
                         $scope.ResultList = msg.data;

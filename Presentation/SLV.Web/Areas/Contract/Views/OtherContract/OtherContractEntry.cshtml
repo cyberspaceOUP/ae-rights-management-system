@@ -1641,7 +1641,7 @@
 
             @*Div for Pending Request for Other Contract Enter*@
             <div ng-show="PendingRequestReq">
-                <div id="PendingRequest" class="col-md-12" ng-show="'@TempData["UpdateRights"]'== 'ad' || '@TempData["UpdateRights"]'=='rt' || '@TempData["UpdateRights"]'=='sa'" @*ng-show="PendingRequestReq"*@>
+                <div id="PendingRequest" class="col-md-12" ng-show="'@TempData["UpdateRights"]'== 'ad' || '@TempData["UpdateRights"]'=='rt' || '@TempData["UpdateRights"]'=='sa' || '@TempData["UpdateRights"]'=='fc'" @*ng-show="PendingRequestReq"*@>
 
                     <div class="portlet box green">
                         <div class="portlet-title">
@@ -1856,20 +1856,20 @@
                                             </div>
 
                                             @*<div class="row">
-                                                <div class="col-md-12">
-                                                    <label class="control-label col-md-5">Period of Agreement&nbsp;<span class="red" ng-show="(Contractstatus =='Issued')">*</span> <br/> (In months) </label>
-                                                    <div class="col-md-7">
-                                                        <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContractperiodUpload.$dirty) && userForm.ContractperiodUpload.$invalid } ">
-                                                            <input type="number" ng-disabled="!(Contractstatus == 'Issued')" ng-required="(Contractstatus == 'Issued')" name="ContractperiodUpload" class="form-control" 
-                                                                   min="1" ng-model="ContractperiodUpload" ng-change="CalculateExpiry()" placeholder="Period of Agreement (In months)">
-                                                            <div class="help-block">
-                                                                <p ng-show="userForm.ContractperiodUpload.$error.required && (userForm.ContractperiodUpload.$dirty || submitted)" class="help-block red">Please enter Period of Agreement</p>
-                                                                <p ng-show="userForm.ContractperiodUpload.$error.pattern" class="help-block red">Please enter valid Period of Agreement</p>
-                                                            </div>
-                                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label col-md-5">Period of Agreement&nbsp;<span class="red" ng-show="(Contractstatus =='Issued')">*</span> <br/> (In months) </label>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{ 'has-error': ( submitted ||userForm.ContractperiodUpload.$dirty) && userForm.ContractperiodUpload.$invalid } ">
+                                                    <input type="number" ng-disabled="!(Contractstatus == 'Issued')" ng-required="(Contractstatus == 'Issued')" name="ContractperiodUpload" class="form-control"
+                                                           min="1" ng-model="ContractperiodUpload" ng-change="CalculateExpiry()" placeholder="Period of Agreement (In months)">
+                                                    <div class="help-block">
+                                                        <p ng-show="userForm.ContractperiodUpload.$error.required && (userForm.ContractperiodUpload.$dirty || submitted)" class="help-block red">Please enter Period of Agreement</p>
+                                                        <p ng-show="userForm.ContractperiodUpload.$error.pattern" class="help-block red">Please enter valid Period of Agreement</p>
                                                     </div>
                                                 </div>
-                                            </div>*@
+                                            </div>
+                                        </div>
+                                    </div>*@
 
 
                                         </div>
@@ -2014,15 +2014,15 @@
 
                                             </div>
                                             @*<div id="doclistid" ng-show="Pendingdocumentshow" style=" padding-left: 29px;">
-                                                <div class="panel panel-warning">
-                                                    <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
-                                                        <h3 class="panel-title">Uploaded Attachments</h3>
-                                                    </div>
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading" style="background-color: #ee5941 !important; color: #FFF !important; ">
+                                            <h3 class="panel-title">Uploaded Attachments</h3>
+                                        </div>
 
-                                                    <div class="tools">
+                                        <div class="tools">
 
-                                                        <a href="javascript:;" class="collapse"> </a>
-                                                    </div>*@
+                                            <a href="javascript:;" class="collapse"> </a>
+                                        </div>*@
 
                                             <div class="panel-body" id="doclistid" ng-show="Pendingdocumentshow">
 
@@ -2046,9 +2046,9 @@
                                                 </table>
 
                                             </div>
-                                                @*</div>
+                                            @*</div>
 
-                                            </div>*@
+                                    </div>*@
                                         </div>
                                     </div>
 

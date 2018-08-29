@@ -104,6 +104,8 @@ namespace SLV.Web.Controllers
               Session["UserId"] = _workContext.CurrentUser.Id;
               Session["SessionId"] = Session.SessionID;
               Session["deptCode"] = _workContext.CurrentUser.DepartmentM.DepartmentCode;
+
+              Session["UserEmailId"] = _workContext.CurrentUser.Emailid;
            
               //Added by Prakash on 16/09/2016
               #region Print Permissions
@@ -162,10 +164,32 @@ namespace SLV.Web.Controllers
             //else
             //    return RedirectToAction("../Staff/Staff/index");
 
-               //Added by sanjeet 
-               #region
-             
-               #endregion
+            //Added by Prakash on 20 March, 2018 
+            #region
+              if (!string.IsNullOrEmpty(_workContext.CurrentUser.Emailid))
+              {
+                  //--manage Login History
+                  ExecutiveLoginHistory exeHistory = new ACS.Core.Domain.Master.ExecutiveLoginHistory();
+                  exeHistory.ExecutiveUserName = _workContext.CurrentUser.Emailid;
+                  exeHistory.LoginTime = DateTime.Now;
+                  exeHistory.EnteredBy = _workContext.CurrentUser.Id;
+                  _execcutiveService.InsertExecutiveLoginHistory(exeHistory);
+
+                  //--get Executive Login History List 
+                  IList<ExecutiveLoginHistory> exeHistoryList = _execcutiveService.GetExecutiveHistoryList(_workContext.CurrentUser.Emailid);
+                  if (exeHistoryList.Count > 1)
+                  {
+                      exeHistoryList = exeHistoryList.OrderByDescending(i => i.Id).Take(2).ToList();
+                      var obj_loginTime = exeHistoryList.OrderBy(i => i.Id).FirstOrDefault().LoginTime;
+                      Session["LastLoginDetails"] = obj_loginTime;
+                  }
+                  else
+                  {
+                      Session["LastLoginDetails"] = "First Time";
+                  }
+              }
+            #endregion
+
                 // return RedirectToAction("../Home/Home/Index");
 
                if (_user.PwdChanged == "N")

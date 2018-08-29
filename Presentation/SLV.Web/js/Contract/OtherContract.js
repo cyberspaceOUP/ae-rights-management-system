@@ -299,7 +299,8 @@
             confirmButtonColor: "#8CD4F5",
             confirmButtonText: "Yes",
             closeOnConfirm: false,
-            closeOnCancel: true
+            closeOnCancel: true,
+            showLoaderOnConfirm: true
         },
           function (Confirm) {
               if (Confirm) {
@@ -369,7 +370,8 @@
 
 
                   function () {
-                      alert('Please validate details');
+                      SweetAlert.swal("", "Please validate details.", "warning");
+                      //alert('Please validate details');
                   });
                   blockUI.stop();
 
@@ -1085,7 +1087,7 @@
             }
             else {
 
-                if ($('#hid_updateRight').val() == "rt" || $('#hid_updateRight').val() == "ed") {  //chage in rt
+                if ($('#hid_updateRight').val() == "rt" || $('#hid_updateRight').val() == "ed" || $('#hid_updateRight').val() == "fc") {  //chage in rt
 
                     $scope.PartyDetailEntryUpdateView = true;
                     $scope.PartyDetailEntryUpdate = false;

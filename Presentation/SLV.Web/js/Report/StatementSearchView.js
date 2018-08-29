@@ -88,6 +88,11 @@
             var _mobjAuthorPubSt = {
                 //Year: $scope.Year,
                 //Month: $scope.Month,
+                EntryFromYear: $scope.EntryFromYear,
+                EntryFromMonth: $scope.EntryFromMonth,
+                EntryToYear: $scope.EntryToYear,
+                EntryToMonth: $scope.EntryToMonth,
+
                 FromYear: $scope.FromYear,
                 FromMonth: $scope.FromMonth,
                 ToYear: $scope.ToYear,
@@ -131,6 +136,11 @@
             var _mobjAuthorPubSt = {
                 //Year: $scope.Year,
                 //Month: $scope.Month,
+                EntryFromYear: $scope.EntryFromYear,
+                EntryFromMonth: $scope.EntryFromMonth,
+                EntryToYear: $scope.EntryToYear,
+                EntryToMonth: $scope.EntryToMonth,
+
                 FromYear: $scope.FromYear,
                 FromMonth: $scope.FromMonth,
                 ToYear: $scope.ToYear,
@@ -146,7 +156,6 @@
                 PublishingCompanyCode: $scope.PublishingCompanyCode,
                 PublishingCompanyName: $scope.PublishingCompanyName
             }
-          //  debugger;
 
             var ExecutiveStatus = AJService.PostDataToAPI('Report/GetPermissionsOutboundStatementList', _mobjAuthorPubSt);
             ExecutiveStatus.then(function (msg) {

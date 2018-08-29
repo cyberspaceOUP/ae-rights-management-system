@@ -198,21 +198,82 @@
     }
 
     $scope.PermissionsInboundForm = function (PermissionsInboundModel) {
-               
-        if (fn_validateForm(PermissionsInboundModel) == 0) {
-            return false;
-        }
+        
+        if ($(".AssetTypeChk:checked").length == 0) {
+            ////--------------Manage (Copy Existing Permissions Of Other Product)
+            if ($scope.final_IVcheckedList.length > 0 || $scope.final_OthercheckedList.length > 0) {
 
-        //Start of submitting form
-        $scope.submitted = true;
-        if ($scope.userForm.$valid) {
+                SweetAlert.swal({
+                    title: "Are you sure?",
+                    text: "",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#8CD4F5",
+                    confirmButtonText: "Yes",
+                    closeOnConfirm: false,
+                    closeOnCancel: true,
+                    showLoaderOnConfirm: true
+                },
+              function (Confirm) {
+                  if (Confirm) {
+
+                      var obj_existingPermission = {
+                          InboundCode: "",
+                          ProductId: $("#hid_ProductId").val(),
+                          TypeFor: $("#hid_Type").val(),
+                          AssetsType: ($scope.final_IVcheckedList.length > 0 && $scope.final_OthercheckedList.length > 0) ? "B" : ($scope.final_IVcheckedList.length > 0 ? "I" : "O"),
+                          EnteredBy: $("input[type=hidden][id*=enterdBy]").val(),
+                          IVcheckedList: $scope.final_IVcheckedList,
+                          OthercheckedList: $scope.final_OthercheckedList,
+                      };
+
+                      var copyObject = AJService.PostDataToAPI('PermissionsInbound/InsertCopyExistingPermissions', obj_existingPermission);
+                      copyObject.then(function (msg) {
+                          if (msg.data.status != "OK") {
+                              SweetAlert.swal('Error', 'Try again', "error");
+                          }
+                          else {
+                              SweetAlert.swal({
+                                  title: "Done",
+                                  text: "Inbound Permission has been Insert successfully.Inbound Permission Code is " + msg.data.code,
+                                  type: "success"
+                              },
+                             function () {
+                                 $window.location.href = GlobalredirectPath + "PermissionsInbound/PermissionsInbound/UpdateInbound?type=P" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
+                             });
+                          }
+                      },
+                      function () {
+                          //-------------------
+                      });
+
+                  }
+              });
+
+            }////-------------------------------------------------------------------
+            else {
+                SweetAlert.swal("Validation", "Please select Assets type", "warning");
+                $($(".AssetTypeChk")[0]).focus();
+                return 0;
+            }
+        }
+        else {
+            if (fn_validateForm(PermissionsInboundModel) == 0) {
+                return false;
+            }
+
+
+            //Start of submitting form
+            $scope.submitted = true;
             if ($scope.userForm.$valid) {
-                $scope.PermissionsOutboundEntry(PermissionsInboundModel);
-                // set form default state
-                $scope.userForm.$setPristine();
-                // set form is no submitted
-                $scope.submitted = false;
-                return;
+                if ($scope.userForm.$valid) {
+                    $scope.PermissionsOutboundEntry(PermissionsInboundModel);
+                    // set form default state
+                    $scope.userForm.$setPristine();
+                    // set form is no submitted
+                    $scope.submitted = false;
+                    return;
+                }
             }
         }
     }
@@ -280,6 +341,7 @@
             return yy + "/" + mm + "/" + dd;
         }
     }
+    
 
     $scope.PermissionsOutboundEntry = function () {
         /***********************************************************************************************
@@ -328,17 +390,30 @@
             confirmButtonColor: "#8CD4F5",
             confirmButtonText: "Yes",
             closeOnConfirm: false,
-            closeOnCancel: true
+            closeOnCancel: true,
+            showLoaderOnConfirm: true
         },
               function (Confirm) {
                   if (Confirm) {
+
+                      if ($(".AssetTypeChk:checked").length == 1) {
+                          if ($(".AssetTypeChk:checked")[0].value == 'O') {
+                              $scope.PermissionsInboundModel['CopyRightHolder'] = $scope.temp_CopyRightHolder == undefined ? 0 : $scope.temp_CopyRightHolder;
+                          }
+                      }
+                      else {
+                          if ($(".AssetTypeChk:checked")[1].value == 'O') {
+                              $scope.PermissionsInboundModel['CopyRightHolder'] = $scope.temp_CopyRightHolder == undefined ? 0 : $scope.temp_CopyRightHolder;
+                          }
+                      }
 
             var PermissionInboundObject = {
                 ProductId: $("#hid_ProductId").val(),
                 TypeFor: $("#hid_Type").val(),
                 LicenseId: null, // $("#hid_Type").val() == "C" ? null : $("#hid_AuthorContract").val(),
                 AuthorContractId: null, // $("#hid_Type").val() == "L" ? null : $("#hid_AuthorContract").val(),
-                AssetsType: $(".AssetTypeChk:checked").length == 2 ? "B" : $(".AssetTypeChk:checked").val(),
+                //AssetsType: $(".AssetTypeChk:checked").length == 2 ? "B" : $(".AssetTypeChk:checked").val(),
+                AssetsType: $(".AssetTypeChk:checked").length == 2 ? "B" : (($scope.final_IVcheckedList.length > 0 && $scope.final_OthercheckedList.length > 0) ? "B" : (($(".AssetTypeChk:checked").val() == "I" && $scope.final_OthercheckedList.length > 0) ? "B" : (($(".AssetTypeChk:checked").val() == "O" && $scope.final_IVcheckedList.length > 0) ? "B" : $(".AssetTypeChk:checked").val()))),
                 EnteredBy: $("input[type=hidden][id*=enterdBy]").val(),
                 DocFileName: $("input[type=hidden][id=hid_Uploads1]").val() == "" ? null : $("input[type=hidden][id=hid_Uploads1]").val().slice(1, -1),
                 PermissionsInboundDataModel: $scope.PermissionsInboundModel,
@@ -347,7 +422,6 @@
                // ImageBankId: $scope.ImageBankId
             };
          
-         // debugger;
        var PermissionInboundObject = AJService.PostDataToAPI('PermissionsInbound/InsertPermissionsOutbound', PermissionInboundObject);
 
         PermissionInboundObject.then(function (msg) {
@@ -369,28 +443,59 @@
                     });
             }
             else {
-                SweetAlert.swal({
-                    title: "Done",
-                    text: "Inbound Permission has been Insert successfully.Inbound Permission Code is " + msg.data.code,
-                    type: "success"
-                },
-           function () {
+                ////--------------Manage (Copy Existing Permissions Of Other Product)
+                if ($scope.final_IVcheckedList.length > 0 || $scope.final_OthercheckedList.length > 0) {
 
-               //if ($("#hid_Type").val() == "C") {
-               //    $window.location.href = "../../PermissionsInbound/PermissionsInbound/ViewInbound/?Id=" + $("#hid_AuthorContract").val() + "&type=C" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
-               //}
-               //else if ($("#hid_Type").val() == "L") {
-               //    $window.location.href = "../../PermissionsInbound/PermissionsInbound/ViewInbound/?Id=" + $("#hid_AuthorContract").val() + "&type=L" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
-               //}
+                    var obj_existingPermission = {
+                        InboundCode: msg.data.code,
+                        ProductId: 0,
+                        TypeFor: "",
+                        AssetsType: "",
+                        EnteredBy: $("input[type=hidden][id*=enterdBy]").val(),
+                        IVcheckedList: $scope.final_IVcheckedList,
+                        OthercheckedList: $scope.final_OthercheckedList,
+                    };
 
-               //$window.location.href = "../../PermissionsInbound/PermissionsInbound/ViewInbound?type=P" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
-               $window.location.href = GlobalredirectPath + "PermissionsInbound/PermissionsInbound/UpdateInbound?type=P" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
-           });
+                    var copyObject = AJService.PostDataToAPI('PermissionsInbound/InsertCopyExistingPermissions', obj_existingPermission);
+                    copyObject.then(function (msg) {
+                        SweetAlert.swal({
+                            title: "Done",
+                            text: "Inbound Permission has been Insert successfully.Inbound Permission Code is " + msg.data.code,
+                            type: "success"
+                        },
+                       function () {
+                           $window.location.href = GlobalredirectPath + "PermissionsInbound/PermissionsInbound/UpdateInbound?type=P" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
+                       });
+                    },
+                    function () {
+                        //-------------------
+                    });
+                }////-------------------------------------------------------------------
+                else {
+                    SweetAlert.swal({
+                        title: "Done",
+                        text: "Inbound Permission has been Insert successfully.Inbound Permission Code is " + msg.data.code,
+                        type: "success"
+                    },
+                   function () {
+
+                       //if ($("#hid_Type").val() == "C") {
+                       //    $window.location.href = "../../PermissionsInbound/PermissionsInbound/ViewInbound/?Id=" + $("#hid_AuthorContract").val() + "&type=C" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
+                       //}
+                       //else if ($("#hid_Type").val() == "L") {
+                       //    $window.location.href = "../../PermissionsInbound/PermissionsInbound/ViewInbound/?Id=" + $("#hid_AuthorContract").val() + "&type=L" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
+                       //}
+
+                       //$window.location.href = "../../PermissionsInbound/PermissionsInbound/ViewInbound?type=P" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
+                       $window.location.href = GlobalredirectPath + "PermissionsInbound/PermissionsInbound/UpdateInbound?type=P" + $("#hid_ProductId").val() + "&InboundId=" + msg.data.code + "";
+                   });
+                }
             }
 
         },
         function () {
-            alert('There is some error in the system');
+            SweetAlert.swal("", "Please validate details.", "warning");
+            //alert('There is some error in the system');
         });
 
                    }
@@ -724,6 +829,95 @@
         });
     }
 
+   
+    ////---Start Autocomplete for 'Copyright Holder' //added on 16 April, 2018
+    $scope.temp_CopyRightHolder = 0;
+    AutoCompleteCopyrightHolder();
+    function AutoCompleteCopyrightHolder() {
+        //var obj = $("[name$=CopyRightHolder1]");
+
+        var CopyRightHolderList = [];
+
+        var getCopyRightHolderList = AJService.GetDataFromAPI("PermissionsInbound/getCopyRightHolder", null);
+        getCopyRightHolderList.then(function (CopyRightHolderData) {
+            for (i = 0; i < CopyRightHolderData.data.length; i++) {
+                CopyRightHolderList[i] = { "label": CopyRightHolderData.data[i].CopyRightHolderName, "value": CopyRightHolderData.data[i].CopyRightHolderName, "data": CopyRightHolderData.data[i].Id };
+            }
+
+            $("[name$=CopyRightHolder1]").autocomplete({
+                source: function (request, response) {
+                    var matcher = new RegExp(request.term, "i"); //RegExp("^" + request.term, "i"); //RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+                    response($.grep(CopyRightHolderList, function (item) {
+                        return matcher.test(item.label);
+                    }));
+                },
+
+                autoFocus: true,
+                select: function (event, ui) {
+                    $scope.CopyRightHolder1 = ui.item.value;
+                    //$scope.PermissionsInboundModel.CopyRightHolder = ui.item.data;
+                    $scope.temp_CopyRightHolder = ui.item.data;
+
+                   
+                    //------------get CopyRightHolder Details
+                    var CopyRightHolderDetail = {
+                        Id: $scope.temp_CopyRightHolder,
+                    };
+
+                    // call API to fetch temp product type list basis on the FlatId
+                    var CopyRightHolderStatus = AJService.PostDataToAPI('PermissionsInbound/CopyRightHolderById', CopyRightHolderDetail);
+                    CopyRightHolderStatus.then(function (msg) {
+                        if (msg != null) {
+
+
+                            $scope.ContactPerson = msg.data.ContactPerson;
+                            $scope.CopyRightHolderCode = msg.data.CopyRightHolderCode;
+
+                            $scope.Mobile = msg.data.Mobile;
+
+                            $scope.CopyRightHolderAddress = msg.data.Address;
+
+                            $scope.CopyRightHolderEmail = msg.data.Email;
+                            $scope.CopyRightHolderURL = msg.data.URL;
+
+                            $scope.CopyRightHolderAccountNo = msg.data.AccountNo;
+                            $scope.CopyRightHolderBankName = msg.data.BankName;
+
+                            $scope.CopyRightHolderBankAddress = msg.data.BankAddress;
+                            $scope.CopyRightHolderIFSCCode = msg.data.IFSCCode;
+                            $scope.CopyRightHolderPANNo = msg.data.PANNo;
+
+                            $scope.pincode = msg.data.Pincode;
+                            $scope.Country = msg.data.CountryId;
+
+                            $scope.getCountryStates();
+                            $scope.State = msg.data.Stateid;
+
+                            $scope.getStateCities();
+                            $scope.City = msg.data.Cityid;
+
+                            setTimeout(function () {
+                                $scope.getStateCities();
+                                $scope.City = msg.data.Cityid;
+                                $(".fadeInout").fadeIn("slow");
+                            }, 250);
+                                                        
+                        }
+                        else {
+                            SweetAlert.swal("Error!", "Error in system. Please try again", "", "error");
+                            blockUI.stop();
+                        }
+
+                    });
+                    //---------------------------------
+
+                }
+            });
+        }, function () {
+            //alert('Error in getting Licensee list');
+        });
+    }
+    ////---End Autocomplete for 'Copyright Holder'
 
 
     $scope.imageBankList = [];
@@ -788,69 +982,70 @@
 
 
 
-    $scope.onCopyRightHolder = function () {
+    //$scope.onCopyRightHolder = function () {
 
-        if ($scope.PermissionsInboundModel.CopyRightHolder == undefined)
-        {
-            $scope.ContactPerson = undefined;
-            $scope.Mobile = undefined;
-            $scope.CopyRightHolderAddress=undefined;
-            $(".fadeInout").fadeOut("slow");
-            return false;
-        }
+    //    if ($scope.PermissionsInboundModel.CopyRightHolder == undefined)
+    //    {
+    //        $scope.ContactPerson = undefined;
+    //        $scope.Mobile = undefined;
+    //        $scope.CopyRightHolderAddress=undefined;
+    //        $(".fadeInout").fadeOut("slow");
+    //        return false;
+    //    }
 
-        var CopyRightHolderDetail = {
-            Id: $scope.PermissionsInboundModel.CopyRightHolder,
-        };
+    //    var CopyRightHolderDetail = {
+    //        Id: $scope.PermissionsInboundModel.CopyRightHolder,
+    //    };
 
-        // call API to fetch temp product type list basis on the FlatId
-        var CopyRightHolderStatus = AJService.PostDataToAPI('PermissionsInbound/CopyRightHolderById', CopyRightHolderDetail);
-        CopyRightHolderStatus.then(function (msg) {
-            if (msg != null) {
-
-
-                $scope.ContactPerson = msg.data.ContactPerson;
-                $scope.CopyRightHolderCode = msg.data.CopyRightHolderCode;
-
-                $scope.Mobile = msg.data.Mobile;
-
-                $scope.CopyRightHolderAddress = msg.data.Address;
-
-                $scope.CopyRightHolderEmail = msg.data.Email;
-                $scope.CopyRightHolderURL = msg.data.URL;
-
-                $scope.CopyRightHolderAccountNo = msg.data.AccountNo;
-                $scope.CopyRightHolderBankName = msg.data.BankName;
-
-                $scope.CopyRightHolderBankAddress = msg.data.BankAddress;
-                $scope.CopyRightHolderIFSCCode = msg.data.IFSCCode;
-                $scope.CopyRightHolderPANNo = msg.data.PANNo;
-
-                $scope.pincode = msg.data.Pincode;
-                $scope.Country = msg.data.CountryId;
-
-                $scope.getCountryStates();
-                $scope.State = msg.data.Stateid;
-
-                $scope.getStateCities();
-                $scope.City = msg.data.Cityid;
-
-                setTimeout(function () {
-                    $scope.getStateCities();
-                    $scope.City = msg.data.Cityid;
-                    $(".fadeInout").fadeIn("slow");
-                }, 250);
+    //    // call API to fetch temp product type list basis on the FlatId
+    //    var CopyRightHolderStatus = AJService.PostDataToAPI('PermissionsInbound/CopyRightHolderById', CopyRightHolderDetail);
+    //    CopyRightHolderStatus.then(function (msg) {
+    //        if (msg != null) {
 
 
-            }
-            else {
-                SweetAlert.swal("Error!", "Error in system. Please try again", "", "error");
-                blockUI.stop();
-            }
+    //            $scope.ContactPerson = msg.data.ContactPerson;
+    //            $scope.CopyRightHolderCode = msg.data.CopyRightHolderCode;
 
-        });
+    //            $scope.Mobile = msg.data.Mobile;
 
-    }
+    //            $scope.CopyRightHolderAddress = msg.data.Address;
+
+    //            $scope.CopyRightHolderEmail = msg.data.Email;
+    //            $scope.CopyRightHolderURL = msg.data.URL;
+
+    //            $scope.CopyRightHolderAccountNo = msg.data.AccountNo;
+    //            $scope.CopyRightHolderBankName = msg.data.BankName;
+
+    //            $scope.CopyRightHolderBankAddress = msg.data.BankAddress;
+    //            $scope.CopyRightHolderIFSCCode = msg.data.IFSCCode;
+    //            $scope.CopyRightHolderPANNo = msg.data.PANNo;
+
+    //            $scope.pincode = msg.data.Pincode;
+    //            $scope.Country = msg.data.CountryId;
+
+    //            $scope.getCountryStates();
+    //            $scope.State = msg.data.Stateid;
+
+    //            $scope.getStateCities();
+    //            $scope.City = msg.data.Cityid;
+
+    //            setTimeout(function () {
+    //                $scope.getStateCities();
+    //                $scope.City = msg.data.Cityid;
+    //                $(".fadeInout").fadeIn("slow");
+    //            }, 250);
+
+
+    //        }
+    //        else {
+    //            SweetAlert.swal("Error!", "Error in system. Please try again", "", "error");
+    //            blockUI.stop();
+    //        }
+
+    //    });
+
+    //}
+
     $scope.func_Willbematerialbetranslated_yes = function () {
         $scope.LanguageReq = true;
     }
@@ -1410,5 +1605,222 @@
     }
 
 
+    ////--------------Manage (Copy Existing Permissions Of Other Product)
+    $scope.InbounProductList = [];
+    $scope.getInboundProductList = function () {
+        var resultData = AJService.GetDataFromAPI('PermissionsInbound/fetchInboundProductList?productId=' + $('#hid_ProductId').val(), null);
+        resultData.then(function (msg) {
+            if (msg.data != "") {
+                $scope.InbounProductList = msg.data;
+            }
+        });
+    }
+
+    $scope.InbounImageVideoDataList = [];
+    $scope.InbounOtherDataList = [];
+    $scope.getInboundDataByProduct = function () {
+        $scope.enableInboundProduct = false;
+        $scope.InbounImageVideoDataList = [];
+        $scope.InbounOtherDataList = [];
+
+        if ($('#hid_CkeckedProduct').val() != undefined && $('#hid_CkeckedProduct').val() != "" && $('#hid_CkeckedProduct').val() != null) {
+           
+            ////--get Inbound Image / Video data list
+            var resultData = AJService.GetDataFromAPI('PermissionsInbound/fetchInboundImageVideoDataList?productIds=' + $('#hid_CkeckedProduct').val(), null);
+            resultData.then(function (msg) {
+                if (msg.data != "") {
+                    $scope.InbounImageVideoDataList = msg.data._GetImageVideoBankDetailsList;
+                }
+            });
+
+            ////--get Inbound Other data list
+            setTimeout(function () {
+                var resultData = AJService.GetDataFromAPI('PermissionsInbound/fetchInboundOtherDataList?productIds=' + $('#hid_CkeckedProduct').val(), null);
+                resultData.then(function (msg) {
+                    if (msg.data != "") {
+                        $scope.InbounOtherDataList = msg.data._GetOtherDetailsList;
+                    }
+                });
+            }, 600);
+
+        }
+        else {
+            SweetAlert.swal("", "Please select product", "info");
+            return;
+        }
+    }
+    
+    $scope.fnSelectAllImageVideoData = function () {
+        if ($('[name=chk_SelectAllImageVideoData]')[0].checked == true) {
+            $('[name*=chk_SelectSingleImageVideoData]').prop('checked', true);
+        }
+        else {
+            $('[name*=chk_SelectSingleImageVideoData]').removeAttr('checked');
+        }
+
+        $scope.fnBindImageVideoCheckedData();
+    }
+
+    $scope.fnSelectSingleImageVideoData = function () {
+        if ($('[name*=chk_SelectSingleImageVideoData]').length == $('[name*=chk_SelectSingleImageVideoData]:checked').length) {
+            $('[name=chk_SelectAllImageVideoData]').prop('checked', true);
+        }
+        else {
+            $('[name*=chk_SelectAllImageVideoData]').removeAttr('checked');
+        }
+
+        $scope.fnBindImageVideoCheckedData();
+    }
+
+    $scope.validateInboundData = true;
+    $scope.IVcheckedList = [];
+    $scope.fnBindImageVideoCheckedData = function () {
+        $scope.IVcheckedList = [];
+        var _IVchecked = $('[name*=chk_SelectSingleImageVideoData]:checked');
+        for (var i = 0; i < _IVchecked.length; i++) {
+            $scope.IVcheckedList.push({
+                InboundId: _IVchecked[i].value.split(',')[0],
+                LinkId: _IVchecked[i].value.split(',')[1],
+                DataId: _IVchecked[i].value.split(',')[2]
+            });
+        }
+
+        ////----------------------------------
+        if ($scope.IVcheckedList.length > 0 || $scope.OthercheckedList.length > 0) {
+            $scope.validateInboundData = false;
+        }
+        else {
+            $scope.validateInboundData = true;
+        }
+    }
+
+    $scope.fnSelectAllOtherData = function () {
+        if ($('[name=chk_SelectAllOtherData]')[0].checked == true) {
+            $('[name*=chk_SelectSingleOtherData]').prop('checked', true);
+        }
+        else {
+            $('[name*=chk_SelectSingleOtherData]').removeAttr('checked');
+        }
+
+        $scope.fnBindOtherCheckedData();
+    }
+
+    $scope.fnSelectSingleOtherData = function () {
+        if ($('[name*=chk_SelectSingleOtherData]').length == $('[name*=chk_SelectSingleOtherData]:checked').length) {
+            $('[name=chk_SelectAllOtherData]').prop('checked', true);
+        }
+        else {
+            $('[name*=chk_SelectAllOtherData]').removeAttr('checked');
+        }
+
+        $scope.fnBindOtherCheckedData();
+    }
+
+    $scope.OthercheckedList = [];
+    $scope.fnBindOtherCheckedData = function () {
+        $scope.OthercheckedList = [];
+        var _Otherchecked = $('[name*=chk_SelectSingleOtherData]:checked');
+        for (var i = 0; i < _Otherchecked.length; i++) {
+            $scope.OthercheckedList.push({
+                InboundId: _Otherchecked[i].value.split(',')[0],
+                InboundOthersId: _Otherchecked[i].value.split(',')[1],
+                CopyRightHolderId: _Otherchecked[i].value.split(',')[2]
+            });
+        }
+
+        ////------------------------------
+        if ($scope.IVcheckedList.length > 0 || $scope.OthercheckedList.length > 0) {
+            $scope.validateInboundData = false;
+        }
+        else {
+            $scope.validateInboundData = true;
+        }
+    }
+
+    $scope.final_IVcheckedList = [];
+    $scope.final_OthercheckedList = [];
+    $scope.inboundIV_SelectedData = [];
+    $scope.inboundOther_SelectedData = [];
+    $scope.getInboundPermissionsData = function () {
+        $scope.final_IVcheckedList = [];
+        $scope.final_OthercheckedList = [];
+        $scope.inboundIV_SelectedData = [];
+        $scope.inboundOther_SelectedData = [];
+
+        if ($scope.IVcheckedList.length > 0 || $scope.OthercheckedList.length > 0) {
+            $scope.final_IVcheckedList = $scope.IVcheckedList;
+            $scope.final_OthercheckedList = $scope.OthercheckedList;
+
+            ////---bind Inbound Code and Product Code for view
+            for (var i = 0; i < $scope.IVcheckedList.length; i++) {
+                for (var j = 0; j < $scope.InbounImageVideoDataList.length; j++) {
+                    if ($scope.IVcheckedList[i].InboundId == $scope.InbounImageVideoDataList[j].Id &&
+                        $scope.IVcheckedList[i].LinkId == $scope.InbounImageVideoDataList[j].LinkId &&
+                        $scope.IVcheckedList[i].DataId == $scope.InbounImageVideoDataList[j].DataId) {
+
+                        $scope.inboundIV_SelectedData[i] = $scope.InbounImageVideoDataList[j];
+                    }
+                }
+            }
+
+
+            for (var i = 0; i < $scope.OthercheckedList.length; i++) {
+                for (var j = 0; j < $scope.InbounOtherDataList.length; j++) {
+                    if ($scope.OthercheckedList[i].InboundId == $scope.InbounOtherDataList[j].Id &&
+                        $scope.OthercheckedList[i].InboundOthersId == $scope.InbounOtherDataList[j].InboundOthersId &&
+                        $scope.OthercheckedList[i].CopyRightHolderId == $scope.InbounOtherDataList[j].CopyRightHolderId) {
+
+                        $scope.inboundOther_SelectedData[i] = $scope.InbounOtherDataList[j];
+                    }
+                }
+            }
+
+            //$scope.inboundProduct_Codes = [];
+            //var _inboundProduct_Ids = $('#hid_CkeckedProduct').val().split(',');
+            //for (var i = 0; i < _inboundProduct_Ids.length; i++) {
+                //for (var j = 0; j < $scope.InbounProductList.length; j++) {
+                    //if (_inboundProduct_Ids[i] == $scope.InbounProductList[j].productId) {
+                        //$scope.inboundProduct_Codes[i] = {
+                        //    InboundCode: $scope.InbounProductList[j].Code,
+                        //    ProductCode: $scope.InbounProductList[j].ProductCode
+                        //}
+                    //}
+                //}
+            //}
+            //--------------------------------------------
+
+            $scope.IVcheckedList = [];
+            $scope.OthercheckedList = [];
+
+            $('.btnClosePopup').click();
+        }
+        else {
+            SweetAlert.swal("", "Please select permissions data", "info");
+            return;
+        }
+    }
+
+    $scope.fnRemoveIVPermission = function (index, InboundId, LinkId, DataId) {
+        //alert(index + ', ' + InboundId + ', ' + LinkId + ', ' + DataId)
+        //$scope.final_IVcheckedList
+        //$scope.inboundIV_SelectedData
+        
+        if (index !== -1) {
+            $scope.inboundIV_SelectedData.splice(index, 1);
+            $scope.final_IVcheckedList.splice(index, 1);
+        }
+    }
+
+    $scope.fnRemoveOtherPermissions = function (index, InboundId, InboundOthersId, CopyRightHolderId) {
+        //alert(index + ', ' + InboundId + ', ' + InboundOthersId + ', ' + CopyRightHolderId)
+        //$scope.final_OthercheckedList
+        //$scope.inboundOther_SelectedData
+
+        if (index !== -1) {
+            $scope.inboundOther_SelectedData.splice(index, 1);
+            $scope.final_OthercheckedList.splice(index, 1);
+        }
+    }
+    ////------------End Manage (Copy Existing Permissions Of Other Product)
 
 });

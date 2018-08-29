@@ -397,7 +397,7 @@
                                                             <tr ng-repeat="url in Docurl1">
                                                                 <td>{{ $index + 1 }} <input type="hidden" name="DocId1" value="{{url.DocId1}}" /></td>
                                                                 <td><a href="~/uploads/{{url.text1}}" target="_blank" style="color: black;">{{url.name1}}</a></td>
-                                                                <td><a style=" color: black; cursor:pointer;" ng-click="RemoveDocumentLinkById(url.DocId1,url.text1)">Delete</a></td>
+                                                                <td><a style=" color: black; cursor:pointer;" ng-click="RemoveAmendmentDocumentLinkById(url.DocId1,url.text1)">Delete</a></td>
 
                                                             </tr>
                                                         </tbody>

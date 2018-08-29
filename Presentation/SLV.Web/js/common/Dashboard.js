@@ -27,7 +27,7 @@ $scope.ProductLicense = [];
 
     // Get product list for isbn not entered 
     $scope.AuthorContractNotEntered = function () {
-        var GetProductList = AJService.GetDataFromAPI("Dashboard/AuthorContractProduct", null);
+        var GetProductList = AJService.GetDataFromAPI("Dashboard/AuthorContractProduct?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         GetProductList.then(function (Product) {
             $scope.ProductAuthorContractNotEntered = Product.data;
         }, function () {
@@ -37,7 +37,7 @@ $scope.ProductLicense = [];
 
     // Get product list for isbn not entered 
     $scope.ListProductLicenseNotEntered = function () {
-        var GetProductList = AJService.GetDataFromAPI("Dashboard/ProductLicenseNotEntered", null);
+        var GetProductList = AJService.GetDataFromAPI("Dashboard/ProductLicenseNotEntered?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         GetProductList.then(function (Product) {
             $scope.ProductLicense = Product.data;
         }, function () {
@@ -78,7 +78,7 @@ $scope.ProductLicense = [];
 
 
     $scope.getProduct_ISBN_enteredList = function () {
-        var getProduct_ISBN_enteredList = AJService.PostDataToAPI("Dashboard/Product_ISBN_entered", null);
+        var getProduct_ISBN_enteredList = AJService.PostDataToAPI("Dashboard/Product_ISBN_entered?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         getProduct_ISBN_enteredList.then(function (mdt) {
             $scope.Product_ISBN_Not_enteredList = mdt.data;
         }, function () {
@@ -88,7 +88,7 @@ $scope.ProductLicense = [];
 
     //Added by Suranjana on 21/07/2016
     $scope.getProductWIthISBNList = function () {
-        var getProductWIthISBNList = AJService.PostDataToAPI("Dashboard/Product_ISBN_Is_Not_Null", null);
+        var getProductWIthISBNList = AJService.PostDataToAPI("Dashboard/Product_ISBN_Is_Not_Null?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         getProductWIthISBNList.then(function (mdt) {
             $scope.ProductWithISBNList = mdt.data;
         }, function () {
@@ -108,7 +108,7 @@ $scope.ProductLicense = [];
 
 
     $scope.getProduct_SAP_Agr_No_Not_EnteredList = function () {
-        var getProduct_SAP_Agr_No_Not_EnteredList = AJService.PostDataToAPI("Dashboard/Product_SAP_Agr_No_Not_Entered", null);
+        var getProduct_SAP_Agr_No_Not_EnteredList = AJService.PostDataToAPI("Dashboard/Product_SAP_Agr_No_Not_Entered?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         getProduct_SAP_Agr_No_Not_EnteredList.then(function (mdt) {
             $scope.Product_SAP_Agr_No_Not_EnteredList = mdt.data;
         }, function () {
@@ -121,7 +121,7 @@ $scope.ProductLicense = [];
 
     //---------Pending Author Contract Request on 30/08/2016
     $scope.PendingAuthorContractRequest = function () {
-        var PendingAuthorContractRequest = AJService.PostDataToAPI("Dashboard/PendingAuthorContractRequest", null);
+        var PendingAuthorContractRequest = AJService.PostDataToAPI("Dashboard/PendingAuthorContractRequest?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         PendingAuthorContractRequest.then(function (status) {
             $scope.PendingAuthorContractRequestList = status.data;
             angular.forEach(status.data, function (row, index) {
@@ -140,7 +140,7 @@ $scope.ProductLicense = [];
 
     //---------Draft and Issued Author Contract Request Status on 10 July, 2017
     $scope.IssuedDraftAuthorContractDetails = function () {
-        var IssuedDraftAuthorContractDetails = AJService.PostDataToAPI("Dashboard/IssuedDraftAuthorContractDetails", null);
+        var IssuedDraftAuthorContractDetails = AJService.PostDataToAPI("Dashboard/IssuedDraftAuthorContractDetails?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         IssuedDraftAuthorContractDetails.then(function (status) {
             $scope.IssuedDraftAuthorContractDetailsList = status.data;
             angular.forEach(status.data, function (row, index){
@@ -159,7 +159,7 @@ $scope.ProductLicense = [];
 
     //--------Inbound Permission Not Entered By Author Contract on 02/09/2016
     $scope.ListInboundPermissionNotEntered = function () {
-        var ListInboundPermissionNotEntered = AJService.PostDataToAPI("Dashboard/InboundPermissionNotEntered", null);
+        var ListInboundPermissionNotEntered = AJService.PostDataToAPI("Dashboard/InboundPermissionNotEntered?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ListInboundPermissionNotEntered.then(function (status) {
             $scope.InboundPermissionNotEntered_List = status.data;
         }, function () {
@@ -179,7 +179,7 @@ $scope.ProductLicense = [];
 
     //---------Final Publishing Date Not Entered on 02/09/2016
     $scope.ListFinalPublishingDateNotEntered = function () {
-        var ListFinalPublishingDateNotEntered = AJService.PostDataToAPI("Dashboard/FinalPublishingDateNotEntered", null);
+        var ListFinalPublishingDateNotEntered = AJService.PostDataToAPI("Dashboard/FinalPublishingDateNotEntered?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ListFinalPublishingDateNotEntered.then(function (status) {
             $scope.FinalPublishingDateNotEntered_List = status.data;
         }, function () {
@@ -189,7 +189,7 @@ $scope.ProductLicense = [];
 
     //---------Final Publishing Date Is Entered But Impression Not Entered on 02/09/2016
     $scope.ListImpressionNotEntered = function () {
-        var ListImpressionNotEntered = AJService.PostDataToAPI("Dashboard/ImpressionNotEntered", null);
+        var ListImpressionNotEntered = AJService.PostDataToAPI("Dashboard/ImpressionNotEntered?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ListImpressionNotEntered.then(function (status) {
             $scope.ImpressionNotEntered_List = status.data;
         }, function () {
@@ -199,7 +199,7 @@ $scope.ProductLicense = [];
 
     //---------Final Publishing Date Is Entered But Impression Not Entered on 26/09/2016 Added by Ankush
     $scope.ListImpressionNotEntered_AuthorContract = function () {
-        var ListImpressionNotEntered_AuthorContract = AJService.PostDataToAPI("Dashboard/ImpressionNotEntered_AuthorContract", null);
+        var ListImpressionNotEntered_AuthorContract = AJService.PostDataToAPI("Dashboard/ImpressionNotEntered_AuthorContract?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ListImpressionNotEntered_AuthorContract.then(function (status) {
             $scope.ImpressionNotEntered_List_AuthorContract = status.data;
         }, function () {
@@ -209,7 +209,7 @@ $scope.ProductLicense = [];
 
     //---------Right Sale Contract Expiring Within 3 Months on 05/09/2016
     $scope.ListRightSaleContractExpiring = function () {
-        var ListRightSaleContractExpiring = AJService.PostDataToAPI("Dashboard/RightSaleContractExpiring", null);
+        var ListRightSaleContractExpiring = AJService.PostDataToAPI("Dashboard/RightSaleContractExpiring?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ListRightSaleContractExpiring.then(function (status) {
             $scope.RightSaleContractExpiring_List = status.data;
         }, function () {
@@ -229,7 +229,7 @@ $scope.ProductLicense = [];
 
     //---------Right Sales Payment Not Receive By ContractId on 06/09/2016
     $scope.ListRightSalePaymentNotReceiveByContractId = function () {
-        var ListRightSalePaymentNotReceiveByContractId = AJService.PostDataToAPI("Dashboard/RightSalePaymentNotReceiveByContractId", null);
+        var ListRightSalePaymentNotReceiveByContractId = AJService.PostDataToAPI("Dashboard/RightSalePaymentNotReceiveByContractId?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ListRightSalePaymentNotReceiveByContractId.then(function (status) {
             $scope.RightSalePaymentNotReceive_ByContractId_List = status.data;
         }, function () {
@@ -239,7 +239,7 @@ $scope.ProductLicense = [];
 
     //---------Right Sales Payment Not Receive By LicenseId on 06/09/2016
     $scope.ListRightSalePaymentNotReceiveByLicenseId = function () {
-        var ListRightSalePaymentNotReceiveByLicenseId = AJService.PostDataToAPI("Dashboard/RightSalePaymentNotReceiveByLicenseId", null);
+        var ListRightSalePaymentNotReceiveByLicenseId = AJService.PostDataToAPI("Dashboard/RightSalePaymentNotReceiveByLicenseId??ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ListRightSalePaymentNotReceiveByLicenseId.then(function (status) {
             $scope.RightSalePaymentNotReceive_ByLicenseId_List = status.data;
         }, function () {
@@ -249,7 +249,7 @@ $scope.ProductLicense = [];
 
     //---------Permission Outbound Payment Not Receive By ContractId on 06/09/2016
     $scope.ListPermissionOutboundPaymentNotReceiveByContractId = function () {
-        var ListPermissionOutboundPaymentNotReceiveByContractId = AJService.PostDataToAPI("Dashboard/PermissionOutboundPaymentNotReceiveByContractId", null);
+        var ListPermissionOutboundPaymentNotReceiveByContractId = AJService.PostDataToAPI("Dashboard/PermissionOutboundPaymentNotReceiveByContractId?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ListPermissionOutboundPaymentNotReceiveByContractId.then(function (status) {
             $scope.PermissionOutboundPaymentNotReceive_ByContractId_List = status.data;
         }, function () {
@@ -259,7 +259,7 @@ $scope.ProductLicense = [];
 
     //---------Permission Outbound Payment Not Receive By LicenseId on 06/09/2016
     $scope.ListPermissionOutboundPaymentNotReceiveByLicenseId = function () {
-        var ListPermissionOutboundPaymentNotReceiveByLicenseId = AJService.PostDataToAPI("Dashboard/PermissionOutboundPaymentNotReceiveByLicenseId", null);
+        var ListPermissionOutboundPaymentNotReceiveByLicenseId = AJService.PostDataToAPI("Dashboard/PermissionOutboundPaymentNotReceiveByLicenseId?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ListPermissionOutboundPaymentNotReceiveByLicenseId.then(function (status) {
             $scope.PermissionOutboundPaymentNotReceive_ByLicenseId_List = status.data;
         }, function () {
@@ -658,7 +658,7 @@ $scope.ProductLicense = [];
 
     //---------Product License Expired on 28/09/2016
     $scope.ProductLicenseExpired = function () {
-        var ProductLicenseExpired = AJService.PostDataToAPI("Dashboard/ProductLicenseExpired", null);
+        var ProductLicenseExpired = AJService.PostDataToAPI("Dashboard/ProductLicenseExpired?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         ProductLicenseExpired.then(function (status) {
             $scope.ProductLicenseExpiredList = status.data;
         }, function () {
@@ -729,7 +729,7 @@ $scope.ProductLicense = [];
 
 
     $scope.InboundPermissionQuantityLess25 = function () {
-        var InboundPermissionQuantityLess25 = AJService.PostDataToAPI("Dashboard/InboundPermissionQuantityLess25", null);
+        var InboundPermissionQuantityLess25 = AJService.PostDataToAPI("Dashboard/InboundPermissionQuantityLess25?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         InboundPermissionQuantityLess25.then(function (status) {
             $scope.InboundPermissionQuantityLess25_List = status.data;
         }, function () {
@@ -741,7 +741,7 @@ $scope.ProductLicense = [];
     //End by Ankush 
 
     $scope.getPermissionOutboundExpiryDate = function () {
-        var getPermissionOutboundExpiryDate = AJService.PostDataToAPI("Dashboard/PermissionOutboundExpiryDate_List", null);
+        var getPermissionOutboundExpiryDate = AJService.PostDataToAPI("Dashboard/PermissionOutboundExpiryDate_List?ExecutiveId=" + parseInt($("#enterdBy").val()), null);
         getPermissionOutboundExpiryDate.then(function (status) {
             $scope.PermissionOutboundExpiryDate_List = status.data;
         }, function () {

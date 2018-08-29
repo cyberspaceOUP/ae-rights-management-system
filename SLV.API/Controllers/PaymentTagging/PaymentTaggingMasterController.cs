@@ -116,7 +116,7 @@ namespace SLV.API.Controllers.PaymentTaggingMaster
         }
 
         //added on 11 Aug, 2017
-        public IHttpActionResult GetList_PaymentNotReceived_ByDashboard(String For)
+        public IHttpActionResult GetList_PaymentNotReceived_ByDashboard(String For, int ExecutiveId)
         {
             try
             {
@@ -126,9 +126,12 @@ namespace SLV.API.Controllers.PaymentTaggingMaster
                 }
                 else
                 {
-                    SqlParameter[] parameters = new SqlParameter[1];
+                    SqlParameter[] parameters = new SqlParameter[2];
                     parameters[0] = new SqlParameter("For", SqlDbType.VarChar, 200);
                     parameters[0].Value = "'" + For + "'";
+                    parameters[1] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+                    parameters[1].Value = "'" + ExecutiveId + "'";
+
                     var _GetPaymentTaggingList = _dbContext.ExecuteStoredProcedureListNewData<PaymentTaggingModel>("Proc_PaymentTagging_Search_ByDashboard_get", parameters).ToList();
                     return Json(_GetPaymentTaggingList);
                 }

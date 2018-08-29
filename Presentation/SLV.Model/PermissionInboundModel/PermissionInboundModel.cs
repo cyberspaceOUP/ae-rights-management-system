@@ -45,6 +45,7 @@ namespace SLV.Model.PermissionInboundModel
         public int? Noofcopy { get; set; }
         public string OriginalSource { get; set; }
         public string InvoiceNumber { get; set; }
+        public double InvoiceValue { get; set; }
         public DateTime? PermissionExpirydate { get; set; }
 
         public int? TerritoryRights { get; set; }
@@ -212,4 +213,33 @@ namespace SLV.Model.PermissionInboundModel
         public int Number { get; set; }
 
     }
+
+    ////--------------Manage (Copy Existing Permissions Of Other Product)
+    public class CopyExistingPermissionInboundModel
+    {
+        public string InboundCode { get; set; }
+        public int ProductId { get; set; }
+        public string TypeFor { get; set; }
+        public string AssetsType { get; set; }
+        public int EnteredBy { get; set; }
+
+        public IList<IVcheckedListModel> IVcheckedList { get; set; }
+        public IList<OthercheckedListModel> OthercheckedList { get; set; }
+    }
+
+    public class IVcheckedListModel
+    {
+        public int? InboundId { get; set; }
+        public int? LinkId { get; set; }
+        public int? DataId { get; set; }
+    }
+
+    public class OthercheckedListModel
+    {
+        public int? InboundId { get; set; }
+        public int? InboundOthersId { get; set; }
+        public int? CopyRightHolderId { get; set; }
+    }
+    ////--------------end Manage (Copy Existing Permissions Of Other Product)
+
 }

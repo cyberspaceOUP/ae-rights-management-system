@@ -26,6 +26,7 @@ using SLV.Model.Product;
 using ACS.Core.Domain.RightsSelling;
 using ACS.Services.RightsSelling;
 using ACS.Services.PermissionsOutbound;
+using ACS.Services.PermissionsInbound;
 using System.Text;
 using Logger;
 
@@ -45,6 +46,7 @@ namespace SLV.API.Controllers.ProductMaster
         private readonly IProductLicenseService _IProductLicenseService;
         private readonly IRightsSelling _IRightsSelling;
         private readonly IPermissionsOutboundService _IPermissionsOutboundService;
+        private readonly IPermissionsInboundService _IPermissionsInboundService;
 
         private readonly IRepository<ACS.Core.Domain.Product.ProductMaster> _ProductMaster;
         private readonly IRepository<SeriesMaster> _SeriesMaster;
@@ -72,6 +74,7 @@ namespace SLV.API.Controllers.ProductMaster
             , IProductLicenseService IProductLicenseService
             , IRightsSelling IRightsSelling
             , IPermissionsOutboundService IPermissionsOutboundService
+            , IPermissionsInboundService IPermissionsInboundService
 
             , IRepository<ACS.Core.Domain.Product.ProductMaster> ProductMaster
             , IRepository<SeriesMaster> SeriesMaster
@@ -97,6 +100,7 @@ namespace SLV.API.Controllers.ProductMaster
             _IProductLicenseService = IProductLicenseService;
             _IRightsSelling = IRightsSelling;
             _IPermissionsOutboundService = IPermissionsOutboundService;
+            _IPermissionsInboundService = IPermissionsInboundService;
 
             _ProductMaster = ProductMaster;
             _SeriesMaster = SeriesMaster;
@@ -1421,6 +1425,64 @@ namespace SLV.API.Controllers.ProductMaster
 
                     return Json(_objPermissionsOutboundList);
                 }
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult GetPermissionsInboundMasterLinks(ProductSearchDetails Product)
+        {
+            try
+            {
+                if (Product.Id == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    var parentId = _ProductPreviousProductLinkRepository.Table.Where(x => x.ProductId == Product.Id && x.Deactivate == "N").Select(x => x.PreviousProductId).FirstOrDefault();
+                    if (parentId == 0)
+                    {
+                        var mobj_PermissionsInboundMaster = _IPermissionsInboundService.getPermissionInboundList();
+                        List<ProductLinkModel> _objPermissionsInboundList = (from rsm in mobj_PermissionsInboundMaster
+                                                                        where rsm.ProductId == Product.Id && rsm.Deactivate == "N"
+                                                                        select new ProductLinkModel
+                                                                        {
+                                                                            TypeFor = rsm.TypeFor,
+                                                                            ProductMasterId = rsm.ProductId,
+                                                                            PermissionsInboundCode = rsm.Code,
+                                                                        }).ToList();
+
+                        _objPermissionsInboundList = _objPermissionsInboundList.GroupBy(x => x.ProductMasterId).Select(x => x.First()).ToList();
+
+                        return Json(_objPermissionsInboundList);
+                    }
+                    else
+                    {
+                        var mobj_PermissionsInboundMaster = _IPermissionsInboundService.getPermissionInboundList();
+                        List<ProductLinkModel> _objPermissionsInboundList = (from rsm in mobj_PermissionsInboundMaster
+                                                                        where (rsm.ProductId == Product.Id || rsm.ProductId == parentId) && rsm.Deactivate == "N"
+                                                                        select new ProductLinkModel
+                                                                        {
+                                                                            TypeFor = rsm.TypeFor,
+                                                                            ProductMasterId = rsm.ProductId,
+                                                                            PermissionsInboundCode = rsm.Code,
+                                                                        }).ToList();
+
+                        _objPermissionsInboundList = _objPermissionsInboundList.GroupBy(x => x.ProductMasterId).Select(x => x.First()).ToList();
+
+                        return Json(_objPermissionsInboundList);
+                    }
+                }
+            }
+            catch (ACSException ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "ProductMasterController.cs", "GetPermissionsInboundMasterLinks", ex);
+                return Json(ex.InnerException.Message);
+            }
+            catch (Exception ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "ProductMasterController.cs", "GetPermissionsInboundMasterLinks", ex);
+                return Json(ex.InnerException.Message);
             }
         }
         #endregion

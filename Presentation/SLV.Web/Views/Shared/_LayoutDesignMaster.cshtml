@@ -58,6 +58,7 @@
 
     @*<script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>*@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    @*<script src="~/Scripts/angular/angular.min.js"></script>*@
     <script src="~/Scripts/angular/angular-datatables.js"></script>
     <link href="~/Content/sweetalert.css" rel="stylesheet" />
     <script src="~/Scripts/angular/sweetalert.min.js"></script>
@@ -260,7 +261,8 @@
         <p>You session has been expired !</p>
         <br/>
         <p style="text-align:center;">
-            <a href="~/Login/logout" class="btn green" id="btnSubmitReset">Ok</a>
+            @*<a href="~/Login/logout" class="btn green" id="btnSubmitReset">Ok</a>*@
+            <a href="~/Home/Dashboard/Dashboard" class="btn green" id="btnSubmitReset">Ok</a>
         </p>
     </div>
 

@@ -99,7 +99,7 @@
                                 <div class="portlet-body">
                                     <div class=" row">
                                         <div class="col-md-6">
-                                            <label class="control-label col-md-5">Assets type &nbsp;<span class="red">*</span></label>
+                                            <label class="control-label col-md-5">Assets type&nbsp;<span class="red">*</span></label>
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label class="checkbox">
@@ -115,14 +115,46 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>                                            
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group" style=" text-align:center; margin-top:1%">
+                                                <div class="col-md-8">
+                                                    <a href="javascript:void(0);" style="color: #ee5941;font-weight:bold;" id="btnShowInboundPopup" class="pull-right"
+                                                       ng-click="getInboundProductList()" data-toggle="modal" data-target="#myModal_InboundProductList">
+                                                        Copy Existing Permissions Of Other Product
+                                                    </a>
+                                                </div>
+                                                @*<div class="col-md-6">
+                                                    <table class="table table-bordered table-striped table-condensed flip-content"
+                                                            ng-if="inboundProduct_Codes.length!=0">
+                                                        <thead class="flip-content">
+                                                            <tr>
+                                                                <th>SNo</th>
+                                                                <th>Inbound Code</th>
+                                                                <th>Product Code</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="obj in inboundProduct_Codes">
+                                                                <td> <span ng-bind="$index +1"></span></td>
+                                                                <td> <span ng-bind="obj.InboundCode"></span></td>
+                                                                <td> <span ng-bind="obj.ProductCode"></span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>*@
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-md-12" ng-show="false" @*ng-show="AssetstypeImage[0]"*@>
                     <div class="portlet box green">
                         <div class="portlet-title">
@@ -276,6 +308,7 @@
                         </div>
                     </div>
                 </div>
+              
                 <div class="col-md-12" ng-show="AssetstypeImage[1]">
                     <div class="portlet box green">
                         <div class="portlet-title">
@@ -290,13 +323,17 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label class="control-label col-md-5">Copyright Holder&nbsp;  <span class="red">*</span></label>
+                                        <label class="control-label col-md-5">Copyright Holder&nbsp;<span class="red">*</span></label>
                                         <div class="col-md-7">
                                             <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.CopyRightHolder.$dirty) && userForm.CopyRightHolder.$invalid } ">
-                                                <select class="form-control" name="CopyRightHolder" id="CopyRightHolder" ng-model="PermissionsInboundModel.CopyRightHolder" ng-change="onCopyRightHolder()" ng-required="AssetstypeImage[1]">
+                                                @*<select class="form-control" name="CopyRightHolder" id="CopyRightHolder" ng-model="PermissionsInboundModel.CopyRightHolder" ng-change="onCopyRightHolder()" ng-required="AssetstypeImage[1]">
                                                     <option value="">Please Select</option>
                                                     <option ng-repeat="div in CopyRightHolderList" ng-model="CopyRightHolder" value="{{div.Id}}">{{div.CopyRightHolderName}}</option>
-                                                </select>
+                                                </select>*@
+
+                                                <input type="text" class="form-control" name="CopyRightHolder1" id="CopyRightHolder1" ng-model="CopyRightHolder1" ng-required="AssetstypeImage[1]" placeholder="Copyright Holder Name">
+                                                @*<input type="hidden" name="CopyRightHolderId" class="form-control" ng-model="PermissionsInboundModel.CopyRightHolder">*@
+
                                                 <div class="help-block">
                                                     <p ng-show="userForm.CopyRightHolder.$error.required && (userForm.CopyRightHolder.$dirty || submitted)">Please select Copyright holder</p>
                                                 </div>
@@ -640,7 +677,7 @@
                                                 <label class="control-label col-md-5">Invoice Value   </label>
                                                 <div class="col-md-7">
                                                     <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.InvoiceValue.$dirty) && userForm.InvoiceValue.$invalid } ">
-                                                        <input type="text" class="form-control" ng-model="PermissionsInboundModel.InvoiceValue" name="InvoiceValue" placeholder="Invoice Value" />
+                                                        <input type="number" class="form-control" ng-model="PermissionsInboundModel.InvoiceValue" name="InvoiceValue" placeholder="Invoice Value" maxlength="8"/>
                                                         <div class="help-block">
                                                             <p ng-show="userForm.InvoiceValue.$error.required && (userForm.InvoiceValue.$dirty || submitted)">Please enter Invoice Value</p>
                                                         </div>
@@ -721,6 +758,120 @@
                         </div>
                     </div>
                 </div>
+            
+                <!--selected (Image/Video and other) existing permission for copy-->
+                <div class="col-md-12" ng-show="inboundIV_SelectedData.length!=0 || inboundOther_SelectedData.length!=0">
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class="portlet box green">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Seleted Permissions
+                                    </div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="collapse"> </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class=" row">
+
+                                        <div class="col-md-12" ng-show="inboundIV_SelectedData.length!=0">
+                                            <h4 class="modal-title btn_closeDataPopup" style="color: #ee5941;">Image Video Bank Details</h4>
+                                            <br />
+                                            <table width="100%" class="table table-bordered table-striped table-condensed flip-content">
+                                                <thead class="flip-content">
+                                                    <tr>
+                                                        <th>SNo</th>
+                                                        <th>Inbound Code</th>
+                                                        <th>Product Code</th>
+                                                        <th>Vendor Name</th>
+                                                        @*<th>Description</th>*@
+                                                        <th>Image Id </th>
+                                                        <th>Invoice Number</th>
+                                                        <th>Invoice Value</th>
+                                                        <th>Currency</th>
+                                                        <th>Invoice Date</th>
+                                                        @*<th>Credit Line</th>*@
+                                                        <th>Print Quantity</th>
+                                                        <th>Permission Expiry Date</th>
+                                                        @*<th>Editorial only image</th>*@
+                                                        <th>Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="M in inboundIV_SelectedData">
+                                                        <td>  <span ng-bind="$index +1"></span> </td>
+                                                        <td><span ng-bind="M.Code"></span></td>
+                                                        <td><span ng-bind="M.ProductCode"></span></td>
+                                                        <td><span ng-bind="M.partyname"></span></td>
+                                                        @*<td><span ng-bind="M.Description"></span>  </td>*@
+                                                        <td><span ng-bind="M.imagevideobankid"></span></td>
+                                                        <td><span ng-bind="M.invoiceno"></span>   </td>
+                                                        <td><span ng-bind="M.invoicevalue"></span> </td>
+                                                        <td><span ng-bind="M.CurrencySymbol"></span>  </td>
+                                                        <td> <span ng-bind="M.invoicedate==null ? '' : M.invoicedate"></span>  </td>
+                                                        @*<td><span ng-bind="M.creditlines"></span>  </td>*@
+                                                        <td> <span ng-bind="M.printquantity==0 ? 'Unrestricted' : M.printquantity"></span> </td>
+                                                        <td> <span ng-bind="M.permissionexpirydate==null ? '' : M.permissionexpirydate"></span>  </td>
+                                                        @*<td><span ng-bind="M.Editorial_Only_Type"></span>  </td>*@
+
+                                                        <td style="text-align:center;">
+                                                            <a href="javascript:void(0);" ng-click="fnRemoveIVPermission($index, M.Id,M.LinkId,M.DataId)" title="Remove Product" style="color: #F45B43;">
+                                                                <i class=" fa fa-trash-o"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="col-md-12">&nbsp;</div>
+
+                                        <div class="col-md-12" ng-show="inboundOther_SelectedData.length!=0">
+                                            <h4 class="modal-title" style="color: #ee5941;">Copyright holder Details</h4>
+                                            <br />
+                                            <table width="100%" class="table table-bordered table-striped table-condensed flip-content">
+                                                <thead class="flip-content">
+                                                    <tr>
+                                                        <th>SNo</th>
+                                                        <th>Inbound Code </th>
+                                                        <th>Product Code </th>
+                                                        <th>Status </th>
+                                                        <th>Asset Sub-Type</th>
+                                                        <th width="25%">Asset Description</th>
+                                                        <th>Copyright Holder</th>
+                                                        <th>Permission Expiry date</th>
+                                                        <th>Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="M in inboundOther_SelectedData">
+                                                        <td> <span ng-bind="$index +1"></span></td>
+                                                        <td> <span ng-bind="M.Code"></span></td>
+                                                        <td> <span ng-bind="M.ProductCode"></span></td>
+                                                        <td> <span ng-bind="M.StatusName"></span></td>
+                                                        <td> <span ng-bind="M.AssetSubType"></span></td>
+                                                        <td> <span ng-bind="M.Description"></span></td>
+                                                        <td><span ng-bind="M.CopyRightHolderName"></span></td>
+                                                        <td><span ng-bind="M.permissionexpirydate"></span></td>
+
+                                                        <td style="text-align:center;">
+                                                            <a href="javascript:void(0);" ng-click="fnRemoveOtherPermissions($index, M.Id,M.InboundOthersId,M.CopyRightHolderId)" title="Remove Product" style="color: #F45B43;">
+                                                                <i class=" fa fa-trash-o"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
          
@@ -753,6 +904,203 @@
 
     </div>
 </div>
+
+<!-- Model popup for Inbound Product Listing -->
+<div class="modal fade bs-example-modal-lg" id="myModal_InboundProductList" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" style="width:80%;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div class="col-md-11">
+                    <h4 class="modal-title" style="color: #ee5941;">Select Product To Copy Permissions</h4>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                </div>
+            </div>
+
+            <div class="modal-body" style="overflow:auto">
+                <table width="100%" datatable="ng" class="table table-bordered table-striped table-condensed flip-content"  >
+                    <thead class="flip-content">
+                        <tr>
+                            <th>SNo</th>
+                            <th>
+                                Action
+                            </th>
+
+                            <th>Inbound Code</th>
+                            <th>Product Code</th>
+                            <th>ISBN</th>
+                            <th>Working Title</th>
+                            <th>Product Category</th>
+                            <th>Product Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="obj in InbounProductList" class="tooltipclass">
+                            <td><span ng-bind="$index + 1"></span></td>
+                            <td>
+                                <input type="checkbox" id="chk_SelectProduct" name="chk_SelectProduct" value="{{obj.productId}}"
+                                       onclick="fnSelectProduct(this)" />
+                                <input type="hidden" name="hid_CkeckedProduct" id="hid_CkeckedProduct" value="" />
+                            </td>
+
+                            <td><span ng-bind="obj.Code"></span></td>
+                            <td><span ng-bind="obj.ProductCode"></span></td>
+                            <td><span ng-bind="obj.ISBN"></span></td>
+                            <td><span ng-bind="obj.WorkingProduct"></span><br /><span style="font-size:11px;" ng-bind="(obj.WorkingSubProduct)"></span></td>
+                            <td><span ng-bind="obj.productcategory"></span></td>
+                            <td><span ng-bind="obj.ProductTypeName"></span><br /><span style="font-size:11px;" ng-bind="(obj.ProductSubTypeName)"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer text-center">
+                <p class="text-center">
+                    <button type="submit" class="btn green" id="btnSubmitInboundProduct" ng-click="getInboundDataByProduct()" 
+                            data-toggle="modal" data-target="#myModal_InboundDataList">
+                        Select
+                    </button>
+                    &nbsp;
+                    <button type="button" class="btn green btnClosePopup" data-dismiss="modal">Close</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Model popup for Inbound Data Listing -->
+<div class="modal fade bs-example-modal-lg" id="myModal_InboundDataList" tabindex="-1" role="dialog" style="margin-top:-3%;">
+    <div class="modal-dialog modal-lg" style="width:80%;">
+        <div class="modal-content">
+
+            <!--Image Video Bank Details-->
+            <div class="modal-header" ng-show="InbounImageVideoDataList.length!=0">
+                <div class="col-md-11">
+                    <h4 class="modal-title btn_closeDataPopup" style="color: #ee5941;">Image Video Bank Details</h4>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            </div>
+
+            <div class="modal-body" style="overflow:auto" ng-show="InbounImageVideoDataList.length!=0">
+                <table width="100%" class="table table-bordered table-striped table-condensed flip-content"
+                       style="display: block; max-height: 400px; overflow-y: auto; ">
+                    <thead class="flip-content">
+                        <tr>
+                            <th>SNo</th>
+                            <th>
+                                All
+                                <input type="checkbox" id="chk_SelectAllImageVideoData" name="chk_SelectAllImageVideoData" ng-click="fnSelectAllImageVideoData()" />
+                            </th>
+
+                            <th>Inbound Code</th>
+                            <th>Product Code</th>
+                            <th>Vendor Name</th>
+                            @*<th>Description</th>*@
+                            <th>Image Id </th>
+                            <th>Invoice Number</th>
+                            <th>Invoice Value</th>
+                            <th>Currency</th>
+                            <th>Invoice Date</th>
+                            @*<th>Credit Line</th>*@
+                            <th>Print Quantity</th>
+                            <th>Permission Expiry Date</th>
+                            @*<th>Editorial only image</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="M in InbounImageVideoDataList">
+                            <td>  <span ng-bind="$index +1"></span> </td>
+                            <td>
+                                <input type="checkbox" id="chk_SelectSingleImageVideoData" name="chk_SelectSingleImageVideoData" ng-click="fnSelectSingleImageVideoData()"
+                                       value="{{M.Id}},{{M.LinkId}},{{M.DataId}}" />
+                            </td>
+
+                            <td><span ng-bind="M.Code"></span></td>
+                            <td><span ng-bind="M.ProductCode"></span></td>
+                            <td><span ng-bind="M.partyname"></span></td>
+                            @*<td><span ng-bind="M.Description"></span>  </td>*@
+                            <td><span ng-bind="M.imagevideobankid"></span></td>
+                            <td><span ng-bind="M.invoiceno"></span>   </td>
+                            <td><span ng-bind="M.invoicevalue"></span> </td>
+                            <td><span ng-bind="M.CurrencySymbol"></span>  </td>
+                            <td> <span ng-bind="M.invoicedate==null ? '' : M.invoicedate"></span>  </td>
+                            @*<td><span ng-bind="M.creditlines"></span>  </td>*@
+                            <td> <span ng-bind="M.printquantity==0 ? 'Unrestricted' : M.printquantity"></span> </td>
+                            <td> <span ng-bind="M.permissionexpirydate==null ? '' : M.permissionexpirydate"></span>  </td>
+                            @*<td><span ng-bind="M.Editorial_Only_Type"></span>  </td>*@
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!--Copyright holder Details-->
+            <div class="modal-header" ng-show="InbounOtherDataList.length!=0">
+                <div class="col-md-11">
+                    <h4 class="modal-title" style="color: #ee5941;">Copyright holder Details</h4>
+                </div>
+            </div>
+
+            <div class="modal-body" style="overflow:auto" ng-show="InbounOtherDataList.length!=0">
+                <table width="100%" class="table table-bordered table-striped table-condensed flip-content"
+                       style="display: block; max-height: 400px; overflow-y: auto; ">
+                    <thead class="flip-content">
+                        <tr>
+                            <th>SNo</th>
+                            <th>
+                                All
+                                <input type="checkbox" id="chk_SelectAllOtherData" name="chk_SelectAllOtherData" ng-click="fnSelectAllOtherData()" />
+                            </th>
+
+                            <th>Inbound Code </th>
+                            <th>Product Code </th>
+                            <th>Status </th>
+                            <th>Asset Sub-Type</th>
+                            <th width="25%">Asset Description</th>
+                            <th>Copyright Holder</th>
+                            <th>Permission Expiry date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="M in InbounOtherDataList">
+                            <td> <span ng-bind="$index +1"></span></td>
+                            <td>
+                                <input type="checkbox" id="chk_SelectSingleOtherData" name="chk_SelectSingleOtherData" ng-click="fnSelectSingleOtherData()"
+                                       value="{{M.Id}},{{M.InboundOthersId}},{{M.CopyRightHolderId}}" />
+                            </td>
+
+                            <td> <span ng-bind="M.Code"></span></td>
+                            <td> <span ng-bind="M.ProductCode"></span></td>
+                            <td> <span ng-bind="M.StatusName"></span></td>
+                            <td> <span ng-bind="M.AssetSubType"></span></td>
+                            <td> <span ng-bind="M.Description"></span></td>
+                            <td>
+                                <span ng-bind="M.CopyRightHolderName"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="M.permissionexpirydate"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="modal-footer text-center">
+                <p class="text-center">
+                    <button type="submit" class="btn green" id="btnSubmitInboundData" ng-click="getInboundPermissionsData()" ng-disabled="validateInboundData">Copy</button>
+                    <button type="button" class="btn green btnClosePopup" data-dismiss="modal">Close</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript">
 
@@ -827,7 +1175,42 @@
 
     }
 
+    ////--manage multiple product for (Copy Existing Permissions Of Other Product)
+    $('#btnSubmitInboundProduct').prop('disabled', 'disabled');
+    var count_productId = [];
+    $('#btnShowInboundPopup').click(function () {
+        $('#btnSubmitInboundProduct').prop('disabled', 'disabled');
+        count_productId = [];
+    })
 
+    function fnSelectProduct(data) {
+        if (data.checked == true) {
+            count_productId.push(data.value);
+        }
+        else {
+            //count_productId.pop(data.value);
+            var index = count_productId.indexOf(data.value);
+            if (index !== -1) {
+                count_productId.splice(index, 1);
+            }
+        }
+
+        if (count_productId.length > 0) {
+            $('#btnSubmitInboundProduct').removeAttr('disabled');
+        }
+        else {
+            $('#btnSubmitInboundProduct').prop('disabled', 'disabled');
+        }
+    }
+
+    $('#btnSubmitInboundProduct').click(function () {
+        var finalId = '';
+        if (count_productId.length > 0) {
+            finalId = count_productId.join(',');
+        }
+        $('#hid_CkeckedProduct').val(finalId);
+    });
+    ////--end manage multiple product for (Copy Existing Permissions Of Other Product)
 </script>
 
 

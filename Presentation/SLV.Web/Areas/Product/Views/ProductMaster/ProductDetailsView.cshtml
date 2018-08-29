@@ -24,6 +24,7 @@
     angular.element(document.getElementById('angularid')).scope().Product_ProductLicenseLinks(@ViewBag.ProductId);
     angular.element(document.getElementById('angularid')).scope().Product_RightsSellingMasterLinks(@ViewBag.ProductId);
     angular.element(document.getElementById('angularid')).scope().Product_PermissionsOutboundMasterLinks(@ViewBag.ProductId);
+    angular.element(document.getElementById('angularid')).scope().Product_PermissionsInboundMasterLinks(@ViewBag.ProductId);
 }
 
 <div class="container-fluid">
@@ -88,6 +89,9 @@
                                                     </td>
                                                     <td ng-hide="!ProductLicenseLinks_List.length">
                                                         @Html.Partial("~/Areas/Product/Views/Shared/_LinkProductLicense.cshtml")
+                                                    </td>
+                                                    <td ng-hide="!PermissionsInboundMasterLinks_List.length">
+                                                        @Html.Partial("~/Areas/Product/Views/Shared/_LinkPermissionsInbound.cshtml")
                                                     </td>
                                                     <td ng-hide="!RightsSellingMasterLinks_List.length">
                                                         @Html.Partial("~/Areas/Product/Views/Shared/_LinkRightsSelling.cshtml")

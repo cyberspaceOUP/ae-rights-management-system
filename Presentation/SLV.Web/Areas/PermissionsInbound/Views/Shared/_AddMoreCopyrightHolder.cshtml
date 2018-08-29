@@ -301,7 +301,7 @@
                         <label class="control-label col-md-5">Invoice Value   </label>
                         <div class="col-md-7">
                             <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.InvoiceValue.$dirty) && userForm.InvoiceValue.$invalid } ">
-                                <input type="text" class="form-control" ng-model="PermissionsInboundModel.InvoiceValue" name="InvoiceValue" placeholder="Invoice Value" />
+                                <input type="number" class="form-control" ng-model="PermissionsInboundModel.InvoiceValue" name="InvoiceValue" placeholder="Invoice Value" maxlength="8" />
                                 <div class="help-block">
                                     <p ng-show="userForm.InvoiceValue.$error.required && (userForm.InvoiceValue.$dirty || submitted)">Please enter Invoice Value</p>
                                 </div>

@@ -1,14 +1,9 @@
 ﻿<script src="~/js/PermissionsInbound/UpdateMoreCopyrightHolder.js"></script>
 @*<script src="~/js/master/common.master.js"></script>*@
 
-
 @*@section onInit
 {
-
-    
     angular.element(document.getElementById('angularid')).scope().getTerritoryRightsList();
-
-
 }*@
 
     <div class="modal-body ">
@@ -32,14 +27,14 @@
                                 <label class="control-label col-md-5">Copyright Holder&nbsp;  <span class="red">*</span></label>
                                 <div class="col-md-7">
                                     <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.CopyRightHolder.$dirty) && userForm.CopyRightHolder.$invalid } ">
-                                        <select class="form-control CopyRightHolderValue" name="CopyRightHolder" id="CopyRightHolder" ng-model="OtherValue.CopyRightHolder" ng-change="onCopyRightHolder()" @*ng-required="AssetstypeImage[1]"*@>
+                                        @*<select class="form-control CopyRightHolderValue" name="CopyRightHolder" id="CopyRightHolder" ng-model="OtherValue.CopyRightHolder" ng-change="onCopyRightHolder()" >
                                             <option value="">Please Select</option>
-                                            @*<option ng-repeat="div in CopyRightHolderList" ng-selected="{{div.Id == OtherValue.CopyRightHolder}}" value="{{div.Id}}">{{div.CopyRightHolderName}}</option>*@
+                                            <option ng-repeat="div in CopyRightHolderList"  value="{{div.Id}}">{{div.CopyRightHolderName}}</option>
+                                        </select>*@
+                                        
+                                        <input type="text" class="form-control" name="CopyRightHolder1" id="CopyRightHolder1" ng-model="CopyRightHolder1" placeholder="Copyright Holder Name">
+                                        <input type="hidden" name="CopyRightHolderId" class="form-control" ng-model="CopyRightHolderId">
 
-                                            <option ng-repeat="div in CopyRightHolderList" @*ng-model="CopyRightHolder"*@ @*ng-selected="{{div.CopyRightHolderCode == OtherValue.CopyRightHolder}}"*@ value="{{div.Id}}">{{div.CopyRightHolderName}}</option>
-
-
-                                        </select>
                                         <div class="help-block">
                                             <p ng-show="userForm.CopyRightHolder.$error.required && (userForm.CopyRightHolder.$dirty || submitted)">Please select Copyright holder</p>
                                         </div>
@@ -52,12 +47,16 @@
                                 <label class="control-label col-md-5">Copyright Holder&nbsp;  <span class="red">*</span></label>
                                 <div class="col-md-7">
                                     <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.CopyRightHolder.$dirty) && userForm.CopyRightHolder.$invalid } ">
-                                        <select class="form-control CopyRightHolderValue" name="CopyRightHolder" id="CopyRightHolder" ng-model="OtherValue.CopyRightHolder" ng-change="onCopyRightHolder()" ng-required="InsertAssetstypeImage[1]">
+                                        @*<select class="form-control CopyRightHolderValue" name="CopyRightHolder" id="CopyRightHolder" ng-model="OtherValue.CopyRightHolder" ng-change="onCopyRightHolder()" ng-required="InsertAssetstypeImage[1]">
                                             <option value="">Please Select</option>
-                                            <option ng-repeat="div in newCpyHlderList" @*ng-model="CopyRightHolder"*@ ng-selected="{{div.Id == OtherValue.CopyRightHolder}}" value="{{div.Id}}">{{div.CopyRightHolderName}}</option>
+                                            <option ng-repeat="div in newCpyHlderList" ng-selected="{{div.Id == OtherValue.CopyRightHolder}}" value="{{div.Id}}">{{div.CopyRightHolderName}}</option>
+                                        </select>*@
 
+                                        @*<input type="text" class="form-control typeaheadBind" autocomplete="off" spellcheck="false">*@
 
-                                        </select>
+                                        <input type="text" class="form-control" name="CopyRightHolder1" id="CopyRightHolder1" ng-model="CopyRightHolder1" ng-required="InsertAssetstypeImage[1]" placeholder="Copyright Holder Name">
+                                        <input type="hidden" name="CopyRightHolderId" class="form-control" ng-model="CopyRightHolderId">
+
                                         <div class="help-block">
                                             <p ng-show="userForm.CopyRightHolder.$error.required && (userForm.CopyRightHolder.$dirty || submitted)">Please select Copyright holder</p>
                                         </div>
@@ -407,7 +406,7 @@
                                         <label class="control-label col-md-5">Invoice Value   </label>
                                         <div class="col-md-7">
                                             <div class="form-group" ng-class="{ 'has-error': (submitted ||userForm.InvoiceValue.$dirty) && userForm.InvoiceValue.$invalid } ">
-                                                <input type="text" class="form-control" ng-model="OtherValue.InvoiceValue" name="InvoiceValue" placeholder="Invoice Value" />
+                                                <input type="number" class="form-control" ng-model="OtherValue.InvoiceValue" name="InvoiceValue" placeholder="Invoice Value" maxlength="8"/>
                                                 <div class="help-block">
                                                     <p ng-show="userForm.InvoiceValue.$error.required && (userForm.InvoiceValue.$dirty || submitted)">Please enter Invoice Value</p>
                                                 </div>
@@ -483,6 +482,7 @@
 
                                 <input type="hidden" ng-model="OtherValue.hid_ValidateReqOther" id="hid_ValidateReqOther" name="hid_ValidateReqOther">
                                 <input type="hidden" value="OtherValue.hid_CopyrightholderId" ng-model="OtherValue.hid_CopyrightholderId" id="hid_CopyrightholderId" name="hid_CopyrightholderId">
+                                <input type="hidden" value="OtherValue.hid_CopyrightholderName" ng-model="OtherValue.hid_CopyrightholderName" id="hid_CopyrightholderName" name="hid_CopyrightholderName">
 
                             </div>
                         </div>

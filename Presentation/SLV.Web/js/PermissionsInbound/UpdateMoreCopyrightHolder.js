@@ -69,6 +69,103 @@
             //alert('Error in getting copy right holder list which is not used in permission inbound');
         });
     };
+    
+
+    ////---Start Autocomplete for 'Copyright Holder' //added on 16 April, 2018
+    AutoCompleteCopyrightHolder();
+    function AutoCompleteCopyrightHolder() {
+        //var obj = $("[name$=CopyRightHolder1]");
+
+        var CopyRightHolderDataList = [];
+
+        var getCopyRightHolderDataList = AJService.GetDataFromAPI("PermissionsInbound/getCopyRightHolder", null);
+        getCopyRightHolderDataList.then(function (CopyRightHolderData) {
+            for (i = 0; i < CopyRightHolderData.data.length; i++) {
+                CopyRightHolderDataList[i] = { "label": CopyRightHolderData.data[i].CopyRightHolderName.trim(), "value": CopyRightHolderData.data[i].CopyRightHolderName.trim(), "data": CopyRightHolderData.data[i].Id };
+            }
+
+            $("[name$=CopyRightHolder1]").autocomplete({
+                source: function (request, response) {
+                    var matcher = new RegExp(request.term, "i"); //RegExp("^" + request.term, "i"); //RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+                    response($.grep(CopyRightHolderDataList, function (item) {
+                        return matcher.test(item.label);
+                    }));
+                },
+
+                autoFocus: true,
+                select: function (event, ui) {
+                    $scope.CopyRightHolder1 = ui.item.value;
+                    //$scope.OtherValue.CopyRightHolder = ui.item.data;
+                    $scope.OtherValue.CopyRightHolderId = ui.item.data;
+                    $scope.OtherValue.hid_CopyrightholderName = ui.item.label.trim();
+
+                    $scope.temp_CopyRightHolder = ui.item.data;
+
+
+                    //------------get CopyRightHolder Details
+                    var CopyRightHolderDetail = {
+                        Id: $scope.temp_CopyRightHolder
+                    };
+
+                    // call API to fetch temp product type list basis on the FlatId
+                    var CopyRightHolderStatus = AJService.PostDataToAPI('PermissionsInbound/CopyRightHolderById', CopyRightHolderDetail);
+                    CopyRightHolderStatus.then(function (msg) {
+                        if (msg != null) {
+
+                            $('.fadeInout').css("display", "inline");
+
+                            msg.data.CopyRightHolderName
+
+
+                            $scope.OtherValue.ContactPerson = msg.data.ContactPerson;
+                            $scope.OtherValue.CopyRightHolderCode = msg.data.CopyRightHolderCode;
+
+                            $scope.OtherValue.Mobile = msg.data.Mobile;
+
+                            $scope.OtherValue.CopyRightHolderAddress = msg.data.Address;
+
+                            $scope.OtherValue.CopyRightHolderEmail = msg.data.Email;
+                            $scope.OtherValue.CopyRightHolderURL = msg.data.URL;
+
+                            $scope.OtherValue.CopyRightHolderAccountNo = msg.data.AccountNo;
+                            $scope.CopyRightHolderBankName = msg.data.BankName;
+
+                            $scope.OtherValue.CopyRightHolderBankAddress = msg.data.BankAddress;
+                            $scope.OtherValue.CopyRightHolderIFSCCode = msg.data.IFSCCode;
+                            $scope.CopyRightHolderPANNo = msg.data.PANNo;
+
+                            $scope.OtherValue.pincode = msg.data.Pincode;
+                            $scope.OtherValue.Country = msg.data.CountryId;
+
+                            $scope.getCountryStates();
+                            $scope.OtherValue.State = msg.data.Stateid;
+
+                            $scope.getStateCities();
+                            $scope.OtherValue.City = msg.data.Cityid;
+
+                            setTimeout(function () {
+                                $scope.getStateCities();
+                                $scope.OtherValue.City = msg.data.Cityid;
+                                $(".fadeInout").fadeIn("slow");
+                            }, 250);
+
+
+                        }
+                        else {
+                            SweetAlert.swal("Error!", "Error in system. Please try again", "", "error");
+                            blockUI.stop();
+                        }
+
+                    });
+                    //---------------------------------
+
+                }
+            });
+        }, function () {
+            //alert('Error in getting Licensee list');
+        });
+    }
+    ////---End Autocomplete for 'Copyright Holder'
 
    
     $scope.getStatus = function () {
@@ -115,76 +212,75 @@
         });
     }
     $scope.getCopyRightHolder();
+    
 
-
-
-    $scope.onCopyRightHolder = function () {
+    //$scope.onCopyRightHolder = function () {
 
       
-        if ($scope.OtherValue.CopyRightHolder == undefined) { //$scope.userForm.CopyRightHolder.$modelValue
-            $scope.OtherValue.ContactPerson = undefined;
-            $scope.OtherValue.Mobile = undefined;
-            $scope.OtherValue.CopyRightHolderAddress = undefined;
-            $(".fadeInout").fadeOut("slow");
-            return false;
-        }
+    //    if ($scope.OtherValue.CopyRightHolder == undefined) { //$scope.userForm.CopyRightHolder.$modelValue
+    //        $scope.OtherValue.ContactPerson = undefined;
+    //        $scope.OtherValue.Mobile = undefined;
+    //        $scope.OtherValue.CopyRightHolderAddress = undefined;
+    //        $(".fadeInout").fadeOut("slow");
+    //        return false;
+    //    }
 
-        var CopyRightHolderDetail = {
-            Id: $scope.OtherValue.CopyRightHolder, //$scope.userForm.CopyRightHolder.$modelValue
-        };
+    //    var CopyRightHolderDetail = {
+    //        Id: $scope.OtherValue.CopyRightHolder, //$scope.userForm.CopyRightHolder.$modelValue
+    //    };
 
-        // call API to fetch temp product type list basis on the FlatId
-        var CopyRightHolderStatus = AJService.PostDataToAPI('PermissionsInbound/CopyRightHolderById', CopyRightHolderDetail);
-        CopyRightHolderStatus.then(function (msg) {
-            if (msg != null) {
+    //    // call API to fetch temp product type list basis on the FlatId
+    //    var CopyRightHolderStatus = AJService.PostDataToAPI('PermissionsInbound/CopyRightHolderById', CopyRightHolderDetail);
+    //    CopyRightHolderStatus.then(function (msg) {
+    //        if (msg != null) {
 
-                $('.fadeInout').css("display", "inline");
+    //            $('.fadeInout').css("display", "inline");
               
-                msg.data.CopyRightHolderName
+    //            msg.data.CopyRightHolderName
 
 
-                $scope.OtherValue.ContactPerson = msg.data.ContactPerson;
-                $scope.OtherValue.CopyRightHolderCode = msg.data.CopyRightHolderCode;
+    //            $scope.OtherValue.ContactPerson = msg.data.ContactPerson;
+    //            $scope.OtherValue.CopyRightHolderCode = msg.data.CopyRightHolderCode;
 
-                $scope.OtherValue.Mobile = msg.data.Mobile;
+    //            $scope.OtherValue.Mobile = msg.data.Mobile;
 
-                $scope.OtherValue.CopyRightHolderAddress = msg.data.Address;
+    //            $scope.OtherValue.CopyRightHolderAddress = msg.data.Address;
 
-                $scope.OtherValue.CopyRightHolderEmail = msg.data.Email;
-                $scope.OtherValue.CopyRightHolderURL = msg.data.URL;
+    //            $scope.OtherValue.CopyRightHolderEmail = msg.data.Email;
+    //            $scope.OtherValue.CopyRightHolderURL = msg.data.URL;
 
-                $scope.OtherValue.CopyRightHolderAccountNo = msg.data.AccountNo;
-                $scope.CopyRightHolderBankName = msg.data.BankName;
+    //            $scope.OtherValue.CopyRightHolderAccountNo = msg.data.AccountNo;
+    //            $scope.CopyRightHolderBankName = msg.data.BankName;
 
-                $scope.OtherValue.CopyRightHolderBankAddress = msg.data.BankAddress;
-                $scope.OtherValue.CopyRightHolderIFSCCode = msg.data.IFSCCode;
-                $scope.CopyRightHolderPANNo = msg.data.PANNo;
+    //            $scope.OtherValue.CopyRightHolderBankAddress = msg.data.BankAddress;
+    //            $scope.OtherValue.CopyRightHolderIFSCCode = msg.data.IFSCCode;
+    //            $scope.CopyRightHolderPANNo = msg.data.PANNo;
 
-                $scope.OtherValue.pincode = msg.data.Pincode;
-                $scope.OtherValue.Country = msg.data.CountryId;
+    //            $scope.OtherValue.pincode = msg.data.Pincode;
+    //            $scope.OtherValue.Country = msg.data.CountryId;
 
-                $scope.getCountryStates();
-                $scope.OtherValue.State = msg.data.Stateid;
+    //            $scope.getCountryStates();
+    //            $scope.OtherValue.State = msg.data.Stateid;
 
-                $scope.getStateCities();
-                $scope.OtherValue.City = msg.data.Cityid;
+    //            $scope.getStateCities();
+    //            $scope.OtherValue.City = msg.data.Cityid;
 
-                setTimeout(function () {
-                    $scope.getStateCities();
-                    $scope.OtherValue.City = msg.data.Cityid;
-                    $(".fadeInout").fadeIn("slow");
-                }, 250);
+    //            setTimeout(function () {
+    //                $scope.getStateCities();
+    //                $scope.OtherValue.City = msg.data.Cityid;
+    //                $(".fadeInout").fadeIn("slow");
+    //            }, 250);
 
 
-            }
-            else {
-                SweetAlert.swal("Error!", "Error in system. Please try again", "", "error");
-                blockUI.stop();
-            }
+    //        }
+    //        else {
+    //            SweetAlert.swal("Error!", "Error in system. Please try again", "", "error");
+    //            blockUI.stop();
+    //        }
 
-        });
+    //    });
 
-    }
+    //}
 
 
 
@@ -305,7 +401,7 @@
                 $scope.OtherValue.SubLicensing = msg.data._mobj_PermissionInboundOthers.SubLicensing;
                 $scope.OtherValue.Fee = (msg.data._mobj_PermissionInboundOthers.Fee == null ? null : parseInt(msg.data._mobj_PermissionInboundOthers.Fee));
               
-                $scope.OtherValue.InvoiceNumber = (msg.data._mobj_PermissionInboundOthers.InvoiceNumber == null ? null : parseInt(msg.data._mobj_PermissionInboundOthers.InvoiceNumber));
+                $scope.OtherValue.InvoiceNumber = msg.data._mobj_PermissionInboundOthers.InvoiceNumber, //(msg.data._mobj_PermissionInboundOthers.InvoiceNumber == null ? null : parseInt(msg.data._mobj_PermissionInboundOthers.InvoiceNumber));
                 $scope.OtherValue.InvoiceValue = msg.data._mobj_PermissionInboundOthers.Invoicevalue;
 
                 if (msg.data._mobj_PermissionInboundOthers.TerritoryRights != null)
@@ -478,8 +574,12 @@
     $('#hid_CopyRightHolderById').val(value);
 
 
-    $("#CopyRightHolder option:selected").text(CopyRightsHolderCode);
-    $("#CopyRightHolder option:selected").val(CopyRightsHolderMasterId);
+    //$("#CopyRightHolder option:selected").text(CopyRightsHolderCode);
+        //$("#CopyRightHolder option:selected").val(CopyRightsHolderMasterId);
+
+    $scope.OtherValue.CopyRightHolderId = CopyRightsHolderMasterId;
+    $scope.OtherValue.hid_CopyrightholderName = CopyRightsHolderCode.trim();
+    $scope.CopyRightHolder1 = CopyRightsHolderCode;
 
   //  $scope.OtherValue.CopyRightHolder = CopyRightsHolderCode;
    
@@ -493,7 +593,6 @@
 
     $scope.ViewCopyRightHolderByIdValue = function ()
     {
-        
         $scope.Clear()
         $scope.ResetOther();
         $scope.UpdateCopyRights = false;
@@ -505,12 +604,16 @@
         $scope.AssetstypeImage[1] = true;
 
         $scope.ReqImageVedio = false;
+
+        //setTimeout(function () {
+        //    app.expandControllerManageCopyRightsHolder($scope, AJService, $window);
+        //}, 600);
     }
     // 
 
 
-    $scope.UpdateCopyRights = true;
-    $scope.InsertCopyRights = false
+    //$scope.UpdateCopyRights = true;
+    //$scope.InsertCopyRights = false
 
 
     $scope.InbounDetailsList = [];

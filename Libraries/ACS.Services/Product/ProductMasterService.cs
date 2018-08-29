@@ -131,7 +131,7 @@ namespace ACS.Services.Product
         {
 
             var mstr_returnmsg = "notexist";
-            var dupes = _ProductRepository.Table.Where(x => x.OUPISBN == Product.OUPISBN && x.OUPISBN != null && x.Deactivate == "N"
+            var dupes = _ProductRepository.Table.Where(x => x.OUPISBN == Product.OUPISBN && x.OUPISBN != null && x.OUPISBN != "" && x.Deactivate == "N"
                                             && (Product.Id != 0 ? x.Id : 0) != (Product.Id != 0 ? Product.Id : 1)).FirstOrDefault();
             if (dupes != null)
             {

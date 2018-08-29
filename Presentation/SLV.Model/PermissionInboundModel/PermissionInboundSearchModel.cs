@@ -97,6 +97,20 @@ namespace SLV.Model.PermissionInboundModel
         public string ProductTypeName { get; set; }
         public string ProductSubTypeName { get; set; }
         public DateTime? permissionexpirydateForSort { get; set; }
+
+        public string QunatityPrinted { get; set; }
+        public string quantity { get; set; }
+        public string BalanceCounts { get; set; }
+
+        public string CountryName { get; set; }
+        public string StateName { get; set; }
+        public string CityName { get; set; }
+        public string Pincode { get; set; }
+        public string Email { get; set; }
+        public string URL { get; set; }
+
+        public int? InboundOthersId { get; set; }
+        public int? CopyRightHolderId { get; set; }
        
     }
 
@@ -142,6 +156,8 @@ namespace SLV.Model.PermissionInboundModel
         public int? OthersId { get; set; }
         public string Type { get; set; }
         public int DeactivateBy { get; set; }
+        public string Code { get; set; }
+        public string ProductCode { get; set; }
     }
 
 

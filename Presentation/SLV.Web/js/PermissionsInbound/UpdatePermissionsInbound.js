@@ -107,7 +107,8 @@
             confirmButtonColor: "#8CD4F5",
             confirmButtonText: "Yes",
             closeOnConfirm: false,
-            closeOnCancel: true
+            closeOnCancel: true,
+            showLoaderOnConfirm: true
         },
             function (Confirm) {
                 if (Confirm) {
@@ -140,7 +141,8 @@
                         }
                         $scope.PermissionRightsObject = [];
 
-                        if ($("#CopyRightHolder option:selected").text() != "Please Select" && $("#CopyRightHolder option:selected").text() != "") {
+                        //if ($("#CopyRightHolder option:selected").text() != "Please Select" && $("#CopyRightHolder option:selected").text() != "") {
+                        if ($scope.OtherValue.hid_CopyrightholderName != undefined && $scope.OtherValue.hid_CopyrightholderName != "") {
                             for (i = 0; i < $scope.OtherRightsMasterList.length; i++) {
                                 $scope.PermissionRightsObject[i] = {
                                     RightsId: $($(".rightsObject")[i]).attr("Rightsid"),
@@ -185,7 +187,8 @@
 
                             ImageVideoCurrency: $('#CurrencyValueData').val() == "" ? null : $('#CurrencyValueData').val(), //$scope.userForm.Currency.$modelValue,
 
-                            CopyRightHolderName: ($("#CopyRightHolder option:selected").text() == "Please Select" ? null : $("#CopyRightHolder option:selected").text()),
+                            //CopyRightHolderName: ($("#CopyRightHolder option:selected").text() == "Please Select" ? null : $("#CopyRightHolder option:selected").text()),
+                            CopyRightHolderName: $scope.OtherValue.hid_CopyrightholderName == undefined ? null : $scope.OtherValue.hid_CopyrightholderName.trim(),
 
                             hid_CopyrightholderId: $scope.OtherValue.hid_CopyrightholderId == undefined ? null : $scope.OtherValue.hid_CopyrightholderId,
 
@@ -257,7 +260,7 @@
                             if (msg.data == "notvalid") {
                                 SweetAlert.swal("Try agian", "There is some problem.", "", "error");
 
-                                SweetAlert.swal("Message", "Invalid  Vendor Name.", "warning");
+                                //SweetAlert.swal("Message", "Invalid  Vendor Name.", "warning");
                             }
                             else if (msg.data == "OK") {
                                 SweetAlert.swal({
@@ -293,7 +296,8 @@
 
                         },
                         function () {
-                            alert('There is some error in the system');
+                            SweetAlert.swal("", "Please validate details.", "warning");
+                            //alert('There is some error in the system');
                         });
 
                     }
@@ -524,9 +528,10 @@
         This is the parent function will be used to validating Whole inbound Permission Form
     *****************************************************************************************/
     function fn_validateOthers() {
-        if ($("#CopyRightHolder").val() == "") {
+        if ($("#CopyRightHolder1").val() == "" || $("#CopyRightHolder1").val() == undefined) {
             SweetAlert.swal("Validation", "Please select CopyRight Holder  ", "warning");
-            $("[id*=CopyRightHolder]").focus();
+            //$("[id*=CopyRightHolder]").focus();
+            $("[id*=CopyRightHolder1]").focus();
             return 0;
         }
         if ($("select[name*=Status]").val() == "") {
@@ -1050,8 +1055,8 @@
             app.expandControllerOthersViewDetails($scope, AJService, $window);
             //$scope.OthersViewViewMode($('#hid_InboundId').val());
             app.expandControllerCopyRightsUpdateDetails($scope, AJService, $window);
-          // app.expandControllerCopyRightsInsertDetails($scope, AJService, $window);
-            
+            // app.expandControllerCopyRightsInsertDetails($scope, AJService, $window);
+                        
             // $scope.getInboundProcessDetails($('#hid_InboundId').val());
             app.expandControllerPendingRequestInsertDetails($scope, AJService, $window, SweetAlert);
             $scope.GetPermissionInboundUpdateList($('#hid_InboundId').val());
@@ -1065,7 +1070,7 @@
         $scope.PendingRemarkRrequired = false;
     }
 
-
+    
 });
 
 

@@ -46,6 +46,7 @@
                 </div>
                 <div class="loginheader" style="float:right; margin-right:30px;">
                     <ul>                        
+                        <li ng-show="'@Session["LastLoginDetails"]'!='First Time'">Last Login @string.Format("{0:MMMM dd, yyyy - hh:mm tt}", Session["LastLoginDetails"])</li>
                         <li > <i aria-hidden="true" class="fa fa-key"></i><a href="~/Login/ChangePassword">Change Password</a></li>
                         <li class="nobg"><i aria-hidden="true" class="fa fa-lock"></i><a href="~/Login/logout">Logout</a></li>
                     </ul>

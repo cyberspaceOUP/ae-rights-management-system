@@ -193,6 +193,11 @@ namespace ACS.Services.Master
        /// 
        string KeyValue(string KeyValue);
 
+       /// <summary>
+       /// Get ExecutiveLogin History  List
+       /// </summary>
+       IList<ExecutiveLoginHistory> GetExecutiveHistoryList(string executiveLogin);
+
     }
    
 }

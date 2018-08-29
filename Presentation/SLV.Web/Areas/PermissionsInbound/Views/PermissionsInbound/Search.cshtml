@@ -415,7 +415,7 @@
                                         <label class="control-label col-md-5">Invoice Value   </label>
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="number" min="0" class="form-control" ng-model="PermissionsInboundModel.Invoicevalue" name="InvoiceValue" placeholder="Invoice Value" />
+                                                <input type="number" min="0" class="form-control" ng-model="PermissionsInboundModel.Invoicevalue" name="InvoiceValue" placeholder="Invoice Value" maxlength="8" />
 
                                             </div>
                                         </div>
@@ -516,6 +516,7 @@
                                     <!--Redirect from dashboard-->
                                     <th ng-if="'@TempData["Action"]'=='dashboard'">Assets Type &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
                                     <th ng-if="'@TempData["Action"]'=='dashboard'">Expiry Date &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
+                                    <th ng-if="'@TempData["Action"]'=='dashboard' && '@TempData["Data"]'=='less'">Balance Quantity &nbsp;<span class="glyphicon glyphicon-sort"></span></th>
 
                                     @*<th>Contract Type</th>
                                     <th>Contract Code</th>*@
@@ -553,9 +554,11 @@
                                     <td ng-if="'@TempData["Action"]'=='dashboard'">
                                         <span ng-bind="obj.AssetsType"></span>
                                     </td>
-
                                     <td ng-if="'@TempData["Action"]'=='dashboard'">
                                         <span class="sortDateHide" ng-bind="obj.permissionexpirydateForSort"></span>{{obj.permissionexpirydate}}
+                                    </td>
+                                    <td ng-if="'@TempData["Action"]'=='dashboard' && '@TempData["Data"]'=='less'">
+                                        <span ng-bind="obj.BalanceCounts"></span>
                                     </td>
 
                                     @*<td>{{obj.TypeFor}} </td>*@
@@ -667,6 +670,15 @@
                 </div>
             </div>
         }
+        
+        <div class="col-md-12 text-center btnPrint" ng-if="'@TempData["Action"]'=='dashboard'">
+            <div class="tools">
+                <button type="submit" ng-if="'@TempData["Data"]'!='less'" class="btn green" ng-click="PermissionsInboundReportExcel()" id="btnSubmit">Generate Excel</button>
+
+                <button type="submit" ng-if="'@TempData["Data"]'=='less'" class="btn green" ng-click="PermissionsInboundLessQuantityReport()" id="btnSubmit">Generate Excel</button>
+            </div>
+        </div>
+        
     </div>
 </div>
 <script type="text/javascript">

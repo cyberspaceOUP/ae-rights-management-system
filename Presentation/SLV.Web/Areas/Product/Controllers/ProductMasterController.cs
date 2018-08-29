@@ -546,7 +546,7 @@ namespace SLV.Web.Areas.Product.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductCategory + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductType + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.SubtypeName + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.OupIsbn + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.OupIsbn == null || data.OupIsbn == "" ? "" : Convert.ToString("&nbsp;" + data.OupIsbn)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingSubProduct + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.OupEdition + "</td>");

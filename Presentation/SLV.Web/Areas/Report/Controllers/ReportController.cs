@@ -500,7 +500,7 @@ namespace SLV.Web.Areas.Report.Controllers
 
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "<br />" + "<span style='font-size:11px;'>" + data.WorkingSubProduct + "</span>" + "</td>");
 
-                        mstr_searchparameter.Append("<td align='left'>" + data.OUPISBN + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.OUPISBN == null || data.OUPISBN == "" ? "" : Convert.ToString("&nbsp;" + data.OUPISBN)) + "</td>");
 
                         mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
 
@@ -1192,7 +1192,7 @@ namespace SLV.Web.Areas.Report.Controllers
                         mstr_searchparameter.Append("<td align='right'>" + mint_Counter + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductLicensecode + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductCode + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.ISBN + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.ISBN == null || data.ISBN == "" ? "" : Convert.ToString("&nbsp;" + data.ISBN)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Expirydate + "</td>");
@@ -1220,9 +1220,11 @@ namespace SLV.Web.Areas.Report.Controllers
         {
             try
             {
-                SqlParameter[] parameters = new SqlParameter[1];
+                SqlParameter[] parameters = new SqlParameter[2];
                 parameters[0] = new SqlParameter("Flag", SqlDbType.VarChar, 200);
                 parameters[0].Value = "'" + _objModel.Flag + "'";
+                parameters[1] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+                parameters[1].Value = "'" + Session["UserId"].ToString() + "'"; ;
 
                 var _GetProductLicenseExpired = _dbContext.ExecuteStoredProcedureListNewData<LicenseListModel>("Proc_ProductLicenseExpired_get", parameters).ToList();
                 return _GetProductLicenseExpired;
@@ -1295,7 +1297,7 @@ namespace SLV.Web.Areas.Report.Controllers
                         mstr_searchparameter.Append("<td align='right'>" + mint_Counter + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductLicensecode + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductCode + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.ISBN + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.ISBN == null || data.ISBN == "" ? "" : Convert.ToString("&nbsp;" + data.ISBN)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.Expirydate + "</td>");
@@ -1422,7 +1424,7 @@ namespace SLV.Web.Areas.Report.Controllers
                         mstr_searchparameter.Append("<td align='right'>" + mint_Counter + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.LicenseeName + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.CountryName + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.ISBN + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.ISBN == null || data.ISBN == "" ? "" : Convert.ToString("&nbsp;" + data.ISBN)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingProduct + "</b align='left'><br/>" + data.WorkingSubProduct + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.DivisionName + "</td>");
 

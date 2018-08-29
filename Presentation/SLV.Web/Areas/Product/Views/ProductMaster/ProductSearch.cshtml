@@ -944,7 +944,7 @@
                     </div>
 
                     <div class="clearfix"></div>
-                    <div class="col-md-12" id="div_btnExcel" ng-if="'@TempData["Report"]' == 'Report'">
+                    <div class="col-md-12" id="div_btnExcel" ng-if="'@TempData["Report"]' == 'Report' || '@ViewBag.ViewMore' == 'NoLicense' || '@TempData["PermissionsInbound"]' == 'permissionsinbound' || '@ViewBag.ViewMore' == 'NoContract' || '@ViewBag.ViewMore' == 'NoSAP'">
                         <div class="form-group text-center">
                             <input type="hidden" name="hid_Report" id="hid_Report" ng-model="hid_Report" />
                             <button type="submit" class="btn green" ng-click="ProductReportExcel()" id="btnSubmit">Generate Excel</button>
@@ -1093,14 +1093,14 @@
                 </div>
 
                 <div class="clearfix"></div>
-                <div class="col-md-12" id="div_btnExcel" ng-if="'@TempData["Report"]' == 'Report'">
+                <div class="col-md-12" id="div_btnExcel" ng-if="'@TempData["Report"]' == 'Report' || '@ViewBag.ViewMore' == 'NoLicense' || '@TempData["PermissionsInbound"]' == 'permissionsinbound' || '@ViewBag.ViewMore' == 'NoContract' || '@ViewBag.ViewMore' == 'NoSAP'">
                     <div class="form-group text-center">
                         <input type="hidden" name="hid_Report" id="hid_Report" ng-model="hid_Report" />
                         <button type="submit" class="btn green" ng-click="ProductSeriesReportExcel()" id="btnSubmit">Generate Excel</button>
 
                     </div>
                 </div>
-
+                
                 <div class="form-actions" ng-if="!('@TempData["Report"]' == 'Report')">
                     <div class="row">
                         <div class="col-md-12 text-center">

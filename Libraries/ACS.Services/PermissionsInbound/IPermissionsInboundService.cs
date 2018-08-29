@@ -213,6 +213,18 @@ namespace ACS.Services.PermissionsInbound
 
         void DeletePermissionInbound(PermissionInbound _PermissionInbound);
 
+        IList<PermissionInbound> getPermissionInboundList();
+
+
+        /// <summary>
+        /// getting the record of copyright table based on Code
+        /// </summary>
+        /// <param name="showHidden"></param>
+        /// <returns>Details by Code</returns>
+        /// <summary>
+        /// 
+        CopyRightHolderMaster getCopyRightHolderByCode(string code);
+
 
         #region "Asset Sub-Type"
 
@@ -244,8 +256,7 @@ namespace ACS.Services.PermissionsInbound
         void UpdateAssetSubType(AssetSubType _AssetSubType);
 
         #endregion
-
-
+        
         #region "Asset Status"
 
         /// <summary>
@@ -276,6 +287,7 @@ namespace ACS.Services.PermissionsInbound
         void UpdateStatusMaster(StatusMaster _StatusMaster);
 
         #endregion
+
 
     }
 }

@@ -96,6 +96,10 @@ namespace SLV.API.Controllers.PermissionsInbound
         private readonly IRepository<PermissionInboundCopyRightHolderMaster> _PermissionInboundCopyRightHolderMaster;
 
         private readonly IRepository<TerritoryRightsMaster> _TerritoryRightsMaster;
+
+        private readonly IRepository<PermissionInboundImageVideoBank> _PermissionInboundImageVideoBank;
+        private readonly IRepository<PermissionInboundImageVideoBankData> _PermissionInboundImageVideoBankData;
+        private readonly IRepository<OtherContractDateRequest> _OtherContractDateRequest;
       
         DataTable _docDataTble = new DataTable();
 
@@ -120,7 +124,11 @@ namespace SLV.API.Controllers.PermissionsInbound
             , IRepository<OtherRightsMaster> OtherRightsMaster
             , IRepository<PermissionInboundOthers> PermissionInboundOthers
             , IRepository<PermissionInboundCopyRightHolderMaster> PermissionInboundCopyRightHolderMaster
-            ,IRepository<TerritoryRightsMaster> TerritoryRightsMaster
+            , IRepository<TerritoryRightsMaster> TerritoryRightsMaster
+
+            , IRepository<PermissionInboundImageVideoBank> PermissionInboundImageVideoBank
+            , IRepository<PermissionInboundImageVideoBankData> PermissionInboundImageVideoBankData
+            , IRepository<OtherContractDateRequest> OtherContractDateRequest
            
              )
         {
@@ -145,6 +153,10 @@ namespace SLV.API.Controllers.PermissionsInbound
             this._PermissionInboundOthers = PermissionInboundOthers;
             this._PermissionInboundCopyRightHolderMaster = PermissionInboundCopyRightHolderMaster;
             this._TerritoryRightsMaster = TerritoryRightsMaster;
+
+            this._PermissionInboundImageVideoBank = PermissionInboundImageVideoBank;
+            this._PermissionInboundImageVideoBankData = PermissionInboundImageVideoBankData;
+            this._OtherContractDateRequest = OtherContractDateRequest;
         }
 
 
@@ -345,6 +357,7 @@ namespace SLV.API.Controllers.PermissionsInbound
                     _InboundOther.Noofcopy = InboundOtherModel.Noofcopy;
                     _InboundOther.OriginalSource = InboundOtherModel.OriginalSource;
                     _InboundOther.InvoiceNumber = InboundOtherModel.InvoiceNumber;
+                    _InboundOther.Invoicevalue = InboundOtherModel.InvoiceValue;
                     _InboundOther.PermissionExpirydate = InboundOtherModel.PermissionExpirydate;
                     _InboundOther.EntryDate = DateTime.Now;
                     _InboundOther.EnteredBy = PermissionInboundModel.EnteredBy;
@@ -859,7 +872,7 @@ namespace SLV.API.Controllers.PermissionsInbound
             var mobj_CopyRightHolderValue = mobj_CopyRightHolder.Select(CRH => new
             {
                 Id = CRH.Id,
-                CopyRightHolderName = CRH.CopyRightHolderName
+                CopyRightHolderName = CRH.CopyRightHolderName.Trim()
             }
                 ).Distinct().OrderBy(a => a.CopyRightHolderName);
             return Json(mobj_CopyRightHolderValue);
@@ -1377,7 +1390,7 @@ namespace SLV.API.Controllers.PermissionsInbound
             }
         }
 
-        public IHttpActionResult getInboundPermissionSearchResultLess(String Data)
+        public IHttpActionResult getInboundPermissionSearchResultLess(String Data, int ExecutiveId)
         {
             if (Data == "")
             {
@@ -1385,7 +1398,11 @@ namespace SLV.API.Controllers.PermissionsInbound
             }
             else
             {
-                var _GetAuthorReport = _dbContext.ExecuteStoredProcedureListNewData<SLV.Model.PermissionInboundModel.PermissionInboundSearchModel>("Proc_InboundPermissionResultQuantityLess25_get").ToList();
+                SqlParameter[] parameters = new SqlParameter[1];
+                parameters[0] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+                parameters[0].Value = "'" + ExecutiveId + "'";
+
+                var _GetAuthorReport = _dbContext.ExecuteStoredProcedureListNewData<SLV.Model.PermissionInboundModel.PermissionInboundSearchModel>("Proc_InboundPermissionResultQuantityLess25_get", parameters).ToList();
                 return Json(_GetAuthorReport);
             }
         }
@@ -2033,22 +2050,46 @@ namespace SLV.API.Controllers.PermissionsInbound
                                     PermissionInboundCopyRightHolderMaster _PermissionInboundCopyRightHolderMaster = _IPermissionsInboundService.getPermissionInboundCopyRightHolderMasterById(Id);
 
 
-                                    _PermissionInboundCopyRightHolderMaster.CopyRightHolderCode = PendingRequestPermissionsInbound.CopyRightHolderCode;
-                                    _PermissionInboundCopyRightHolderMaster.CopyRightHolderName = PendingRequestPermissionsInbound.CopyRightHolderName;
-                                    _PermissionInboundCopyRightHolderMaster.ContactPerson = PendingRequestPermissionsInbound.ContactPerson;
-                                    _PermissionInboundCopyRightHolderMaster.Address = PendingRequestPermissionsInbound.CopyRightHolderAddress;
-                                    _PermissionInboundCopyRightHolderMaster.CountryId = PendingRequestPermissionsInbound.Country.GetValueOrDefault();
-                                    _PermissionInboundCopyRightHolderMaster.Stateid = PendingRequestPermissionsInbound.State.GetValueOrDefault();
-                                    _PermissionInboundCopyRightHolderMaster.Cityid = PendingRequestPermissionsInbound.City.GetValueOrDefault();
-                                    _PermissionInboundCopyRightHolderMaster.Pincode = PendingRequestPermissionsInbound.Pincode;
-                                    _PermissionInboundCopyRightHolderMaster.Mobile = PendingRequestPermissionsInbound.Mobile;
-                                    _PermissionInboundCopyRightHolderMaster.Email = PendingRequestPermissionsInbound.CopyRightHolderEmail;
-                                    _PermissionInboundCopyRightHolderMaster.URL = PendingRequestPermissionsInbound.CopyRightHolderURL;
-                                    _PermissionInboundCopyRightHolderMaster.BankName = PendingRequestPermissionsInbound.CopyRightHolderBankName;
-                                    _PermissionInboundCopyRightHolderMaster.AccountNo = PendingRequestPermissionsInbound.CopyRightHolderAccountNo;
-                                    _PermissionInboundCopyRightHolderMaster.BankAddress = PendingRequestPermissionsInbound.CopyRightHolderBankAddress;
-                                    _PermissionInboundCopyRightHolderMaster.IFSCCode = PendingRequestPermissionsInbound.CopyRightHolderIFSCCode;
-                                    _PermissionInboundCopyRightHolderMaster.PANNo = PendingRequestPermissionsInbound.CopyRightHolderPANNo;
+                                    //_PermissionInboundCopyRightHolderMaster.CopyRightHolderCode = PendingRequestPermissionsInbound.CopyRightHolderCode;
+                                    //_PermissionInboundCopyRightHolderMaster.CopyRightHolderName = PendingRequestPermissionsInbound.CopyRightHolderName;
+                                    //_PermissionInboundCopyRightHolderMaster.ContactPerson = PendingRequestPermissionsInbound.ContactPerson;
+                                    //_PermissionInboundCopyRightHolderMaster.Address = PendingRequestPermissionsInbound.CopyRightHolderAddress;
+                                    //_PermissionInboundCopyRightHolderMaster.CountryId = PendingRequestPermissionsInbound.Country.GetValueOrDefault();
+                                    //_PermissionInboundCopyRightHolderMaster.Stateid = PendingRequestPermissionsInbound.State.GetValueOrDefault();
+                                    //_PermissionInboundCopyRightHolderMaster.Cityid = PendingRequestPermissionsInbound.City.GetValueOrDefault();
+                                    //_PermissionInboundCopyRightHolderMaster.Pincode = PendingRequestPermissionsInbound.Pincode;
+                                    //_PermissionInboundCopyRightHolderMaster.Mobile = PendingRequestPermissionsInbound.Mobile;
+                                    //_PermissionInboundCopyRightHolderMaster.Email = PendingRequestPermissionsInbound.CopyRightHolderEmail;
+                                    //_PermissionInboundCopyRightHolderMaster.URL = PendingRequestPermissionsInbound.CopyRightHolderURL;
+                                    //_PermissionInboundCopyRightHolderMaster.BankName = PendingRequestPermissionsInbound.CopyRightHolderBankName;
+                                    //_PermissionInboundCopyRightHolderMaster.AccountNo = PendingRequestPermissionsInbound.CopyRightHolderAccountNo;
+                                    //_PermissionInboundCopyRightHolderMaster.BankAddress = PendingRequestPermissionsInbound.CopyRightHolderBankAddress;
+                                    //_PermissionInboundCopyRightHolderMaster.IFSCCode = PendingRequestPermissionsInbound.CopyRightHolderIFSCCode;
+                                    //_PermissionInboundCopyRightHolderMaster.PANNo = PendingRequestPermissionsInbound.CopyRightHolderPANNo;
+                                    //_PermissionInboundCopyRightHolderMaster.InboundOthersId = PendingRequestPermissionsInbound.InboundOthersId.GetValueOrDefault();
+                                    //_PermissionInboundCopyRightHolderMaster.ModifiedBy = PendingRequestPermissionsInbound.EnteredBy;
+
+
+                                    CopyRightHolderMaster holder = new CopyRightHolderMaster();
+                                    holder = _IPermissionsInboundService.getCopyRightHolderByCode(PendingRequestPermissionsInbound.CopyRightHolderCode.ToString());
+
+                                    _PermissionInboundCopyRightHolderMaster.CopyRightHolderCode = holder.CopyRightHolderCode;
+                                    _PermissionInboundCopyRightHolderMaster.CopyRightHolderName = holder.CopyRightHolderName;
+                                    _PermissionInboundCopyRightHolderMaster.ContactPerson = holder.ContactPerson;
+                                    _PermissionInboundCopyRightHolderMaster.Address = holder.Address;
+                                    _PermissionInboundCopyRightHolderMaster.CountryId = holder.CountryId;
+                                    _PermissionInboundCopyRightHolderMaster.Stateid = holder.Stateid;
+                                    _PermissionInboundCopyRightHolderMaster.Cityid = holder.Cityid;
+                                    _PermissionInboundCopyRightHolderMaster.Pincode = holder.Pincode;
+                                    _PermissionInboundCopyRightHolderMaster.Mobile = holder.Mobile;
+                                    _PermissionInboundCopyRightHolderMaster.Email = holder.Email;
+                                    _PermissionInboundCopyRightHolderMaster.URL = holder.URL;
+                                    _PermissionInboundCopyRightHolderMaster.BankName = holder.BankName;
+                                    _PermissionInboundCopyRightHolderMaster.AccountNo = holder.AccountNo;
+                                    _PermissionInboundCopyRightHolderMaster.BankAddress = holder.BankAddress;
+                                    _PermissionInboundCopyRightHolderMaster.IFSCCode = holder.IFSCCode;
+                                    _PermissionInboundCopyRightHolderMaster.PANNo = holder.PANNo;
+                                    
                                     _PermissionInboundCopyRightHolderMaster.InboundOthersId = PendingRequestPermissionsInbound.InboundOthersId.GetValueOrDefault();
                                     _PermissionInboundCopyRightHolderMaster.ModifiedBy = PendingRequestPermissionsInbound.EnteredBy;
 
@@ -2170,27 +2211,48 @@ namespace SLV.API.Controllers.PermissionsInbound
                                         _PermissionInboundOthers.EnteredBy = PendingRequestPermissionsInbound.EnteredBy;
 
                                         int PermissionInboundOthersId = _IPermissionsInboundService.InsertPermissionInboundOthers(_PermissionInboundOthers);
-
-
-
-
+                                                                                
+                                        
                                         PermissionInboundCopyRightHolderMaster _PermissionInboundCopyRightHolderMaster = new PermissionInboundCopyRightHolderMaster();
-                                        _PermissionInboundCopyRightHolderMaster.CopyRightHolderCode = PendingRequestPermissionsInbound.CopyRightHolderCode;
-                                        _PermissionInboundCopyRightHolderMaster.CopyRightHolderName = PendingRequestPermissionsInbound.CopyRightHolderName;
-                                        _PermissionInboundCopyRightHolderMaster.ContactPerson = PendingRequestPermissionsInbound.ContactPerson;
-                                        _PermissionInboundCopyRightHolderMaster.Address = PendingRequestPermissionsInbound.CopyRightHolderAddress;
-                                        _PermissionInboundCopyRightHolderMaster.CountryId = PendingRequestPermissionsInbound.Country.GetValueOrDefault();
-                                        _PermissionInboundCopyRightHolderMaster.Stateid = PendingRequestPermissionsInbound.State.GetValueOrDefault();
-                                        _PermissionInboundCopyRightHolderMaster.Cityid = PendingRequestPermissionsInbound.City.GetValueOrDefault();
-                                        _PermissionInboundCopyRightHolderMaster.Pincode = PendingRequestPermissionsInbound.Pincode;
-                                        _PermissionInboundCopyRightHolderMaster.Mobile = PendingRequestPermissionsInbound.Mobile;
-                                        _PermissionInboundCopyRightHolderMaster.Email = PendingRequestPermissionsInbound.CopyRightHolderEmail;
-                                        _PermissionInboundCopyRightHolderMaster.URL = PendingRequestPermissionsInbound.CopyRightHolderURL;
-                                        _PermissionInboundCopyRightHolderMaster.BankName = PendingRequestPermissionsInbound.CopyRightHolderBankName;
-                                        _PermissionInboundCopyRightHolderMaster.AccountNo = PendingRequestPermissionsInbound.CopyRightHolderAccountNo;
-                                        _PermissionInboundCopyRightHolderMaster.BankAddress = PendingRequestPermissionsInbound.CopyRightHolderBankAddress;
-                                        _PermissionInboundCopyRightHolderMaster.IFSCCode = PendingRequestPermissionsInbound.CopyRightHolderIFSCCode;
-                                        _PermissionInboundCopyRightHolderMaster.PANNo = PendingRequestPermissionsInbound.CopyRightHolderPANNo;
+                                        //_PermissionInboundCopyRightHolderMaster.CopyRightHolderCode = PendingRequestPermissionsInbound.CopyRightHolderCode;
+                                        //_PermissionInboundCopyRightHolderMaster.CopyRightHolderName = PendingRequestPermissionsInbound.CopyRightHolderName;
+                                        //_PermissionInboundCopyRightHolderMaster.ContactPerson = PendingRequestPermissionsInbound.ContactPerson;
+                                        //_PermissionInboundCopyRightHolderMaster.Address = PendingRequestPermissionsInbound.CopyRightHolderAddress;
+                                        //_PermissionInboundCopyRightHolderMaster.CountryId = PendingRequestPermissionsInbound.Country.GetValueOrDefault();
+                                        //_PermissionInboundCopyRightHolderMaster.Stateid = PendingRequestPermissionsInbound.State.GetValueOrDefault();
+                                        //_PermissionInboundCopyRightHolderMaster.Cityid = PendingRequestPermissionsInbound.City.GetValueOrDefault();
+                                        //_PermissionInboundCopyRightHolderMaster.Pincode = PendingRequestPermissionsInbound.Pincode;
+                                        //_PermissionInboundCopyRightHolderMaster.Mobile = PendingRequestPermissionsInbound.Mobile;
+                                        //_PermissionInboundCopyRightHolderMaster.Email = PendingRequestPermissionsInbound.CopyRightHolderEmail;
+                                        //_PermissionInboundCopyRightHolderMaster.URL = PendingRequestPermissionsInbound.CopyRightHolderURL;
+                                        //_PermissionInboundCopyRightHolderMaster.BankName = PendingRequestPermissionsInbound.CopyRightHolderBankName;
+                                        //_PermissionInboundCopyRightHolderMaster.AccountNo = PendingRequestPermissionsInbound.CopyRightHolderAccountNo;
+                                        //_PermissionInboundCopyRightHolderMaster.BankAddress = PendingRequestPermissionsInbound.CopyRightHolderBankAddress;
+                                        //_PermissionInboundCopyRightHolderMaster.IFSCCode = PendingRequestPermissionsInbound.CopyRightHolderIFSCCode;
+                                        //_PermissionInboundCopyRightHolderMaster.PANNo = PendingRequestPermissionsInbound.CopyRightHolderPANNo;
+                                        //_PermissionInboundCopyRightHolderMaster.InboundOthersId = PermissionInboundOthersId;
+                                        //_PermissionInboundCopyRightHolderMaster.EnteredBy = PendingRequestPermissionsInbound.EnteredBy;
+
+                                        CopyRightHolderMaster holder = new CopyRightHolderMaster();
+                                        holder = _IPermissionsInboundService.getCopyRightHolderByCode(PendingRequestPermissionsInbound.CopyRightHolderCode.ToString());
+
+                                        _PermissionInboundCopyRightHolderMaster.CopyRightHolderCode = holder.CopyRightHolderCode;
+                                        _PermissionInboundCopyRightHolderMaster.CopyRightHolderName = holder.CopyRightHolderName;
+                                        _PermissionInboundCopyRightHolderMaster.ContactPerson = holder.ContactPerson;
+                                        _PermissionInboundCopyRightHolderMaster.Address = holder.Address;
+                                        _PermissionInboundCopyRightHolderMaster.CountryId = holder.CountryId;
+                                        _PermissionInboundCopyRightHolderMaster.Stateid = holder.Stateid;
+                                        _PermissionInboundCopyRightHolderMaster.Cityid = holder.Cityid;
+                                        _PermissionInboundCopyRightHolderMaster.Pincode = holder.Pincode;
+                                        _PermissionInboundCopyRightHolderMaster.Mobile = holder.Mobile;
+                                        _PermissionInboundCopyRightHolderMaster.Email = holder.Email;
+                                        _PermissionInboundCopyRightHolderMaster.URL = holder.URL;
+                                        _PermissionInboundCopyRightHolderMaster.BankName = holder.BankName;
+                                        _PermissionInboundCopyRightHolderMaster.AccountNo = holder.AccountNo;
+                                        _PermissionInboundCopyRightHolderMaster.BankAddress = holder.BankAddress;
+                                        _PermissionInboundCopyRightHolderMaster.IFSCCode = holder.IFSCCode;
+                                        _PermissionInboundCopyRightHolderMaster.PANNo = holder.PANNo;
+
                                         _PermissionInboundCopyRightHolderMaster.InboundOthersId = PermissionInboundOthersId;
                                         _PermissionInboundCopyRightHolderMaster.EnteredBy = PendingRequestPermissionsInbound.EnteredBy;
 
@@ -3194,6 +3256,331 @@ namespace SLV.API.Controllers.PermissionsInbound
 
         }
 
+        /* Create By  : Prakash
+        * Create on  : 29 May, 2018
+        * Create for : get Inbound Product List 
+        */
+        [HttpGet]
+        public IHttpActionResult fetchInboundProductList(string productId = "")
+        {
+            try
+            {
+                SqlParameter[] parameters = new SqlParameter[1];
+                parameters[0] = new SqlParameter("productId", SqlDbType.VarChar, 200);
+                parameters[0].Value = "'" + productId + "'";
+
+                var _GetReport = _dbContext.ExecuteStoredProcedureListNewData<SLV.Model.PermissionInboundModel.PermissionInboundSearchModel>("Proc_fetchInboundProductList_get", parameters).ToList();
+                return Json(_GetReport);
+            }
+            catch (ACSException ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "fetchInboundProductList", ex);
+                return Json(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "fetchInboundProductList", ex);
+                return Json(ex.ToString());
+            }
+        }
+
+        /* Create By  : Prakash
+        * Create on  : 29 May, 2018
+        * Create for : get Inbound Image/Video data List 
+        */
+        [HttpGet]
+        public IHttpActionResult fetchInboundImageVideoDataList(string productIds = "")
+        {
+            try
+            {
+                SqlParameter[] parameters = new SqlParameter[1];
+                parameters[0] = new SqlParameter("productIds", SqlDbType.VarChar, 200);
+                parameters[0].Value = "'" + productIds + "'";
+
+                //--Image / Video Bank Data List
+                var _GetImageVideoBankDetailsList = _dbContext.ExecuteStoredProcedureListNewData<SLV.Model.PermissionInboundModel.PermissionInBoundImageVideoBankDetails>("Proc_fetchInboundImageVideoList_get", parameters).ToList();
+                return Json(new { _GetImageVideoBankDetailsList });
+            }
+            catch (ACSException ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "fetchInboundImageVideoDataList", ex);
+                return Json(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "fetchInboundImageVideoDataList", ex);
+                return Json(ex.ToString());
+            }
+        }
+
+        /* Create By  : Prakash
+        * Create on  : 29 May, 2018
+        * Create for : get Inbound Other data List 
+        */
+        [HttpGet]
+        public IHttpActionResult fetchInboundOtherDataList(string productIds = "")
+        {
+            try
+            {
+                SqlParameter[] parameters = new SqlParameter[1];
+                parameters[0] = new SqlParameter("productIds", SqlDbType.VarChar, 200);
+                parameters[0].Value = "'" + productIds + "'";
+
+                //--Other Data List
+                var _GetOtherDetailsList = _dbContext.ExecuteStoredProcedureListNewData<SLV.Model.PermissionInboundModel.PermissionInboundSearchModel>("Proc_fetchInboundOtherDataList_get", parameters).ToList();
+                return Json(new { _GetOtherDetailsList });
+            }
+            catch (ACSException ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "fetchInboundOtherDataList", ex);
+                return Json(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "fetchInboundOtherDataList", ex);
+                return Json(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult InsertCopyExistingPermissions(CopyExistingPermissionInboundModel obj)
+        {
+            string status = string.Empty;
+            string code = string.Empty;
+            int PermissionInBoundId = 0;
+            try
+            {
+                PermissionInbound _InboundTable = new PermissionInbound();
+
+                if (obj.InboundCode == "")
+                {
+                    _InboundTable.ProductId = obj.ProductId;
+                    _InboundTable.TypeFor = obj.TypeFor.ToString();
+                    _InboundTable.AssetsType = obj.AssetsType.ToString();
+
+                    _InboundTable.EnteredBy = obj.EnteredBy;
+                    _InboundTable.EntryDate = DateTime.Now;
+                    _InboundTable.Deactivate = "N";
+
+                    //get existing inbound code by productId
+                    if (obj.ProductId != 0)
+                    {
+                        var mstr_Code = _PermissionInbound.Table.Where(a => a.ProductId == obj.ProductId && a.Deactivate == "N").FirstOrDefault();
+                        if (mstr_Code != null)
+                        {
+                            _InboundTable.Code = mstr_Code.Code;
+                        }
+                        else
+                        {
+                            _InboundTable.Code = GenerateSeriesCode("InboundCode", "IP");
+                        }
+                    }
+
+                    //--insert permission inbound data
+                    PermissionInBoundId = _IPermissionsInboundService.InsertPermissionInboundData(_InboundTable);                    
+                }
+                else
+                {
+                    _InboundTable.Code = obj.InboundCode;
+                }
+
+                //--get last inbound entry id
+                var obj_inboundLastEntryData = _PermissionInbound.Table.Where(x => x.Deactivate == "N" && x.Code ==_InboundTable.Code).OrderByDescending(i => i.Id).FirstOrDefault();
+
+                ////--copy image / video data
+                if (obj.IVcheckedList.Count > 0)
+                {
+                    foreach (var iv_items in obj.IVcheckedList)
+                    {
+                        var obj_ivLinkData = _PermissionInboundImageVideoBank.Table.Where(x => x.Deactivate == "N" && x.Id == iv_items.LinkId && x.PermissionInboundId == iv_items.InboundId).FirstOrDefault();
+                        var obj_ivBankData = _PermissionInboundImageVideoBankData.Table.Where(x => x.Deactivate == "N" && x.Id == iv_items.DataId && x.IVBId == iv_items.LinkId).FirstOrDefault();
+
+                        PermissionInboundImageVideoBank _ImageVideoBank = new PermissionInboundImageVideoBank();
+                        PermissionInboundImageVideoBankData _ImageVideoBankData = new PermissionInboundImageVideoBankData();
+
+                        if (obj_ivLinkData != null)
+                        {
+                            //----------insert PermissionInboundImageVideoBankLink 
+                            _ImageVideoBank.ImageBankId = obj_ivLinkData.ImageBankId;
+                            _ImageVideoBank.PermissionInboundId = PermissionInBoundId != 0 ? PermissionInBoundId : obj_inboundLastEntryData.Id;
+
+                            _ImageVideoBank.EnteredBy = obj.EnteredBy;
+
+                            int ImageVideoBankLinkId = _IPermissionsInboundService.InsertPermissionInboundImageVideoBankLink(_ImageVideoBank);
+                            //------------------------------------------------------
+
+                            if (ImageVideoBankLinkId != null && obj_ivBankData != null)
+                            {
+                                //-----------insert PermissionInboundImageVideoBankData
+                                _ImageVideoBankData.ContractTypes = obj_ivBankData.ContractTypes;
+                                _ImageVideoBankData.ImageBankPartyId = obj_ivBankData.ImageBankPartyId; 
+                                _ImageVideoBankData.IVBId = ImageVideoBankLinkId;
+                                _ImageVideoBankData.imagevideobankid = obj_ivBankData.imagevideobankid;
+                                _ImageVideoBankData.Description = obj_ivBankData.Description;
+                                _ImageVideoBankData.creditlines = obj_ivBankData.creditlines;
+                                _ImageVideoBankData.EditorialonlyType = obj_ivBankData.EditorialonlyType;
+                                _ImageVideoBankData.invoiceno = obj_ivBankData.invoiceno;
+                                _ImageVideoBankData.invoicevalue = Convert.ToDouble(obj_ivBankData.invoicevalue);
+                                _ImageVideoBankData.CurrencyId = obj_ivBankData.CurrencyId;
+                                _ImageVideoBankData.printquantity = obj_ivBankData.printquantity;
+                                _ImageVideoBankData.weblink = obj_ivBankData.weblink;
+                                _ImageVideoBankData.usage = obj_ivBankData.usage == "" ? null : obj_ivBankData.usage;
+                                _ImageVideoBankData.Remarks = obj_ivBankData.Remarks;
+
+                                if (obj_ivBankData.invoicedate != null)
+                                {
+                                    _ImageVideoBankData.invoicedate = obj_ivBankData.invoicedate;
+                                }
+                                else
+                                {
+                                    _ImageVideoBankData.invoicedate = (DateTime?)null;
+                                }
+
+                                if (obj_ivBankData.permissionexpirydate != null)
+                                {
+                                    _ImageVideoBankData.permissionexpirydate = obj_ivBankData.permissionexpirydate;
+                                }
+                                else
+                                {
+                                    _ImageVideoBankData.permissionexpirydate = (DateTime?)null;
+                                }
+
+                                _ImageVideoBankData.EnteredBy = obj.EnteredBy;
+
+                                _IPermissionsInboundService.InsertNewPermissionInboundImageVideoBankData(_ImageVideoBankData);
+                                //-----------------------------------------------------
+                            }
+                        }
+                    }
+                }
+
+                ////--copy other data
+                if (obj.OthercheckedList.Count > 0)
+                {
+                    foreach (var o_items in obj.OthercheckedList)
+                    {
+                        var obj_otherData = _PermissionInboundOthers.Table.Where(x => x.Deactivate == "N" && x.Id == o_items.InboundOthersId && x.PermissionInboundId == o_items.InboundId).FirstOrDefault();
+                        var obj_otherCRHM = _PermissionInboundCopyRightHolderMaster.Table.Where(x => x.Deactivate == "N" && x.Id == o_items.CopyRightHolderId && x.InboundOthersId == o_items.InboundOthersId).FirstOrDefault();
+                        var obj_otherDateRequest = _OtherContractDateRequest.Table.Where(x => x.Deactivate == "N" && x.PIOID == o_items.InboundOthersId).ToList();
+                        var obj_otherRightsLink = _PermissionInboundOthersRightsLink.Table.Where(x => x.Deactivate == "N" && x.PIOID == o_items.InboundOthersId).ToList();
+
+                        PermissionInboundOthers _InboundOther = new PermissionInboundOthers();
+                        PermissionInboundCopyRightHolderMaster _InboundCopyRightHolder = new PermissionInboundCopyRightHolderMaster();
+                        OtherContractDateRequest _OtherDateRequest = new OtherContractDateRequest();
+                        PermissionInboundOthersRightsLink _InboundOtherRightsLink = new PermissionInboundOthersRightsLink();
+
+                        if (obj_otherData != null)
+                        {
+                            //------------insert PermissionInboundOthers
+                            _InboundOther.PermissionInboundId = PermissionInBoundId != 0 ? PermissionInBoundId : obj_inboundLastEntryData.Id;
+                            _InboundOther.AssetSubTypeId = obj_otherData.AssetSubTypeId;
+                            _InboundOther.AssetDescription = obj_otherData.AssetDescription;
+                            _InboundOther.statusId = obj_otherData.statusId;
+                            _InboundOther.Restriction = obj_otherData.Restriction;
+                            _InboundOther.SubLicensing = obj_otherData.SubLicensing;
+                            _InboundOther.Fee = obj_otherData.Fee;
+                            _InboundOther.CurrencyId = obj_otherData.CurrencyId;
+                            _InboundOther.Extent = obj_otherData.Extent;
+                            _InboundOther.Gratiscopytobesent = obj_otherData.Gratiscopytobesent;
+                            _InboundOther.Noofcopy = obj_otherData.Noofcopy;
+                            _InboundOther.OriginalSource = obj_otherData.OriginalSource;
+                            _InboundOther.InvoiceNumber = obj_otherData.InvoiceNumber;
+                            _InboundOther.Invoicevalue = obj_otherData.Invoicevalue;
+                            _InboundOther.PermissionExpirydate = obj_otherData.PermissionExpirydate;
+                            _InboundOther.Acknowledgementline = obj_otherData.Acknowledgementline;
+                            _InboundOther.InboundRemarks = obj_otherData.InboundRemarks;
+                            _InboundOther.TerritoryRightsId = obj_otherData.TerritoryRightsId;
+
+                            _InboundOther.EnteredBy = obj.EnteredBy;
+
+                            int PermissionInboundOthersId = _IPermissionsInboundService.InsertPermissionInboundOthers(_InboundOther);
+                            //------------------------------------------------------
+
+                            if (PermissionInboundOthersId != null && obj_otherCRHM != null)
+                            {
+                                //------------insert PermissionInboundCopyRightHolderMaster
+                                _InboundCopyRightHolder.InboundOthersId = PermissionInboundOthersId;
+                                _InboundCopyRightHolder.CopyRightHolderCode = obj_otherCRHM.CopyRightHolderCode;
+                                _InboundCopyRightHolder.CopyRightHolderName = obj_otherCRHM.CopyRightHolderName;
+                                _InboundCopyRightHolder.ContactPerson = obj_otherCRHM.ContactPerson;
+                                _InboundCopyRightHolder.Address = obj_otherCRHM.Address;
+                                _InboundCopyRightHolder.CountryId = obj_otherCRHM.CountryId;
+                                _InboundCopyRightHolder.Stateid = obj_otherCRHM.Stateid;
+                                _InboundCopyRightHolder.Cityid = obj_otherCRHM.Cityid;
+                                _InboundCopyRightHolder.Pincode = obj_otherCRHM.Pincode;
+                                _InboundCopyRightHolder.Mobile = obj_otherCRHM.Mobile;
+                                _InboundCopyRightHolder.Email = obj_otherCRHM.Email;
+                                _InboundCopyRightHolder.URL = obj_otherCRHM.URL;
+                                _InboundCopyRightHolder.BankName = obj_otherCRHM.BankName;
+                                _InboundCopyRightHolder.AccountNo = obj_otherCRHM.AccountNo;
+                                _InboundCopyRightHolder.BankAddress = obj_otherCRHM.BankAddress;
+                                _InboundCopyRightHolder.IFSCCode = obj_otherCRHM.IFSCCode;
+                                _InboundCopyRightHolder.PANNo = obj_otherCRHM.PANNo;
+
+                                _InboundCopyRightHolder.EnteredBy = obj.EnteredBy;
+
+                                _IPermissionsInboundService.InsertPermissionInboundCopyRightHolderMaster(_InboundCopyRightHolder);
+                                //------------------------------------------------------
+                            }
+
+                            if (PermissionInboundOthersId != null && obj_otherDateRequest.Count > 0)
+                            {
+                                //------------insert OtherContractDateRequest
+                                foreach (var lst in obj_otherDateRequest)
+                                {
+                                     _OtherDateRequest = new OtherContractDateRequest();
+
+                                     _OtherDateRequest.PIOID = PermissionInboundOthersId;
+                                     _OtherDateRequest.dateOf = lst.dateOf;
+                                     _OtherDateRequest.dateValue = lst.dateValue;
+
+                                     _OtherDateRequest.EnteredBy = obj.EnteredBy;
+
+                                     _IPermissionsInboundService.InsertOtherContractDateRequest(_OtherDateRequest);
+                                }
+                                //------------------------------------------
+                            }
+
+                            if (PermissionInboundOthersId != null && obj_otherRightsLink.Count > 0)
+                            {
+                                //------------insert PermissionInboundOthersRightsLink
+                                foreach (var lst in obj_otherRightsLink)
+                                {
+                                    _InboundOtherRightsLink = new PermissionInboundOthersRightsLink();
+
+                                    _InboundOtherRightsLink.PIOID = PermissionInboundOthersId;
+                                    _InboundOtherRightsLink.RightsId = lst.RightsId;
+                                    _InboundOtherRightsLink.status = lst.status;
+                                    _InboundOtherRightsLink.Number = lst.Number;
+                                    _InboundOtherRightsLink.RunGranted = lst.RunGranted;
+
+                                    _InboundOtherRightsLink.EnteredBy = obj.EnteredBy;
+
+                                    _IPermissionsInboundService.InsertPermissionInboundOthersRightsLink(_InboundOtherRightsLink);
+                                }
+                                //---------------------------------------------------
+                            }
+
+                        }
+
+                    }
+                }
+
+                status = "OK";
+                code = _InboundTable.Code;
+                return Json(new { status, code });
+            }
+            catch (ACSException ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "InsertCopyExistingPermissions", ex);
+                return Json(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                _ILog.LogException("", Severity.ProcessingError, "PermissionsInboundController.cs", "InsertCopyExistingPermissions", ex);
+                return Json(ex.ToString());
+            }
+        }
 
     }
     public class CopyClass

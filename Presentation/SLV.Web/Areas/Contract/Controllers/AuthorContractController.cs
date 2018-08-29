@@ -491,7 +491,7 @@ namespace SLV.Web.Areas.Contract.Controllers
                     {
                         for (int i = 0; i < _mobjReportList.Count; i++)
                         {
-                            if (_mobjReportList[i].AuthorData != null)
+                            if (_mobjReportList[i].AuthorData != null && _mobjReportList[i].AuthorData != "")
                             {
                                 int AuthorNo = 0;
                                 string[] AuthorSaperations = _mobjReportList[i].AuthorData.Split('~');
@@ -574,7 +574,7 @@ namespace SLV.Web.Areas.Contract.Controllers
                         {
                             foreach (string Typenames in distincttypename)
                             {
-                                mstr_searchparameter.Append("<td ><b>" + Typenames.ToUpper() + " </b></td>");
+                                mstr_searchparameter.Append("<td ><b>" + Typenames + " </b></td>");     //Typenames.ToUpper()
                             }
                         }
 
@@ -583,7 +583,7 @@ namespace SLV.Web.Areas.Contract.Controllers
                         {
                             foreach (string subsiadiry in distinctsubsiadiryname)
                             {
-                                mstr_searchparameter.Append("<td ><b>" + subsiadiry.ToUpper() + " </b></td>");
+                                mstr_searchparameter.Append("<td ><b>" + subsiadiry + " </b></td>");    //subsiadiry.ToUpper()
                             }
                         }
                     }
@@ -605,7 +605,7 @@ namespace SLV.Web.Areas.Contract.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductCode + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingTitle + "<br />"+ "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.WorkingSubProduct + "<br />" + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.oupisbn + "</td>");
+                        mstr_searchparameter.Append("<td align='left'>" + (data.oupisbn == null || data.oupisbn == "" ? "" : Convert.ToString("&nbsp;" + data.oupisbn)) + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.AuthorName + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ContractEntryDate + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.NoOfAuthors + "</td>");
@@ -634,7 +634,9 @@ namespace SLV.Web.Areas.Contract.Controllers
                         mstr_searchparameter.Append("<td align='left'>" + data.ProductRemarks + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.SeriesName + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.ContractDate + "</td>");
-                        mstr_searchparameter.Append("<td align='left'>" + data.Contractstatus + "</td>");
+
+                        mstr_searchparameter.Append("<td align='left'>" + (data.Contractstatus == "Pending" ? "Issued" : (data.Contractstatus == "Issued" ? "Received" : data.Contractstatus)) + "</td>");
+
                         mstr_searchparameter.Append("<td align='left'>" + data.DateOfAgreement + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.SignedContractsentdate + "</td>");
                         mstr_searchparameter.Append("<td align='left'>" + data.SignedContractreceived + "</td>");
@@ -649,7 +651,7 @@ namespace SLV.Web.Areas.Contract.Controllers
 
 
 
-                        if (_mobjReportList[Count_value].AuthorData != null)
+                        if (_mobjReportList[Count_value].AuthorData != null && _mobjReportList[Count_value].AuthorData != "")
                         {
                             int AuthorNo = 0;
                             string[] AuthorSaperations = _mobjReportList[Count_value].AuthorData.Split('~');

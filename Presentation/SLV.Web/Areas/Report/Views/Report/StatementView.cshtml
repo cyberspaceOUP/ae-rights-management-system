@@ -161,10 +161,12 @@
                                     <td class="Hide_ForPrint"><span ng-bind="items.Percentage"></span></td>
 
                                     <td class="Hide_ForPrint">
-                                        <i class="fa fa-{{items.InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="items.Amount"></span>
+                                        @*{{items.InvoiceCurrency}}*@
+                                        <i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="items.Amount"></span>
                                     </td>
                                     <td>
-                                        <i class="fa fa-{{items.InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="items.AuthorAmount"></span>
+                                        @*{{items.InvoiceCurrency}}*@
+                                        <i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="items.AuthorAmount"></span>
                                     </td>
                                     @*<td class="OUPDataValue">
                                         <i class="fa fa-{{items.InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="items.OupAmount"></span>
@@ -179,8 +181,10 @@
 
                                 <tr ng-if="!(AuthorContractValueData) && !(IsInvoice)" class="OUPDataValue">
                                     <td colspan="9" align="right" style="font-weight:bold;">Total Amount</td>
-                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
-                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span></td>
+                                    @*{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}*@
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
+                                    @*{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}*@
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span></td>
                                     <td>
                                     @*<i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
                                     </td>
@@ -189,8 +193,10 @@
 
                                 <tr ng-if="(AuthorContractValueData == true && IsInvoice == false)" class="OUPDataValue">
                                     <td colspan="11" align="right" style="font-weight:bold;">Total Amount</td>
-                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
-                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span></td>
+                                    @*{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}*@
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
+                                    @*{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}*@
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span></td>
                                     <td>
                                     @*<i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
                                     </td>
@@ -199,22 +205,22 @@
 
                                 <tr ng-if="(AuthorContractValueData == false && IsInvoice == true)" class="OUPDataValue">
                                     <td colspan="11" align="right" style="font-weight:bold;">Total Amount</td>
-                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
-                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span></td>
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span></td>
                                     <td>
-                                        @*<i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
+                                        @*<i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
                                     </td>
                                     <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
                                 </tr>
 
                                 <tr ng-if="(IsInvoice == true && AuthorContractValueData == true )" class="OUPDataValue">
                                     <td colspan="13" align="right" style="font-weight:bold;">Total Amount</td>
-                                    <td><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
+                                    <td><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalAmount"></span></td>
                                     <td>
-                                        <i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span>
+                                        <i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalAuthorAmount"></span>
                                     </td>
                                     <td>
-                                    @*<i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
+                                    @*<i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span>*@
                                     </td>
                                     <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
                                 </tr>
@@ -223,37 +229,37 @@
 
                                 <tr ng-if="!(AuthorContractValueData) && !(IsInvoice)" class="Hide_ForPrint">
                                     <td colspan="9" align="right" style="font-weight:bold;">Total OUP Amount</td>
-                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="3"><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
                                     <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
                                 </tr>
 
                                 <tr ng-if="(AuthorContractValueData == true && IsInvoice == false)" class="Hide_ForPrint">
                                     <td colspan="11" align="right" style="font-weight:bold;">Total OUP Amount</td>
-                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="3"><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
                                     <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
                                 </tr>
 
                                 <tr ng-if="(AuthorContractValueData == false && IsInvoice == true)" class="Hide_ForPrint">
                                     <td colspan="11" align="right" style="font-weight:bold;">Total OUP Amount</td>
-                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="3"><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
                                     <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
                                 </tr>
 
                                 <tr ng-if="(IsInvoice == true && AuthorContractValueData == true )" class="Hide_ForPrint">
                                     <td colspan="13" align="right" style="font-weight:bold;">Total OUP Amount</td>
-                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="3"><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
                                     <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
                                 </tr>
 
                                 <!--only for print-->
                                 <tr ng-if="RightsStatement_Detail" style="display:none;" class="Show_ForSinglePrint">
                                     <td colspan="9" align="right" style="font-weight:bold;">Total OUP Amount</td>
-                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="3"><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
                                     <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
                                 </tr>
                                 <tr ng-if="PermissionsOutboundStatement_Detail" style="display:none;" class="Show_ForSinglePrint">
                                     <td colspan="11" align="right" style="font-weight:bold;">Total OUP Amount</td>
-                                    <td colspan="3"><i class="fa fa-{{AuthorPublisherStatement_Detail[0].InvoiceCurrency}}" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
+                                    <td colspan="3"><i class="fa fa-inr" aria-hidden="true"></i><span ng-bind="totalOupAmount"></span></td>
                                     <td colspan="2" class="Hide_btn_ForPrint">&nbsp;</td>
                                 </tr>
 

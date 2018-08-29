@@ -226,24 +226,24 @@ app.controller("MainCtrl", function ($scope, AJService, $window, $compile, Sweet
     $scope.submitForm = function () {
 
         $scope.submitted = true;
-        if ($scope.Name == undefined)
+        if ($scope.Name == undefined || $scope.Name == "")
         {
             $scope.ExecutiveForm.$valid = false;
             return false;
         }
-        if ($scope.Code == undefined) {
+        if ($scope.Code == undefined || $scope.Code == "") {
             $scope.ExecutiveForm.$valid = false;
             return false;
         }
-        if ($scope.Email == undefined) {
+        if ($scope.Email == undefined || $scope.Email == "") {
             $scope.ExecutiveForm.$valid = false;
              return false;
         }
-        if ($scope.Password == undefined) {
+        if ($scope.Password == undefined || $scope.Password == "") {
             $scope.ExecutiveForm.$valid = false;
             return false;
         }
-        if ($scope.Mobile == undefined && $scope.Phone==undefined) {
+        if ($scope.Phone == "" && $scope.Phone == undefined) {
             $scope.ExecutiveForm.$valid = false;
             return false;
         }

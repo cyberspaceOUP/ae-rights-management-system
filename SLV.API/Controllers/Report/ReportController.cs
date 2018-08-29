@@ -55,21 +55,30 @@ namespace SLV.API.Controllers.Report
         {
             try
             {
-                SqlParameter[] parameters = new SqlParameter[7];
+                SqlParameter[] parameters = new SqlParameter[11];
 
                 //parameters[0] = new SqlParameter("Year", SqlDbType.VarChar, 4);
                 //parameters[0].Value = "'" + _AuthorPubStModel.Year + "'";
                 //parameters[1] = new SqlParameter("Month", SqlDbType.VarChar, 2);
                 //parameters[1].Value = "'" + _AuthorPubStModel.Month + "'";
 
-                parameters[0] = new SqlParameter("FromYear", SqlDbType.VarChar, 4);
-                parameters[0].Value = "'" + _AuthorPubStModel.FromYear + "'";
-                parameters[1] = new SqlParameter("FromMonth", SqlDbType.VarChar, 2);
-                parameters[1].Value = "'" + _AuthorPubStModel.FromMonth + "'";
-                parameters[2] = new SqlParameter("ToYear", SqlDbType.VarChar, 4);
-                parameters[2].Value = "'" + _AuthorPubStModel.ToYear + "'";
-                parameters[3] = new SqlParameter("ToMonth", SqlDbType.VarChar, 2);
-                parameters[3].Value = "'" + _AuthorPubStModel.ToMonth + "'";
+                parameters[0] = new SqlParameter("EntryFromYear", SqlDbType.VarChar, 4);
+                parameters[0].Value = "'" + _AuthorPubStModel.EntryFromYear + "'";
+                parameters[1] = new SqlParameter("EntryFromMonth", SqlDbType.VarChar, 2);
+                parameters[1].Value = "'" + _AuthorPubStModel.EntryFromMonth + "'";
+                parameters[2] = new SqlParameter("EntryToYear", SqlDbType.VarChar, 4);
+                parameters[2].Value = "'" + _AuthorPubStModel.EntryToYear + "'";
+                parameters[3] = new SqlParameter("EntryToMonth", SqlDbType.VarChar, 2);
+                parameters[3].Value = "'" + _AuthorPubStModel.EntryToMonth + "'";
+
+                parameters[4] = new SqlParameter("FromYear", SqlDbType.VarChar, 4);
+                parameters[4].Value = "'" + _AuthorPubStModel.FromYear + "'";
+                parameters[5] = new SqlParameter("FromMonth", SqlDbType.VarChar, 2);
+                parameters[5].Value = "'" + _AuthorPubStModel.FromMonth + "'";
+                parameters[6] = new SqlParameter("ToYear", SqlDbType.VarChar, 4);
+                parameters[6].Value = "'" + _AuthorPubStModel.ToYear + "'";
+                parameters[7] = new SqlParameter("ToMonth", SqlDbType.VarChar, 2);
+                parameters[7].Value = "'" + _AuthorPubStModel.ToMonth + "'";
 
 
                 //if ((_AuthorPubStModel.AuthorName != null && _AuthorPubStModel.AuthorName != "") ||
@@ -77,24 +86,24 @@ namespace SLV.API.Controllers.Report
                 //    (_AuthorPubStModel.AuthorContractCode != null && _AuthorPubStModel.AuthorContractCode != ""))
                 if (_AuthorPubStModel.Type != null && _AuthorPubStModel.Type != "" && _AuthorPubStModel.Type.ToLower() == "authorcontractcode")
                 {
-                    parameters[4] = new SqlParameter("AuthorContractCode", SqlDbType.VarChar, 200);
-                    parameters[4].Value = "'" + _AuthorPubStModel.AuthorContractCode + "'";
-                    parameters[5] = new SqlParameter("AuthorCode", SqlDbType.VarChar, 200);
-                    parameters[5].Value = "'" + _AuthorPubStModel.AuthorCode + "'";
-                    parameters[6] = new SqlParameter("AuthorName", SqlDbType.VarChar, 200);
-                    parameters[6].Value = "'" + _AuthorPubStModel.AuthorName + "'";
+                    parameters[8] = new SqlParameter("AuthorContractCode", SqlDbType.VarChar, 200);
+                    parameters[8].Value = "'" + _AuthorPubStModel.AuthorContractCode + "'";
+                    parameters[9] = new SqlParameter("AuthorCode", SqlDbType.VarChar, 200);
+                    parameters[9].Value = "'" + _AuthorPubStModel.AuthorCode + "'";
+                    parameters[10] = new SqlParameter("AuthorName", SqlDbType.VarChar, 200);
+                    parameters[10].Value = "'" + _AuthorPubStModel.AuthorName + "'";
                     var _GetAuthorStatement = _dbContext.ExecuteStoredProcedureListNewData<StatementModel>("Proc_Statement_Search_RS_A_get", parameters).ToList();
 
                     return Json(_GetAuthorStatement);
                 }
                 else
                 {
-                    parameters[4] = new SqlParameter("ProductLicenseCode", SqlDbType.VarChar, 200);
-                    parameters[4].Value = "'" + _AuthorPubStModel.ProductLicenseCode + "'";
-                    parameters[5] = new SqlParameter("PublishingCompanyCode", SqlDbType.VarChar, 200);
-                    parameters[5].Value = "'" + _AuthorPubStModel.PublishingCompanyCode + "'";
-                    parameters[6] = new SqlParameter("PublishingCompanyName", SqlDbType.VarChar, 200);
-                    parameters[6].Value = "'" + _AuthorPubStModel.PublishingCompanyName + "'";
+                    parameters[8] = new SqlParameter("ProductLicenseCode", SqlDbType.VarChar, 200);
+                    parameters[8].Value = "'" + _AuthorPubStModel.ProductLicenseCode + "'";
+                    parameters[9] = new SqlParameter("PublishingCompanyCode", SqlDbType.VarChar, 200);
+                    parameters[9].Value = "'" + _AuthorPubStModel.PublishingCompanyCode + "'";
+                    parameters[10] = new SqlParameter("PublishingCompanyName", SqlDbType.VarChar, 200);
+                    parameters[10].Value = "'" + _AuthorPubStModel.PublishingCompanyName + "'";
                     var _GetStatement = _dbContext.ExecuteStoredProcedureListNewData<StatementModel>("Proc_Statement_Search_RS_P_get", parameters).ToList();
 
                     return Json(_GetStatement);
@@ -149,21 +158,30 @@ namespace SLV.API.Controllers.Report
         {
             try
             {
-                SqlParameter[] parameters = new SqlParameter[7];
+                SqlParameter[] parameters = new SqlParameter[11];
 
                 //parameters[0] = new SqlParameter("Year", SqlDbType.VarChar, 4);
                 //parameters[0].Value = "'" + _AuthorPubStModel.Year + "'";
                 //parameters[1] = new SqlParameter("Month", SqlDbType.VarChar, 2);
                 //parameters[1].Value = "'" + _AuthorPubStModel.Month + "'";
 
-                parameters[0] = new SqlParameter("FromYear", SqlDbType.VarChar, 4);
-                parameters[0].Value = "'" + _AuthorPubStModel.FromYear + "'";
-                parameters[1] = new SqlParameter("FromMonth", SqlDbType.VarChar, 2);
-                parameters[1].Value = "'" + _AuthorPubStModel.FromMonth + "'";
-                parameters[2] = new SqlParameter("ToYear", SqlDbType.VarChar, 4);
-                parameters[2].Value = "'" + _AuthorPubStModel.ToYear + "'";
-                parameters[3] = new SqlParameter("ToMonth", SqlDbType.VarChar, 2);
-                parameters[3].Value = "'" + _AuthorPubStModel.ToMonth + "'";
+                parameters[0] = new SqlParameter("EntryFromYear", SqlDbType.VarChar, 4);
+                parameters[0].Value = "'" + _AuthorPubStModel.EntryFromYear + "'";
+                parameters[1] = new SqlParameter("EntryFromMonth", SqlDbType.VarChar, 2);
+                parameters[1].Value = "'" + _AuthorPubStModel.EntryFromMonth + "'";
+                parameters[2] = new SqlParameter("EntryToYear", SqlDbType.VarChar, 4);
+                parameters[2].Value = "'" + _AuthorPubStModel.EntryToYear + "'";
+                parameters[3] = new SqlParameter("EntryToMonth", SqlDbType.VarChar, 2);
+                parameters[3].Value = "'" + _AuthorPubStModel.EntryToMonth + "'";
+
+                parameters[4] = new SqlParameter("FromYear", SqlDbType.VarChar, 4);
+                parameters[4].Value = "'" + _AuthorPubStModel.FromYear + "'";
+                parameters[5] = new SqlParameter("FromMonth", SqlDbType.VarChar, 2);
+                parameters[5].Value = "'" + _AuthorPubStModel.FromMonth + "'";
+                parameters[6] = new SqlParameter("ToYear", SqlDbType.VarChar, 4);
+                parameters[6].Value = "'" + _AuthorPubStModel.ToYear + "'";
+                parameters[7] = new SqlParameter("ToMonth", SqlDbType.VarChar, 2);
+                parameters[7].Value = "'" + _AuthorPubStModel.ToMonth + "'";
 
 
                 //if ((_AuthorPubStModel.AuthorName != null && _AuthorPubStModel.AuthorName != "") ||
@@ -171,24 +189,24 @@ namespace SLV.API.Controllers.Report
                 //    (_AuthorPubStModel.AuthorContractCode != null && _AuthorPubStModel.AuthorContractCode != ""))
                 if (_AuthorPubStModel.Type != null && _AuthorPubStModel.Type != "" && _AuthorPubStModel.Type.ToLower() == "authorcontractcode")
                 {
-                    parameters[4] = new SqlParameter("AuthorContractCode", SqlDbType.VarChar, 200);
-                    parameters[4].Value = "'" + _AuthorPubStModel.AuthorContractCode + "'";
-                    parameters[5] = new SqlParameter("AuthorCode", SqlDbType.VarChar, 200);
-                    parameters[5].Value = "'" + _AuthorPubStModel.AuthorCode + "'";
-                    parameters[6] = new SqlParameter("AuthorName", SqlDbType.VarChar, 200);
-                    parameters[6].Value = "'" + _AuthorPubStModel.AuthorName + "'";
+                    parameters[8] = new SqlParameter("AuthorContractCode", SqlDbType.VarChar, 200);
+                    parameters[8].Value = "'" + _AuthorPubStModel.AuthorContractCode + "'";
+                    parameters[9] = new SqlParameter("AuthorCode", SqlDbType.VarChar, 200);
+                    parameters[9].Value = "'" + _AuthorPubStModel.AuthorCode + "'";
+                    parameters[10] = new SqlParameter("AuthorName", SqlDbType.VarChar, 200);
+                    parameters[10].Value = "'" + _AuthorPubStModel.AuthorName + "'";
                     var _GetAuthorStatement = _dbContext.ExecuteStoredProcedureListNewData<StatementModel>("Proc_Statement_Search_PO_A_get", parameters).ToList();
 
                     return Json(_GetAuthorStatement);
                 }
                 else
                 {
-                    parameters[4] = new SqlParameter("ProductLicenseCode", SqlDbType.VarChar, 200);
-                    parameters[4].Value = "'" + _AuthorPubStModel.ProductLicenseCode + "'";
-                    parameters[5] = new SqlParameter("PublishingCompanyCode", SqlDbType.VarChar, 200);
-                    parameters[5].Value = "'" + _AuthorPubStModel.PublishingCompanyCode + "'";
-                    parameters[6] = new SqlParameter("PublishingCompanyName", SqlDbType.VarChar, 200);
-                    parameters[6].Value = "'" + _AuthorPubStModel.PublishingCompanyName + "'";
+                    parameters[8] = new SqlParameter("ProductLicenseCode", SqlDbType.VarChar, 200);
+                    parameters[8].Value = "'" + _AuthorPubStModel.ProductLicenseCode + "'";
+                    parameters[9] = new SqlParameter("PublishingCompanyCode", SqlDbType.VarChar, 200);
+                    parameters[9].Value = "'" + _AuthorPubStModel.PublishingCompanyCode + "'";
+                    parameters[10] = new SqlParameter("PublishingCompanyName", SqlDbType.VarChar, 200);
+                    parameters[10].Value = "'" + _AuthorPubStModel.PublishingCompanyName + "'";
                     var _GetStatement = _dbContext.ExecuteStoredProcedureListNewData<StatementModel>("Proc_Statement_Search_PO_P_get", parameters).ToList();
 
                     return Json(_GetStatement);
@@ -298,9 +316,11 @@ namespace SLV.API.Controllers.Report
         {
             try
             {
-                SqlParameter[] parameters = new SqlParameter[1];
+                SqlParameter[] parameters = new SqlParameter[2];
                 parameters[0] = new SqlParameter("Flag", SqlDbType.VarChar, 200);
                 parameters[0].Value = "'" + Flag.Flag + "'";
+                parameters[1] = new SqlParameter("ExecutiveId", SqlDbType.VarChar, 200);
+                parameters[1].Value = "'" + Flag.ExecutiveId + "'"; ;
 
                 var _GetProductLicenseExpired = _dbContext.ExecuteStoredProcedureListNewData<DashBoardModel>("Proc_ProductLicenseExpired_get", parameters).ToList();
                 return Json(_GetProductLicenseExpired);

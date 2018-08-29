@@ -282,7 +282,8 @@ app.controller("MainCtrl", function ($scope, AJService, $window, $compile, Sweet
                 confirmButtonColor: "#8CD4F5",
                 confirmButtonText: "Yes",
                 closeOnConfirm: false,
-                closeOnCancel: true
+                closeOnCancel: true,
+                showLoaderOnConfirm: true
             },
                  function (Confirm) {
                      if (Confirm) {

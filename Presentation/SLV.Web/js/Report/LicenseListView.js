@@ -10,8 +10,8 @@
 
         var _Flag = {
 
-            Flag: "List"
-
+            Flag: "List",
+            ExecutiveId: parseInt($("#enterdBy").val())
         };
 
         var ExecutiveStatus = AJService.PostDataToAPI('Report/GetProductLicenseExpired', _Flag);
